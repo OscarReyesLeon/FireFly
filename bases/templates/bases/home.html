@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+    <div class="col-xl-6 col-md-6 mb-6">
+        <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    Usuario: <mark>{{ user.username }}  {{user.get_full_name }}</mark> 
+                </div>
+                <div class="dropdown-divider"></div>
+
+                <div class="row">
+                    <mark>Ingresa por el menú</mark>
+                    <br>
+                    <small>O si el uso es limitado usa el boton de abajo.</small>
+
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'inv:pedido_list' %}" class="btn btn-success"><span class="fal fa-check"></span> Ir a pedidos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
+            </div>
+            </div>
+        </div>
+        </div>
+    <br/> 
+    <left><a title="Post Nuevo" href="https://ledsa.mx/"><img src="https://ledsa.mx/ff/archivos/banner.jpeg" class="img-fluid" alt="Blog Ledsa"></a>
+    
+
+    </left>
+    <br/> 
+    <audio controls>
+        <source src="https://ledsa.mx/ff/Nora.mp3" type="audio/mp3">
+            Utiliza FireFox!.
+        </audio>
+
+    </div>
+{% endblock %}
