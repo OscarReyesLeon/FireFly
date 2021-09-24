@@ -130,7 +130,7 @@ class Pedido(ClaseModelo):
     status2 = models.CharField(max_length=20, default='--')
     precio_uni = models.FloatField(null=True,blank=True)
     preciotransaccion = models.FloatField(null=True,blank=True)
-    articulo = models.ForeignKey(Producto, on_delete=models.PROTECT)
+    articulo = models.CharField(max_length=200)
     proceso = models.ForeignKey(Proceso, on_delete=models.PROTECT)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
     motivo_peticion = models.CharField(max_length=200,null=True,blank=True)

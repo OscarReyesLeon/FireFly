@@ -119,7 +119,7 @@ class PedidoForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        self.fields['articulo'].widget.attrs['class'] = 'form-control select2'
+        """self.fields['articulo'].widget.attrs['class'] = 'form-control select2'"""
         self.fields['precio_uni'].widget.attrs['readonly'] = True
         self.fields['preciotransaccion'].widget.attrs['readonly'] = True
         self.fields['um'].widget.attrs['readonly'] = True
