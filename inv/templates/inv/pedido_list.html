@@ -34,8 +34,7 @@
 	<th>Cant</th>
         <th>articulo</th>
         <th>Solcitud</th>
-        <th>Fecha</th>
-        <th>Modificado</th>
+        <th>Fecha Creacion</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody>
@@ -49,7 +48,6 @@
           <td>{{ item.articulo }}</td>
           <td>{{ item.uc}}</td>
           <td>{{ item.fc|date:"d/m/y-H:i"}}</td>
-          <td>{{ item.fm|date:"d/m/y-H:i"}}</td>
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')">
                 <i class="far fa-edit"></i></button>
