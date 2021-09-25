@@ -128,9 +128,9 @@ class Pedido(ClaseModelo):
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, default='--')
     status2 = models.CharField(max_length=20, default='--')
-    precio_uni = models.FloatField(null=True,blank=True)
+    precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True,blank=True)
-    articulo = models.CharField(max_length=200)
+    articulo = models.CharField(max_length=35)
     proceso = models.ForeignKey(Proceso, on_delete=models.PROTECT)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
     motivo_peticion = models.CharField(max_length=200,null=True,blank=True)
@@ -142,8 +142,7 @@ class Pedido(ClaseModelo):
 
 
     def save(self):
-        self.preciotransaccion = float(float(int(self.cantidad)) * float(self.articulo.precio))
-        self.precio_uni = float(self.articulo.precio)
+        self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
         super(Pedido, self).save()
 
 
@@ -204,10 +203,10 @@ class Empleado(ClaseModelo):
         help_text='Nombre/Apellido completo',
         unique=True
     )
-    licenciacaduca = models.DateField(null=True,blank=True)
+    licenciacaduca = models.DateTimeField(null=True, blank=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
     nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
-    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
+    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
     def __str__(self):
         return '{}'.format(self.nombre)
 

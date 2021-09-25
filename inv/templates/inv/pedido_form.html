@@ -110,7 +110,8 @@
 <script>
     $(function() {
         $('.select2').select2({
-            placeholder: "Utiliza el buscador por tecleo",
+            placeholder: "Selecciona una opcion acorde a lo que buscas",
+            language: "es"
         });
         $("#id_equipo").val("{{ obj.proceso.equipo.id }}").change();
         $("#id_proceso").val("{{ obj.proceso.id }}").change();

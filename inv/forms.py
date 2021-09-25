@@ -119,8 +119,6 @@ class PedidoForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        """self.fields['articulo'].widget.attrs['class'] = 'form-control select2'"""
-        self.fields['precio_uni'].widget.attrs['readonly'] = True
         self.fields['preciotransaccion'].widget.attrs['readonly'] = True
         self.fields['um'].widget.attrs['readonly'] = True
         self.fields['fecha_aprobado'].widget.attrs['readonly'] = True        
@@ -158,8 +156,7 @@ class PuestoForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
-class EmpleadoForm(forms.ModelForm): 
-    licenciacaduca = forms.DateInput()
+class EmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
         exclude = ['um', 'fm', 'uc', 'fc']
@@ -172,7 +169,6 @@ class EmpleadoForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        self.fields['licenciacaduca'].widget.attrs['readonly'] = True
 
 class ComputadoraForm(forms.ModelForm):
     class Meta:
