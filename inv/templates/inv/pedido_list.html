@@ -53,9 +53,9 @@
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')">
                 <i class="far fa-edit"></i></button>
+                <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
                 <a href="{% url 'inv:pedido_aprobado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
                 <a href="{% url 'inv:pedido_rechazado' item.id %}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
-                <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
                 <a href="{% url 'inv:pedido_comprando' item.id %}" class="btn btn-info btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
                 <a href="{% url 'inv:pedido_entregado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="fa fa-check"></i></a>
           </td>

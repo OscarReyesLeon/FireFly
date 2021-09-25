@@ -419,13 +419,15 @@ def pedido_aprobado(request, id):
     
     if request.method=='GET':
         contexto={'obj':pedi}
-    
     if request.method=='POST':
-        pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
-        pedi.status2='Si'
-        pedi.save()
-        return redirect("inv:pedido_list")
-
+        if pedi.status2=='Pendiente' and pedi.status=='Revizado':
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -442,11 +444,14 @@ def pedido_rechazado(request, id):
         contexto={'obj':pedi}
     
     if request.method=='POST':
-        pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
-        pedi.status2='No'
-        pedi.save()
-        return redirect("inv:pedido_list")
-
+        if pedi.status2=='Pendiente' and pedi.status=='Revizado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Fin'
+            pedi.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -463,9 +468,9 @@ def pedido_comprando(request, id):
         contexto={'obj':pede}
     
     if request.method=='POST':
-        if pede.status2=='Si' and pede.status=='--':
+        if pede.status2=='Si' and pede.status=='Pendiente':
             pede.fecha_requerido = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='Si'
+            pede.status='en Proveedor'
             pede.save()
             return redirect("inv:pedido_list")
         else:
@@ -486,7 +491,7 @@ def pedido_entregado(request, id):
         contexto={'obj':pede}
     
     if request.method=='POST':
-        if pede.status=='Si':
+        if pede.status=='en Proveedor' and pede.status2=='Si':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
             pede.save()
@@ -510,10 +515,10 @@ def pedido_reaut(request, id):
         contexto={'obj':pede}
     
     if request.method=='POST':
-        if pede.status2=='Si' and pede.status=='--':
+        if pede.status2=='--' and pede.status=='--':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='--'
-            pede.status2='ReCotizado'
+            pede.status2='Pendiente'
+            pede.status='Revizado'
             pede.save()
             return redirect("inv:pedido_list")
         else:
