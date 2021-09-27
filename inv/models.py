@@ -139,6 +139,7 @@ class Pedido(ClaseModelo):
     fecha_recotizado = models.CharField(max_length=200,null=True,blank=True)
     fecha_finalizado = models.CharField(max_length=200,null=True,blank=True)
     fecha_rechazo = models.CharField(max_length=200,null=True,blank=True)
+    folio_ingreso = models.CharField(max_length=20, default='--')
 
 
     def save(self):
