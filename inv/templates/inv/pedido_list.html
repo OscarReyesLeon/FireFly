@@ -27,27 +27,27 @@
     {% endif %}
     <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
       <thead>
-        <th>ID</th>
+        <th>io</th>
+        <th>Aut</th>
+        <th>Solcitud</th>
+      	<th>Cant</th>
+        <th>articulo</th>
         <th>Apro</th>
         <th>Compr</th>
-        <th>Aut</th>
-	<th>Cant</th>
-        <th>articulo</th>
-        <th>Solcitud</th>
-        <th>Fecha Creacion</th>
+        <th>ID</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
-          <td>{{item.id}}</td>
+          <td>{{item.indentificador_estado}}</td>
+          <td>{{item.autpor}}</td>
+          <td>{{ item.uc}}</td>
+      	  <td>{{item.cantidad}}</td>
+          <td>{{ item.articulo }}</td>
           <td>{{item.status2}}</td>
           <td>{{item.status}}</td>
-          <td>{{item.autpor}}</td>
-	  <td>{{item.cantidad}}</td>
-          <td>{{ item.articulo }}</td>
-          <td>{{ item.uc}}</td>
-          <td>{{ item.fc|date:"d/m/y-H:i"}}</td>
+          <td>{{item.id}}</td>
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')">
                 <i class="far fa-edit"></i></button>

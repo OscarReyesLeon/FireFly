@@ -111,7 +111,7 @@ class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = ['cantidad', 'UniMed', 'articulo', 'proceso', 'autpor', 'motivo_peticion', 'comentario', 'precio_uni', 'preciotransaccion', 'um', 'fecha_aprobado', 'fecha_requerido', 'fecha_recotizado', 'fecha_finalizado', 'folio_ingreso']
-        """exclude = ['status', 'status2', 'fc', 'uc', 'fm', 'fecha_rechazo']"""
+        """exclude = ['status', 'status2', 'fc', 'uc', 'fm', 'fecha_rechazo', indentificador_estado]"""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

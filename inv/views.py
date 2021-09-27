@@ -424,6 +424,7 @@ def pedido_aprobado(request, id):
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='Si'
             pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
             pedi.save()
             return redirect("inv:pedido_list")
         else:
@@ -448,6 +449,7 @@ def pedido_rechazado(request, id):
             pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='No'
             pedi.status='Fin'
+            pedi.indentificador_estado='6'
             pedi.save()
             return redirect("inv:pedido_list")
         else:
@@ -471,6 +473,7 @@ def pedido_comprando(request, id):
         if pede.status2=='Si' and pede.status=='Pendiente':
             pede.fecha_requerido = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='en Proveedor'
+            pede.indentificador_estado='4'
             pede.save()
             return redirect("inv:pedido_list")
         else:
@@ -496,6 +499,7 @@ def pedido_entregado(request, id):
         if pede.status=='en Proveedor' and pede.status2=='Si':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
+            pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list")
         else:
@@ -521,6 +525,7 @@ def pedido_reaut(request, id):
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
             pede.status='Revizado'
+            pede.indentificador_estado='2'
             pede.save()
             return redirect("inv:pedido_list")
         else:
