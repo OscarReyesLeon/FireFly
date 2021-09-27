@@ -420,7 +420,7 @@ def pedido_aprobado(request, id):
     if request.method=='GET':
         contexto={'obj':pedi}
     if request.method=='POST':
-        if pedi.status2=='Pendiente' and pedi.status=='Revizado':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='Si'
             pedi.status='Pendiente'
@@ -445,7 +445,7 @@ def pedido_rechazado(request, id):
         contexto={'obj':pedi}
     
     if request.method=='POST':
-        if pedi.status2=='Pendiente' and pedi.status=='Revizado':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
             pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='No'
             pedi.status='Fin'
@@ -526,7 +526,7 @@ def pedido_reaut(request, id):
         if pede.status2=='Proximo' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
-            pede.status='Revizado'
+            pede.status='Revisado'
             pede.indentificador_estado='1'
             pede.save()
             return redirect("inv:pedido_list")
