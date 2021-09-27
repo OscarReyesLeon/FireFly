@@ -499,7 +499,7 @@ def pedido_entregado(request, id):
         if pede.status=='en Proveedor' and pede.status2=='Si':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
-            pede.indentificador_estado='6'
+            pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list")
         else:
