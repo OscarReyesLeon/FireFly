@@ -126,8 +126,8 @@ class Pedido(ClaseModelo):
     cantidad = models.PositiveIntegerField()
     comentario = models.CharField(max_length=200,null=True,blank=True)
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
-    status = models.CharField(max_length=20, default='--')
-    status2 = models.CharField(max_length=20, default='--')
+    status = models.CharField(max_length=20, default='X-Revisar')
+    status2 = models.CharField(max_length=20, default='Proximo')
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True,blank=True)
     articulo = models.CharField(max_length=35)
@@ -140,7 +140,7 @@ class Pedido(ClaseModelo):
     fecha_finalizado = models.CharField(max_length=200,null=True,blank=True)
     fecha_rechazo = models.CharField(max_length=200,null=True,blank=True)
     folio_ingreso = models.CharField(max_length=20, default='--')
-    indentificador_estado = models.CharField(max_length=20, default='1')
+    indentificador_estado = models.CharField(max_length=20, default='2')
 
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))

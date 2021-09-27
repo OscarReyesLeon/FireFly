@@ -521,11 +521,13 @@ def pedido_reaut(request, id):
         contexto={'obj':pede}
     
     if request.method=='POST':
-        if pede.status2=='--' and pede.status=='--':
+        if pede.precio_uni==0:
+            return HttpResponse("no tiene precio ingresado")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
             pede.status='Revizado'
-            pede.indentificador_estado='2'
+            pede.indentificador_estado='1'
             pede.save()
             return redirect("inv:pedido_list")
         else:
