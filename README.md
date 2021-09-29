@@ -1,3 +1,4 @@
+Sistema de compras, inventarios y RH:
 Desarrollado por Oscar Daniel Reyes León
 
 Ledsa Industrial SA de CV.
