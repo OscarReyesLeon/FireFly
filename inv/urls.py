@@ -9,7 +9,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoEdit, pedido_aprobado, pedido_rechazado, pedido_comprando, pedido_reaut,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoEdit, pedido_aprobado, pedido_rechazado, pedido_comprando, pedido_reaut, pedido_stock,\
     PuestoView, PuestoNew, PuestoEdit,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, EmpresaNew, EmpresaEdit ,EquipoForm, \
@@ -55,6 +55,7 @@ urlpatterns = [
     path('pedidos/comprando/<int:id>',pedido_comprando, name="pedido_comprando"),
     path('pedidos/entregado/<int:id>',pedido_entregado, name="pedido_entregado"),
     path('pedidos/reaut/<int:id>',pedido_reaut, name="pedido_reaut"),
+    path('pedidos/stock/<int:id>',pedido_stock, name="pedido_stock"),
 
     path('banco/',BancoView.as_view(), name='banco_list'),
     path('banco/new',BancoNew.as_view(), name='banco_new'),

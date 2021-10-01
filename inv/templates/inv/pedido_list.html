@@ -71,6 +71,9 @@
             {% if perms.inv.change_producto %}
             <a href="{% url 'inv:pedido_entregado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="fa fa-check"></i></a>
             {% endif %}
+            {% if perms.inv.change_producto %}
+            <a href="{% url 'inv:pedido_stock' item.id %}" class="btn btn-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

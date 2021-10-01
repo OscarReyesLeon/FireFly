@@ -448,7 +448,7 @@ def pedido_rechazado(request, id):
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
             pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='No'
-            pedi.status='Fin'
+            pedi.status='Rechazo'
             pedi.indentificador_estado='5'
             pedi.save()
             return redirect("inv:pedido_list")
@@ -531,11 +531,38 @@ def pedido_reaut(request, id):
             pede.save()
             return redirect("inv:pedido_list")
         else:
-            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+            return HttpResponse("no se puede mandar a autorizar")
 
 
     return render(request,template_name,contexto)
 
+@login_required(login_url="/login/")
+@permission_required("inv.change_producto",login_url="/login/")
+def pedido_stock(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pede:
+        return redirect("inv:pedido_list")
+    
+    if request.method=='GET':
+        contexto={'obj':pede}
+    
+    if request.method=='POST':
+        if pede.status2=='Proximo' and pede.status=='X-Revisar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Stock'
+            pede.indentificador_estado='1'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+
+
+    return render(request,template_name,contexto)
 
 """RH EDIT Aqui"""
 
