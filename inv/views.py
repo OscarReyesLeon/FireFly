@@ -555,7 +555,7 @@ def pedido_stock(request, id):
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='na'
             pede.status='Stock'
-            pede.indentificador_estado='1'
+            pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list")
         else:
