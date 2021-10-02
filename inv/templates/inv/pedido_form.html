@@ -117,8 +117,5 @@
             placeholder: "Selecciona una opcion acorde a lo que buscas",
             language: "es"
         });
-        $("#id_equipo").val("{{ obj.proceso.equipo.id }}").change();
-        $("#id_proceso").val("{{ obj.proceso.id }}").change();
-        $("#id_proceso").chained("#id_equipo");
     });
 </script>
