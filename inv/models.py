@@ -131,7 +131,7 @@ class Pedido(ClaseModelo):
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True,blank=True)
     articulo = models.CharField(max_length=35)
-    proceso = models.CharField(max_length=15,null=True,blank=True)
+    proceso = models.CharField(max_length=15)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
     motivo_peticion = models.CharField(max_length=200,null=True,blank=True)
     fecha_aprobado = models.CharField(max_length=200,null=True,blank=True)
