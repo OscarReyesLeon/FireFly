@@ -144,6 +144,9 @@ class Pedido(ClaseModelo):
 
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
+        self.articulo = self.articulo.upper()
+        self.proceso = self.proceso.upper()
+
         super(Pedido, self).save()
 
 
