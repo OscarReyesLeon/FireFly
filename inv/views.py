@@ -418,7 +418,15 @@ def pedido_aprobado(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pedi}
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
+            pedi.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     if request.method=='POST':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -442,7 +450,15 @@ def pedido_rechazado(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pedi}
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Rechazo'
+            pedi.indentificador_estado='5'
+            pedi.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el pedido ya fue autorizado")
     
     if request.method=='POST':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
@@ -453,7 +469,7 @@ def pedido_rechazado(request, id):
             pedi.save()
             return redirect("inv:pedido_list")
         else:
-            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+            return HttpResponse("el pedido ya fue autorizado")
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -467,7 +483,14 @@ def pedido_comprando(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pede}
+        if pede.status2=='Si' and pede.status=='Pendiente':
+            pede.fecha_requerido = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='en Proveedor'
+            pede.indentificador_estado='4'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el articulo no está aprobado o ya está terminado")
     
     if request.method=='POST':
         if pede.status2=='Si' and pede.status=='Pendiente':
@@ -491,7 +514,16 @@ def pedido_entregado(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pede}
+        if pede.folio_ingreso=='--':
+            return HttpResponse("Falta ingresar folio de entrega")            
+        if pede.status=='en Proveedor' and pede.status2=='Si':
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("el pedido aun no está en atención o ya está terminado")
     
     if request.method=='POST':
         if pede.folio_ingreso=='--':
@@ -518,7 +550,17 @@ def pedido_reaut(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pede}
+        if pede.precio_uni==0:
+            return HttpResponse("no tiene precio ingresado")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='Pendiente'
+            pede.status='Revisado'
+            pede.indentificador_estado='1'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("no se puede mandar a autorizar")
     
     if request.method=='POST':
         if pede.precio_uni==0:
@@ -547,7 +589,16 @@ def pedido_stock(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        contexto={'obj':pede}
+        if pede.status2=='Proximo' and pede.status=='X-Revisar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Stock'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("Esta opción no está disponible")
     
     if request.method=='POST':
         if pede.status2=='Proximo' and pede.status=='X-Revisar':
