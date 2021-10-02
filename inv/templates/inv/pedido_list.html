@@ -52,12 +52,11 @@
           <td>{{item.indentificador_estado}}</td>
           <td>
             {% if perms.inv.view_autoriza %}
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')">
+            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
             {% if perms.inv.change_producto %}
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')">
+            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
-            <i class="far fa-edit"></i></button>
             {% if perms.inv.change_producto %}
             <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
