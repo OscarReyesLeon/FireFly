@@ -29,12 +29,12 @@
       <thead>
         <th>ID</th>
         <th>Aut</th>
-        <th>Apro</th>
+        <th>Aprobado</th>
         <th>Solcitud</th>
         <th>Articulo</th>
       	<th>Cant</th>
         <th>$Unitario</th>
-        <th>Compr</th>
+        <th>Compras</th>
         <th>io</th>
         <th class="all">Acciones</th>
       </thead>
@@ -46,7 +46,7 @@
           <td>{{item.status2}}</td>
           <td>{{ item.uc}}</td>
           <td>{{ item.articulo }}</td>
-      	  <td>{{item.cantidad}}</td>
+      	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>${{item.precio_uni}}</td>
           <td>{{item.status}}</td>
           <td>{{item.indentificador_estado}}</td>
