@@ -5,7 +5,7 @@ Ledsa Industrial SA de CV.
 Trabajo a petición de Aaron Ledesma Santos.
 
 Correo personal
-oscar@mercax.com
+seyfer.orl@googlemail.com
 
 Correo en ledsa
 oscar.reyes@ledsa.mx
