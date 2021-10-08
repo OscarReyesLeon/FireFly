@@ -514,8 +514,6 @@ def pedido_entregado(request, id):
         return redirect("inv:pedido_list")
     
     if request.method=='GET':
-        if pede.folio_ingreso=='--':
-            return HttpResponse("Falta ingresar folio de entrega")            
         if pede.status=='en Proveedor' and pede.status2=='Si':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
@@ -526,8 +524,6 @@ def pedido_entregado(request, id):
             return HttpResponse("el pedido aun no está en atención o ya está terminado")
     
     if request.method=='POST':
-        if pede.folio_ingreso=='--':
-            return HttpResponse("Falta ingresar folio de entrega")            
         if pede.status=='en Proveedor' and pede.status2=='Si':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
