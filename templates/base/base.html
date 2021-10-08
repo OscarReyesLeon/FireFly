@@ -102,6 +102,9 @@
             {% if perms.inv.view_pedido %}
             <a class="collapse-item" href="{% url 'inv:pedido_list' %}">Pedidos</a>
             {% endif %}
+            {% if perms.inv.view_autoriza or perms.inv.change_producto %}
+            <a class="collapse-item" href="{% url 'inv:pedido_list_all' %}">Pedidos-Todos</a>
+            {% endif %}
 
             <h6 class="collapse-header">Catálogos de RH:</h6>
             {% if perms.inv.view_empresas %}

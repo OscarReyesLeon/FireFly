@@ -359,6 +359,22 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
+    def get_queryset(self):
+        user = self.request.user
+        #print(user, "usuario")
+        qs = super().get_queryset()
+        for q in qs:
+            print(q.uc,q.id) 
+
+        if not user.is_superuser:
+            qs = qs.filter(uc=user)
+        return qs
+
+class PedidoViewAll(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
 
 class PedidoNew(SuccessMessageMixin,SinPrivilegios,
                    generic.CreateView):
