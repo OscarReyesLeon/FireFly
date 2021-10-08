@@ -34,6 +34,7 @@
         <th>Articulo</th>
       	<th>Cantidad</th>
         <th>$ Unitario</th>
+        <th>Fecha Solcitud</th>
         <th>Compras</th>
         <th>io</th>
         <th class="all">Acciones</th>
@@ -48,6 +49,7 @@
           <td>{{ item.articulo }}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>${{item.precio_uni}}</td>
+          <td>{{item.fc|date:"d/m/Y H:i"}}
           <td>{{item.status}}</td>
           <td>{{item.indentificador_estado}}</td>
           <td>
@@ -88,7 +90,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 8, 'asc' ], [ 0, 'desc' ]],
+      "order": [[ 9, 'asc' ], [ 0, 'desc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "language": {
             "sProcessing": "Procesando...",
