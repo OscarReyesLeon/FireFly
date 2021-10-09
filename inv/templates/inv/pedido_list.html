@@ -20,6 +20,8 @@
   <div class="card-body">
     <div class="buttons-toolbar">
       <a class="btn btn-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
+      <a href="{% url 'inv:pedido_list' %}" class="btn btn-info" role="button"><i class="fa fa-cubes"></i>Ver Todo</a>
+
     </div>
 
     {% if not obj %}

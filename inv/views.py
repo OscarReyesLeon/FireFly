@@ -376,6 +376,14 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
             qs = qs.filter(uc=user)
         return qs
 
+class PedidoViewXR(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+
+
 class PedidoViewAll(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/prducto_list.html"
