@@ -9,7 +9,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewAll, PedidoEdit, pedido_aprobado, pedido_rechazado, pedido_comprando, pedido_reaut, pedido_stock,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoEdit, pedido_aprobado, pedido_rechazado, pedido_comprando, pedido_reaut, pedido_stock,\
     PuestoView, PuestoNew, PuestoEdit,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, EmpresaNew, EmpresaEdit ,EquipoForm, \
@@ -48,7 +48,7 @@ urlpatterns = [
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
     path('pedidos/',PedidoView.as_view(), name="pedido_list"),
-    path('pedidos2/',PedidoViewAll.as_view(), name="pedido_list_all"),
+    path('pedidosf/',PedidoViewF.as_view(), name="pedido_list_f"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
     path('pedidos/edit/<int:pk>',PedidoEdit.as_view(), name="pedido_edit"),
     path('pedidos/aprobado/<int:id>',pedido_aprobado, name="pedido_aprobado"),

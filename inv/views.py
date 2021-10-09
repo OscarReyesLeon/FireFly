@@ -359,6 +359,23 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
+class PedidoViewF(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        #print(user, "usuario")
+        qs = super().get_queryset()
+        for q in qs:
+            print(q.uc,q.id) 
+
+        if not user.is_superuser:
+            qs = qs.filter(uc=user)
+        return qs
+
 class PedidoViewAll(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/prducto_list.html"
@@ -371,7 +388,7 @@ class PedidoNew(SuccessMessageMixin,SinPrivilegios,
     template_name="inv/pedido_form.html"
     context_object_name = 'obj'
     form_class=PedidoForm
-    success_url= reverse_lazy("inv:pedido_list")
+    success_url= reverse_lazy("inv:pedido_list_f")
     success_message="Pedido Creado"
     permission_required="inv.add_pedido"
 
