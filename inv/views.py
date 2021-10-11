@@ -367,22 +367,64 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
-        #print(user, "usuario")
         qs = super().get_queryset()
-        for q in qs:
-            print(q.uc,q.id) 
-
-        if not user.is_superuser:
-            qs = qs.filter(uc=user)
+        qs = qs.filter(uc=user)
         return qs
 
-class PedidoViewXR(SinPrivilegios, generic.ListView):
+class PedidoViewF1(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/prducto_list.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
+    def get_queryset(self):
+        user = self.request.user
+        qs = Pedido.objects.filter(indentificador_estado=1)
+        return qs
 
+class PedidoViewF2(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Pedido.objects.filter(indentificador_estado=2)
+        return qs
+
+class PedidoViewF3(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Pedido.objects.filter(indentificador_estado=3)
+        return qs
+
+class PedidoViewF4(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Pedido.objects.filter(indentificador_estado=4)
+        return qs
+
+class PedidoViewF5(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/prducto_list.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Pedido.objects.filter(indentificador_estado=5)
+        return qs
 
 class PedidoViewAll(SinPrivilegios, generic.ListView):
     model = Pedido
@@ -418,7 +460,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
     template_name="inv/pedido_form.html"
     context_object_name = 'obj'
     form_class=PedidoForm
-    success_url= reverse_lazy("inv:pedido_list")
+    success_url= reverse_lazy("inv:pedido_list_f2")
     success_message="Pedido Editado"
     permission_required="inv.change_pedido"
 
@@ -445,7 +487,7 @@ def pedido_aprobado(request, id):
     template_name="inv/pedidos_brinco.html"
 
     if not pedi:
-        return redirect("inv:pedido_list")
+        return redirect("inv:pedido_list_f1")
     
     if request.method=='GET':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
@@ -454,7 +496,7 @@ def pedido_aprobado(request, id):
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
             pedi.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f1")
         else:
             return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     if request.method=='POST':
@@ -464,7 +506,7 @@ def pedido_aprobado(request, id):
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
             pedi.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f1")
         else:
             return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     return render(request,template_name,contexto)
@@ -477,7 +519,7 @@ def pedido_rechazado(request, id):
     template_name="inv/pedidos_brinco.html"
 
     if not pedi:
-        return redirect("inv:pedido_list")
+        return redirect("inv:pedido_list_f1")
     
     if request.method=='GET':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
@@ -486,7 +528,7 @@ def pedido_rechazado(request, id):
             pedi.status='Rechazo'
             pedi.indentificador_estado='5'
             pedi.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f1")
         else:
             return HttpResponse("el pedido ya fue autorizado")
     
@@ -497,7 +539,7 @@ def pedido_rechazado(request, id):
             pedi.status='Rechazo'
             pedi.indentificador_estado='5'
             pedi.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f1")
         else:
             return HttpResponse("el pedido ya fue autorizado")
     return render(request,template_name,contexto)
@@ -510,7 +552,7 @@ def pedido_comprando(request, id):
     template_name="inv/pedidos_brinco.html"
 
     if not pede:
-        return redirect("inv:pedido_list")
+        return redirect("inv:pedido_list_f3")
     
     if request.method=='GET':
         if pede.status2=='Si' and pede.status=='Pendiente':
@@ -518,7 +560,7 @@ def pedido_comprando(request, id):
             pede.status='en Proveedor'
             pede.indentificador_estado='4'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f3")
         else:
             return HttpResponse("el articulo no está aprobado o ya está terminado")
     
@@ -528,7 +570,7 @@ def pedido_comprando(request, id):
             pede.status='en Proveedor'
             pede.indentificador_estado='4'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f3")
         else:
             return HttpResponse("el articulo no está aprobado o ya está terminado")
     return render(request,template_name,contexto)
@@ -541,7 +583,7 @@ def pedido_entregado(request, id):
     template_name="inv/pedidos_brinco.html"
 
     if not pede:
-        return redirect("inv:pedido_list")
+        return redirect("inv:pedido_list_f4")
     
     if request.method=='GET':
         if pede.status=='en Proveedor' and pede.status2=='Si':
@@ -549,7 +591,7 @@ def pedido_entregado(request, id):
             pede.status='Fin'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f4")
         else:
             return HttpResponse("el pedido aun no está en atención o ya está terminado")
     
@@ -559,7 +601,7 @@ def pedido_entregado(request, id):
             pede.status='Fin'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f4")
         else:
             return HttpResponse("el pedido aun no está en atención o ya está terminado")
     return render(request,template_name,contexto)
@@ -573,7 +615,7 @@ def pedido_reaut(request, id):
     template_name="inv/pedidos_brinco.html"
 
     if not pede:
-        return redirect("inv:pedido_list")
+        return redirect("inv:pedido_list_f2")
     
     if request.method=='GET':
         if pede.precio_uni==0:
@@ -584,7 +626,7 @@ def pedido_reaut(request, id):
             pede.status='Revisado'
             pede.indentificador_estado='1'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("no se puede mandar a autorizar")
     
@@ -597,7 +639,7 @@ def pedido_reaut(request, id):
             pede.status='Revisado'
             pede.indentificador_estado='1'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("no se puede mandar a autorizar")
 
@@ -622,7 +664,7 @@ def pedido_stock(request, id):
             pede.status='Stock'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list")
+            return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("Esta opción no está disponible")
     
