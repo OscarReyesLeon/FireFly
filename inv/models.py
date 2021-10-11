@@ -141,6 +141,13 @@ class Pedido(ClaseModelo):
     fecha_rechazo = models.CharField(max_length=200,null=True,blank=True)
     folio_ingreso = models.CharField(max_length=20, default='--')
     indentificador_estado = models.CharField(max_length=20, default='2')
+    @property
+    def dias(self):
+        today = date.today()
+        dias = today.year - self.fecha_requerido.year - \
+            ((today.month, today.day) < \
+                (self.fecha_requerido.month, self.fecha_requerido.day))
+        return dias
 
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
