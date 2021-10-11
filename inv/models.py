@@ -3,8 +3,6 @@ from django.db.models.deletion import SET_NULL
 
 from bases.models import ClaseModelo
 
-from datetime import timezone
-
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Equipo(ClaseModelo):
