@@ -141,6 +141,8 @@ class Pedido(ClaseModelo):
     fecha_rechazo = models.CharField(max_length=200,null=True,blank=True)
     folio_ingreso = models.CharField(max_length=20, default='--')
     indentificador_estado = models.CharField(max_length=20, default='2')
+    #Apunte consulta
+    # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
 
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
