@@ -412,7 +412,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
-        qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:1000]
+        qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF5(SinPrivilegios, generic.ListView):
