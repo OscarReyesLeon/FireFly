@@ -485,7 +485,9 @@ def pedido_aprobado(request, id):
         return redirect("inv:pedido_list_f1")
     
     if request.method=='GET':
-        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado' or \
+            pedi.status2=='No' and pedi.status=='Rechazo':
+
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='Si'
             pedi.status='Pendiente'

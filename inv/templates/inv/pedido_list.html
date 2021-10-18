@@ -65,7 +65,7 @@
             {% if perms.inv.change_producto and item.indentificador_estado == '2' %}
             <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
-            {% if perms.inv.view_autoriza and item.indentificador_estado == '1' %}
+            {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
             <a href="{% url 'inv:pedido_aprobado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
             {% if perms.inv.view_autoriza and item.indentificador_estado == '1' %}
