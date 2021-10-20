@@ -127,7 +127,7 @@ class Pedido(ClaseModelo):
     comentario = models.CharField(max_length=200,null=True,blank=True)
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, default='X-Revisar')
-    status2 = models.CharField(max_length=20, default='Proximo')
+    status2 = models.CharField(max_length=20, default='Prox')
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True,blank=True)
     articulo = models.CharField(max_length=35)
