@@ -371,7 +371,7 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user)
+        qs = qs.filter(uc=user).order_by('-id')[:200]
         return qs
 
 class PedidoViewF1(SinPrivilegios, generic.ListView):
