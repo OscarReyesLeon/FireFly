@@ -355,13 +355,16 @@ def producto_inactivar(request, id):
 
 class PedidoView(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_inverso.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
+    def get_queryset(self):
+        qs = Pedido.objects.order_by('-id')[:20000]
+        return qs
 
 class PedidoViewF(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_inverso.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -378,7 +381,7 @@ class PedidoViewF1(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:1000]
+        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
@@ -388,7 +391,7 @@ class PedidoViewF2(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:1000]
+        qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF3(SinPrivilegios, generic.ListView):
@@ -398,7 +401,7 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:1000]
+        qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF4(SinPrivilegios, generic.ListView):
@@ -413,17 +416,17 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
 
 class PedidoViewF5(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_inverso.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=5).order_by('-id')[:1000]
+        qs = Pedido.objects.filter(indentificador_estado=5).order_by('-id')[:2000]
         return qs
 
 class PedidoViewAll(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_inverso.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
