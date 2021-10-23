@@ -364,7 +364,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
 
 class PedidoViewF(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/pedido_list_inverso.html"
+    template_name = "inv/pedido_list_f.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -376,7 +376,7 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
 
 class PedidoViewF1(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_f1.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -386,7 +386,7 @@ class PedidoViewF1(SinPrivilegios, generic.ListView):
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -396,7 +396,7 @@ class PedidoViewF2(SinPrivilegios, generic.ListView):
 
 class PedidoViewF3(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_f3.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -406,7 +406,7 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
 
 class PedidoViewF4(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_f4.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
@@ -416,7 +416,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
 
 class PedidoViewF5(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/pedido_list_inverso.html"
+    template_name = "inv/pedido_list_f5.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
