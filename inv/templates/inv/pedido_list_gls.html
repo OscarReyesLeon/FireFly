@@ -35,10 +35,10 @@
       {% endif %}
       <a href="{% url 'inv:pedido_list' %}" class="btn btn-light" role="button"></i>Todo</a>
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_als' %}" class="btn btn-primary" role="button"></i>ALS</a>
+      <a href="{% url 'inv:pedido_list_als' %}" class="btn btn-info" role="button"></i>ALS</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_gls' %}" class="btn btn-info" role="button"></i>GLS</a>
+      <a href="{% url 'inv:pedido_list_gls' %}" class="btn btn-primary" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_mls' %}" class="btn btn-info" role="button"></i>MLS</a>
@@ -59,7 +59,6 @@
         <th>Fecha</th>
         <th class="all">Acciones</th>
         <th>Total sin IVA</th>
-        <th>io</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -95,7 +94,6 @@
             {% endif %}
           </td>
           <td>{{item.preciotransaccion}}</td>
-          <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -108,7 +106,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 10, 'asc' ], [ 0, 'asc' ]],
+      "order": [ 0, 'asc' ],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

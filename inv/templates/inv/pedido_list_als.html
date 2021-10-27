@@ -59,7 +59,6 @@
         <th>Fecha</th>
         <th class="all">Acciones</th>
         <th>Total sin IVA</th>
-        <th>io</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -95,7 +94,6 @@
             {% endif %}
           </td>
           <td>{{item.preciotransaccion}}</td>
-          <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -108,7 +106,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 9, 'asc' ], [ 0, 'asc' ]],
+      "order": [ 0, 'asc' ],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {
