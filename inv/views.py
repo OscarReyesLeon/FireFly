@@ -479,7 +479,6 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
     context_object_name = 'obj'
     form_class=PedidoForm
     success_url= reverse_lazy("inv:pedido_list_f2")
-    success_message="Pedido Editado"
     permission_required="inv.change_pedido"
 
     def form_valid(self, form):
