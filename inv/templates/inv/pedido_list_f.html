@@ -54,14 +54,13 @@
         <th>ID</th>
         <th>PA</th>
         <th>Aut</th>
-        <th>Solicitante</th>
-        <th>Articulo</th>
       	<th>Cantidad</th>
+        <th>Articulo</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
         <th>Compras</th>
+        <th>Status</th>
         <th class="all">Acciones</th>
-        <th>io</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -69,12 +68,12 @@
           <td>{{item.id}}</td>
           <td>{{item.autpor}}</td>
           <td>{{item.status2}}</td>
-          <td>{{item.uc}}</td>
-          <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
+          <td>{{item.articulo}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}
           <td>{{item.status}}</td>
+          <td>{{item.indentificador_estado}}</td>
           <td>
             {% if perms.inv.view_autoriza or perms.inv.change_producto%}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
@@ -98,7 +97,6 @@
             <a href="{% url 'inv:pedido_stock' item.id %}" class="btn btn-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
             {% endif %}
           </td>
-          <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -111,7 +109,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 10, 'asc' ], [ 0, 'desc' ]],
+      "order": [[ 8, 'asc' ], [ 0, 'desc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

@@ -52,7 +52,6 @@
       <thead>
         <th>ID</th>
         <th>PA</th>
-        <th>Aut</th>
         <th>Solicitante</th>
         <th>Articulo</th>
       	<th>Cantidad</th>
@@ -61,19 +60,20 @@
         <th>Compras</th>
         <th class="all">Acciones</th>
         <th>io</th>
+        <th>Comentarios</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
           <td>{{item.autpor}}</td>
-          <td>{{item.status2}}</td>
           <td>{{item.uc}}</td>
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}
           <td>{{item.status}}</td>
+          <td>{{item.comentarios}}</td>
           <td>
             {% if perms.inv.view_autoriza or perms.inv.change_producto%}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
@@ -110,7 +110,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 10, 'asc' ], [ 0, 'asc' ]],
+      "order": [[ 9, 'asc' ], [ 0, 'asc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {
