@@ -48,8 +48,9 @@
         <th>Compras</th>
         <th>Proceso</th>
         <th>F-Registro</th>
+        <th>F-Cotizado</th>
         <th>F-Aprobado</th>
-        <th>F-Requerido</th>
+        <th>F-Proveedor</th>
         <th>F-Finalizado</th>
         <th>F-Rechazo</th>    
         <th class="all">ReAut</th>
@@ -71,8 +72,9 @@
           <td>{{item.precio_uni}}</td>
           <td>{{item.status}}</td>
           <td>{{item.proceso}}</td>
-          <td>{{item.fc|date:"d/m/y"}}
+          <td>{{item.fc|date:"d/m/y H:i"}}
           <td>{{item.fecha_aprobado}}</td>
+          <td>{{item.fecha_recotizado}}</td>
           <td>{{item.fecha_requerido}}</td>
           <td>{{item.fecha_finalizado}}</td>
           <td>{{item.fecha_rechazo}}</td>
