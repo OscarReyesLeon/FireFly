@@ -33,7 +33,7 @@
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_f5' %}" class="btn btn-info" role="button"></i>Terminado</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" class="btn btn-dark" role="button"></i>Todo</a>
+      <a href="{% url 'inv:pedido_list' %}" class="btn btn-light" role="button"></i>Todo</a>
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_als' %}" class="btn btn-info" role="button"></i>ALS</a>
       {% endif %}
@@ -41,12 +41,12 @@
       <a href="{% url 'inv:pedido_list_gls' %}" class="btn btn-info" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_mls' %}" class="btn btn-info" role="button"></i>MLS</a>
+      <a href="{% url 'inv:pedido_list_mls' %}" class="btn btn-primary" role="button"></i>MLS</a>
       {% endif %}
     </div>
 
     {% if not obj %}
-    <div class="alert alert-info">No Pedidos</div>
+    <div class="alert alert-info">Marco no tiene pendientes por autorizar</div>
     {% endif %}
     <table class="table table-striped table-hover dt-responsive nowrap compact" style="width:100%">
       <thead>
@@ -56,21 +56,11 @@
         <th>Solicitante</th>
         <th>Articulo</th>
       	<th>Cantidad</th>
-        <th>UM</th>
-        <th>div</th>
-        <th>$</th>
+        <th>$ Unitario</th>
+        <th>Fecha</th>
         <th>Compras</th>
-        <th>Proceso</th>
-        <th>F-Registro</th>
-        <th>F-Cotizado</th>
-        <th>F-Aprobado</th>
-        <th>F-Proveedor</th>
-        <th>F-Finalizado</th>
-        <th>F-Rechazo</th>    
-        <th class="all">ReAut</th>
-        <th>Motivo</th>    
-        <th>Comentario</th>    
-        <th>IO</th>
+        <th class="all">Acciones</th>
+        <th>io</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -80,25 +70,33 @@
           <td>{{item.status2}}</td>
           <td>{{item.uc}}</td>
           <td>{{item.articulo}}</td>
-      	  <td>{{item.cantidad}}</td>
-          <td>{{item.UniMed}}</td>
-          <td>{{item.divisa}}</td>
-          <td>{{item.precio_uni}}</td>
+      	  <td>{{item.cantidad}} {{item.UniMed}}</td>
+          <td>{{item.divisa}}$ {{item.precio_uni}}</td>
+          <td>{{item.fc|date:"d/m/y"}}
           <td>{{item.status}}</td>
-          <td>{{item.proceso}}</td>
-          <td>{{item.fc|date:"d-m-y H:i"}}
-          <td>{{item.fecha_recotizado}}</td>
-          <td>{{item.fecha_aprobado}}</td>
-          <td>{{item.fecha_requerido}}</td>
-          <td>{{item.fecha_finalizado}}</td>
-          <td>{{item.fecha_rechazo}}</td>
           <td>
+            {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
+            {% endif %}
+            {% if perms.inv.change_producto and item.indentificador_estado == '2' %}
+            <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
             {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
-            <a href="{% url 'inv:pedido_aprobado_als' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            <a href="{% url 'inv:pedido_aprobado_mls' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            {% endif %}
+            {% if perms.inv.view_autoriza and item.indentificador_estado == '1' %}
+            <a href="{% url 'inv:pedido_rechazado_mls' item.id %}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
+            {% endif %}
+            {% if perms.inv.change_producto and item.indentificador_estado == '3' %}
+            <a href="{% url 'inv:pedido_comprando' item.id %}" class="btn btn-info btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            {% endif %}
+            {% if perms.inv.change_producto and item.indentificador_estado == '4' %}
+            <a href="{% url 'inv:pedido_entregado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+            {% if perms.inv.change_producto and item.indentificador_estado == '2' %}
+            <a href="{% url 'inv:pedido_stock' item.id %}" class="btn btn-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
             {% endif %}
           </td>
-          <td>{{item.motivo_peticion}}</td>
-          <td>{{item.comentario}}</td>
           <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
@@ -112,7 +110,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [[ 19, 'asc' ], [ 0, 'desc' ]],
+      "order": [[ 10, 'asc' ], [ 0, 'asc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

@@ -9,7 +9,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoViewF1, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_aprobado, pedido_rechazado, pedido_comprando, pedido_reaut, pedido_stock,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoViewALS, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock,\
     PuestoView, PuestoNew, PuestoEdit,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, EmpresaNew, EmpresaEdit ,EquipoForm, \
@@ -49,15 +49,21 @@ urlpatterns = [
 
     path('pedidos/',PedidoView.as_view(), name="pedido_list"),
     path('pedidosf/',PedidoViewF.as_view(), name="pedido_list_f"),
-    path('pedidosf1/',PedidoViewF1.as_view(), name="pedido_list_f1"),
+    path('pedidosals/',PedidoViewALS.as_view(), name="pedido_list_als"),
+    path('pedidosgls/',PedidoViewGLS.as_view(), name="pedido_list_gls"),
+    path('pedidosmls/',PedidoViewMLS.as_view(), name="pedido_list_mls"),
     path('pedidosf2/',PedidoViewF2.as_view(), name="pedido_list_f2"),
     path('pedidosf3/',PedidoViewF3.as_view(), name="pedido_list_f3"),
     path('pedidosf4/',PedidoViewF4.as_view(), name="pedido_list_f4"),
     path('pedidosf5/',PedidoViewF5.as_view(), name="pedido_list_f5"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
     path('pedidos/edit/<int:pk>',PedidoEdit.as_view(), name="pedido_edit"),
-    path('pedidos/aprobado/<int:id>',pedido_aprobado, name="pedido_aprobado"),
-    path('pedidos/rechazado/<int:id>',pedido_rechazado, name="pedido_rechazado"),
+    path('pedidos/aprobadoals/<int:id>',pedido_aprobado_als, name="pedido_aprobado_als"),
+    path('pedidos/rechazadoals/<int:id>',pedido_rechazado_als, name="pedido_rechazado_als"),
+    path('pedidos/aprobadogls/<int:id>',pedido_aprobado_gls, name="pedido_aprobado_gls"),
+    path('pedidos/rechazadogls/<int:id>',pedido_rechazado_gls, name="pedido_rechazado_gls"),
+    path('pedidos/aprobadomls/<int:id>',pedido_aprobado_mls, name="pedido_aprobado_mls"),
+    path('pedidos/rechazadomls/<int:id>',pedido_rechazado_mls, name="pedido_rechazado_mls"),
     path('pedidos/comprando/<int:id>',pedido_comprando, name="pedido_comprando"),
     path('pedidos/entregado/<int:id>',pedido_entregado, name="pedido_entregado"),
     path('pedidos/reaut/<int:id>',pedido_reaut, name="pedido_reaut"),

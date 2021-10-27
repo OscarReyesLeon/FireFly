@@ -374,14 +374,34 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
         qs = qs.filter(uc=user).order_by('-id')[:200]
         return qs
 
-class PedidoViewF1(SinPrivilegios, generic.ListView):
+class PedidoViewALS(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/pedido_list_f1.html"
+    template_name = "inv/pedido_list_als.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000]
+        return qs
+
+class PedidoViewGLS(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_gls.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:2000]
+        return qs
+
+class PedidoViewMLS(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_mls.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
@@ -479,13 +499,13 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 
 @login_required(login_url="/login/")
 @permission_required("inv.view_autoriza",login_url="/login/")
-def pedido_aprobado(request, id):
+def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
     if not pedi:
-        return redirect("inv:pedido_list_f1")
+        return redirect("inv:pedido_list_als")
     
     if request.method=='GET':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado' or \
@@ -496,7 +516,7 @@ def pedido_aprobado(request, id):
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
             pedi.save()
-            return redirect("inv:pedido_list_f1")
+            return redirect("inv:pedido_list_als")
         else:
             return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     if request.method=='POST':
@@ -506,20 +526,21 @@ def pedido_aprobado(request, id):
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
             pedi.save()
-            return redirect("inv:pedido_list_f1")
+            return redirect("inv:pedido_list_als")
         else:
             return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     return render(request,template_name,contexto)
 
+
 @login_required(login_url="/login/")
 @permission_required("inv.view_autoriza",login_url="/login/")
-def pedido_rechazado(request, id):
+def pedido_rechazado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
     if not pedi:
-        return redirect("inv:pedido_list_f1")
+        return redirect("inv:pedido_list_als")
     
     if request.method=='GET':
         if pedi.status2=='Pendiente' and pedi.status=='Revisado':
@@ -528,7 +549,7 @@ def pedido_rechazado(request, id):
             pedi.status='Rechazo'
             pedi.indentificador_estado='5'
             pedi.save()
-            return redirect("inv:pedido_list_f1")
+            return redirect("inv:pedido_list_als")
         else:
             return HttpResponse("el pedido ya fue autorizado")
     
@@ -539,7 +560,143 @@ def pedido_rechazado(request, id):
             pedi.status='Rechazo'
             pedi.indentificador_estado='5'
             pedi.save()
-            return redirect("inv:pedido_list_f1")
+            return redirect("inv:pedido_list_als")
+        else:
+            return HttpResponse("el pedido ya fue autorizado")
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
+@permission_required("inv.view_autoriza",login_url="/login/")
+def pedido_aprobado_gls(request, id):
+    pedi = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pedi:
+        return redirect("inv:pedido_list_gls")
+    
+    if request.method=='GET':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado' or \
+            pedi.status2=='No' and pedi.status=='Rechazo':
+
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
+            pedi.save()
+            return redirect("inv:pedido_list_gls")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+    if request.method=='POST':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
+            pedi.save()
+            return redirect("inv:pedido_list_gls")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+    return render(request,template_name,contexto)
+
+
+@login_required(login_url="/login/")
+@permission_required("inv.view_autoriza",login_url="/login/")
+def pedido_rechazado_gls(request, id):
+    pedi = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pedi:
+        return redirect("inv:pedido_list_gls")
+    
+    if request.method=='GET':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Rechazo'
+            pedi.indentificador_estado='5'
+            pedi.save()
+            return redirect("inv:pedido_list_gls")
+        else:
+            return HttpResponse("el pedido ya fue autorizado")
+    
+    if request.method=='POST':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Rechazo'
+            pedi.indentificador_estado='5'
+            pedi.save()
+            return redirect("inv:pedido_list_gls")
+        else:
+            return HttpResponse("el pedido ya fue autorizado")
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
+@permission_required("inv.view_autoriza",login_url="/login/")
+def pedido_aprobado_mls(request, id):
+    pedi = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pedi:
+        return redirect("inv:pedido_list_mls")
+    
+    if request.method=='GET':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado' or \
+            pedi.status2=='No' and pedi.status=='Rechazo':
+
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
+            pedi.save()
+            return redirect("inv:pedido_list_mls")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+    if request.method=='POST':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='Si'
+            pedi.status='Pendiente'
+            pedi.indentificador_estado='3'
+            pedi.save()
+            return redirect("inv:pedido_list_mls")
+        else:
+            return HttpResponse("el pedido no esta en condición de ser re-autorizado")
+    return render(request,template_name,contexto)
+
+
+@login_required(login_url="/login/")
+@permission_required("inv.view_autoriza",login_url="/login/")
+def pedido_rechazado_mls(request, id):
+    pedi = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pedi:
+        return redirect("inv:pedido_list_mls")
+    
+    if request.method=='GET':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Rechazo'
+            pedi.indentificador_estado='5'
+            pedi.save()
+            return redirect("inv:pedido_list_mls")
+        else:
+            return HttpResponse("el pedido ya fue autorizado")
+    
+    if request.method=='POST':
+        if pedi.status2=='Pendiente' and pedi.status=='Revisado':
+            pedi.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pedi.status2='No'
+            pedi.status='Rechazo'
+            pedi.indentificador_estado='5'
+            pedi.save()
+            return redirect("inv:pedido_list_mls")
         else:
             return HttpResponse("el pedido ya fue autorizado")
     return render(request,template_name,contexto)
