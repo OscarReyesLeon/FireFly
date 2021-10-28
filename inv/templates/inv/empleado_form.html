@@ -11,25 +11,94 @@
             <div class="row no-gutters align-items-center">
             <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    {% if obj %} Editar {% else %} Nueva {% endif %} Empleado
+                    {% if obj %} Editar {% else %} Registrar {% endif %} Empleado
                 </div>
                 <div class="dropdown-divider"></div>
                 {% csrf_token %}
                 <div class="row">
-                    <!--<div class="col-10">
-                        <div class="input-group">
-                            {{ form.descripcion }}
-                        </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.nombre.label}}</div>
+                        <div class="col-md-6">{{form.nombre}}</div>
                     </div>
-                    <div class="col-2">
-                        <div class="input-group">
-                            <label for="id_estado">Estado</label>-->
-                            <!-- <input type="checkbox" name="estado" class="form-control" id="id_estado" {% if obj.estado %} checked {% endif %} > -->
-                            
-                        <!--</div>
-                    </div>        -->
-                    {{ form.as_p }}
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.apellido_paterno.label}}</div>
+                        <div class="col-md-6">{{form.apellido_paterno}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.apellido_materno.label}}</div>
+                        <div class="col-md-6">{{form.apellido_materno}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.edad.label}}</div>
+                        <div class="col-md-6">{{form.edad}}</div>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.rfc.label}}</div>
+                        <div class="col-md-6">{{form.rfc}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.nss.label}}</div>
+                        <div class="col-md-6">{{form.nss}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.telefono_fijo.label}}</div>
+                        <div class="col-md-6">{{form.telefono_fijo}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.telefono_celular.label}}</div>
+                        <div class="col-md-6">{{form.telefono_celular}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.email.label}}</div>
+                        <div class="col-md-6">{{form.email}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.rfc.label}}</div>
+                        <div class="col-md-6">{{form.rfc}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.nss.label}}</div>
+                        <div class="col-md-6">{{form.nss}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.contacto_emergencia.label}}</div>
+                        <div class="col-md-6">{{form.contacto_emergencia}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.telefono_emergencia.label}}</div>
+                        <div class="col-md-6">{{form.telefono_emergencia}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.empresa.label}}</div>
+                        <div class="col-md-6">{{form.empresa}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.nominaBanco.label}}</div>
+                        <div class="col-md-6">{{form.nominaBanco}}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.cuenta.label}}</div>
+                        <div class="col-md-6">{{form.cuenta}}</div>
+                    </div>                   
+                    <div class="col-md-6">
+                        <div class="col-md-6">{{form.clabe_banco.label}}</div>
+                        <div class="col-md-6">{{form.clabe_banco}}</div>
+                    </div>
+                </div>
+                
+<!--                <div class="row">
+                    {{ form.as_p }}
+                </div>-->
                 <div class="dropdown-divider"></div>
                 <div class="row">
                     <div class="col">

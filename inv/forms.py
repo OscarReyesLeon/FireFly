@@ -160,7 +160,7 @@ class EmpleadoForm(forms.ModelForm):
     class Meta:
         model = Empleado
         exclude = ['um', 'fm', 'uc', 'fc']
-        labels = {'nombre': "nombres apellidos completos del empleado"}
+        labels = {'nombre': "Nombres"}
         widget = {'nombre': forms.TextInput()}
 
     def __init__(self, *args, **kwargs):
