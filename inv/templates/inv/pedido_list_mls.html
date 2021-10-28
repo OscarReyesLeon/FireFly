@@ -94,7 +94,7 @@
             <a href="{% url 'inv:pedido_stock' item.id %}" class="btn btn-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
             {% endif %}
           </td>
-          <td>{{item.divisa}}$ {{item.preciotransaccion}}</td>
+          <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>
           <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
