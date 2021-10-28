@@ -391,7 +391,7 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:2000]
         return qs
 
 class PedidoViewMLS(SinPrivilegios, generic.ListView):
@@ -401,7 +401,7 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:2000]
         return qs
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
