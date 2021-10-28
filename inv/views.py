@@ -803,6 +803,45 @@ def pedido_reaut(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
+@permission_required("inv.new_producto",login_url="/login/")
+def pedido_scancela(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pede:
+        return redirect("inv:pedido_list_f2")
+    
+    if request.method=='GET':
+        if pede.precio_uni==0:
+            return HttpResponse("no tiene precio ingresado")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='sc'
+            pede.status='S-Cancela'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f")
+        else:
+            return HttpResponse("El pedido ya fue revisado por compras y no lo puedes cancelar desde aquí. comunicate con compras")
+    
+    if request.method=='POST':
+        if pede.precio_uni==0:
+            return HttpResponse("no tiene precio ingresado")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='SC'
+            pede.status='S-Cancela'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f")
+        else:
+            return HttpResponse("El pedido ya fue revisado y no lo puedes cancelar. comunicate con compras")
+
+
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
 @permission_required("inv.change_producto",login_url="/login/")
 def pedido_stock(request, id):
     pede = Pedido.objects.filter(pk=id).first()
