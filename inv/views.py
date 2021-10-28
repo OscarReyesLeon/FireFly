@@ -803,7 +803,7 @@ def pedido_reaut(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.new_producto",login_url="/login/")
+@permission_required("inv.add_pedido",login_url="/login/")
 def pedido_scancela(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
