@@ -12,9 +12,11 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoViewALS, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock,\
     PuestoView, PuestoNew, PuestoEdit,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
-    ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, EmpresaNew, EmpresaEdit ,EquipoForm, \
-    EmpresaView, EmpresaNew, EmpresaEdit
-    
+    ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
+    EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
+    EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, \
+    PuestoView, PuestoNew, PuestoEdit, \
+    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit
 
 urlpatterns = [
     path('equipos/',EquipoView.as_view(), name='equipo_list'),
@@ -94,5 +96,29 @@ urlpatterns = [
     path('empresa/',EmpresaView.as_view(), name='empresa_list'),
     path('empresa/new',EmpresaNew.as_view(), name='empresa_new'),
     path('empresa/edit/<int:pk>',EmpresaEdit.as_view(), name='empresa_edit'),
+
+    path('genero/', GeneroView.as_view(), name='genero_list'),
+    path('genero/new', GeneroNew.as_view(), name='genero_new'),
+    path('genero/edit/<int:pk>', GeneroEdit.as_view(), name='genero_edit'),
+
+    path('estudios/', EstudiosView.as_view(), name='estudios_list'),
+    path('estudios/new', EstudiosNew.as_view(), name='estudios_new'),
+    path('estudios/edit/<int:pk>', EstudiosEdit.as_view(), name='estudios_edit'),
+
+    path('ecivil/', EcivilView.as_view(), name='ecivil_list'),
+    path('ecivil/new', EcivilNew.as_view(), name='ecivil_new'),
+    path('ecivil/edit/<int:pk>', EcivilEdit.as_view(), name='ecivil_edit'),
+
+    path('departamento/', DepartamentoView.as_view(), name='departamento_list'),
+    path('departamento/new', DepartamentoNew.as_view(), name='departamento_new'),
+    path('departamento/edit/<int:pk>', DepartamentoEdit.as_view(), name='departamento_edit'),
+
+    path('puesto/', PuestoView.as_view(), name='puesto_list'),
+    path('puesto/new', PuestoNew.as_view(), name='puesto_new'),
+    path('puesto/edit/<int:pk>', PuestoEdit.as_view(), name='puesto_edit'),
+
+    path('pcontacto/', ParentescocontactoView.as_view(), name='parentescocontacto_list'),
+    path('pcontacto/new', ParentescocontactoNew.as_view(), name='parentescocontacto_new'),
+    path('pcontacto/edit/<int:pk>', ParentescocontactoEdit.as_view(), name='parentescocontacto_edit'),
 
 ]

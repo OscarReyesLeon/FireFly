@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Banco, Computadora, Empleado, Equipo, Herramienta, Proceso, Categoria, Puesto, \
-    UnidadMedida, Producto, Pedido, Autoriza, Computadora, Empresa
+    UnidadMedida, Producto, Pedido, Autoriza, Computadora, Empresa, Genero, Estudios, Departamento
 
 
 class EquipoForm(forms.ModelForm):
@@ -213,3 +213,92 @@ class EmpresaForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
+class GeneroForm(forms.ModelForm):
+    class Meta:
+        model = Genero
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Descripción del genero",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class EstudiosForm(forms.ModelForm):
+    class Meta:
+        model = Estudios
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Nivel estudios",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class EcivilForm(forms.ModelForm):
+    class Meta:
+        model = Estudios
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Estado civil",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class ParentescocontactoForm(forms.ModelForm):
+    class Meta:
+        model = Estudios
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Parentesco del familiar",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class DepartamentoForm(forms.ModelForm):
+    class Meta:
+        model = Departamento
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Departamento",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class PuestoForm(forms.ModelForm):
+    class Meta:
+        model = Estudios
+        fields = ['descripcion', 'estado']
+        labels = {'descripcion': "Puesto o posición",
+                  "estado": "Estado"}
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })

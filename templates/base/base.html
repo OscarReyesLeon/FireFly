@@ -75,8 +75,8 @@
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item {% if cat_url in request.path or s_cat_url in request.path  %} active {% endif %}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Catálogos</span>
+          <i class="fas fa-fw fa-rocket"></i>
+          <span>Movimientos</span>
         </a>
         <div id="collapseTwo" class="collapse {% if cat_url in request.path or s_cat_url in request.path %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -112,6 +112,12 @@
             {% endif %}
             {% if perms.inv.view_puesto %}
             <a class="collapse-item" href="{% url 'inv:puesto_list' %}">Puestos</a>
+            {% endif %}
+            {% if perms.inv.view_genero %}
+            <a class="collapse-item" href="{% url 'inv:genero_list' %}">Generos</a>
+            {% endif %}
+            {% if perms.inv.view_estudios %}
+            <a class="collapse-item" href="{% url 'inv:genero_list' %}">Estudios</a>
             {% endif %}
             {% if perms.inv.view_empleado %}
             <a class="collapse-item" href="{% url 'inv:empleado_list' %}">Empleados</a>

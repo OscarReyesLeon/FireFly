@@ -10,11 +10,13 @@ from datetime import datetime
 
 
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
-    Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa
+    Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
+    Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto
 from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
-    UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, PuestoForm, \
+    UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
-    EmpresaForm
+    EmpresaForm, GeneroForm, EstudiosForm, \
+    EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm
 
 from bases.views import SinPrivilegios
 
@@ -971,6 +973,42 @@ class EmpleadoView(SinPrivilegios,\
     template_name = "inv/empleado_list.html"
     context_object_name = "obj"
 
+class ParentescocontactoNew(SuccessMessageMixin,SinPrivilegios,
+                   generic.CreateView):
+    model=Parentescocontacto
+    template_name="inv/parentescocontacto_form.html"
+    context_object_name = 'obj'
+    form_class=ParentescocontactoForm
+    success_url= reverse_lazy("inv:parentescocontacto_list")
+    success_message="Parentesco Creado"
+    permission_required="inv.add_parentescocontacto"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class ParentescocontactoEdit(SuccessMessageMixin,SinPrivilegios,
+                   generic.UpdateView):
+    model=Parentescocontacto
+    template_name="inv/puesto_parentescocontacto.html"
+    context_object_name = 'obj'
+    form_class=ParentescocontactoForm
+    success_url= reverse_lazy("inv:parentescocontacto_list")
+    success_message="Parentesco Editado"
+    permission_required="inv.change_parentescocontacto"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+class ParentescocontactoView(SinPrivilegios,\
+     generic.ListView):
+    permission_required = "inv.view_parentescocontacto"
+    model = Parentescocontacto
+    template_name = "inv/parentescocontacto_list.html"
+    context_object_name = "obj"
+
 
 class EmpleadoNew(SuccessMessageMixin,SinPrivilegios,
                    generic.CreateView):
@@ -1118,4 +1156,204 @@ class EmpresaEdit(SuccessMessageMixin,SinPrivilegios, \
         return super().form_valid(form)
 
 
-"""fin de la edición"""
+"""Genero"""
+
+
+class GeneroView(SinPrivilegios, \
+                  generic.ListView):
+    permission_required = "inv.view_genero"
+    model = Genero
+    template_name = "inv/genero_list.html"
+    context_object_name = "obj"
+
+
+class GeneroNew(SuccessMessageMixin, SinPrivilegios, \
+                 generic.CreateView):
+    permission_required = "inv.add_genero"
+    model = Genero
+    template_name = "inv/genero_form.html"
+    context_object_name = "obj"
+    form_class = GeneroForm
+    success_url = reverse_lazy("inv:genero_list")
+    success_message = "Genero registrado"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class GeneroEdit(SuccessMessageMixin, SinPrivilegios, \
+                  generic.UpdateView):
+    permission_required = "inv.change_genero"
+    model = Genero
+    template_name = "inv/genero_form.html"
+    context_object_name = "obj"
+    form_class = GeneroForm
+    success_url = reverse_lazy("inv:genero_list")
+    success_message = "Genero Actualizado"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+
+"""Estudios"""
+
+class EstudiosView(SinPrivilegios, \
+                  generic.ListView):
+    permission_required = "inv.view_estudios"
+    model = Estudios
+    template_name = "inv/estudios_list.html"
+    context_object_name = "obj"
+
+
+class EstudiosNew(SuccessMessageMixin, SinPrivilegios, \
+                 generic.CreateView):
+    permission_required = "inv.add_estudios"
+    model = Estudios
+    template_name = "inv/estudios_form.html"
+    context_object_name = "obj"
+    form_class = EstudiosForm
+    success_url = reverse_lazy("inv:estudios_list")
+    success_message = "Nivel escolar registrado"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class EstudiosEdit(SuccessMessageMixin, SinPrivilegios, \
+                  generic.UpdateView):
+    permission_required = "inv.change_estudios"
+    model = Genero
+    template_name = "inv/estudios_form.html"
+    context_object_name = "obj"
+    form_class = GeneroForm
+    success_url = reverse_lazy("inv:estudios_list")
+    success_message = "Nivel escolar Actualizado"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+"""Estudios Fin"""
+"""Ecivil"""
+
+class EcivilView(SinPrivilegios, \
+                  generic.ListView):
+    permission_required = "inv.view_ecivil"
+    model = Ecivil
+    template_name = "inv/ecivil_list.html"
+    context_object_name = "obj"
+
+
+class EcivilNew(SuccessMessageMixin, SinPrivilegios, \
+                 generic.CreateView):
+    permission_required = "inv.add_ecivil"
+    model = Ecivil
+    template_name = "inv/ecivil_form.html"
+    context_object_name = "obj"
+    form_class = EcivilForm
+    success_url = reverse_lazy("inv:ecivil_list")
+    success_message = "Estado Civil Registrado"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class EcivilEdit(SuccessMessageMixin, SinPrivilegios, \
+                  generic.UpdateView):
+    permission_required = "inv.change_ecivil"
+    model = Ecivil
+    template_name = "inv/ecivil_form.html"
+    context_object_name = "obj"
+    form_class = GeneroForm
+    success_url = reverse_lazy("inv:ecivil_list")
+    success_message = "Estado Civil Modificado"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+"""Ecivil Fin"""
+"""Departamento"""
+
+class DepartamentoView(SinPrivilegios, \
+                  generic.ListView):
+    permission_required = "inv.view_departamento"
+    model = Departamento
+    template_name = "inv/departamento_list.html"
+    context_object_name = "obj"
+
+
+class DepartamentoNew(SuccessMessageMixin, SinPrivilegios, \
+                 generic.CreateView):
+    permission_required = "inv.add_departamento"
+    model = Departamento
+    template_name = "inv/departamento_form.html"
+    context_object_name = "obj"
+    form_class = DepartamentoForm
+    success_url = reverse_lazy("inv:departamento_list")
+    success_message = "Departamento dado de alta"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class DepartamentoEdit(SuccessMessageMixin, SinPrivilegios, \
+                  generic.UpdateView):
+    permission_required = "inv.change_departamento"
+    model = Genero
+    template_name = "inv/departamento_form.html"
+    context_object_name = "obj"
+    form_class = DepartamentoForm
+    success_url = reverse_lazy("inv:departamento_list")
+    success_message = "departamento Actualizado"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+"""Departamento Fin"""
+"""Puesto"""
+
+class PuestoView(SinPrivilegios, \
+                  generic.ListView):
+    permission_required = "inv.view_puesto"
+    model = Estudios
+    template_name = "inv/puesto_list.html"
+    context_object_name = "obj"
+
+
+class PuestoNew(SuccessMessageMixin, SinPrivilegios, \
+                 generic.CreateView):
+    permission_required = "inv.add_puesto"
+    model = Estudios
+    template_name = "inv/puesto_form.html"
+    context_object_name = "obj"
+    form_class = EstudiosForm
+    success_url = reverse_lazy("inv:puesto_list")
+    success_message = "Puesto registrado"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class PuestoEdit(SuccessMessageMixin, SinPrivilegios, \
+                  generic.UpdateView):
+    permission_required = "inv.change_puesto"
+    model = Genero
+    template_name = "inv/puesto_form.html"
+    context_object_name = "obj"
+    form_class = GeneroForm
+    success_url = reverse_lazy("inv:puesto_list")
+    success_message = "puesto modificado"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+"""Puesto Fin"""

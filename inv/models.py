@@ -4,6 +4,7 @@ from bases.models import ClaseModelo
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 class Equipo(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -19,7 +20,7 @@ class Equipo(ClaseModelo):
         super(Equipo, self).save()
 
     class Meta:
-        verbose_name_plural= "Equipos"
+        verbose_name_plural = "Equipos"
 
 
 class Proceso(ClaseModelo):
@@ -30,15 +31,16 @@ class Proceso(ClaseModelo):
     )
 
     def __str__(self):
-        return '{}:{}'.format(self.equipo.descripcion,self.descripcion)
-    
+        return '{}:{}'.format(self.equipo.descripcion, self.descripcion)
+
     def save(self):
         self.descripcion = self.descripcion.upper()
         super(Proceso, self).save()
 
     class Meta:
-        verbose_name_plural= "Procesos"
-        unique_together = ('equipo','descripcion')
+        verbose_name_plural = "Procesos"
+        unique_together = ('equipo', 'descripcion')
+
 
 class Autoriza(ClaseModelo):
     descripcion = models.CharField(
@@ -55,7 +57,7 @@ class Autoriza(ClaseModelo):
         super(Autoriza, self).save()
 
     class Meta:
-        verbose_name_plural= "Autorizantes"
+        verbose_name_plural = "Autorizantes"
 
 
 class Categoria(ClaseModelo):
@@ -94,7 +96,6 @@ class UnidadMedida(ClaseModelo):
         verbose_name_plural = "Unidades de Medida"
 
 
-
 class Producto(ClaseModelo):
     codigo = models.CharField(
         max_length=200,
@@ -106,42 +107,44 @@ class Producto(ClaseModelo):
     existencia = models.FloatField(default=0)
     ultima_compra = models.DateField(null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
-    unidad_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, null=True,blank=True)
-    proceso = models.ForeignKey(Proceso, on_delete=models.PROTECT, null=True,blank=True)
-    foto = models.ImageField(upload_to="images/",null=True,blank=True)
+    unidad_medida = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT, null=True, blank=True)
+    proceso = models.ForeignKey(Proceso, on_delete=models.PROTECT, null=True, blank=True)
+    foto = models.ImageField(upload_to="images/", null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
-    
+
     def save(self):
         self.descripcion = self.descripcion.upper()
-        super(Producto,self).save()
-    
+        super(Producto, self).save()
+
     class Meta:
         verbose_name_plural = "Productos"
-        unique_together = ('codigo','codigo_barra')
+        unique_together = ('codigo', 'codigo_barra')
+
 
 class Pedido(ClaseModelo):
     cantidad = models.PositiveIntegerField()
-    comentario = models.CharField(max_length=200,null=True,blank=True)
+    comentario = models.CharField(max_length=200, null=True, blank=True)
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, default='X-Revisar')
     status2 = models.CharField(max_length=20, default='Proximo')
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-    preciotransaccion = models.FloatField(null=True,blank=True)
+    preciotransaccion = models.FloatField(null=True, blank=True)
     articulo = models.CharField(max_length=35)
     proceso = models.CharField(max_length=15)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
-    motivo_peticion = models.CharField(max_length=200,null=True,blank=True)
-    fecha_aprobado = models.CharField(max_length=200,null=True,blank=True)
-    fecha_requerido = models.CharField(max_length=200,null=True,blank=True)
-    fecha_recotizado = models.CharField(max_length=200,null=True,blank=True)
-    fecha_finalizado = models.CharField(max_length=200,null=True,blank=True)
-    fecha_rechazo = models.CharField(max_length=200,null=True,blank=True)
+    motivo_peticion = models.CharField(max_length=200, null=True, blank=True)
+    fecha_aprobado = models.CharField(max_length=200, null=True, blank=True)
+    fecha_requerido = models.CharField(max_length=200, null=True, blank=True)
+    fecha_recotizado = models.CharField(max_length=200, null=True, blank=True)
+    fecha_finalizado = models.CharField(max_length=200, null=True, blank=True)
+    fecha_rechazo = models.CharField(max_length=200, null=True, blank=True)
     folio_ingreso = models.CharField(max_length=20, default='--')
     divisa = models.CharField(max_length=3, default='mxn')
     indentificador_estado = models.CharField(max_length=20, default='2')
-    #Apunte consulta
+
+    # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
 
     def save(self):
@@ -167,7 +170,8 @@ class Banco(ClaseModelo):
         super(Banco, self).save()
 
     class Meta:
-        verbose_name_plural= "Bancos"
+        verbose_name_plural = "Bancos"
+
 
 class Puesto(ClaseModelo):
     descripcion = models.CharField(
@@ -186,6 +190,7 @@ class Puesto(ClaseModelo):
     class Meta:
         verbose_name_plural = "Puestos"
 
+
 class Empresa(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
@@ -200,7 +205,109 @@ class Empresa(ClaseModelo):
         super(Empresa, self).save()
 
     class Meta:
-        verbose_name_plural= "Empresas"
+        verbose_name_plural = "Empresas"
+
+
+class Genero(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Genero, self).save()
+
+    class Meta:
+        verbose_name_plural = "Genero"
+
+
+class Estudios(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Estudios, self).save()
+
+    class Meta:
+        verbose_name_plural = "Estudios"
+
+
+class Ecivil(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Ecivil, self).save()
+
+    class Meta:
+        verbose_name_plural = "Estadocivil"
+
+
+class Parentescocontacto(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Parentescocontacto, self).save()
+
+    class Meta:
+        verbose_name_plural = "Parentescocontactos"
+
+
+class Departamento(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Departamento, self).save()
+
+    class Meta:
+        verbose_name_plural = "Departamentos"
+
+
+class Puesto(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=10,
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Puesto, self).save()
+
+    class Meta:
+        verbose_name_plural = "Puestos"
 
 
 class Empleado(ClaseModelo):
@@ -210,20 +317,26 @@ class Empleado(ClaseModelo):
     edad = models.IntegerField(validators=[MinValueValidator(0.0), MaxValueValidator(99)], help_text='Edad', default=99)
     rfc = models.CharField(max_length=13, unique=True, help_text='Registro Federal de Contribuyente', default=99)
     nss = models.CharField(max_length=11, unique=True, help_text='Numero de seguro social', default=99)
-    telefono_fijo = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)], help_text="telefono a 10 digitos", default=4427744366)
-    telefono_celular = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)], unique=True, help_text="telefono celular a 10 digitos", default=4427744366)
+    telefono_fijo = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
+                                        help_text="telefono a 10 digitos", default=4427744366)
+    telefono_celular = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
+                                           unique=True, help_text="telefono celular a 10 digitos", default=4427744366)
     email = models.EmailField(unique=True, default="oscar@mercax.com")
-    contacto_emergencia = models.CharField(max_length=20, help_text="Nombre de la persona de emergencia", default="eliminar default")
-    telefono_emergencia = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)], help_text="Telefono de emergencia confirmar", default=4427744366)
+    contacto_emergencia = models.CharField(max_length=20, help_text="Nombre de la persona de emergencia",
+                                           default="eliminar default")
+    telefono_emergencia = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
+                                              help_text="Telefono de emergencia confirmar", default=4427744366)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
     nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
-    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)], unique=True, default=99)
-    clabe_banco = models.IntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True, default=999999999999999999)
-
-
+    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],
+                                 unique=True, default=99)
+    clabe_banco = models.IntegerField(
+        validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,
+        default=999999999999999999)
 
     licenciacaduca = models.DateTimeField(null=True, blank=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
+
     def __str__(self):
         return '{}'.format(self.nombre)
 
@@ -233,6 +346,7 @@ class Empleado(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Empleados"
+
 
 class Computadora(ClaseModelo):
     descripcion = models.CharField(max_length=100)
@@ -258,15 +372,15 @@ class Computadora(ClaseModelo):
     class Meta:
         verbose_name_plural = "Computadoras"
 
+
 class Herramienta(ClaseModelo):
     descripcion = models.CharField(max_length=100)
     tipo = models.CharField(max_length=100)
     motivo = models.CharField(max_length=100)
-    motivo_de_edicion = models.CharField(max_length=100,null=True,blank=True)
+    motivo_de_edicion = models.CharField(max_length=100, null=True, blank=True)
     serie = models.CharField(max_length=40, unique=True)
     asignado = models.ForeignKey(Empleado, on_delete=models.PROTECT)
-    foto = models.ImageField(upload_to="images/",null=True,blank=True)
-
+    foto = models.ImageField(upload_to="images/", null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion, self.macEth, self.macWifi, self.serie)
@@ -278,4 +392,3 @@ class Herramienta(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Herramientas"
-

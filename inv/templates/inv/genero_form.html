@@ -13,7 +13,7 @@
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        {% if obj %} Editar {% else %} Nueva {% endif %} Empresa
+                        {% if obj %} Editar {% else %} Nuevo {% endif %} Genero
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="row">
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col">
                             <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
-                            <a href="{% url 'inv:empresa_list' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
+                            <a href="{% url 'inv:genero_list' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
                         </div>
                     </div>
                 </div>
