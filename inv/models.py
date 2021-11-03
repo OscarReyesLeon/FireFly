@@ -173,24 +173,6 @@ class Banco(ClaseModelo):
         verbose_name_plural = "Bancos"
 
 
-class Puesto(ClaseModelo):
-    descripcion = models.CharField(
-        max_length=100,
-        help_text='Descripción de los Puestos',
-        unique=True
-    )
-
-    def __str__(self):
-        return '{}'.format(self.descripcion)
-
-    def save(self):
-        self.descripcion = self.descripcion.upper()
-        super(Puesto, self).save()
-
-    class Meta:
-        verbose_name_plural = "Puestos"
-
-
 class Empresa(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
@@ -325,8 +307,6 @@ class Empleado(ClaseModelo):
     nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
     cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True, default=10000000000)
     clabe_banco = models.IntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,default=999999999999999999)
-
-    licenciacaduca = models.DateTimeField(null=True, blank=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
 
     def __str__(self):
