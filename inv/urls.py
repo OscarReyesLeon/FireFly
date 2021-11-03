@@ -113,10 +113,6 @@ urlpatterns = [
     path('departamento/new', DepartamentoNew.as_view(), name='departamento_new'),
     path('departamento/edit/<int:pk>', DepartamentoEdit.as_view(), name='departamento_edit'),
 
-    path('puesto/', PuestoView.as_view(), name='puesto_list'),
-    path('puesto/new', PuestoNew.as_view(), name='puesto_new'),
-    path('puesto/edit/<int:pk>', PuestoEdit.as_view(), name='puesto_edit'),
-
     path('pcontacto/', ParentescocontactoView.as_view(), name='parentescocontacto_list'),
     path('pcontacto/new', ParentescocontactoNew.as_view(), name='parentescocontacto_new'),
     path('pcontacto/edit/<int:pk>', ParentescocontactoEdit.as_view(), name='parentescocontacto_edit'),
