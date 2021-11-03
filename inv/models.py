@@ -311,28 +311,20 @@ class Puesto(ClaseModelo):
 
 
 class Empleado(ClaseModelo):
-    nombre = models.CharField(max_length=15, help_text='Nombre')
-    apellido_paterno = models.CharField(max_length=15, help_text='Apellido Paterno', default="eliminar default")
-    apellido_materno = models.CharField(max_length=15, help_text='Apellido Materno', default="eliminar default")
-    edad = models.IntegerField(validators=[MinValueValidator(0.0), MaxValueValidator(99)], help_text='Edad', default=99)
-    rfc = models.CharField(max_length=13, unique=True, help_text='Registro Federal de Contribuyente', default=99)
-    nss = models.CharField(max_length=11, unique=True, help_text='Numero de seguro social', default=99)
-    telefono_fijo = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
-                                        help_text="telefono a 10 digitos", default=4427744366)
-    telefono_celular = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
-                                           unique=True, help_text="telefono celular a 10 digitos", default=4427744366)
+    nombre = models.CharField(max_length=15)
+    apellido_paterno = models.CharField(max_length=15, default="eliminar default")
+    apellido_materno = models.CharField(max_length=15, default="eliminar default")
+    rfc = models.CharField(max_length=13, unique=True, default=99)
+    nss = models.CharField(max_length=11, unique=True, default=99)
+    telefono_fijo = models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)], default=4427744366)
+    telefono_celular = models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)],unique=True, default=4427744366)
     email = models.EmailField(unique=True, default="oscar@mercax.com")
-    contacto_emergencia = models.CharField(max_length=20, help_text="Nombre de la persona de emergencia",
-                                           default="eliminar default")
-    telefono_emergencia = models.IntegerField(validators=[MinValueValidator(1111111111), MaxValueValidator(9999999999)],
-                                              help_text="Telefono de emergencia confirmar", default=4427744366)
+    contacto_emergencia = models.CharField(max_length=20, default="eliminar default")
+    telefono_emergencia = models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)], default=4427744366)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
     nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
-    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],
-                                 unique=True, default=99)
-    clabe_banco = models.IntegerField(
-        validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,
-        default=999999999999999999)
+    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True, default=10000000000)
+    clabe_banco = models.IntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,default=999999999999999999)
 
     licenciacaduca = models.DateTimeField(null=True, blank=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
@@ -342,6 +334,11 @@ class Empleado(ClaseModelo):
 
     def save(self):
         self.nombre = self.nombre.upper()
+        self.apellido_paterno = self.apellido_paterno.upper()
+        self.apellido_materno = self.apellido_materno.upper()
+        self.rfc = self.rfc.upper()
+        self.nss = self.nss.upper()
+        self.contacto_emergencia = self.contacto_emergencia.upper()
         super(Empleado, self).save()
 
     class Meta:
