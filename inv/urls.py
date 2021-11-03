@@ -15,7 +15,6 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
     EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
     EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, \
-    PuestoView, PuestoNew, PuestoEdit, \
     ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit
 
 urlpatterns = [
