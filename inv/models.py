@@ -304,10 +304,10 @@ class Empleado(ClaseModelo):
     contacto_emergencia = models.CharField(max_length=20, default="eliminar default")
     telefono_emergencia = models.IntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)], default=4427744366)
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
-    nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
-    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True, default=10000000000)
-    clabe_banco = models.IntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,default=999999999999999999)
-    puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
+    nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT, default=1)
+    cuenta = models.IntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True, default=1000000001)
+    clabe_banco = models.IntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True,default=999999999999999998)
+    puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT, default=1)
 
     def __str__(self):
         return '{}'.format(self.nombre)

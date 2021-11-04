@@ -1225,10 +1225,10 @@ class EstudiosNew(SuccessMessageMixin, SinPrivilegios, \
 class EstudiosEdit(SuccessMessageMixin, SinPrivilegios, \
                   generic.UpdateView):
     permission_required = "inv.change_estudios"
-    model = Genero
+    model = Estudios
     template_name = "inv/estudios_form.html"
     context_object_name = "obj"
-    form_class = GeneroForm
+    form_class = EstudiosForm
     success_url = reverse_lazy("inv:estudios_list")
     success_message = "Nivel escolar Actualizado"
 
