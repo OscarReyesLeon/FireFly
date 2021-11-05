@@ -815,8 +815,6 @@ def pedido_scancela(request, id):
         return redirect("inv:pedido_list_f2")
     
     if request.method=='GET':
-        if pede.precio_uni==0:
-            return HttpResponse("no tiene precio ingresado")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='sc'
@@ -828,8 +826,6 @@ def pedido_scancela(request, id):
             return HttpResponse("El pedido ya fue revisado por compras y no lo puedes cancelar desde aquí. comunicate con compras")
     
     if request.method=='POST':
-        if pede.precio_uni==0:
-            return HttpResponse("no tiene precio ingresado")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='SC'
