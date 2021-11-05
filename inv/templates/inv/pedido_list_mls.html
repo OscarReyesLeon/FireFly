@@ -75,9 +75,6 @@
             {% if perms.inv.view_autoriza or perms.inv.change_producto%}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
-            {% if perms.inv.change_producto and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_reaut' item.id %}" class="btn btn-primary btn-circle" role="button"><i class="fa fa-recycle"></i></a>
-            {% endif %}
             {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
             <a href="{% url 'inv:pedido_aprobado_mls' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
@@ -89,9 +86,6 @@
             {% endif %}
             {% if perms.inv.change_producto and item.indentificador_estado == '4' %}
             <a href="{% url 'inv:pedido_entregado' item.id %}" class="btn btn-success btn-circle" role="button"><i class="fa fa-check"></i></a>
-            {% endif %}
-            {% if perms.inv.change_producto and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_stock' item.id %}" class="btn btn-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
             {% endif %}
           </td>
           <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>

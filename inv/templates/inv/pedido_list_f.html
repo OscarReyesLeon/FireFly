@@ -75,7 +75,9 @@
           <td>{{item.status}}</td>
           <td>{{item.indentificador_estado}}</td>
           <td>
+            {%if item.status2 == 'Proximo' and item.status == 'X-Revisar' %}
             <a href="{% url 'inv:scancela' item.id %}" class="btn btn-dark btn-circle" role="button"><i class="fa fa-times"></i></a>
+            {% endif %}
             {% if perms.inv.view_autoriza or perms.inv.change_producto%}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
