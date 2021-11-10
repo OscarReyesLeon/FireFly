@@ -383,7 +383,7 @@ class PedidoViewALS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000]
         return qs
 
 class PedidoViewGLS(SinPrivilegios, generic.ListView):

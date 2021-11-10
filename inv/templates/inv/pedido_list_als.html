@@ -51,6 +51,7 @@
     <table class="table table-striped table-hover dt-responsive nowrap compact" style="width:100%">
       <thead>
         <th>ID</th>
+        <th>Status</th>
         <th>PA</th>
         <th>Solicitante</th>
         <th>Articulo</th>
@@ -59,11 +60,13 @@
         <th>Fecha</th>
         <th class="all">Acciones</th>
         <th>Total sin IVA</th>
+        <th>io</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
+          <td>{{item.status2}}</td>
           <td>{{item.autpor}}</td>
           <td>{{item.uc}}</td>
           <td>{{item.articulo}}</td>
@@ -94,6 +97,7 @@
             {% endif %}
           </td>
           <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>
+          <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -106,7 +110,7 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [ 0, 'asc' ],
+      "order": [[ 10, 'asc' ], [ 0, 'desc' ]], 
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {
