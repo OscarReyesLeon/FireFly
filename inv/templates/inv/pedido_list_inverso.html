@@ -59,9 +59,11 @@
         <th>UM</th>
         <th>div</th>
         <th>$</th>
+        <th>$ Total</th>
         <th>Compras</th>
         <th>Proceso</th>
         <th>F-Registro</th>
+        <th>F-Modificado</th>
         <th>F-Cotizado</th>
         <th>F-Aprobado</th>
         <th>F-Proveedor</th>
@@ -84,9 +86,11 @@
           <td>{{item.UniMed}}</td>
           <td>{{item.divisa}}</td>
           <td>{{item.precio_uni}}</td>
+          <td>{{item.preciotransaccion}}</td>
           <td>{{item.status}}</td>
           <td>{{item.proceso}}</td>
           <td>{{item.fc|date:"d-m-y H:i"}}
+          <td>{{item.fm|date:"d-m-y H:i"}}
           <td>{{item.fecha_recotizado}}</td>
           <td>{{item.fecha_aprobado}}</td>
           <td>{{item.fecha_requerido}}</td>
