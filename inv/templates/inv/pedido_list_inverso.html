@@ -52,15 +52,15 @@
       <thead>
         <th>ID</th>
         <th>PA</th>
-        <th>Aut</th>
+        <th>Autorizado</th>
         <th>Solicitante</th>
         <th>Articulo</th>
       	<th>Cantidad</th>
-        <th>UM</th>
-        <th>div</th>
-        <th>$</th>
+        <th>Unidad Medida</th>
+        <th>Divisa</th>
+        <th>$ Unitario</th>
         <th>$ Total</th>
-        <th>Compras</th>
+        <th>Estado</th>
         <th>Proceso</th>
         <th>F-Registro</th>
         <th>F-Modificado</th>
@@ -69,7 +69,7 @@
         <th>F-Proveedor</th>
         <th>F-Finalizado</th>
         <th>F-Rechazo</th>    
-        <th class="all">ReAut</th>
+        <th class="all">¿ReAut?</th>
         <th>Motivo</th>    
         <th>Comentario</th>    
         <th>IO</th>
@@ -116,8 +116,8 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
-      "order": [ 0, 'desc' ],
-      "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
+      "order": [[ 22, 'asc' ], [ 0, 'desc' ]], 
+      "lengthMenu": [ 1000, 2500, 5000, 10000, 20000],
       "scrollX": true,
       "language": {
             "sProcessing": "Procesando...",
