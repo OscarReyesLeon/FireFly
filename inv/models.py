@@ -292,18 +292,34 @@ class Puesto(ClaseModelo):
         verbose_name_plural = "Puestos"
 
 
+
 class Empleado(ClaseModelo):
     nombre = models.CharField(max_length=15)
+    apellido_paterno = models.CharField(max_length=15)
+    apellido_materno = models.CharField(max_length=15)
+    rfc = models.CharField(max_length=13, unique=True)
+    nss = models.CharField(max_length=11, unique=True)
+    telefono_fijo = models.BigIntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)])
+    telefono_celular = models.BigIntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)],unique=True)
+    email = models.EmailField(unique=True)
+    contacto_emergencia = models.CharField(max_length=20)
+    telefono_emergencia = models.BigIntegerField(validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999)])
+    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
+    nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
+    cuenta = models.BigIntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True)
+    clabe_banco = models.BigIntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True)
+    puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
 
-    def __str__(self):
-        return '{}'.format(self.nombre)
 
     def save(self):
         self.nombre = self.nombre.upper()
+        self.apellido_paterno = self.nombre.upper()
+        self.apellido_materno = self.nombre.upper()
         super(Empleado, self).save()
 
     class Meta:
         verbose_name_plural = "Empleados"
+
 
 
 class Computadora(ClaseModelo):
