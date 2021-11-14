@@ -113,6 +113,8 @@
 {% endblock %}
 {% block js_page %}
 <script>
+  $("#sidebarToggle").click();
+
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
