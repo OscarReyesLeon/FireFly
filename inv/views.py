@@ -361,7 +361,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:20000]
+        qs = Pedido.objects.order_by('-id')[:40000]
         return qs
 
 class PedidoViewF(SinPrivilegios, generic.ListView):
