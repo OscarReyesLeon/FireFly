@@ -15,7 +15,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
     EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
     EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, \
-    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit
+    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport
 
 urlpatterns = [
     path('equipos/',EquipoView.as_view(), name='equipo_list'),
@@ -49,6 +49,7 @@ urlpatterns = [
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
     path('pedidos/',PedidoView.as_view(), name="pedido_list"),
+    path('pedidosexport/',PedidoExport.as_view(), name="pedido_export"),
     path('pedidosf/',PedidoViewF.as_view(), name="pedido_list_f"),
     path('pedidosals/',PedidoViewALS.as_view(), name="pedido_list_als"),
     path('pedidosgls/',PedidoViewGLS.as_view(), name="pedido_list_gls"),

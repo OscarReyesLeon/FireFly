@@ -43,6 +43,9 @@
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_mls' %}" class="btn btn-info" role="button"></i>MLS</a>
       {% endif %}
+      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      <a href="{% url 'inv:pedido_export' %}" class="btn btn-light" role="button"></i>Exportar</a>
+      {% endif %}
     </div>
 
 
