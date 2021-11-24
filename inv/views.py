@@ -282,7 +282,7 @@ def um_inactivar(request, id):
 
 class ProductoView(SinPrivilegios, generic.ListView):
     model = Producto
-    template_name = "inv/prducto_list.html"
+    template_name = "inv/pedido_list_inverso.html"
     context_object_name = "obj"
     permission_required="inv.view_producto"
 
@@ -357,11 +357,11 @@ def producto_inactivar(request, id):
 
 class PedidoView(SinPrivilegios, generic.ListView):
     model = Pedido
-    template_name = "inv/pedido_list_inverso.html"
+    template_name = "inv/pedido_list_export.html"
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:2000]
+        qs = Pedido.objects.order_by('-id')[:100]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
