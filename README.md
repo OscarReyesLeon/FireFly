@@ -8,4 +8,4 @@ Correo personal
 seyfer.orl@googlemail.com
 
 Correo en ledsa
-oscar.reyes@ledsa.mx
+oscar@mercax.com
