@@ -13,7 +13,7 @@ from django.db.models import Sum
 from .models import Proveedor, ComprasEnc, ComprasDet
 from cmp.forms import ProveedorForm,ComprasEncForm
 from bases.views import SinPrivilegios
-from inv.models import Producto
+from inv.models import Pedido
 
 
 class ProveedorView(SinPrivilegios, generic.ListView):
@@ -87,7 +87,7 @@ class ComprasView(SinPrivilegios, generic.ListView):
 @permission_required('cmp.view_comprasenc', login_url='bases:sin_privilegios')
 def compras(request,compra_id=None):
     template_name="cmp/compras.html"
-    prod=Producto.objects.filter(estado=True)
+    prod=Pedido.objects.filter(indentificador_estado=3)
     form_compras={}
     contexto={}
 
@@ -113,7 +113,7 @@ def compras(request,compra_id=None):
         else:
             det=None
         
-        contexto={'productos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
+        contexto={'pedidos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
 
     if request.method=='POST':
         fecha_compra = request.POST.get("fecha_compra")
@@ -152,18 +152,18 @@ def compras(request,compra_id=None):
         if not compra_id:
             return redirect("cmp:compras_list")
         
-        producto = request.POST.get("id_id_producto")
+        pedido = request.POST.get("id_id_pedido")
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
         sub_total_detalle = request.POST.get("id_sub_total_detalle")
         descuento_detalle  = request.POST.get("id_descuento_detalle")
         total_detalle  = request.POST.get("id_total_detalle")
 
-        prod = Producto.objects.get(pk=producto)
+        prod = Pedido.objects.get(pk=pedido)
 
         det = ComprasDet(
             compra=enc,
-            producto=prod,
+            pedido=prod,
             cantidad=cantidad,
             precio_prv=precio,
             descuento=descuento_detalle,

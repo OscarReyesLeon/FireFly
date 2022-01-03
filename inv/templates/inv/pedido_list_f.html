@@ -98,17 +98,72 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
+      "rowCallback": function(row, data, index){
+        if(data[1]== 'Pendiente'){
+      	$(row).find('td:eq(1)').css('color', 'orange');
+        }
+        if(data[1]== 'Si'){
+      	$(row).find('td:eq(1)').css('color', 'green');
+        }
+        if(data[1]== 'No'){
+      	$(row).find('td:eq(1)').css('color', 'red');
+        }
+        if(data[1]== 'sc'){
+      	$(row).find('td:eq(1)').css('color', 'blue');
+        }
+        if(data[1]== 'na'){
+      	$(row).find('td:eq(1)').css('color', 'blue');
+        }
+
+        if(data[8]== 2){
+      	$(row).find('td:eq(4)').css('color', 'purple');
+        }
+        if(data[8]== 1){
+      	$(row).find('td:eq(4)').css('color', 'green');
+        }
+        if(data[8]== 3){
+      	$(row).find('td:eq(4)').css('color', 'orange');
+        }
+        if(data[8]== 4){
+      	$(row).find('td:eq(4)').css('color', 'blue');
+        }
+
+        if(data[7]== 'X-Revisar'){
+      	$(row).find('td:eq(7)').css('color', 'red');
+        }
+        if(data[7]== 'Revisado'){
+      	$(row).find('td:eq(7)').css('color', 'green');
+        }
+        if(data[7]== 'Pendiente'){
+      	$(row).find('td:eq(7)').css('color', 'red');
+        }
+        if(data[7]== 'en Proveedor'){
+      	$(row).find('td:eq(7)').css('color', 'red');
+        }
+        if(data[7]== 'Fin'){
+      	$(row).find('td:eq(7)').css('color', 'purple');
+        }
+        if(data[7]== 'S-Cancela'){
+      	$(row).find('td:eq(7)').css('color', 'black');
+        }
+        if(data[7]== 'Rechazo'){
+      	$(row).find('td:eq(7)').css('color', 'orange');
+        }
+        if(data[7]== 'Stock'){
+      	$(row).find('td:eq(7)').css('color', 'blue');
+        }
+      },
       "order": [[ 8, 'asc' ], [ 0, 'desc' ]],
-      "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
+      "lengthMenu": [ 100, 250, 500, 1000],
       "scrollX": true,
       "language": {
             "sProcessing": "Procesando...",
-            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sLengthMenu": "Mostrar _MENU_ pedidos",
             "sZeroRecords": "No se encontraron resultados",
             "sEmptyTable": "Ningún dato disponible en esta tabla",
-            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ pedidos" + "<br>" + "<br>" + "Tus registros antiguos a +1000 son archivados",
+            "sInfoEmpty": "No hay pedidos registrados",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ pedidos)",
             "sInfoPostFix": "",
             "sSearch": "Buscar:",
             "sUrl": "",

@@ -361,7 +361,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:100]
+        qs = Pedido.objects.order_by('-id')[:200]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -370,7 +370,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:20000]
+        qs = Pedido.objects.order_by('-id')[:40000]
         return qs
 
 
@@ -383,7 +383,7 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user).order_by('-id')[:200]
+        qs = qs.filter(uc=user).order_by('-id')[:1000]
         return qs
 
 class PedidoViewALS(SinPrivilegios, generic.ListView):

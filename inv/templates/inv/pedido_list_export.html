@@ -82,6 +82,41 @@
     <script>
 	$(document).ready(function() {
 	    var table = $('#export').DataTable( {
+          "rowCallback": function(row, data, index){
+          if(data[2]== 'Pendiente'){
+        	$(row).find('td:eq(2)').css('color', 'orange');
+          }
+          if(data[2]== 'Si'){
+        	$(row).find('td:eq(2)').css('color', 'green');
+          }
+          if(data[2]== 'No'){
+        	$(row).find('td:eq(2)').css('color', 'red');
+          }
+          if(data[2]== 'sc'){
+        	$(row).find('td:eq(2)').css('color', 'blue');
+          }
+          if(data[2]== 'na'){
+        	$(row).find('td:eq(2)').css('color', 'blue');
+          }
+          if(data[21]== 2){
+        	$(row).find('td:eq(4)').css('color', 'purple');
+          }
+          if(data[21]== 1){
+        	$(row).find('td:eq(4)').css('color', 'green');
+          }
+          if(data[21]== 3){
+        	$(row).find('td:eq(4)').css('color', 'orange');
+          }
+          if(data[21]== 4){
+        	$(row).find('td:eq(4)').css('color', 'blue');
+          }
+          if(data[21]< 5){
+        	$(row).find('td:eq(10)').css('color', 'orange');
+          }
+          if(data[21]== 5){
+        	$(row).find('td:eq(10)').css('color', 'blue');
+          }
+        },
           "order": [ 0, 'desc' ],
 	        lengthChange: false,
 	        buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]

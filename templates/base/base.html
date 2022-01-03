@@ -153,7 +153,7 @@
         <div id="collapseCompras" class="collapse {% if cmp_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Entradas</h6>
-            <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Compras</a>
+            <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">OC (Compras)</a>
 
             <h6 class="collapse-header">Salidas</h6>
             <a class="collapse-item" href="{% url 'fac:factura_list' %}">Facturas</a>

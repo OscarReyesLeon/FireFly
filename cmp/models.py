@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.db.models import Sum
 
 from bases.models import ClaseModelo
-from inv.models import Producto
+from inv.models import Pedido
 
 class Proveedor(ClaseModelo):
     descripcion=models.CharField(
@@ -69,7 +69,7 @@ class ComprasEnc(ClaseModelo):
 
 class ComprasDet(ClaseModelo):
     compra=models.ForeignKey(ComprasEnc,on_delete=models.CASCADE)
-    producto=models.ForeignKey(Producto,on_delete=models.CASCADE)
+    pedido=models.ForeignKey(Pedido,on_delete=models.CASCADE, blank=True, null=True)
     cantidad=models.BigIntegerField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
@@ -78,7 +78,7 @@ class ComprasDet(ClaseModelo):
     costo=models.FloatField(default=0)
 
     def __str__(self):
-        return '{}'.format(self.producto)
+        return '{}'.format(self.pedido)
 
     def save(self):
         self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
@@ -93,7 +93,7 @@ class ComprasDet(ClaseModelo):
 
 @receiver(post_delete, sender=ComprasDet)
 def detalle_compra_borrar(sender,instance, **kwargs):
-    id_producto = instance.producto.id
+    id_pedido = instance.pedido.id
     id_compra = instance.compra.id
 
     enc = ComprasEnc.objects.filter(pk=id_compra).first()
@@ -104,7 +104,7 @@ def detalle_compra_borrar(sender,instance, **kwargs):
         enc.descuento=descuento['descuento__sum']
         enc.save()
     
-    prod=Producto.objects.filter(pk=id_producto).first()
+    prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
         cantidad = int(prod.existencia) - int(instance.cantidad)
         prod.existencia = cantidad
@@ -113,10 +113,10 @@ def detalle_compra_borrar(sender,instance, **kwargs):
 
 @receiver(post_save, sender=ComprasDet)
 def detalle_compra_guardar(sender,instance,**kwargs):
-    id_producto = instance.producto.id
+    id_pedido = instance.pedido.id
     fecha_compra=instance.compra.fecha_compra
 
-    prod=Producto.objects.filter(pk=id_producto).first()
+    prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
         cantidad = int(prod.existencia) + int(instance.cantidad)
         prod.existencia = cantidad
