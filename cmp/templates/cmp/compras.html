@@ -166,7 +166,7 @@
                                                 <th>Precio</th>
                                                 <th>Ajuste '-'</th>
                                                 <th>Total</th>
-                                                <th class="all">Acciones</th>
+                                                <!-- <th class="all">Acciones</th> -->
                                             </thead>
                                             <tbody>
                                                 {% for item in detalle %}
@@ -177,9 +177,9 @@
                                                 <td>{{ item.pedido.divisa }} ${{ item.cantidad }}</td>
                                                 <td>{{ item.descuento }}</td>
                                                 <td>{{ item.pedido.divisa }} ${{ item.total }}</td>
-                                                <td>
+<!--                                                <td>
                                                     <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:compras_del' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
+                                                </td>-->
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
