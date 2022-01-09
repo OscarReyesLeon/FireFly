@@ -50,7 +50,6 @@ class ComprasEnc(ClaseModelo):
     total=models.FloatField(default=0)
 
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
-    
     def __str__(self):
         return '{}'.format(self.observacion)
 
@@ -59,7 +58,6 @@ class ComprasEnc(ClaseModelo):
         if self.sub_total == None  or self.descuento == None:
             self.sub_total = 0
             self.descuento = 0
-            
         self.total = self.sub_total - self.descuento
         super(ComprasEnc,self).save()
 
@@ -84,7 +82,6 @@ class ComprasDet(ClaseModelo):
         self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
         self.total = self.sub_total - float(self.descuento)
         super(ComprasDet, self).save()
-    
     class Mega:
         verbose_name_plural = "Detalles Compras"
         verbose_name="Detalle Compra"
@@ -103,11 +100,10 @@ def detalle_compra_borrar(sender,instance, **kwargs):
         enc.sub_total=sub_total['sub_total__sum']
         enc.descuento=descuento['descuento__sum']
         enc.save()
-    
     prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
-        cantidad = int(prod.existencia) - int(instance.cantidad)
-        prod.existencia = cantidad
+        prod.status='Error en OC'
+        prod.indentificador_estado='3'
         prod.save()
 
 
@@ -118,9 +114,8 @@ def detalle_compra_guardar(sender,instance,**kwargs):
 
     prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
-        cantidad = int(prod.existencia) + int(instance.cantidad)
-        prod.existencia = cantidad
-        prod.ultima_compra=fecha_compra
+        prod.status='en Proveedor'
+        prod.indentificador_estado='4'
         prod.save()
 
 

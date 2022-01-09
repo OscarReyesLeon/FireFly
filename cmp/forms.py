@@ -35,7 +35,6 @@ class ProveedorForm(forms.ModelForm):
 class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()
     fecha_factura = forms.DateInput()
-    
     class Meta:
         model=ComprasEnc
         fields=['proveedor','fecha_compra','observacion',

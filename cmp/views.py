@@ -112,7 +112,6 @@ def compras(request,compra_id=None):
             form_compras = ComprasEncForm(e)
         else:
             det=None
-        
         contexto={'pedidos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
 
     if request.method=='POST':
@@ -134,7 +133,7 @@ def compras(request,compra_id=None):
                 no_factura=no_factura,
                 fecha_factura=fecha_factura,
                 proveedor=prov,
-                uc = request.user 
+                uc = request.user
             )
             if enc:
                 enc.save()
@@ -151,7 +150,6 @@ def compras(request,compra_id=None):
 
         if not compra_id:
             return redirect("cmp:compras_list")
-        
         pedido = request.POST.get("id_id_pedido")
         cantidad = request.POST.get("id_cantidad_detalle")
         precio = request.POST.get("id_precio_detalle")
@@ -191,7 +189,6 @@ class CompraDetDelete(SinPrivilegios, generic.DeleteView):
     model = ComprasDet
     template_name = "cmp/compras_det_del.html"
     context_object_name = 'obj'
-    
     def get_success_url(self):
-          compra_id=self.kwargs['compra_id']
-          return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
+        compra_id=self.kwargs['compra_id']
+        return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
