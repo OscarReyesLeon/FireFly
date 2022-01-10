@@ -148,15 +148,13 @@
       <li class="nav-item {% if cmp_url in request.path  %} active {% endif %}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
           <i class="fas fa-fw fa-truck"></i>
-          <span>Movimientos</span>
+          <span>Contabilidad</span>
         </a>
         <div id="collapseCompras" class="collapse {% if cmp_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Entradas</h6>
-            <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">OC (Compras)</a>
+            <h6 class="collapse-header">Compras</h6>
+            <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
 
-            <h6 class="collapse-header">Salidas</h6>
-            <a class="collapse-item" href="{% url 'fac:factura_list' %}">Facturas</a>
 
           </div>
         </div>

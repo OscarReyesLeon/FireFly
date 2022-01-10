@@ -20,12 +20,20 @@
 <body>
     <div class="container">
         <div class="card">
-            <div class="card-header">
-                <h4>Sistema de Compras DEBS</h4>
+            <div class="card-header" align="right">
+                <h3>Orden de compra ID: {{ encabezado.id}} </h3>
             </div>
-
             <div class="list-group">
-                <p>No. Compra: {{ encabezado.id}} </p>
+                <table class="">
+                    <tbody>
+                        <tr>
+                            <td>Usuario UM ID:</td>
+                            <td>{{ encabezado.um}}</td>
+                            <td>Fecha UM:</td>
+                            <td><h4>{{ encabezado.fm|date:"d/m/Y H:i"}}</h4></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <table class="">
                     <tbody>
                         <tr>
@@ -35,17 +43,14 @@
                             <td>{{ encabezado.fecha_compra|date:"d/m/Y"}}</td>
                         </tr>
                         <tr>
-                            <td>No. Factura</td>
+                            <td># OC</td>
                             <td>{{encabezado.no_factura}}</td>
                             <td>Fecha Factura:</td>
                             <td>{{ encabezado.fecha_factura|date:"d/m/Y"}}</td>
                         </tr>
-                        <tr>
-                            <td>Observación:</td>
-                            <td colspan="3">{{encabezado.Observación}}</td>
-                        </tr>
                     </tbody>
                 </table>
+
                 <hr>
             </div>
 
@@ -53,23 +58,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Sub total</th>
-                        <th>Producto</th>
+                        <th>Pedido ID</th>
                         <th>Cantidad</th>
-                        <th>Sub total</th>
-                        <th>Descuento</th>
-                        <th>Total</th>
+                        <th>Descripcion</th>
+                        <th>PreTotal</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in detalle %}
                     <tr>
-                        <td><span class="small">{{ item.producto }}</span></td>
-                        <td class="numero">{{ item.cantidad }}</td>
-                        <td class="numero">{{ item.precio_prv }}</td>
-                        <td class="numero">{{ item.sub_total }}</td>
-                        <td class="numero">{{ item.descuento }}</td>
-                        <td class="numero">{{ item.total }}</td>
+                        <td><span class="small"><center>{{ item.id }}</center></span></td>
+                        <td class="numero"><center>{{ item.cantidad }}</center></td>
+                        <td class="numero">{{ item.articulo }}</td>
+                        <td class="numero"><center>${{ item.sub_total|floatformat:"0" }}.xx</center></td>
                     </tr>
                     {% endfor %}
                     <tr>
@@ -93,7 +94,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><h4>Descuento</h4></td>
+                            <td><h4>Ajuste</h4></td>
                             <td class="numero"><h4>{{ encabezado.descuento}}</h4></td>
                           </tr>
                           <tr>
@@ -107,6 +108,9 @@
 
                 </tbody>
             </table>
+        </div>
+        <div class="card-header">
+            <h4>Impresión generada con Ledsa FireFly el {{ today|date:"d/m/Y" }} a las {{ today|date:"H:i" }}</h4>
         </div>
     </div>
 </body>

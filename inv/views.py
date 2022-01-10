@@ -786,8 +786,8 @@ def pedido_reaut(request, id):
         return redirect("inv:pedido_list_f2")
     
     if request.method=='GET':
-        if pede.precio_uni==0:
-            return HttpResponse("no tiene precio ingresado")
+        if pede.precio_uni==0 or pede.cantidad==0:
+            return HttpResponse("no tiene precio ingresado o la cantidad es 0")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
@@ -799,8 +799,8 @@ def pedido_reaut(request, id):
             return HttpResponse("no se puede mandar a autorizar")
     
     if request.method=='POST':
-        if pede.precio_uni==0:
-            return HttpResponse("no tiene precio ingresado")
+        if pede.precio_uni==0 or pede.cantidad==0:
+            return HttpResponse("no tiene precio ingresado o la cantidad es 0")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
