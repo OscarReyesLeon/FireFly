@@ -69,7 +69,7 @@
                     <tr>
                         <td><span class="small"><center>{{ item.id }}</center></span></td>
                         <td class="numero"><center>{{ item.cantidad }}</center></td>
-                        <td class="numero">{{ item.articulo }}</td>
+                        <td class="numero">{{ item.pedido.articulo }}</td>
                         <td class="numero"><center>${{ item.sub_total|floatformat:"0" }}.xx</center></td>
                     </tr>
                     {% endfor %}
