@@ -120,6 +120,7 @@ def detalle_compra_guardar(sender,instance,**kwargs):
     if prod:
         prod.status='en Proveedor'
         prod.indentificador_estado='4'
+        prod.ultima_compra=fecha_compra
         prod.save()
 
 
