@@ -361,7 +361,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:200]
+        qs = Pedido.objects.order_by('-id')[:1000]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -784,7 +784,6 @@ def pedido_reaut(request, id):
 
     if not pede:
         return redirect("inv:pedido_list_f2")
-    
     if request.method=='GET':
         if pede.precio_uni==0 or pede.cantidad==0:
             return HttpResponse("no tiene precio ingresado o la cantidad es 0")
@@ -797,7 +796,6 @@ def pedido_reaut(request, id):
             return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("no se puede mandar a autorizar")
-    
     if request.method=='POST':
         if pede.precio_uni==0 or pede.cantidad==0:
             return HttpResponse("no tiene precio ingresado o la cantidad es 0")
@@ -823,7 +821,6 @@ def pedido_scancela(request, id):
 
     if not pede:
         return redirect("inv:pedido_list_f2")
-    
     if request.method=='GET':
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -834,7 +831,6 @@ def pedido_scancela(request, id):
             return redirect("inv:pedido_list_f")
         else:
             return HttpResponse("El pedido ya fue revisado por compras y no lo puedes cancelar desde aquí. comunicate con compras")
-    
     if request.method=='POST':
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -858,7 +854,6 @@ def pedido_stock(request, id):
 
     if not pede:
         return redirect("inv:pedido_list")
-    
     if request.method=='GET':
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -870,7 +865,6 @@ def pedido_stock(request, id):
             return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("Esta opción no está disponible")
-    
     if request.method=='POST':
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -895,7 +889,7 @@ class BancoView(SinPrivilegios, \
     model = Banco
     template_name = "inv/banco_list.html"
     context_object_name = "obj"
-    
+
 
 
 class BancoNew(SuccessMessageMixin,SinPrivilegios,\

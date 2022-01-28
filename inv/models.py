@@ -143,6 +143,15 @@ class Pedido(ClaseModelo):
     folio_ingreso = models.CharField(max_length=20, default='--')
     divisa = models.CharField(max_length=3, default='mxn')
     indentificador_estado = models.CharField(max_length=20, default='2')
+    iva = models.FloatField(default=.16)
+    @property
+    def precio_uni_iva(self):
+        precioiva = self.precio_uni * self.iva
+        return precioiva
+    @property
+    def transaccion_iva(self):
+        preciotransaccioniva = self.preciotransaccion * self.iva
+        return preciotransaccioniva
 
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
