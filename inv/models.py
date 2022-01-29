@@ -149,17 +149,25 @@ class Pedido(ClaseModelo):
         precioiva = self.precio_uni * self.iva
         return precioiva
     @property
-    def transaccion_iva(self):
-        preciotransaccioniva = self.preciotransaccion * self.iva
-        return preciotransaccioniva
+    def precio_unimasiva(self):
+        unitario = self.precio_uni
+        ivapuro = self.iva
+        ivaoperacion = unitario * ivapuro
+        precioiva = unitario + ivaoperacion
+        return precioiva
     @property
     def transaccion_iva(self):
         preciotransaccioniva = self.preciotransaccion * self.iva
         return preciotransaccioniva
-
+    @property
+    def transaccionconiva(self):
+        transaccion = self.preciotransaccion
+        ivapuro = self.iva
+        ivaoperacion = transaccion * ivapuro
+        preciotransaccioniva = transaccion + ivaoperacion
+        return preciotransaccioniva
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
-
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
         self.articulo = self.articulo.upper()

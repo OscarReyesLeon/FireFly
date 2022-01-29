@@ -55,7 +55,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label for="sub_total">Descuento:</label>
+                                                        <label for="sub_total">Ajuste:</label>
                                                     </div>
                                                     <div class="col">
                                                         {{ form_enc.descuento }}
@@ -95,7 +95,7 @@
                                                         <td>{{ item.divisa }}${{ item.precio_uni }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-warning btn-circle"
-                                                            onclick="selectPedido({{item.id}},'{{ item.articulo }}','{{ item.cantidad }}','{{ item.divisa }}','{{ item.precio_uni }}')" ><i class="fas fa-plus"></i></button>
+                                                            onclick="selectPedido({{item.id}},'{{ item.articulo }}','{{ item.cantidad }}','{{ item.divisa }}','{{ item.precio_uni }}','{{ item.precio_uni_iva }}')" ><i class="fas fa-plus"></i></button>
                                                         </td>
                                                         </tr>
                                                         {% endfor %}
@@ -163,6 +163,7 @@
                                                 <th>Pedido</th>
                                                 <th>Descripcion</th>
                                                 <th>Cantidad</th>
+                                                <th>IVA</th>
                                                 <th>Precio</th>
                                                 <th>Ajuste '-'</th>
                                                 <th>Total</th>
@@ -174,6 +175,7 @@
                                                 <td>{{ item.pedido.id }}</td>
                                                 <td>{{ item.pedido.articulo }}</td>
                                                 <td>{{ item.cantidad }}</td>
+                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni_iva }}</td>
                                                 <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni }}</td>
                                                 <td>{{ item.descuento }}</td>
                                                 <td>{{ item.pedido.divisa }} ${{ item.total }}</td>
@@ -241,7 +243,6 @@
 
             var  no_fact = $("#id_no_factura").val();
             console.log(no_fact);
-            
             if(no_fact.trim()==""){
                 e.preventDefault()
                 $.alert({
@@ -251,7 +252,6 @@
                         });
                 return false;
             }
-
 
             if($("#id_fecha_compra").val()=="" || $("#id_fecha_factura").val()==""){
                 e.preventDefault()
@@ -274,14 +274,14 @@
             }
         });
         /*Fin Validar Envío de Detalle */
-
     });
 
-    function selectPedido(id,descripcion,cantidad,divisa,precio_uni)
+    function selectPedido(id,descripcion,cantidad,divisa,precio_uni, precio_uni_iva)
     {
         $("#id_cantidad_detalle").val(cantidad);
         $('#id_divisa').val(divisa);
         $('#id_precio_detalle').val(precio_uni);
+        $('#id_precio_detalle_iva').val(precio_uni_iva);
         $('#id_descuento_detalle').val(1);
 
         $('#id_sub_total_detalle').val(0);
@@ -289,6 +289,7 @@
 
         $("#id_id_pedido").val(+id);
         $('#id_descripcion_pedido').val(descripcion);
+
         $('#id_descuento_detalle').focus();
         $('#id_descuento_detalle').select();
 
