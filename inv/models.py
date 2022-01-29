@@ -152,6 +152,10 @@ class Pedido(ClaseModelo):
     def transaccion_iva(self):
         preciotransaccioniva = self.preciotransaccion * self.iva
         return preciotransaccioniva
+    @property
+    def transaccion_iva(self):
+        preciotransaccioniva = self.preciotransaccion * self.iva
+        return preciotransaccioniva
 
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()

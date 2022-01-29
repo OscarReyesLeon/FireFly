@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listado de Compras</title>
+    <title>PDF FireFly</title>
 
     <style type="text/css">
     @page {
@@ -13,7 +13,7 @@
     }
 
     .table td .numero{
-        text-align: center;
+        text-align: left;
     }
     </style>
 </head>
@@ -61,7 +61,9 @@
                         <th>Pedido ID</th>
                         <th>Cantidad</th>
                         <th>Descripcion</th>
-                        <th>PreTotal</th>
+                        <th>Unitario</th>
+                        <th>Total</th>
+                        <th>Total+IVA</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +72,9 @@
                         <td><span class="small"><center>{{ item.id }}</center></span></td>
                         <td class="numero"><center>{{ item.cantidad }}</center></td>
                         <td class="numero">{{ item.pedido.articulo }}</td>
-                        <td class="numero"><center>${{ item.sub_total|floatformat:"0" }}.xx</center></td>
+                        <td class="numero">$ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
+                        <td class="numero">$ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
+                        <td class="numero">{{item.pedido.divisa}}$ {{ item.sub_total|floatformat:"2" }}</td>
                     </tr>
                     {% endfor %}
                     <tr>
@@ -80,32 +84,31 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                          </tr>
-                          <tr>
+                    </tr>
+                    <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h4>Sub Total</h4></td>
-                            <td class="numero"><h4>{{ encabezado.sub_total}}</h4></td>
-                          </tr>
-                          <tr>
+                            <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:"2" }}</h4></td>
+                    </tr>
+                    <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h4>Ajuste</h4></td>
-                            <td class="numero"><h4>{{ encabezado.descuento}}</h4></td>
-                          </tr>
-                          <tr>
+                            <td class="numero"><h4>$ {{ encabezado.descuento|floatformat:"2" }}</h4></td>
+                    </tr>
+                    <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h4>Total</h4></td>
-                            <td class="numero"><h4>{{ encabezado.total}}</h4></td>
-                          </tr>
-
+                            <td class="numero"><h4>$ {{ encabezado.total|floatformat:"2" }}</h4></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
