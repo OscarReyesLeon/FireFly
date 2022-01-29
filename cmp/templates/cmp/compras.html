@@ -175,8 +175,8 @@
                                                 <td>{{ item.pedido.id }}</td>
                                                 <td>{{ item.pedido.articulo }}</td>
                                                 <td>{{ item.cantidad }}</td>
-                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni_iva }}</td>
-                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni }}</td>
+                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni_iva|floatformat:"2" }}</td>
+                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
                                                 <td>{{ item.descuento }}</td>
                                                 <td>{{ item.pedido.divisa }} ${{ item.total }}</td>
 <!--                                                <td>
