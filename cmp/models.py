@@ -72,7 +72,7 @@ class ComprasDet(ClaseModelo):
     cantidad=models.BigIntegerField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
-    descuento=models.FloatField(default=0)
+    descuento=models.FloatField(default=0, blank=True, null=True)
     total=models.FloatField(default=0)
     costo=models.FloatField(default=0)
 
@@ -81,7 +81,7 @@ class ComprasDet(ClaseModelo):
 
     def save(self):
         self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
-        self.total = self.sub_total - float(self.descuento)
+        """self.total = self.sub_total - float(self.descuento)"""
         super(ComprasDet, self).save()
     class Mega:
         verbose_name_plural = "Detalles Compras"
