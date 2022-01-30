@@ -54,12 +54,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-<!--                                                    <div class="col">
+                                                    <div class="col">
                                                         <label for="sub_total">Ajuste:</label>
                                                     </div>
                                                     <div class="col">
                                                         {{ form_enc.descuento }}
-                                                    </div>-->
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
@@ -228,7 +228,7 @@
             }
         });
 
-        $('#id_cantidad_detalle,#id_precio_detalle,#id_divisa').change(function(){
+        $('#id_cantidad_detalle,#id_precio_detalle,#id_descuento_detalle').change(function(){
             calcular_detalle();
         });
 
@@ -300,7 +300,7 @@
         prec =$('#id_precio_detalle').val();
         prec = prec==="" ? 0 : +prec;
         prec = prec<0 ? 0 : prec;
-/*
+
         desc = $('#id_descuento_detalle').val();
         desc = desc==="" ? 0 : +desc;
         desc = desc<0 ? 0 : desc;
@@ -309,20 +309,19 @@
 
         stotal = cant * prec;
         total  = stotal - desc;
-*/
+
         $('#id_cantidad_detalle').val(cant);
         $('#id_precio_detalle').val(prec);
-/*        $('#id_descuento_detalle').val(desc); */
+        $('#id_descuento_detalle').val(desc);
 
         $('#id_sub_total_detalle').val(stotal);
         $('#id_total_detalle').val(total);
 
     }
-
     function clear_Detail(){
         $('#id_cantidad_detalle').val(0);
         $('#id_precio_detalle').val(0);
-/*        $('#id_descuento_detalle').val(0); */
+        $('#id_descuento_detalle').val(0);
 
         $('#id_sub_total_detalle').val(0);
         $('#id_total_detalle').val(0);
