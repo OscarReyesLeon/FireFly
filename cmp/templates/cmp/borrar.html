@@ -12,7 +12,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    {% if encabezado %} Editar {% else %} Nueva {% endif %} Compra
+                                    {% if encabezado %} Editar {% else %} Nueva {% endif %} Orden de Compra
                                 </div>
                                 <div class="dropdown-divider"></div>
                                 <div class="row">
@@ -22,7 +22,7 @@
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-sm-2 col-form-label">Proveedor:</label>
                                             <div class="col-sm-10">
-                                              {{ form_enc.proveedor }}
+                                            {{ form_enc.proveedor }}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -38,7 +38,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="id_fecha_compra">No. Factura:</label>
+                                                    <label for="id_fecha_compra">No. Orden de Compra:</label>
                                                     {{form_enc.no_factura}}
                                                 </div>
                                                 <div class="form-group">
@@ -55,7 +55,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label for="sub_total">Descuento:</label>
+                                                        <label for="sub_total">Ajuste:</label>
                                                     </div>
                                                     <div class="col">
                                                         {{ form_enc.descuento }}
@@ -78,20 +78,24 @@
                                     <div class="col-6">
                                         <div class="row">
                                             <div class="col">
-                                                <table class="table table-striped table-hover dt-responsive table-sm nowrap tbl-productos" style="width:100%">
+                                                <table class="table table-striped table-hover dt-responsive table-sm nowrap tbl-pedidos" style="width:100%">
                                                     <thead>
-                                                        <th>Id</th>        
-                                                        <th class="all">Descripción</th>
-                                                        <th class="all">Acciones</th>
+                                                        <th >ID</th>
+                                                        <th class="all">Cantidad</th>
+                                                        <th class="all">Articulo</th>
+                                                        <th class="all">$</th>
+                                                        <th class="all">Agregar</th>
                                                     </thead>
                                                     <tbody>
-                                                        {% for item in productos %}
+                                                        {% for item in pedidos %}
                                                         <tr>
                                                         <td>{{ item.id }}</td>
-                                                        <td>{{ item.descripcion }}</td>
+                                                        <td>{{ item.cantidad }}</td>
+                                                        <td>{{ item.articulo }}</td>
+                                                        <td>{{ item.divisa }}${{ item.precio_uni }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-warning btn-circle"
-                                                            onclick="selectProducto({{item.id}},'{{item.descripcion}}')" ><i class="far fa-hand-pointer"></i></button>
+                                                            onclick="selectPedido({{item.id}},'{{ item.articulo }}','{{ item.cantidad }}','{{ item.divisa }}','{{ item.precio_uni }}','{{ item.precio_uni_iva }}','{{ item.preciotransaccion }}','{{ item.transaccionconiva }}')" ><i class="fas fa-plus"></i></button>
                                                         </td>
                                                         </tr>
                                                         {% endfor %}
@@ -100,32 +104,32 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="id_id_producto" class="col-sm-3 col-form-label">Producto</label>
+                                            <label for="id_id_pedido" class="col-sm-3 col-form-label">ID | Pedido</label>
                                             <div class="col-sm-2">
-                                                <input type="text" readonly class="form-control-plaintext" name="id_id_producto" id="id_id_producto" value="" required>
+                                                <input type="text" readonly class="form-control-plaintext" name="id_id_pedido" id="id_id_pedido" value="" required>
                                             </div>
                                             <div class="col-sm-7">
-                                                <input type="text" readonly class="form-control-plaintext" id="id_descripcion_producto" value="" required>
+                                                <input type="text" readonly class="form-control-plaintext" id="id_descripcion_pedido" value="" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="id_cantidad_detalle" class="col-sm-2 col-form-label">Cant.:</label>
                                             <div class="col-sm-2">
-                                                <input type="number" class="form-control" name="id_cantidad_detalle" id="id_cantidad_detalle" value="00" required>
+                                                <input type="number" readonly class="form-control" name="id_cantidad_detalle" id="id_cantidad_detalle" value="" required>
+                                            </div>
+                                            <label for="id_divisa" class="col-sm-2 col-form-label">Divisa:</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" readonly class="form-control" name="id_divisa" id="id_divisa" value="" required>
                                             </div>
                                             <label for="id_precio_detalle" class="col-sm-2 col-form-label">Precio:</label>
                                             <div class="col-sm-2">
-                                                <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="00" required>
-                                            </div>
-                                            <label for="id_descuento_detalle" class="col-sm-2 col-form-label">Desc.:</label>
-                                            <div class="col-sm-2">
-                                                <input type="text" class="form-control" name="id_descuento_detalle" id="id_descuento_detalle" value="00">
+                                                <input type="float" step="0.01" min=0.00 readonly class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="id_sub_total_detalle" class="col-sm-2 col-form-label">S. Total:</label>
                                             <div class="col-sm-4">
-                                                <input type="text" readonly class="form-control-plaintext" name="id_sub_total_detalle" id="id_sub_total_detalle" value="00">
+                                                <input type="number" readonly class="form-control" name="id_sub_total_detalle" id="id_sub_total_detalle" value="" required>
                                             </div>
                                             <label for="id_total_detalle" class="col-sm-2 col-form-label">Total:</label>
                                             <div class="col-sm-3">
@@ -139,8 +143,8 @@
                                         <div class="dropdown-divider"></div>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
-                                                <a href="{% url 'cmp:compras_list' %}" class="btn btn-success"><i class="far fa-hand-point-left"></i> Cancelar</a>
+                                                <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                                <a href="{% url 'cmp:compras_list' %}" class="btn btn-danger"><i class="far fa-hand-point-left"></i> Salir</a>
                                             </div>
                                         </div>
                                         <!-- Fin Botones -->
@@ -152,26 +156,26 @@
                                     <div class="col">
                                         <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
                                             <thead>
-                                                <th>Producto</th>        
+                                                <th>Pedido</th>
+                                                <th>Descripcion</th>
                                                 <th>Cantidad</th>
                                                 <th>Precio</th>
-                                                <th>Sub Total</th>
-                                                <th>Desc.</th>
+                                                <th>IVA</th>
                                                 <th>Total</th>
-                                                <th class="all">Acciones</th>
+                                                <!-- <th class="all">Acciones</th> -->
                                             </thead>
                                             <tbody>
                                                 {% for item in detalle %}
                                                 <tr>
-                                                <td>{{ item.producto }}</td>
+                                                <td>{{ item.pedido.id }}</td>
+                                                <td>{{ item.pedido.articulo }}</td>
                                                 <td>{{ item.cantidad }}</td>
-                                                <td>{{ item.cantidad }}</td>
-                                                <td>{{ item.sub_total }}</td>
-                                                <td>{{ item.descuento }}</td>
-                                                <td>{{ item.total }}</td>
-                                                <td>
+                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
+                                                <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni_iva|floatformat:"2" }}</td>
+                                                <td>{{ item.pedido.divisa }} ${{ item.pedido.transaccionconiva }}</td>
+<!--                                                <td>
                                                     <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:compras_del' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
-                                                </td>
+                                                </td>-->
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -197,7 +201,7 @@
         $("#sidebarToggle").click();
 
         $('.table').DataTable({
-            "pageLength": 2,
+            "pageLength": 20,
             "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -233,7 +237,6 @@
 
             var  no_fact = $("#id_no_factura").val();
             console.log(no_fact);
-            
             if(no_fact.trim()==""){
                 e.preventDefault()
                 $.alert({
@@ -244,7 +247,6 @@
                 return false;
             }
 
-
             if($("#id_fecha_compra").val()=="" || $("#id_fecha_factura").val()==""){
                 e.preventDefault()
                 $.alert({
@@ -254,35 +256,36 @@
                         });
                 return false;
             }
-
-            if($('#id_total_detalle').val()==0 || $('#id_id_producto').val()==0 ){
+            /*
+            if($('#id_total_detalle').val()==0 || $('#id_id_pedido').val()==0 ){
                 e.preventDefault();
-                //alert("No ha agregado producto o está sin cantidades");
+                //alert("No ha agregado pedido o está sin cantidades");
                 $.alert({
                         type:'red',
                         title:'',
-                        content:'No ha agregado producto o está sin cantidades'
+                        content:'Debes corregir el "Ajuste"'
                         })
-            }
+            }*/
         });
         /*Fin Validar Envío de Detalle */
-
     });
 
-    function selectProducto(id,descripcion)
+    function selectPedido(id,descripcion,cantidad,divisa,precio_uni,precio_uni_iva,preciotransaccion,transaccionconiva)
     {
-        $("#id_cantidad_detalle").val(0);
-        $('#id_precio_detalle').val(0);
-        $('#id_descuento_detalle').val(0);
+        $("#id_cantidad_detalle").val(cantidad);
+        $('#id_divisa').val(divisa);
+        $('#id_precio_detalle').val(precio_uni);
+        $('#id_precio_detalle_iva').val(precio_uni_iva);
 
-        $('#id_sub_total_detalle').val(0);
-        $('#id_total_detalle').val(0);
+        $('#id_sub_total_detalle').val(preciotransaccion);
+        $('#id_total_detalle').val(transaccionconiva);
 
-        $("#id_id_producto").val(+id);
-        $('#id_descripcion_producto').val(descripcion);
-        $('#id_cantidad_detalle').focus();
-        $('#id_cantidad_detalle').select();
-
+        $("#id_id_pedido").val(+id);
+        $('#id_descripcion_pedido').val(descripcion);
+/*
+        $('#id_descuento_detalle').focus();
+        $('#id_descuento_detalle').select();
+*/
         $('.table').DataTable().search('').draw();
     }
 
@@ -315,7 +318,6 @@
         $('#id_total_detalle').val(total);
 
     }
-
     function clear_Detail(){
         $('#id_cantidad_detalle').val(0);
         $('#id_precio_detalle').val(0);
@@ -324,8 +326,8 @@
         $('#id_sub_total_detalle').val(0);
         $('#id_total_detalle').val(0);
 
-        $('#id_id_producto').val('');
-        $('#id_descripcion_producto').val('');
+        $('#id_id_pedido').val('');
+        $('#id_descripcion_pedido').val('');
 
         $('.table').DataTable().search('').draw();
 
