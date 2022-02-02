@@ -4,7 +4,7 @@
 <div class="card shadow mb-4">
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-    <h6 class="m-0 font-weight-bold text-primary">Listado de Ordenedes de compras</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Listado de Ordenes de compras</h6>
     <div class="dropdown no-arrow">
       <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -17,6 +17,16 @@
     </div>
   </div>
   <!-- Card Body -->
+  <div class="card-body">
+    <div class="buttons-toolbar">
+      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      <a href="{% url 'cmp:compras_new' %}" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      {% endif %}
+      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      <a href="{% url 'inv:pedido_list_f3' %}" class="btn btn-info" role="button"></i>X-Pedir</a>
+      {% endif %}
+    </div>
+
   <div class="card-body">
     {% if not obj %}
     <div class="alert alert-info">No hay Ordenes de Compras</div>

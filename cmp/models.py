@@ -7,7 +7,9 @@ from django.db.models import Sum
 from django.http import HttpResponse
 
 from bases.models import ClaseModelo
-from inv.models import Pedido
+from inv.models import Pedido, Banco
+
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Proveedor(ClaseModelo):
     descripcion=models.CharField(
@@ -29,6 +31,10 @@ class Proveedor(ClaseModelo):
         max_length=250,
         null=True, blank=True
     )
+    bancoproveedor=models.ForeignKey(Banco,null=True, on_delete=models.PROTECT)
+    cuentabanco= models.IntegerField(unique=True, null=True, validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999999)])
+    clabeproveedor=models.IntegerField(unique=True, null=True, validators=[MinValueValidator(2000000000000000), MaxValueValidator(999999999999999999)])
+    rfcproveedor=models.CharField(max_length=13, unique=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
