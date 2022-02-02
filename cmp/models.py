@@ -7,7 +7,7 @@ from django.db.models import Sum
 from django.http import HttpResponse
 
 from bases.models import ClaseModelo
-from inv.models import Pedido, Banco
+from inv.models import Pedido, Banco, Empresa
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -55,6 +55,7 @@ class ComprasEnc(ClaseModelo):
     sub_total=models.FloatField(default=0)
     descuento=models.FloatField(default=0)
     total=models.FloatField(default=0)
+    empresaoc=models.ForeignKey(Empresa,on_delete=models.PROTECT, null=True)
 
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
     def __str__(self):

@@ -124,7 +124,7 @@ class Producto(ClaseModelo):
 
 
 class Pedido(ClaseModelo):
-    cantidad = models.PositiveIntegerField()
+    cantidad = models.FloatField()
     comentario = models.CharField(max_length=200, null=True, blank=True)
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, default='X-Revisar')
