@@ -59,7 +59,7 @@ class ComprasEnc(ClaseModelo):
         if self.sub_total == None  or self.descuento == None:
             self.sub_total = 0
             self.descuento = 0
-        self.total = self.sub_total + ( self.sub_total * self.descuento )
+        self.total = self.sub_total + self.descuento
         super(ComprasEnc,self).save()
 
     class Meta:
@@ -81,11 +81,11 @@ class ComprasDet(ClaseModelo):
 
     def save(self):
         self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
-        """self.total = self.sub_total - float(self.descuento)"""
+        self.total = self.sub_total + float(self.descuento)
         super(ComprasDet, self).save()
     class Mega:
-        verbose_name_plural = "Detalles Compras"
-        verbose_name="Detalle Compra"
+        verbose_name_plural = "Detalles Ordenes"
+        verbose_name="Detalle Ordenes"
 
 
 

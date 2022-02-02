@@ -157,8 +157,10 @@ class Pedido(ClaseModelo):
         return precioiva
     @property
     def transaccion_iva(self):
-        preciotransaccioniva = self.preciotransaccion * self.iva
-        return preciotransaccioniva
+        transaccion = self.preciotransaccion
+        ivapuro = self.iva
+        preciotransaccion_iva = transaccion * ivapuro
+        return preciotransaccion_iva
     @property
     def transaccionconiva(self):
         transaccion = self.preciotransaccion
