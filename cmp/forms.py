@@ -47,6 +47,7 @@ class ComprasEncForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+        self.fields['proveedor'].widget.attrs['class'] = 'form-control select2'
         self.fields['fecha_compra'].widget.attrs['readonly'] = True
         self.fields['fecha_factura'].widget.attrs['readonly'] = True
         self.fields['sub_total'].widget.attrs['readonly'] = True
