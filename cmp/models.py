@@ -31,10 +31,19 @@ class Proveedor(ClaseModelo):
         max_length=250,
         null=True, blank=True
     )
+    telefono2=models.CharField(
+        max_length=10,
+        null=True, blank=True
+    )
+    email2=models.CharField(
+        max_length=250,
+        null=True, blank=True
+    )
     bancoproveedor=models.ForeignKey(Banco,null=True, on_delete=models.PROTECT)
-    cuentabanco= models.IntegerField(unique=True, null=True, validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999999)])
+    cuentabanco= models.IntegerField(unique=True, null=True, blank=True, validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999999)])
     clabeproveedor=models.IntegerField(unique=True, null=True, validators=[MinValueValidator(2000000000000000), MaxValueValidator(999999999999999999)])
     rfcproveedor=models.CharField(max_length=13, unique=True, null=True)
+    diascredito=models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
@@ -76,7 +85,7 @@ class ComprasEnc(ClaseModelo):
 class ComprasDet(ClaseModelo):
     compra=models.ForeignKey(ComprasEnc,on_delete=models.CASCADE)
     pedido=models.ForeignKey(Pedido,on_delete=models.CASCADE, blank=True, null=True)
-    cantidad=models.BigIntegerField(default=0)
+    cantidad=models.FloatField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
     descuento=models.FloatField(default=0, blank=True, null=True)
@@ -87,7 +96,7 @@ class ComprasDet(ClaseModelo):
         return '{}'.format(self.pedido)
 
     def save(self):
-        self.sub_total = float(float(int(self.cantidad)) * float(self.precio_prv))
+        self.sub_total = float(float(float(self.cantidad)) * float(self.precio_prv))
         self.total = self.sub_total + float(self.descuento)
         super(ComprasDet, self).save()
     class Mega:

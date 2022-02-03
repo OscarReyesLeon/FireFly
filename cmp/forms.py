@@ -15,6 +15,8 @@ class ProveedorForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+            self.fields['cuentabanco'].widget.attrs['readonly'] = True
+
 
     def clean(self):
         try:
@@ -37,7 +39,7 @@ class ComprasEncForm(forms.ModelForm):
     fecha_factura = forms.DateInput()
     class Meta:
         model=ComprasEnc
-        fields=['proveedor','fecha_compra','observacion',
+        fields=['proveedor','empresaoc','fecha_compra','observacion',
             'no_factura','fecha_factura','sub_total',
             'descuento','total']
 

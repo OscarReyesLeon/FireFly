@@ -20,6 +20,12 @@
                                     <div class="col-6">
                                         <!-- Inicio Encabezado -->
                                         <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label">Empresa:</label>
+                                            <div class="col-sm-10">
+                                              {{ form_enc.empresaoc }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <label for="staticEmail" class="col-sm-2 col-form-label">Proveedor:</label>
                                             <div class="col-sm-10">
                                               {{ form_enc.proveedor }}
@@ -28,7 +34,7 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="id_fecha_compra">Fecha Compra:</label>
+                                                    <label for="id_fecha_compra">Fecha Entrega:</label>
                                                     {{form_enc.fecha_compra}}
                                                 </div>
                                                 <div class="form-group">
@@ -237,7 +243,7 @@
 
             var  no_fact = $("#id_no_factura").val();
             console.log(no_fact);
-            
+
             if(no_fact.trim()==""){
                 e.preventDefault()
                 $.alert({

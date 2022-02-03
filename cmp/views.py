@@ -10,7 +10,7 @@ from django.http import HttpResponse
 import json
 from django.db.models import Sum
 
-from .models import Proveedor, ComprasEnc, ComprasDet
+from .models import Proveedor, ComprasEnc, ComprasDet, Empresa
 from cmp.forms import ProveedorForm,ComprasEncForm
 from bases.views import SinPrivilegios
 from inv.models import Pedido
@@ -102,6 +102,7 @@ def compras(request,compra_id=None):
             e = {
                 'fecha_compra':fecha_compra,
                 'proveedor': enc.proveedor,
+                'empresaoc': enc.empresaoc,
                 'observacion': enc.observacion,
                 'no_factura': enc.no_factura,
                 'fecha_factura': fecha_factura,
@@ -120,18 +121,20 @@ def compras(request,compra_id=None):
         no_factura = request.POST.get("no_factura")
         fecha_factura = request.POST.get("fecha_factura")
         proveedor = request.POST.get("proveedor")
+        empresaoc = request.POST.get("empresaoc")
         sub_total = 0
         descuento = 0
         total = 0
 
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
-
+            emproc=Empresa.objects.get(pk=empresaoc)
             enc = ComprasEnc(
                 fecha_compra=fecha_compra,
                 observacion=observacion,
                 no_factura=no_factura,
                 fecha_factura=fecha_factura,
+                empresaoc=emproc,
                 proveedor=prov,
                 uc = request.user
             )
