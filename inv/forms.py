@@ -201,9 +201,9 @@ class HerramientaForm(forms.ModelForm):
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
-        fields = ['descripcion', 'estado']
+        fields = ['descripcion', 'estado','razonsocial','rfcempresa','direccionfiscal','direccionentrega','urllogoempresa']
         labels = {'descripcion': "Descripción de la empresa",
-                  "estado": "Estado"}
+            "estado": "Estado"}
         widget = {'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):
@@ -218,7 +218,7 @@ class GeneroForm(forms.ModelForm):
         model = Genero
         fields = ['descripcion', 'estado']
         labels = {'descripcion': "Descripción del genero",
-                  "estado": "Estado"}
+            "estado": "Estado"}
         widget = {'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):

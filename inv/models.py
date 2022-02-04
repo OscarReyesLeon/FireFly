@@ -199,14 +199,20 @@ class Banco(ClaseModelo):
 class Empresa(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
-        unique=True
+        unique=True,
     )
+    razonsocial = models.CharField(max_length=200, null=True, blank=True)
+    direccionfiscal = models.CharField(max_length=200, null=True, blank=True)
+    direccionentrega = models.CharField(max_length=200, null=True, blank=True)
+    rfcempresa = models.CharField(max_length=13, null=True, blank=True)
+    urllogoempresa = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
 
     def save(self):
         self.descripcion = self.descripcion.upper()
+        self.rfcempresa = self.rfcempresa.upper()
         super(Empresa, self).save()
 
     class Meta:
