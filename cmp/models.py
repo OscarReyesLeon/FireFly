@@ -40,8 +40,8 @@ class Proveedor(ClaseModelo):
         null=True, blank=True
     )
     bancoproveedor=models.ForeignKey(Banco,null=True, on_delete=models.PROTECT)
-    cuentabanco= models.IntegerField(unique=True, null=True, blank=True, validators=[MinValueValidator(1000000000), MaxValueValidator(9999999999999)])
-    clabeproveedor=models.IntegerField(unique=True, null=True, validators=[MinValueValidator(2000000000000000), MaxValueValidator(999999999999999999)])
+    cuentabanco= models.IntegerField(unique=True, null=True, blank=True)
+    clabeproveedor=models.BigIntegerField(unique=True, null=True, blank=True)
     rfcproveedor=models.CharField(max_length=13, unique=True, null=True)
     diascredito=models.IntegerField(null=True, blank=True)
 
