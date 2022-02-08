@@ -104,7 +104,7 @@
             {% endif %}
 
             <h6 class="collapse-header">Catálogos de RH:</h6>
-            {% if perms.inv.view_empresas %}
+            {% if perms.inv.view_empresa %}
             <a class="collapse-item" href="{% url 'inv:empresa_list' %}">Empresas</a>
             {% endif %}
             {% if perms.inv.view_banco %}
