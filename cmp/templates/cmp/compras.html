@@ -47,11 +47,11 @@
                                                     <label for="id_fecha_compra">No. Factura:</label>
                                                     {{form_enc.no_factura}}
                                                 </div>
-                                                <div class="form-group">
+<!--                                                <div class="form-group">
                                                     <label for="id_descripcion">Fecha Factura:</label>
                                                     {{form_enc.fecha_factura}}
                                                 </div>
-                                                <div class="row">
+-->                                                <div class="row">
                                                     <div class="col">
                                                         <label for="Sub Total">Sub Total:</label>
                                                     </div>
@@ -244,7 +244,7 @@
             var  no_fact = $("#id_no_factura").val();
             console.log(no_fact);
 
-            if(no_fact.trim()==""){
+/*            if(no_fact.trim()==""){
                 e.preventDefault()
                 $.alert({
                         type:'red',
@@ -253,9 +253,9 @@
                         });
                 return false;
             }
+*/
 
-
-            if($("#id_fecha_compra").val()=="" || $("#id_fecha_factura").val()==""){
+            if($("#id_fecha_compra").val()==""){
                 e.preventDefault()
                 $.alert({
                         type:'red',

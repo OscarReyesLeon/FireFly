@@ -98,14 +98,12 @@ def compras(request,compra_id=None):
         if enc:
             det = ComprasDet.objects.filter(compra=enc)
             fecha_compra = datetime.date.isoformat(enc.fecha_compra)
-            fecha_factura = datetime.date.isoformat(enc.fecha_factura)
             e = {
                 'fecha_compra':fecha_compra,
                 'proveedor': enc.proveedor,
                 'empresaoc': enc.empresaoc,
                 'observacion': enc.observacion,
                 'no_factura': enc.no_factura,
-                'fecha_factura': fecha_factura,
                 'sub_total': enc.sub_total,
                 'descuento': enc.descuento,
                 'total':enc.total
@@ -119,7 +117,6 @@ def compras(request,compra_id=None):
         fecha_compra = request.POST.get("fecha_compra")
         observacion = request.POST.get("observacion")
         no_factura = request.POST.get("no_factura")
-        fecha_factura = request.POST.get("fecha_factura")
         proveedor = request.POST.get("proveedor")
         empresaoc = request.POST.get("empresaoc")
         sub_total = 0
@@ -133,7 +130,6 @@ def compras(request,compra_id=None):
                 fecha_compra=fecha_compra,
                 observacion=observacion,
                 no_factura=no_factura,
-                fecha_factura=fecha_factura,
                 empresaoc=emproc,
                 proveedor=prov,
                 uc = request.user
@@ -147,7 +143,6 @@ def compras(request,compra_id=None):
                 enc.fecha_compra = fecha_compra
                 enc.observacion = observacion
                 enc.no_factura=no_factura
-                enc.fecha_factura=fecha_factura
                 enc.um=request.user.id
                 enc.save()
 

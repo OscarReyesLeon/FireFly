@@ -36,11 +36,11 @@ class ProveedorForm(forms.ModelForm):
 
 class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()
-    fecha_factura = forms.DateInput()
+    """fecha_factura = forms.DateInput()"""
     class Meta:
         model=ComprasEnc
         fields=['proveedor','empresaoc','fecha_compra','observacion',
-            'no_factura','fecha_factura','sub_total',
+            'no_factura','sub_total',
             'descuento','total']
 
     def __init__(self, *args, **kwargs):
@@ -51,7 +51,7 @@ class ComprasEncForm(forms.ModelForm):
             })
         self.fields['proveedor'].widget.attrs['class'] = 'form-control select2'
         self.fields['fecha_compra'].widget.attrs['readonly'] = True
-        self.fields['fecha_factura'].widget.attrs['readonly'] = True
+        """self.fields['fecha_factura'].widget.attrs['readonly'] = True"""
         self.fields['sub_total'].widget.attrs['readonly'] = True
         self.fields['descuento'].widget.attrs['readonly'] = True
         self.fields['total'].widget.attrs['readonly'] = True
