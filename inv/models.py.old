@@ -124,7 +124,7 @@ class Producto(ClaseModelo):
 
 
 class Pedido(ClaseModelo):
-    cantidad = models.FloatField()
+    cantidad = models.PositiveIntegerField()
     comentario = models.CharField(max_length=200, null=True, blank=True)
     autpor = models.ForeignKey(Autoriza, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, default='X-Revisar')
@@ -143,33 +143,10 @@ class Pedido(ClaseModelo):
     folio_ingreso = models.CharField(max_length=20, default='--')
     divisa = models.CharField(max_length=3, default='mxn')
     indentificador_estado = models.CharField(max_length=20, default='2')
-    iva = models.FloatField(default=.16)
-    @property
-    def precio_uni_iva(self):
-        precioiva = self.precio_uni * self.iva
-        return precioiva
-    @property
-    def precio_unimasiva(self):
-        unitario = self.precio_uni
-        ivapuro = self.iva
-        ivaoperacion = unitario * ivapuro
-        precioiva = unitario + ivaoperacion
-        return precioiva
-    @property
-    def transaccion_iva(self):
-        transaccion = self.preciotransaccion
-        ivapuro = self.iva
-        preciotransaccion_iva = transaccion * ivapuro
-        return preciotransaccion_iva
-    @property
-    def transaccionconiva(self):
-        transaccion = self.preciotransaccion
-        ivapuro = self.iva
-        ivaoperacion = transaccion * ivapuro
-        preciotransaccioniva = transaccion + ivaoperacion
-        return preciotransaccioniva
+
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
+
     def save(self):
         self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
         self.articulo = self.articulo.upper()
@@ -199,20 +176,14 @@ class Banco(ClaseModelo):
 class Empresa(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
-        unique=True,
+        unique=True
     )
-    razonsocial = models.CharField(max_length=200, null=True, blank=True)
-    direccionfiscal = models.CharField(max_length=200, null=True, blank=True)
-    direccionentrega = models.CharField(max_length=200, null=True, blank=True)
-    rfcempresa = models.CharField(max_length=13, null=True, blank=True)
-    urllogoempresa = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
 
     def save(self):
         self.descripcion = self.descripcion.upper()
-        self.rfcempresa = self.rfcempresa.upper()
         super(Empresa, self).save()
 
     class Meta:

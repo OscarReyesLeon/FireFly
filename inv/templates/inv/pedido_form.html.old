@@ -60,10 +60,6 @@
                                 <div class="col-md-6">{{form.precio_uni}}</div>
                             </div>
                             <div class="col-md-6">
-                                <div class="col-md-6">IVA en enteros</div>
-                                <div class="col-md-6">{{form.iva}}</div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="col-md-6">Divisa</div>
                                 <div class="col-md-6">{{form.divisa}}</div>
                             </div>
