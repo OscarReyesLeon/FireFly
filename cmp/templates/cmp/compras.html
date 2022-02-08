@@ -48,7 +48,7 @@
                                                     {{form_enc.no_factura}}
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="id_descripcion">Fecha Factura:</label>
+                                                    <label for="id_descripcion">Fecha Opcional:</label>
                                                     {{form_enc.fecha_factura}}
                                                 </div>
                                                 <div class="row">
@@ -241,7 +241,7 @@
         /*Validar Envío de Detalle */
         $("#frmCompras").submit(function(e){
 
-            var  no_fact = $("#id_no_factura").val();
+/*            var  no_fact = $("#id_no_factura").val();
             console.log(no_fact);
 
             if(no_fact.trim()==""){
@@ -253,9 +253,9 @@
                         });
                 return false;
             }
+*/
 
-
-            if($("#id_fecha_compra").val()=="" || $("#id_fecha_factura").val()==""){
+            if($("#id_fecha_compra").val()==""){
                 e.preventDefault()
                 $.alert({
                         type:'red',

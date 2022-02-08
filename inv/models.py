@@ -4,7 +4,7 @@ from bases.models import ClaseModelo
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
+===>
 class Equipo(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
