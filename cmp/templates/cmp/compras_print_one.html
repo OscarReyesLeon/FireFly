@@ -117,11 +117,11 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Pedido ID</th>
-                        <th>Cantidad</th>
+                        <th style="width: 10%">Pedido ID</th>
+                        <th style="width: 10%">Cantidad</th>
                         <th>Descripcion</th>
-                        <th>Unitario</th>
-                        <th>Total</th>
+                        <th style="width: 12%">Unitario</th>
+                        <th style="width: 15%">Total</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,9 +129,9 @@
                     <tr>
                         <td><span class="small"><center>{{ item.pedido.id }}</center></span></td>
                         <td class="numero"><center>{{ item.cantidad }}</center></td>
-                        <td class="numero">{{ item.pedido.articulo }}</td>
-                        <td class="numero">$ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
-                        <td class="numero">$ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
+                        <td class="letter">{{ item.pedido.articulo }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
                     </tr>
                     {% endfor %}
                     <tr>

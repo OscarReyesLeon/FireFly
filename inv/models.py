@@ -141,7 +141,7 @@ class Pedido(ClaseModelo):
     fecha_finalizado = models.CharField(max_length=200, null=True, blank=True)
     fecha_rechazo = models.CharField(max_length=200, null=True, blank=True)
     folio_ingreso = models.CharField(max_length=20, default='--')
-    divisa = models.CharField(max_length=3, default='mxn')
+    divisa = models.CharField(max_length=3, default='MXN')
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
     @property
