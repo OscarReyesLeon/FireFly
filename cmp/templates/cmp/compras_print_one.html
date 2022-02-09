@@ -85,8 +85,9 @@
                     <tbody>
                         <tr>
                             <td>
-                                <h4>Información del Comprador</h4>
+                                <h4>Información de Facturación</h4>
                             </td>
+                            <td><h4>Uso CFDI: {{ encabezado.no_factura }}</h4></td>
                         </tr>
                     </tbody>
                 </table><br>
@@ -95,16 +96,6 @@
                         <tr>
                             <td><h4>Razon Social:</h4></td>
                             <td>{{ encabezado.empresaoc.razonsocial }}</td>
-                            <td><h4>RFC:</h4></td>
-                            <td>{{ encabezado.empresaoc.rfcempresa }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="">
-                    <tbody>
-                        <tr>
-                            <td><h4>Uso CFDI:</h4></td>
-                            <td>{{ encabezado.no_factura }}</td>
                             <td><h4>RFC:</h4></td>
                             <td>{{ encabezado.empresaoc.rfcempresa }}</td>
                         </tr>
