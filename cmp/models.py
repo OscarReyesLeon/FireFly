@@ -12,10 +12,7 @@ from inv.models import Pedido, Banco, Empresa
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Proveedor(ClaseModelo):
-    descripcion=models.CharField(
-        max_length=100,
-        unique=True
-        )
+    descripcion=models.CharField(max_length=100,unique=True)
     direccion=models.CharField(
         max_length=250,
         null=True, blank=True
@@ -41,9 +38,13 @@ class Proveedor(ClaseModelo):
     )
     bancoproveedor=models.ForeignKey(Banco,null=True, on_delete=models.PROTECT)
     cuentabanco= models.IntegerField(unique=True, null=True, blank=True)
-    clabeproveedor=models.BigIntegerField(unique=True, null=True, blank=True)
-    rfcproveedor=models.CharField(max_length=13, unique=True, null=True)
+    clabeproveedor=models.BigIntegerField(null=True, blank=True)
+    rfcproveedor=models.CharField(max_length=14, unique=True, blank=True, null=True)
     diascredito=models.IntegerField(null=True, blank=True)
+    giro=models.CharField(max_length=50,null=True,blank=True)
+    ubicacion=models.CharField(max_length=20,null=True,blank=True)
+    nombrecomercial=models.CharField(max_length=70)
+    
 
     def __str__(self):
         return '{}'.format(self.descripcion)

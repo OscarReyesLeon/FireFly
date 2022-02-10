@@ -122,6 +122,7 @@
                         <th style="width: 10%">Pedido ID</th>
                         <th style="width: 10%">Cantidad</th>
                         <th>Descripcion</th>
+                        <th style="width: 5%">IVA</th>
                         <th style="width: 12%">Unitario</th>
                         <th style="width: 15%">Total</th>
                     </tr>
@@ -132,6 +133,7 @@
                         <td><span class="small"><center>{{ item.pedido.id }}</center></span></td>
                         <td class="numero"><center>{{ item.cantidad }}</center></td>
                         <td class="letter">{{ item.pedido.articulo }}</td>
+                        <td class="letter"><center>{{ item.pedido.iva }}</center></td>
                         <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
                         <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
                     </tr>
@@ -140,6 +142,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td><hr></td>
                         <td><hr></td>
                         <td><hr></td>
                 </tr>
