@@ -28,7 +28,7 @@
                 </td>
                 <td>
                     <div class="card-header" align="right">
-                        <h3>Orden de compra ID: {{ encabezado.id}} <br> Fecha UM: {{ encabezado.fm|date:"H:i"}} {{ encabezado.fm|date:"d/m/Y"}} <br> UM ID: {{ encabezado.um }} </h3>
+                        <h4>Orden de compra ID: {{encabezado.id}}<br>UM: {{ encabezado.fm|date:"d/m/Y"}} - {{encabezado.fm|date:"H:i"}}<br>Comprador: {{ encabezado.uc }} <br> UM ID: {{ encabezado.um }} </h4>
                     </div>
                 </td>
             </tr>
@@ -40,16 +40,14 @@
                     <tbody>
                         <tr>
                             <td>
-                                <h4>Información del Proveedor</h4>
+                                <h3>Información del Proveedor</h3>
                             </td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <h4>Dias de credito: {{ encabezado.proveedor.diascredito }}</h4>
                             </td>
                         </tr>
-                    </tbody>
-                </table><br>
-                <table class="">
-                    <tbody>
                         <tr>
                             <td><h4>Razon Social:</h4></td>
                             <td>{{ encabezado.proveedor.descripcion}}</td>
@@ -85,19 +83,32 @@
                     <tbody>
                         <tr>
                             <td>
-                                <h4>Información de Facturación</h4>
+                                <h3>Información de Facturación</h3>
                             </td>
+                            <td> </td>
+                            <td></td>
                             <td><h4>Uso CFDI: {{ encabezado.no_factura }}</h4></td>
                         </tr>
-                    </tbody>
-                </table><br>
-                <table class="">
-                    <tbody>
                         <tr>
-                            <td><h4>Razon Social:</h4></td>
+                            <td style="width: 20%"><h4>Razon Social:</h4></td>
                             <td>{{ encabezado.empresaoc.razonsocial }}</td>
-                            <td><h4>RFC:</h4></td>
-                            <td>{{ encabezado.empresaoc.rfcempresa }}</td>
+                            <td></td>
+                            <td><h4>RFC: {{ encabezado.empresaoc.rfcempresa }}</h4></td>
+                        </tr>
+                    </table>
+                    <table class="">
+                        <tbody>
+                            <tr>
+                            <td style="width: 20%"><h4>Dirección Fiscal</h4></td>
+                            <td style="width: 80%">{{encabezado.empresaoc.direccionfiscal}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%"><h4>Dirección de Entrega:</h4></td>
+                            <td style="width: 80%"><u>{{encabezado.empresaoc.direccionentrega}}</u></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%"><h4>Horario de Entrega:</h4></td>
+                            <td style="width: 80%">{{encabezado.empresaoc.horarios}}</td>
                         </tr>
                     </tbody>
                 </table>

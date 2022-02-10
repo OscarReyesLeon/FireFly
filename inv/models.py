@@ -206,6 +206,7 @@ class Empresa(ClaseModelo):
     direccionentrega = models.CharField(max_length=200, null=True, blank=True)
     rfcempresa = models.CharField(max_length=13, null=True, blank=True)
     urllogoempresa = models.CharField(max_length=100, null=True, blank=True)
+    horarios = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
@@ -213,6 +214,7 @@ class Empresa(ClaseModelo):
     def save(self):
         self.descripcion = self.descripcion.upper()
         self.rfcempresa = self.rfcempresa.upper()
+        self.razonsocial = self.razonsocial.upper()
         super(Empresa, self).save()
 
     class Meta:

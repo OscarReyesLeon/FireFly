@@ -201,7 +201,7 @@ class HerramientaForm(forms.ModelForm):
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
-        fields = ['descripcion', 'estado','razonsocial','rfcempresa','direccionfiscal','direccionentrega','urllogoempresa']
+        fields = ['descripcion', 'estado','razonsocial','rfcempresa','direccionfiscal','direccionentrega','urllogoempresa','horarios']
         labels = {'descripcion': "Descripción de la empresa",
             "estado": "Estado"}
         widget = {'descripcion': forms.TextInput}
