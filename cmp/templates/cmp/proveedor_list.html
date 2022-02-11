@@ -23,10 +23,8 @@
     <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
       <thead>
         <th>Id</th>        
-        <th>Descripcion</th>
-        <th>Dirección</th>
-        <th>Contacto</th>
-        <th>Teléfono</th>
+        <th>Razon Social</th>
+        <th>Nombre Comercial</th>
         <th>EMail</th>
         <th>Estado</th>
         <th class="all">Acciones</th>
@@ -36,9 +34,7 @@
         <tr>
           <td>{{ item.id }}</td>
           <td>{{ item.descripcion }}</td>
-          <td>{{item.direccion}}</td>
-          <td>{{ item.contacto }}</td>
-          <td>{{ item.telefono }}</td>
+          <td>{{item.nombrecomercial}}</td>
           <td>{{ item.email }}</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
