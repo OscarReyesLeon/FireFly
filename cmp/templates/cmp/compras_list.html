@@ -34,22 +34,18 @@
     <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
       <thead>
         <th>Id</th>
-        <th>Finalizada</th>
         <th>Sub Total</th>
-        <th>IVA</th>
+        <th>Ultima Edición</th>
         <th>Total</th>
-        <th>Estado</th>
         <th class="all">Acciones</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{ item.id }}</td>
+          <td>{{ item.proveedor }}</td>
           <td>{{item.fm}}</td>
-          <td>{{ item.sub_total|floatformat:"0" }}</td>
-          <td>{{ item.descuento|floatformat:"0" }}</td>
-          <td>{{ item.total|floatformat:"0" }}</td>
-          <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+          <td>$ {{ item.total|floatformat:"0" }}</td>
           <td>
             <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edit' item.id %}"><i class="far fa-edit"></i></a>
             <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_one' item.id %}" target="reportes"><i class="fas fa-print"></i></a>

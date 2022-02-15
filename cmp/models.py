@@ -44,6 +44,10 @@ class Proveedor(ClaseModelo):
     giro=models.CharField(max_length=50,null=True,blank=True)
     ubicacion=models.CharField(max_length=20,null=True,blank=True)
     nombrecomercial=models.CharField(max_length=70)
+    @property
+    def cuentabancoauto(self):
+        cuentabanco=self.clabeproveedor[6:17]
+        return cuentabanco
     
 
     def __str__(self):
