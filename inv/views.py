@@ -786,7 +786,7 @@ def pedido_reaut(request, id):
         return redirect("inv:pedido_list_f2")
     if request.method=='GET':
         if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("no tiene precio ingresado o la cantidad es 0")
+            return HttpResponse("Ingresa el precio primero")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
@@ -798,7 +798,7 @@ def pedido_reaut(request, id):
             return HttpResponse("no se puede mandar a autorizar")
     if request.method=='POST':
         if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("no tiene precio ingresado o la cantidad es 0")
+            return HttpResponse("Ingresa el precio primero")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
@@ -808,8 +808,6 @@ def pedido_reaut(request, id):
             return redirect("inv:pedido_list_f2")
         else:
             return HttpResponse("no se puede mandar a autorizar")
-
-
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -841,8 +839,6 @@ def pedido_scancela(request, id):
             return redirect("inv:pedido_list_f")
         else:
             return HttpResponse("El pedido ya fue revisado y no lo puedes cancelar. comunicate con compras")
-
-
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -851,7 +847,6 @@ def pedido_stock(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
     template_name="inv/pedidos_brinco.html"
-
     if not pede:
         return redirect("inv:pedido_list")
     if request.method=='GET':
@@ -876,8 +871,40 @@ def pedido_stock(request, id):
             return redirect("inv:pedido_list")
         else:
             return HttpResponse("Esta opción no está disponible")
+    return render(request,template_name,contexto)
 
-
+@login_required(login_url="/login/")
+@permission_required("inv.change_producto",login_url="/login/")
+def pedido_express(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+    if not pede:
+        return redirect("inv:pedido_list")
+    if request.method=='GET':
+        if pede.precio_uni==0 or pede.cantidad==0:
+            return HttpResponse("Primero ingresa el monto $ de la compra Express")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Express'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f2")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+    if request.method=='POST':
+        if pede.precio_uni==0 or pede.cantidad==0:
+            return HttpResponse("Primero ingresa el monto $ de la compra Express")
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Express'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("Esta opción no está disponible")
     return render(request,template_name,contexto)
 
 """RH EDIT Aqui"""
