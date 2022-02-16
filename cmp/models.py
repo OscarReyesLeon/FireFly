@@ -48,7 +48,6 @@ class Proveedor(ClaseModelo):
     def cuentabancoauto(self):
         cuentabanco=self.clabeproveedor[6:17]
         return cuentabanco
-    
 
     def __str__(self):
         return '{}'.format(self.descripcion)
@@ -60,6 +59,18 @@ class Proveedor(ClaseModelo):
     class Meta:
         verbose_name_plural = "Proveedores"
 
+class UsoFactura(ClaseModelo):
+    descripcion=models.CharField(max_length=100,unique=True)
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(UsoFactura, self).save()
+
+    class Meta:
+        verbose_name_plural = "Usos Facturas"
 
 class ComprasEnc(ClaseModelo):
     fecha_compra=models.DateField(null=True,blank=True)

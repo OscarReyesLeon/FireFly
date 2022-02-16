@@ -10,8 +10,8 @@ from django.http import HttpResponse
 import json
 from django.db.models import Sum
 
-from .models import Proveedor, ComprasEnc, ComprasDet, Empresa
-from cmp.forms import ProveedorForm,ComprasEncForm
+from .models import Proveedor, ComprasEnc, ComprasDet, Empresa, UsoFactura
+from cmp.forms import ProveedorForm,ComprasEncForm, UsoFacturaForm
 from bases.views import SinPrivilegios
 from inv.models import Pedido
 
@@ -75,6 +75,64 @@ def proveedorInactivar(request,id):
 
     return render(request,template_name,contexto)
 
+class UsoFacturaView(SinPrivilegios, generic.ListView):
+    model = UsoFactura
+    template_name = "cmp/usofactura_list.html"
+    context_object_name = "obj"
+    permission_required="cmp.view_UsoFactura"
+
+class UsoFacturaNew(SuccessMessageMixin, SinPrivilegios,\
+                generic.CreateView):
+    model=UsoFactura
+    template_name="cmp/usofactura_form.html"
+    context_object_name = 'obj'
+    form_class=UsoFacturaForm
+    success_url= reverse_lazy("cmp:usofactura_list")
+    success_message="Clave de sat agregada"
+    permission_required="cmp.add_UsoFactura"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        #print(self.request.user.id)
+        return super().form_valid(form)
+
+
+class UsoFacturaEdit(SuccessMessageMixin, SinPrivilegios,\
+                generic.UpdateView):
+    model=UsoFactura
+    template_name="cmp/usofactura_form.html"
+    context_object_name = 'obj'
+    form_class=UsoFacturaForm
+    success_url= reverse_lazy("cmp:usofactura_list")
+    success_message="Clave de sat editada Editado"
+    permission_required="cmp.change_UsoFactura"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        print(self.request.user.id)
+        return super().form_valid(form)
+
+
+@login_required(login_url="/login/")
+@permission_required("cmp.change_UsoFactura",login_url="/login/")
+def UsoFacturaInactivar(request,id):
+    template_name='cmp/inactivar_prv.html'
+    contexto={}
+    prv = UsoFactura.objects.filter(pk=id).first()
+
+    if not prv:
+        return HttpResponse('Clave del SAT no existe ' + str(id))
+
+    if request.method=='GET':
+        contexto={'obj':prv}
+
+    if request.method=='POST':
+        prv.estado=False
+        prv.save()
+        contexto={'obj':'OK'}
+        return HttpResponse('Clave de SAT Inactivado')
+
+    return render(request,template_name,contexto)
 
 class ComprasView(SinPrivilegios, generic.ListView):
     model = ComprasEnc

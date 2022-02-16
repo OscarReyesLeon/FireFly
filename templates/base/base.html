@@ -134,6 +134,9 @@
             {% if perms.cmp.view_proveedor %}
             <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
             {% endif %}
+            {% if perms.cmp.view_UsoFactura %}
+            <a class="collapse-item" href="{% url 'cmp:usofactura_list' %}">Claves SAT</a>
+            {% endif %}
 
             <h6 class="collapse-header">Catálogos de Facturación:</h6>
             
