@@ -76,6 +76,7 @@ class ComprasEnc(ClaseModelo):
     fecha_compra=models.DateField(null=True,blank=True)
     observacion=models.TextField(blank=True,null=True)
     no_factura=models.CharField(max_length=100,null=True,blank=True,default="Gastos en general (G03)")
+    uso_factura=models.ForeignKey(UsoFactura,on_delete=models.PROTECT,null=True, blank=True)
     fecha_factura=models.DateField(null=True,blank=True)
     sub_total=models.FloatField(default=0)
     descuento=models.FloatField(default=0)

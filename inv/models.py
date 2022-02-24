@@ -171,7 +171,7 @@ class Pedido(ClaseModelo):
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
     def save(self):
-        self.preciotransaccion = float(float(int(self.cantidad)) * float(self.precio_uni))
+        self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
         self.articulo = self.articulo.upper()
         self.proceso = self.proceso.upper()
 
@@ -181,7 +181,7 @@ class Pedido(ClaseModelo):
 class Banco(ClaseModelo):
     descripcion = models.CharField(
         max_length=20,
-        help_text='Bancos donde se paga nomina',
+        help_text='Bancos',
         unique=True
     )
 
