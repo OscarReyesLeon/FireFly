@@ -121,28 +121,24 @@ class ComprasDet(ClaseModelo):
         verbose_name="Detalle Ordenes"
 
 
-
 @receiver(post_delete, sender=ComprasDet)
 def detalle_compra_borrar(sender,instance, **kwargs):
     id_pedido = instance.pedido.id
     id_compra = instance.compra.id
 
     enc = ComprasEnc.objects.filter(pk=id_compra).first()
+    if enc:
+        sub_total = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('sub_total'))
+        descuento = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('descuento'))
+        enc.sub_total=sub_total['sub_total__sum']
+        enc.descuento=descuento['descuento__sum']
+        enc.save()
+    
     prod=Pedido.objects.filter(pk=id_pedido).first()
-    if prod.indentificador_estado=='4':
-        if enc:
-            sub_total = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('sub_total'))
-            descuento = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('descuento'))
-            enc.sub_total=sub_total['sub_total__sum']
-            enc.descuento=descuento['descuento__sum']
-            enc.save()
-        if prod:
-            prod.status='Error en OC'
-            prod.indentificador_estado='3'
-            prod.save()
-    else:
-        return HttpResponse("ya no se puede modificar")
-
+    if prod:
+        prod.status='Error en OC'
+        prod.indentificador_estado='3'
+        prod.save()
 
 @receiver(post_save, sender=ComprasDet)
 def detalle_compra_guardar(sender,instance,**kwargs):
