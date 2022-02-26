@@ -101,7 +101,7 @@ class ComprasEnc(ClaseModelo):
 
 class ComprasDet(ClaseModelo):
     compra=models.ForeignKey(ComprasEnc,on_delete=models.CASCADE)
-    pedido=models.ForeignKey(Pedido,on_delete=models.CASCADE, blank=True, null=True)
+    pedido=models.OneToOneField(Pedido,on_delete=models.CASCADE, blank=True)
     cantidad=models.FloatField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
