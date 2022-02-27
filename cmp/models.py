@@ -101,7 +101,7 @@ class ComprasEnc(ClaseModelo):
 
 class ComprasDet(ClaseModelo):
     compra=models.ForeignKey(ComprasEnc,on_delete=models.CASCADE)
-    pedido=models.OneToOneField(Pedido,on_delete=models.CASCADE, blank=True)
+    pedido=models.OneToOneField(Pedido,on_delete=models.CASCADE, blank=True, null=True)
     cantidad=models.FloatField(default=0)
     precio_prv=models.FloatField(default=0)
     sub_total=models.FloatField(default=0)
@@ -136,7 +136,7 @@ def detalle_compra_borrar(sender,instance, **kwargs):
     
     prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
-        prod.status='Error en OC'
+        prod.status='X asignar OC'
         prod.indentificador_estado='3'
         prod.save()
 
