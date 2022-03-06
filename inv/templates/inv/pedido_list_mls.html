@@ -75,7 +75,7 @@
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
           <td>
-            {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+            {% if perms.inv.view_autoriza %}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
             {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
