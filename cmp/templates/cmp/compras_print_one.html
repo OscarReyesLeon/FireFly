@@ -65,7 +65,7 @@
                             <td>{{ encabezado.proveedor.email }}</td>
                         </tr>
                     </tbody>
-                </table><br>
+                </table>
                 <table class="">
                     <tbody>
                         <tr>
@@ -157,6 +157,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td><h4>Sub Total</h4></td>
                             <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:"2" }}</h4></td>
                     </tr>
@@ -164,10 +165,12 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td><h4>IVA</h4></td>
                             <td class="numero"><h4>$ {{ encabezado.descuento|floatformat:"2" }}</h4></td>
                     </tr>
                     <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

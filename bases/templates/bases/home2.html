@@ -17,9 +17,9 @@
         </div>
         </div>
         <div>
-          <canvas id="myChart"></canvas>
-        </div>
-<br>      <div>    <h6 class="m-0 font-weight-bold text-dark" align="center">Pedidos abiertos = {{pedidosstatusall}}</h6>
+          <canvas id="Polar"></canvas>
+<br>      </div>
+      <div>    <h6 class="m-0 font-weight-bold text-dark" align="center">Compras abiertas por Estado (General) = {{pedidosstatusall}}</h6>
       </div>
       <div><br>      <div><audio src="{% static  'base/img/cancion.flac' %}" preload="none" controls></audio></audio></div>
       <br>
@@ -48,8 +48,8 @@
         <h6 class="m-0 font-weight-bold text-primary" align="left">en Proveedor</h6>
         El pedido está por recibirse. El tiempo depende de los acuerdos, tiempos y formas de entrega que se tenga con el proveedor.<br>
         <br>
-        <h6 class="m-0 font-weight-bold text-primary" align="left">Express</h6>
-        El pedido se adquirió por "compra directa". Dichas compras son casos únicos que por el monto mínimo o la situación, se realizaron fuera del proceso normal.<br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Directa</h6>
+        El pedido se adquirió por "compra directa". Dichas compras son casos únicos que por falta de proveedor, el monto mínimo y la situación, se realizaron fuera del proceso normal.<br>
         <br>
         <h6 class="m-0 font-weight-bold text-primary" align="left">Stock</h6>
         Lo solicitado en el pedido. Ya se encontraba en el almacén.<br>
@@ -72,135 +72,58 @@
         </table>-->
       </div><br><br>
       
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-  const labels = [
-    '-8',
-    '-7',
-    '-6',
-    '-5',
-    '-4',
-    'anteantier',
-    'antier',
-    'ayer',
-    'hoy',
-  ];
-
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: 'X-Revisar',
-      data: {{diaxr|safe}},
-      backgroundColor: 'green',
-      borderColor: 'green',
-      tension: 0.4,
-    },
-    {
-      label: 'Revisado',
-      data: {{diare|safe}},
-      backgroundColor: '#a18262',
-      borderColor: '#a18262',
-      tension: 0.4,
-    },
-    {
-      label: 'Pendiente',
-      data: {{diape|safe}},
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      tension: 0.4,
-    },
-    {
-      label: 'en Proveedor',
-      data: {{diapr|safe}},
-      backgroundColor: '#33D1FF',
-      borderColor: '#33D1FF',
-      tension: 0.4,
-    },
-    {
-      label: 'Directa',
-      data: {{diadi|safe}},
-      backgroundColor: 'orange',
-      borderColor: 'orange',
-      tension: 0.4,
-    },
-    {
-      label: 'X asignar OC',
-      data: {{diaoc|safe}},
-      backgroundColor: 'red',
-      borderColor: 'red',
-      tension: 0.4,
-    },
-    {
-      label: 'Stock',
-      data: {{diast|safe}},
-      backgroundColor: 'blue',
-      borderColor: 'blue',
-      tension: 0.4,
-    },
-    {
-      label: 'Fin',
-      data: {{diafn|safe}},
-      backgroundColor: 'purple',
-      borderColor: 'purple',
-      tension: 0.0,
-    },
-    {
-      label: 'Total',
-      data: {{diall|safe}},
-      backgroundColor: 'red',
-      borderColor: 'gray',
-      tension: 0.3,
-    },
-  ],
-  
-  };
-
-  const config = {
-  type: 'line',
-  data: data,
-  options: {
-    animation: {
+        <script>
+          const data = {
+          labels: [
+            'x Asignar OC',
+            '1- x Revisar',
+            '2- Revisado',
+            '3- Pendiente',
+            '4- en Proveedor',
+          ],
+          datasets: [{
+            label: '',
+            data: {{datagraph|safe}},
+            backgroundColor: [
+              'rgb(255, 0, 0)',
+              '#00FFFF',
+              'rgb(0, 128, 0)',
+              'rgb(255, 165, 0)',
+              '#33D1FF',
+            ]
+          }]
+        };        
+          const config = {
+            type: 'line',
+            data: data,
+            options: {
+              animation: {
               duration: 5000,
               },
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: 'Movimiento en los pedidos'
-      },
-    },
-    interaction: {
-      intersect: false,
-    },
-    scales: {
-      x: {
-        display: true,
-        title: {
-          display: true
-        }
-      },
-      y: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Cantidad de pedidos'
-        },
-        suggestedMin: 0,
-        suggestedMax: 50,
-      }
-    }
-  },
-};</script>
+              plugins: {
+                legend: {
+                  display: false
+                }
+              },
+              scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              },
+          };
+          
+        </script>
 
- 
-<script>
-  const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
-</script>
- 
+        <script>
+          const Polar = new Chart(
+            document.getElementById('Polar'),
+            config
+          );
+        </script>
+
 
 
 

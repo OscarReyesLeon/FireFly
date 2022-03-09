@@ -1,4 +1,11 @@
 from inv.models import Pedido
+from datetime import datetime, timedelta
+
+def nan0(v):
+    for i in range(len(v)):
+        if v[i] == 0:
+            v[i] = "NaN"
+    return v
 
 def pedidos_status(request):
     statusEn1 = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:999].count()
@@ -6,10 +13,174 @@ def pedidos_status(request):
     statusEn3 = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:999].count()
     statusEn4 = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:999].count()
     statusAll = statusEn1 +  statusEn2 + statusEn3 + statusEn4
+    
     XRevisar = Pedido.objects.filter(status="X-Revisar").order_by('-id')[:999].count()
     Revisado = Pedido.objects.filter(status="Revisado").order_by('-id')[:999].count()
     Pendiente = Pedido.objects.filter(status="Pendiente").order_by('-id')[:999].count()
     enProveedor = Pedido.objects.filter(status="en Proveedor").order_by('-id')[:999].count()
     XasignarOC = Pedido.objects.filter(status="X asignar OC").order_by('-id')[:999].count()
     datagraph = [XasignarOC, XRevisar, Revisado, Pendiente, enProveedor,]
-    return {'pedidosstatus1':statusEn1, 'pedidosstatus2':statusEn2, 'pedidosstatus3':statusEn3, 'pedidosstatus4':statusEn4, 'pedidosstatusall': statusAll, 'datagraph':datagraph}
+    
+    fechahoy = datetime.today()
+    
+    fechahoy2 = fechahoy
+    diahoy = fechahoy2.strftime('%d')
+    meshoy = fechahoy2.strftime('%m')
+    anohoy = fechahoy2.strftime('%Y')
+    
+    fecha1 = fechahoy + timedelta(days=-1)
+    dia1 = fecha1.strftime('%d')
+    mes1 = fecha1.strftime('%m')
+    ano1 = fecha1.strftime('%Y')
+    
+    fecha2 = fechahoy + timedelta(days=-2)
+    dia2 = fecha2.strftime('%d')
+    mes2 = fecha2.strftime('%m')
+    ano2 = fecha2.strftime('%Y')
+    
+    fecha3 = fechahoy + timedelta(days=-3)
+    dia3 = fecha3.strftime('%d')
+    mes3 = fecha3.strftime('%m')
+    ano3 = fecha3.strftime('%Y')
+    
+    fecha4 = fechahoy + timedelta(days=-4)
+    dia4 = fecha4.strftime('%d')
+    mes4 = fecha4.strftime('%m')
+    ano4 = fecha4.strftime('%Y')
+    
+    fecha5 = fechahoy + timedelta(days=-5)
+    dia5 = fecha5.strftime('%d')
+    mes5 = fecha5.strftime('%m')
+    ano5 = fecha5.strftime('%Y')
+    
+    fecha6 = fechahoy + timedelta(days=-6)
+    dia6 = fecha6.strftime('%d')
+    mes6 = fecha6.strftime('%m')
+    ano6 = fecha6.strftime('%Y')
+    
+    fecha7 = fechahoy + timedelta(days=-7)
+    dia7 = fecha7.strftime('%d')
+    mes7 = fecha7.strftime('%m')
+    ano7 = fecha7.strftime('%Y')
+    
+    fecha8 = fechahoy + timedelta(days=-8)
+    dia8 = fecha8.strftime('%d')
+    mes8 = fecha8.strftime('%m')
+    ano8 = fecha8.strftime('%Y')
+    dia0oc = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="X asignar OC").count()
+    dia0xr = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="X-Revisar").count()
+    dia0re = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="Revisado").count()
+    dia0pe = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="Pendiente").count()
+    dia0pr = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="en Proveedor").count()
+    dia0di = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="Directa").count()
+    dia0fn = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="Fin").count()
+    dia0st = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy,status="Stock").count()
+    dia0ll = Pedido.objects.filter(fc__year=anohoy,fc__month=meshoy,fc__day=diahoy).count()
+    
+    dia1oc = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="X asignar OC").count()
+    dia1xr = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="X-Revisar").count()
+    dia1re = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="Revisado").count()
+    dia1pe = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="Pendiente").count()
+    dia1pr = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="en Proveedor").count()
+    dia1di = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="Directa").count()
+    dia1fn = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="Fin").count()
+    dia1st = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1,status="Stock").count()
+    dia1ll = Pedido.objects.filter(fc__year=ano1,fc__month=mes1,fc__day=dia1).count()
+    
+    dia2oc = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="X asignar OC").count()
+    dia2xr = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="X-Revisar").count()
+    dia2re = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="Revisado").count()
+    dia2pe = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="Pendiente").count()
+    dia2pr = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="en Proveedor").count()
+    dia2di = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="Directa").count()
+    dia2fn = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="Fin").count()
+    dia2st = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2,status="Stock").count()
+    dia2ll = Pedido.objects.filter(fc__year=ano2,fc__month=mes2,fc__day=dia2).count()
+    
+    dia3oc = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="X asignar OC").count()
+    dia3xr = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="X-Revisar").count()
+    dia3re = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="Revisado").count()
+    dia3pe = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="Pendiente").count()
+    dia3pr = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="en Proveedor").count()
+    dia3di = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="Directa").count()
+    dia3fn = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="Fin").count()
+    dia3st = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3,status="Stock").count()
+    dia3ll = Pedido.objects.filter(fc__year=ano3,fc__month=mes3,fc__day=dia3).count()
+    
+    dia4oc = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="X asignar OC").count()
+    dia4xr = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="X-Revisar").count()
+    dia4re = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="Revisado").count()
+    dia4pe = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="Pendiente").count()
+    dia4pr = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="en Proveedor").count()
+    dia4di = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="Directa").count()
+    dia4fn = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="Fin").count()
+    dia4st = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4,status="Stock").count()
+    dia4ll = Pedido.objects.filter(fc__year=ano4,fc__month=mes4,fc__day=dia4).count()
+    
+    dia5oc = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="X asignar OC").count()
+    dia5xr = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="X-Revisar").count()
+    dia5re = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="Revisado").count()
+    dia5pe = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="Pendiente").count()
+    dia5pr = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="en Proveedor").count()
+    dia5di= Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="Directa").count()
+    dia5fn = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="Fin").count()
+    dia5st = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5,status="Stock").count()
+    dia5ll = Pedido.objects.filter(fc__year=ano5,fc__month=mes5,fc__day=dia5).count()
+    
+    dia6oc = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="X asignar OC").count()
+    dia6xr = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="X-Revisar").count()
+    dia6re = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="Revisado").count()
+    dia6pe = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="Pendiente").count()
+    dia6pr = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="en Proveedor").count()
+    dia6di = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="Directa").count()
+    dia6fn = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="Fin").count()
+    dia6st = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6,status="Stock").count()
+    dia6ll = Pedido.objects.filter(fc__year=ano6,fc__month=mes6,fc__day=dia6).count()
+    
+    dia7oc = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="X asignar OC").count()
+    dia7xr = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="X-Revisar").count()
+    dia7re = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="Revisado").count()
+    dia7pe = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="Pendiente").count()
+    dia7pr = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="en Proveedor").count()
+    dia7di = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="Directa").count()
+    dia7fn = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="Fin").count()
+    dia7st = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7,status="Stock").count()
+    dia7ll = Pedido.objects.filter(fc__year=ano7,fc__month=mes7,fc__day=dia7).count()
+    
+    dia8oc = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="X asignar OC").count()
+    dia8xr = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="X-Revisar").count()
+    dia8re = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Revisado").count()
+    dia8pe = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Pendiente").count()
+    dia8pr = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="en Proveedor").count()
+    dia8di = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Directa").count()
+    dia8fn = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Fin").count()
+    dia8st = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Stock").count()
+    dia8ll = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8).count()
+
+    diaoc = nan0([dia0oc, dia1oc, dia2oc, dia3oc, dia4oc, dia5oc, dia6oc, dia7oc, dia8oc])
+    diaxr = nan0([dia0xr, dia1xr, dia2xr, dia3xr, dia4xr, dia5xr, dia6xr, dia7xr, dia8xr])
+    diare = nan0([dia0re, dia1re, dia2re, dia3re, dia4re, dia5re, dia6re, dia7re, dia8re])
+    diape = nan0([dia0pe, dia1pe, dia2pe, dia3pe, dia4pe, dia5pe, dia6pe, dia7pe, dia8pe])
+    diapr = nan0([dia0pr, dia1pr, dia2pr, dia3pr, dia4pr, dia5pr, dia6pr, dia7pr, dia8pr])
+    diadi = nan0([dia0di, dia1di, dia2di, dia3di, dia4di, dia5di, dia6di, dia7di, dia8di])
+    diafn = nan0([dia0fn, dia1fn, dia2fn, dia3fn, dia4fn, dia5fn, dia6fn, dia7fn, dia8fn])
+    diast = nan0([dia0st, dia1st, dia2st, dia3st, dia4st, dia5st, dia6st, dia7st, dia8st])
+    diall = nan0([dia0ll, dia1ll, dia2ll, dia3ll, dia4ll, dia5ll, dia6ll, dia7ll, dia8ll])
+
+    return {'pedidosstatus1':statusEn1,
+            'pedidosstatus2':statusEn2,
+            'pedidosstatus3':statusEn3,
+            'pedidosstatus4':statusEn4,
+            'pedidosstatusall': statusAll,
+            'datagraph':datagraph,
+            'diaoc' :diaoc,
+            'diaxr' :diaxr,
+            'diare' :diare,
+            'diape' :diape,
+            'diapr' :diapr,
+            'diadi' :diadi,
+            'diafn' :diafn,
+            'diall' :diall,
+            'diast' :diast,
+            }
+

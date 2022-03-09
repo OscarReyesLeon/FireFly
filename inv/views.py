@@ -883,11 +883,11 @@ def pedido_express(request, id):
         return redirect("inv:pedido_list")
     if request.method=='GET':
         if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("Primero ingresa el monto $ de la compra Express")
+            return HttpResponse("Primero ingresa el monto $ de la compra Directa")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='na'
-            pede.status='Express'
+            pede.status='Directa'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list_f2")
@@ -895,11 +895,11 @@ def pedido_express(request, id):
             return HttpResponse("Esta opción no está disponible")
     if request.method=='POST':
         if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("Primero ingresa el monto $ de la compra Express")
+            return HttpResponse("Primero ingresa el monto $ de la compra Directa")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='na'
-            pede.status='Express'
+            pede.status='Directa'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list")
