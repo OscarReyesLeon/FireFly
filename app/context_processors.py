@@ -22,11 +22,9 @@ def pedidos_status(request):
     datagraph = [XasignarOC, XRevisar, Revisado, Pendiente, enProveedor,]
     
     fechahoy = datetime.today()
-    
-    fechahoy2 = fechahoy
-    diahoy = fechahoy2.strftime('%d')
-    meshoy = fechahoy2.strftime('%m')
-    anohoy = fechahoy2.strftime('%Y')
+    diahoy = fechahoy.strftime('%d')
+    meshoy = fechahoy.strftime('%m')
+    anohoy = fechahoy.strftime('%Y')
     
     fecha1 = fechahoy + timedelta(days=-1)
     dia1 = fecha1.strftime('%d')
@@ -157,15 +155,15 @@ def pedidos_status(request):
     dia8st = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8,status="Stock").count()
     dia8ll = Pedido.objects.filter(fc__year=ano8,fc__month=mes8,fc__day=dia8).count()
 
-    diaoc = nan0([dia0oc, dia1oc, dia2oc, dia3oc, dia4oc, dia5oc, dia6oc, dia7oc, dia8oc])
-    diaxr = nan0([dia0xr, dia1xr, dia2xr, dia3xr, dia4xr, dia5xr, dia6xr, dia7xr, dia8xr])
-    diare = nan0([dia0re, dia1re, dia2re, dia3re, dia4re, dia5re, dia6re, dia7re, dia8re])
-    diape = nan0([dia0pe, dia1pe, dia2pe, dia3pe, dia4pe, dia5pe, dia6pe, dia7pe, dia8pe])
-    diapr = nan0([dia0pr, dia1pr, dia2pr, dia3pr, dia4pr, dia5pr, dia6pr, dia7pr, dia8pr])
-    diadi = nan0([dia0di, dia1di, dia2di, dia3di, dia4di, dia5di, dia6di, dia7di, dia8di])
-    diafn = nan0([dia0fn, dia1fn, dia2fn, dia3fn, dia4fn, dia5fn, dia6fn, dia7fn, dia8fn])
-    diast = nan0([dia0st, dia1st, dia2st, dia3st, dia4st, dia5st, dia6st, dia7st, dia8st])
-    diall = nan0([dia0ll, dia1ll, dia2ll, dia3ll, dia4ll, dia5ll, dia6ll, dia7ll, dia8ll])
+    diaoc = nan0([dia8oc, dia7oc, dia6oc, dia5oc, dia4oc, dia3oc, dia2oc, dia1oc, dia0oc])
+    diaxr = nan0([dia8xr, dia7xr, dia6xr, dia5xr, dia4xr, dia3xr, dia2xr, dia1xr, dia0xr])
+    diare = nan0([dia8re, dia7re, dia6re, dia5re, dia4re, dia3re, dia2re, dia1re, dia0re])
+    diape = nan0([dia8pe, dia7pe, dia6pe, dia5pe, dia4pe, dia3pe, dia2pe, dia1pe, dia0pe])
+    diapr = nan0([dia8pr, dia7pr, dia6pr, dia5pr, dia4pr, dia3pr, dia2pr, dia1pr, dia0pr])
+    diadi = nan0([dia8di, dia7di, dia6di, dia5di, dia4di, dia3di, dia2di, dia1di, dia0di])
+    diafn = nan0([dia8fn, dia7fn, dia6fn, dia5fn, dia4fn, dia3fn, dia2fn, dia1fn, dia0fn])
+    diast = nan0([dia8st, dia7st, dia6st, dia5st, dia4st, dia3st, dia2st, dia1st, dia0st])
+    diall = nan0([dia8ll, dia7ll, dia6ll, dia5ll, dia4ll, dia3ll, dia2ll, dia1ll, dia0ll])
 
     return {'pedidosstatus1':statusEn1,
             'pedidosstatus2':statusEn2,
