@@ -157,3 +157,4 @@ dmypy.json
 .history
 
 # End of https://www.gitignore.io/api/django,visualstudiocode
+static/base/img/cancion.flac
