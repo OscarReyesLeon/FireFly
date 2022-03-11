@@ -226,6 +226,8 @@ def compras(request,compra_id=None):
         )
 
         if det:
+            if ComprasDet.objects.filter(pedido_id=pedido).exists() == True:
+                        return redirect("cmp:compras_list")
             det.save()
 
             sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
