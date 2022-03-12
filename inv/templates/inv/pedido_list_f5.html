@@ -59,6 +59,8 @@
       	<th>Cantidad</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
+        <th>Forma de compra</th>
+        <th class="all">Consultar OC</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -68,7 +70,13 @@
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
-          <td>{{item.fc|date:"d/m/y"}}
+          <td>{{item.fc|date:"d/m/y"}}</td>
+          <td>{{item.status}}</td>
+          <td>
+            {% if perms.cmp.view_comprasenc %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" class="btn btn-success btn-circle" role="button"><i class="fas fa-print"></i></i></a>
+            {% endif %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

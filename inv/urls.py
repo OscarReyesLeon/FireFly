@@ -9,7 +9,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoViewALS, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock, pedido_express,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewF, PedidoViewALS, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
     PuestoView, PuestoNew, PuestoEdit,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
@@ -72,6 +72,7 @@ urlpatterns = [
     path('pedidos/reaut/<int:id>',pedido_reaut, name="pedido_reaut"),
     path('pedidos/stock/<int:id>',pedido_stock, name="pedido_stock"),
     path('pedidos/express/<int:id>',pedido_express, name="pedido_express"),
+    path('pedidos/oc/<int:id>',pedido_oc, name="pedido_oc"),
 
     path('banco/',BancoView.as_view(), name='banco_list'),
     path('banco/new',BancoNew.as_view(), name='banco_new'),

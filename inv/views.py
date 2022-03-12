@@ -17,6 +17,7 @@ from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
     EmpresaForm, GeneroForm, EstudiosForm, \
     EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm
+from cmp.models import ComprasDet
 
 from bases.views import SinPrivilegios
 
@@ -453,7 +454,7 @@ class PedidoViewF5(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=5).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(status="Fin").order_by('-id')[:2000] | Pedido.objects.filter(status="Directo").order_by('-id')[:2000] | Pedido.objects.filter(status="Stock").order_by('-id')[:2000]
         return qs
 
 class PedidoViewAll(SinPrivilegios, generic.ListView):
@@ -906,6 +907,20 @@ def pedido_express(request, id):
         else:
             return HttpResponse("Esta opción no está disponible")
     return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
+@permission_required("cmp.view_comprasenc",login_url="/login/")
+def pedido_oc(request, id):
+    pede = Pedido.objects.filter(pk=id).get()
+    pede = pede.id
+    if request.method=='GET':
+        if ComprasDet.objects.filter(pedido_id=pede).exists() == True:
+            antiduplicado = ComprasDet.objects.filter(pedido_id=pede).get()
+            return redirect("cmp:compras_print_one",compra_id=antiduplicado.compra_id)
+        else:
+            return HttpResponse("Esta pedido no esta en ninguna orden de compra. Pudo ser oc-cancela, Pedido Directo, ó Stock")
+    return redirect("inv:pedidos_list")
+
 
 """RH EDIT Aqui"""
 
