@@ -577,6 +577,31 @@ def pedidos_status(request):
     diall = nan0([dia31ll, dia30ll, dia29ll, dia28ll, dia27ll, dia26ll, dia25ll, dia24ll, dia23ll, dia22ll, dia21ll, dia20ll, dia19ll, dia18ll, dia17ll, dia16ll, dia15ll, dia14ll, dia13ll, dia12ll, dia11ll, dia10ll, dia9ll, dia8ll, dia7ll, dia6ll, dia5ll, dia4ll, dia3ll, dia2ll, dia1ll, dia0ll])
     diaob = nan0([dia31ob, dia30ob, dia29ob, dia28ob, dia27ob, dia26ob, dia25ob, dia24ob, dia23ob, dia22ob, dia21ob, dia20ob, dia19ob, dia18ob, dia17ob, dia16ob, dia15ob, dia14ob, dia13ob, dia12ob, dia11ob, dia10ob, dia9ob, dia8ob, dia7ob, dia6ob, dia5ob, dia4ob, dia3ob, dia2ob, dia1ob, dia0ob])
 
+
+    abiertos = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:2000]
+
+    tiempospendientes = []
+    for i in range(abiertos.count()):
+        objetospendientes = abiertos[i]
+        objetospendientes = objetospendientes.fc.date()
+        objetospendientes = objetospendientes
+        tiempospendientes.append(objetospendientes)
+
+    fechahoydate = fechahoy.date()
+    diaspromedio = 0
+    for i in range(len(tiempospendientes)):
+        diaspromedio = diaspromedio + (fechahoydate - tiempospendientes[i]).days
+    diaspromedio = round(diaspromedio / len(tiempospendientes),1)
+
+    if (diaspromedio > 4) and (diaspromedio <= 8):
+        diascolor = "text-dark"
+    elif diaspromedio <= 4:
+        diascolor = "text-info"
+    else:
+        diascolor = "text-danger"
+
+
+
     return {'pedidosstatus1':statusEn1,
             'pedidosstatus2':statusEn2,
             'pedidosstatus3':statusEn3,
@@ -593,5 +618,7 @@ def pedidos_status(request):
             'diall' :diall,
             'diast' :diast,
             'diaob' :diaob,
+            'diaspromedio':diaspromedio,
+            'diascolor' :diascolor,
             }
 
