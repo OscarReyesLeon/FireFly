@@ -33,10 +33,13 @@
         <th>F-Aprobado</th>
         <th>F-Proveedor</th>
         <th>F-Finalizado</th>
-        <th>F-Rechazo</th>  
-        <th>Motivo</th>    
-        <th>Comentario</th>    
+        <th>F-Rechazo</th>
+        <th>Motivo</th>
+        <th>Comentario</th>
         <th>IO</th>
+        <th>Proveedor Directo</th>
+        <th>Numero de OC</th>
+        <th>Proveedor de OC</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -64,6 +67,9 @@
           <td>{{item.motivo_peticion}}</td>
           <td>{{item.comentario}}</td>
           <td>{{item.indentificador_estado}}</td>
+          <td>{{item.folio_ingreso}}</td>
+          <td>{{item.oc}}</td>
+          <td>{{item.proveedoroc}}</td>
         </tr>
         {% endfor %}
       </tbody>

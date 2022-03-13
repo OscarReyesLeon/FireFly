@@ -145,6 +145,30 @@ class Pedido(ClaseModelo):
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
     @property
+    def oc(self):
+        from cmp.models import ComprasDet
+        if ComprasDet.objects.filter(pedido_id=self.id).exists() == True:
+            numeroOC = ComprasDet.objects.filter(pedido_id=self.id).get()
+            numeroOC = numeroOC.compra_id
+            return numeroOC
+        else:
+            numeroOC = "Sin orden de compras"
+            return numeroOC
+    @property
+    def proveedoroc(self):
+        from cmp.models import ComprasDet, ComprasEnc, Proveedor
+        if ComprasDet.objects.filter(pedido_id=self.id).exists() == True:
+            proveedorOC = ComprasDet.objects.filter(pedido_id=self.id).get()
+            proveedorOC = proveedorOC.compra_id
+            proveedorOC = ComprasEnc.objects.filter(id=proveedorOC).get()
+            proveedorOC = proveedorOC.proveedor_id
+            proveedorOC = Proveedor.objects.filter(id=proveedorOC).get()
+            proveedorOC = proveedorOC.descripcion
+            return proveedorOC
+        else:
+            proveedorOC = "sin proveedor de OC registrado"
+            return proveedorOC
+    @property
     def precio_uni_iva(self):
         precioiva = self.precio_uni * self.iva
         return precioiva
