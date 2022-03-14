@@ -580,7 +580,9 @@ def pedidos_status(request):
 
     fechahoydate = fechahoy.date()
     fechaa32 = fechahoy + timedelta(days=-32)
-    abiertos = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:2000]
+    atrasofin = fechahoy + timedelta(days=-7)
+    atrasoini = fechahoy + timedelta(days=-183)
+    abiertos = Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=1)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=2)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=3)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=4)[:2000]
     todosenrango = Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Directo") | Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Fin")
     print(todosenrango.count())
 
@@ -594,7 +596,11 @@ def pedidos_status(request):
     diaspromedio = 0
     for i in range(len(tiempospendientes)):
         diaspromedio = diaspromedio + (fechahoydate - tiempospendientes[i]).days
-    diaspromedio = round(diaspromedio / len(tiempospendientes),1)
+        
+    if diaspromedio == 0:
+        diaspromedio = 0
+    else:
+        diaspromedio = round(diaspromedio / len(tiempospendientes),1)
 
 
 
@@ -617,9 +623,9 @@ def pedidos_status(request):
 
 
 
-    if (promedio32 > 5) and (promedio32 <= 10):
+    if (diaspromedio > 6) and (diaspromedio <= 8):
         diascolor = "text-dark"
-    elif promedio32 <= 5:
+    elif diaspromedio <= 6:
         diascolor = "text-info"
     else:
         diascolor = "text-danger"
