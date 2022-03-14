@@ -578,7 +578,11 @@ def pedidos_status(request):
     diaob = nan0([dia31ob, dia30ob, dia29ob, dia28ob, dia27ob, dia26ob, dia25ob, dia24ob, dia23ob, dia22ob, dia21ob, dia20ob, dia19ob, dia18ob, dia17ob, dia16ob, dia15ob, dia14ob, dia13ob, dia12ob, dia11ob, dia10ob, dia9ob, dia8ob, dia7ob, dia6ob, dia5ob, dia4ob, dia3ob, dia2ob, dia1ob, dia0ob])
 
 
+    fechahoydate = fechahoy.date()
+    fechaa32 = fechahoy + timedelta(days=-32)
     abiertos = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:2000]
+    todosenrango = Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Directo") | Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Fin")
+    print(todosenrango.count())
 
     tiempospendientes = []
     for i in range(abiertos.count()):
@@ -587,15 +591,35 @@ def pedidos_status(request):
         objetospendientes = objetospendientes
         tiempospendientes.append(objetospendientes)
 
-    fechahoydate = fechahoy.date()
     diaspromedio = 0
     for i in range(len(tiempospendientes)):
         diaspromedio = diaspromedio + (fechahoydate - tiempospendientes[i]).days
     diaspromedio = round(diaspromedio / len(tiempospendientes),1)
 
-    if (diaspromedio > 4) and (diaspromedio <= 8):
+
+
+    pini32 = []
+    pfin32 = []
+    for i in range(todosenrango.count()):
+        objetospendientes = todosenrango[i]
+        pinip32 = objetospendientes.fc.strftime('%d-%m-%y %H:%M')
+        pfinp32 = objetospendientes.fecha_finalizado
+        pinip32 = datetime.strptime(pinip32, '%d-%m-%y %H:%M')
+        pfinp32 = datetime.strptime(pfinp32, '%d-%m-%y %H:%M')
+        pini32.append(pinip32)
+        pfin32.append(pfinp32)
+
+    promedio32 = 0
+    for i in range(len(pfin32)):
+        promedio32 = promedio32 + (pfin32[i] - pini32[i]).days
+    
+    promedio32 = round(promedio32 / len(pfin32),1)
+
+
+
+    if (promedio32 > 5) and (promedio32 <= 10):
         diascolor = "text-dark"
-    elif diaspromedio <= 4:
+    elif promedio32 <= 5:
         diascolor = "text-info"
     else:
         diascolor = "text-danger"
@@ -620,5 +644,6 @@ def pedidos_status(request):
             'diaob' :diaob,
             'diaspromedio':diaspromedio,
             'diascolor' :diascolor,
+            'promedio32' : promedio32,
             }
 
