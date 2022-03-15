@@ -84,6 +84,12 @@ class ComprasEnc(ClaseModelo):
     empresaoc=models.ForeignKey(Empresa,on_delete=models.PROTECT, null=True)
 
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
+    
+    @property
+    def fechalistado(self):
+        fechalistado = self.fm.strftime('%y-%m-%d %H:%M.%S')
+        return fechalistado
+    
     def __str__(self):
         return '{}'.format(self.observacion)
 
