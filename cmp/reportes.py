@@ -64,6 +64,9 @@ def reporte_compras(request):
 def imprimir_compra(request, compra_id):
     template_path = 'cmp/compras_print_one.html'
     today = timezone.now()
+    paraborrarvacios = ComprasEnc.objects.filter(total="0")
+    paraborrarvacios.delete()
+
     
     enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:

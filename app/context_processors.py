@@ -621,8 +621,10 @@ def pedidos_status(request):
     promedio32 = 0
     for i in range(len(pfin32)):
         promedio32 = promedio32 + (pfin32[i] - pini32[i]).days
-    
-    promedio32 = round(promedio32 / len(pfin32),1)
+    if (len(pfin32) > 0):
+        promedio32 = round(promedio32 / len(pfin32),1)
+    else:
+        promedio32 = 0
 
 
 
