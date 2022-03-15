@@ -883,8 +883,8 @@ def pedido_express(request, id):
     if not pede:
         return redirect("inv:pedido_list")
     if request.method=='GET':
-        if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("Primero ingresa el monto $ de la compra Directo")
+        if pede.precio_uni==0 or pede.cantidad==0 or pede.folio_ingreso=="--":
+            return HttpResponse("Primero ingresa el monto $ de la compra Directo y/o el Proveedor C Directo")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='na'
