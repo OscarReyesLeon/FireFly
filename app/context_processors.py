@@ -584,6 +584,9 @@ def pedidos_status(request):
     atrasoini = fechahoy + timedelta(days=-183)
     abiertos = Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=1)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=2)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=3)[:2000] | Pedido.objects.filter(fc__range=(atrasoini, atrasofin)).filter(indentificador_estado=4)[:2000]
     todosenrango = Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Directo") | Pedido.objects.filter(fc__range=(fechaa32, fechahoydate)).filter(status="Fin")
+
+    abiertoscontados = abiertos.count()
+    cierrecontados = todosenrango.count()
     print(todosenrango.count())
 
     tiempospendientes = []
@@ -623,9 +626,9 @@ def pedidos_status(request):
 
 
 
-    if (diaspromedio > 6) and (diaspromedio <= 8):
+    if (diaspromedio > 14) and (diaspromedio <= 20):
         diascolor = "text-dark"
-    elif diaspromedio <= 6:
+    elif diaspromedio <= 7:
         diascolor = "text-info"
     else:
         diascolor = "text-danger"
@@ -651,5 +654,7 @@ def pedidos_status(request):
             'diaspromedio':diaspromedio,
             'diascolor' :diascolor,
             'promedio32' : promedio32,
+            'abiertoscontados' :abiertoscontados,
+            'cierrecontados' :cierrecontados,
             }
 
