@@ -11,6 +11,7 @@ from inv.models import Pedido, Banco, Empresa
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 class Proveedor(ClaseModelo):
     descripcion=models.CharField(max_length=100,unique=True)
     direccion=models.CharField(
@@ -82,9 +83,8 @@ class ComprasEnc(ClaseModelo):
     descuento=models.FloatField(default=0)
     total=models.FloatField(default=0)
     empresaoc=models.ForeignKey(Empresa,on_delete=models.PROTECT, null=True)
-
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
-    
+    clienteuniqueid = models.CharField(max_length=100, null=True, blank=True)
     @property
     def fechalistado(self):
         fechalistado = self.fm.strftime('%y-%m-%d %H:%M.%S')

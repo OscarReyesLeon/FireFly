@@ -14,6 +14,18 @@ from .models import Proveedor, ComprasEnc, ComprasDet, Empresa, UsoFactura
 from cmp.forms import ProveedorForm,ComprasEncForm, UsoFacturaForm
 from bases.views import SinPrivilegios
 from inv.models import Pedido
+import string
+import random
+
+def id_generator(size=40, chars=string.ascii_letters + string.digits):
+    verificadorid = ''.join(random.choice(chars) for _ in range(size))
+    repetidocheck = ComprasEnc.objects.filter(clienteuniqueid=verificadorid).exists()
+    while repetidocheck == True:
+        verificadorid = ''.join(random.choice(chars) for _ in range(size))
+        repetidocheck = ComprasEnc.objects.filter(clienteuniqueid=verificadorid).exists()
+    return verificadorid
+
+
 
 
 class ProveedorView(SinPrivilegios, generic.ListView):
@@ -190,9 +202,10 @@ def compras(request,compra_id=None):
                 no_factura=no_factura,
                 empresaoc=emproc,
                 proveedor=prov,
-                uc = request.user
+                uc = request.user,
             )
             if enc:
+                enc.clienteuniqueid = id_generator()
                 enc.save()
                 compra_id=enc.id
         else:
@@ -202,6 +215,7 @@ def compras(request,compra_id=None):
                 enc.observacion = observacion
                 enc.no_factura=no_factura
                 enc.um=request.user.id
+                enc.clienteuniqueid = id_generator()
                 enc.save()
 
         if not compra_id:
@@ -222,7 +236,7 @@ def compras(request,compra_id=None):
             precio_prv=precio,
             descuento=descuento_detalle,
             costo=0,
-            uc = request.user
+            uc = request.user,
         )
 
         if det:
