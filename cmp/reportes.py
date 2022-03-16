@@ -96,12 +96,13 @@ def imprimir_compra(request, compra_id):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-def imprimir_compra2(request, compra_id):
+def imprimir_compra2(request, clienteuniqueid):
     template_path = 'cmp/compras_print_one.html'
     today = timezone.now()
     paraborrarvacios = ComprasEnc.objects.filter(total="0")
     paraborrarvacios.delete()
-
+    compra_id = ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).get()
+    compra_id = compra_id.id
     
     enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:

@@ -27,6 +27,6 @@ urlpatterns = [
 
     path('ordencompra/listado', reporte_compras, name='compras_print_all'),
     path('ordencompra/<int:compra_id>/imprimir', imprimir_compra,name="compras_print_one"),
-    path('ordencompra/<int:compra_id>/oc', imprimir_compra2,name="compras_print_one"),
+    path('ordencompra/<slug:clienteuniqueid>/oc', imprimir_compra2,name="compras_print_client"),
 
 ]
