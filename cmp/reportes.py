@@ -8,6 +8,9 @@ from django.utils import timezone
 
 from .models import ComprasEnc, ComprasDet
 
+from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import render, redirect
+
 def link_callback(uri, rel):
     """
     Convert HTML URIs to absolute system paths so xhtml2pdf can access those
@@ -60,7 +63,8 @@ def reporte_compras(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-
+@login_required(login_url="/login/")
+@permission_required("cmp.view_comprasenc",login_url="/login/")
 def imprimir_compra(request, compra_id):
     template_path = 'cmp/compras_print_one.html'
     today = timezone.now()
@@ -101,8 +105,11 @@ def imprimir_compra2(request, clienteuniqueid):
     today = timezone.now()
     paraborrarvacios = ComprasEnc.objects.filter(total="0")
     paraborrarvacios.delete()
-    compra_id = ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).get()
-    compra_id = compra_id.id
+    if ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).exists() == True:
+        compra_id = ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).get()
+        compra_id = compra_id.id
+    else:
+        return redirect("inv:pedido_list_f4")
     
     enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:

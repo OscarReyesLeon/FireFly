@@ -17,7 +17,7 @@ from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
     EmpresaForm, GeneroForm, EstudiosForm, \
     EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm
-from cmp.models import ComprasDet
+from cmp.models import ComprasDet, ComprasEnc
 
 from bases.views import SinPrivilegios
 
@@ -915,8 +915,9 @@ def pedido_oc(request, id):
     pede = pede.id
     if request.method=='GET':
         if ComprasDet.objects.filter(pedido_id=pede).exists() == True:
-            antiduplicado = ComprasDet.objects.filter(pedido_id=pede).get()
-            return redirect("cmp:compras_print_one",compra_id=antiduplicado.compra_id)
+            triplebusqueda = ComprasDet.objects.filter(pedido_id=pede).get()
+            triplebusqueda = ComprasEnc.objects.filter(id=triplebusqueda.compra_id).get()
+            return redirect("cmp:compras_print_client",clienteuniqueid=triplebusqueda.clienteuniqueid)
         else:
             return HttpResponse("Esta pedido no esta en ninguna orden de compra. Pudo ser oc-cancela, Pedido Directo, ó Stock")
     return redirect("inv:pedidos_list")
