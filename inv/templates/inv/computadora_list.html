@@ -40,7 +40,7 @@
           <td>{{ item.serie }}</td>
           <td>{{ item.asignado }}</td>
           <td>
-            <a href="{% url 'inv:computadora_edit' item.id %}" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
+            <a href="{% url 'inv:computadora_edit' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
           </td>
         </tr>
         {% endfor %}

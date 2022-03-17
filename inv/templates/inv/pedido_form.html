@@ -100,7 +100,7 @@
                         <div class="dropdown-divider"></div>
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
                                 <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
                                 <button type="button" class="btn btn-danger" onclick="return cerrar_modal()">
                                     Cancelar
@@ -118,7 +118,19 @@
         </form>
     </div>
 </div>
+<script>
+  var cuenta=0;
+  function antidoblebuton() {
+    if (!cuenta == 0) {
+        document.getElementById('boton').disabled=true;
+        return (false);
+    }
+    else
+  cuenta++;
+          return (true);
+  }
 
+</script>
 <script>
     $(function() {
         $('.select2').select2({

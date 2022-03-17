@@ -556,6 +556,19 @@
     {% endif %}
 
   </script>
+<script>
+  var cuenta=0;
+  function antidoble() {
+      if (!cuenta == 0) {
+        $("a").removeAttr("href");
+          return (false);
+      }
+      else
+  cuenta++;
+          return (true);
+  }
+</script>
+
 
 
   {% endblock%}

@@ -20,28 +20,28 @@
   <div class="card-body">
     <div class="buttons-toolbar">
       <a class="btn btn-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-info" role="button"></i>Mis Pedidos</a>
+      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Mis Pedidos</a>
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f2' %}" class="btn btn-info" role="button">Cotizar</i></a>
+      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-info" role="button">Cotizar</i></a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f3' %}" class="btn btn-info" role="button"></i>X-Pedir</a>
+      <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>X-Pedir</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f4' %}" class="btn btn-info" role="button"></i>Proveedor</a>
+      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Proveedor</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f5' %}" class="btn btn-info" role="button"></i>Terminado</a>
+      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Terminado</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" class="btn btn-dark" role="button"></i>Todo</a>
+      <a href="{% url 'inv:pedido_list' %}" onclick="antidoble()" class="btn btn-dark" role="button"></i>Todo</a>
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_als' %}" class="btn btn-info" role="button"></i>ALS</a>
-      {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_gls' %}" class="btn btn-info" role="button"></i>GLS</a>
+      <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>ALS</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_mls' %}" class="btn btn-info" role="button"></i>MLS</a>
+      <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>GLS</a>
+      {% endif %}
+      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>MLS</a>
       {% endif %}
     </div>
 
@@ -98,7 +98,7 @@
           <td>{{item.fecha_rechazo}}</td>
           <td>
             {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
-            <a href="{% url 'inv:pedido_aprobado_als' item.id %}" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            <a href="{% url 'inv:pedido_aprobado_als' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
           </td>
           <td>{{item.motivo_peticion}}</td>

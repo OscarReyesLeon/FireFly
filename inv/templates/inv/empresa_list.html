@@ -41,7 +41,7 @@
                   <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td>
                   <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
                   <td>
-                    <a href="{% url 'inv:empresa_edit' item.id %}" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
+                    <a href="{% url 'inv:empresa_edit' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
                   </td>
               </tr>
               {% endfor %}

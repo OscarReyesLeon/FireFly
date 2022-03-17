@@ -10,7 +10,7 @@
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">¿Modificar {{ obj.descripcion }}?</div>
                 <button type="submit" class="btn btn-success"><i class="far fa-question-circle"></i>Si, Modificar</button>
-                <!-- <a href="{% url 'inv:equipo_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
+                <!-- <a href="{% url 'inv:equipo_list' %}" onclick="antidoble()" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
                 <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
               </div>
               <div class="col-auto">
