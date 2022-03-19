@@ -18,7 +18,7 @@
   </div>
   <!-- Card Body -->
   <div class="card-body">
-    <div class="buttons-toolbar">
+    <div class="buttons-toolbar" align="center">
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'cmp:compras_new' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
       {% endif %}
