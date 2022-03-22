@@ -198,7 +198,9 @@ class Pedido(ClaseModelo):
         self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
         self.articulo = self.articulo.upper()
         self.proceso = self.proceso.upper()
-
+        
+        self.articulo = self.articulo.replace("'","")
+        self.proceso = self.proceso.replace("'","")
         super(Pedido, self).save()
 
 
