@@ -627,10 +627,9 @@ def pedidos_status(request):
         promedio32 = 0
 
 
-
     if (diaspromedio > 20):
         diascolor = "text-danger"
-    elif diaspromedio <= 7:
+    elif diaspromedio < 8:
         diascolor = "text-info"
     else:
         diascolor = "text-dark"
