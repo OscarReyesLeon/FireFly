@@ -8,9 +8,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Oscar Reyes León">
+  {% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}
+  <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+  {% else %}
   <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
-  <title>Ledsa FireFly</title>
+  {% endif %}
+  
+  <title>{% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}({{pedidosstatus1}}) - {% endif %}Ledsa FireFly</title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -569,7 +574,12 @@
   }
 </script>
 
-
+<script type="text/javascript">
+    //Función actualizar
+  function actualizar(){location.reload(true);}
+  //Función para actualizar cada 5 segundos(5000 milisegundos)
+  setInterval("actualizar()",1800000);
+</script>
 
   {% endblock%}
   {% block js_page %} {% endblock %}
