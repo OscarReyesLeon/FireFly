@@ -371,7 +371,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:40000]
+        qs = Pedido.objects.order_by('-id')[:10000]
         return qs
 
 
@@ -384,7 +384,7 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user).order_by('-id')[:1000]
+        qs = qs.filter(uc=user).order_by('-id')[:500]
         return qs
 
 class PedidoViewALS(SinPrivilegios, generic.ListView):
@@ -394,7 +394,7 @@ class PedidoViewALS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:100]
         return qs
 
 class PedidoViewGLS(SinPrivilegios, generic.ListView):
@@ -404,7 +404,7 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:100]
         return qs
 
 class PedidoViewMLS(SinPrivilegios, generic.ListView):
@@ -414,7 +414,7 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:2000] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:100]
         return qs
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
@@ -424,7 +424,7 @@ class PedidoViewF2(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:100]
         return qs
 
 class PedidoViewF3(SinPrivilegios, generic.ListView):
@@ -434,7 +434,7 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:100]
         return qs
 
 class PedidoViewF4(SinPrivilegios, generic.ListView):
@@ -444,7 +444,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:2000]
+        qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:100]
         return qs
 
 class PedidoViewF5(SinPrivilegios, generic.ListView):
@@ -454,7 +454,7 @@ class PedidoViewF5(SinPrivilegios, generic.ListView):
     permission_required="inv.view_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(status="Fin").order_by('-id')[:2000] | Pedido.objects.filter(status="Directo").order_by('-id')[:2000] | Pedido.objects.filter(status="Stock").order_by('-id')[:2000]
+        qs = Pedido.objects.filter(status="Fin").order_by('-id')[:100] | Pedido.objects.filter(status="Directo").order_by('-id')[:100] | Pedido.objects.filter(status="Stock").order_by('-id')[:100]
         return qs
 
 class PedidoViewAll(SinPrivilegios, generic.ListView):
