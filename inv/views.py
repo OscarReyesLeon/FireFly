@@ -843,6 +843,37 @@ def pedido_scancela(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
+@permission_required("inv.view_autoriza",login_url="/login/")
+def pedido_acancela(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pede:
+        return redirect("inv:pedido_list_f4")
+    if request.method=='GET':
+        if pede.status=='en Proveedor' and pede.status2=='Si':
+            pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='sc'
+            pede.status='Fin-Anormal'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f4")
+        else:
+            return HttpResponse("El pedido no puede ser finalizado de forma anormal")
+    if request.method=='POST':
+        if pede.status=='en Proveedor' and pede.status2=='Si':
+            pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='SC'
+            pede.status='Fin-Anormal'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f4")
+        else:
+            return HttpResponse("El pedido no puede ser finalizado de forma anormal")
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
 @permission_required("inv.change_producto",login_url="/login/")
 def pedido_stock(request, id):
     pede = Pedido.objects.filter(pk=id).first()
