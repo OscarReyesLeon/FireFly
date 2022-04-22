@@ -940,7 +940,7 @@ def pedido_express(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("cmp.view_comprasenc",login_url="/login/")
+@permission_required("inv.change_producto",login_url="/login/")
 def pedido_oc(request, id):
     pede = Pedido.objects.filter(pk=id).get()
     pede = pede.id

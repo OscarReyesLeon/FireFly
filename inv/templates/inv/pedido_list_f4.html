@@ -72,8 +72,8 @@
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
           <td>
-            {% if perms.cmp.view_comprasenc or perms.inv.view_autoriza %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="fas fa-print"></i></i></a>
+            {% if perms.inv.view_autoriza or perms.inv.change_producto %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-success btn-circle" role="button"><i class="fas fa-print"></i></i></a>
             {% endif %}
           </td>
           <td>

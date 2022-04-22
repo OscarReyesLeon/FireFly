@@ -61,9 +61,19 @@ class VehiculoPesado(ClaseModelo):
     class Meta:
         verbose_name_plural = 'Vehiculos Pesados'
 
+class ReciboEntrega(ClaseModelo):
+    movimiento = models.CharField(max_length=7, help_text='recibo o entrega')
+    def __str__(self):
+        return '{}'.format(self.movimiento)
+    def save(self):
+        self.movimiento = self.movimient.upper()
+        super(ReciboEntrega, self).save()
+    class Meta:
+        verbose_name_plural = 'Recibo o entrega'
 class LlavesEnResguardo(ClaseModelo):
+    movimiento = models.ForeignKey(ReciboEntrega, on_delete=models.PROTECT)
     vehiculo = models.ForeignKey(VehiculoPesado, on_delete=models.PROTECT)
-    recibo = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT, help_text='Nombre de quien se recibe las llaves')
+    involucrado = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT, help_text='Nombre de quien se recibe o entrega las llaves')
     golpes = models.BooleanField(default=False, help_text='¿Gopes nuevos?')
     tarjeta = models.BooleanField(default=True, help_text='Tarjeta de circulación')
     poliza = models.BooleanField(default=True, help_text='Poliza de seguro')
@@ -89,6 +99,7 @@ class MotivoIngresoUnidad(ClaseModelo):
 class IngresoUnidadPesada(ClaseModelo):
     vehiculo = models.ForeignKey(VehiculoPesado, on_delete=models.PROTECT)
     operador = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT)
+    motivo = models.ForeignKey(MotivoIngresoUnidad, on_delete=models.PROTECT)
     fsalida = models.DateTimeField()
 
     def __str__(self):
@@ -96,9 +107,20 @@ class IngresoUnidadPesada(ClaseModelo):
     class Meta:
         verbose_name_plural = 'Ingresos de unidades pesadas'
 
+class TanquesDiesel(ClaseModelo):
+    nombre = models.CharField(max_length=50,unique=True,help_text="Banco, Patio, Planta, ETC.")
+    def __str__(self):
+        return '{}'.format(self.nombre)
+    def save(self):
+        self.nombre = self.nombre.upper()
+        super(OperadorPesado, self).save()
+    class Meta:
+        verbose_name_plural = 'Tanques de Diesel'
+
+
 class DescargaDeDiesel(ClaseModelo):
     pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT)
-
+    tanquedediesel = models.ForeignKey(TanquesDiesel, on_delete=models.PROTECT, help_text="en donde se descarga?")
 class DestinosClientes(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
@@ -139,6 +161,7 @@ class MotivoVisita(ClaseModelo):
         super(MotivoVisita, self).save()
 
 class Visitantes(ClaseModelo):
+    nombre = models.CharField(max_length=50)
     visitaa = models.CharField(max_length=50)
     motivo = models.ForeignKey(MotivoVisita, on_delete=models.PROTECT)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.PROTECT, null=True, blank=True, help_text="Si es proveedor, selecciona aquí")
