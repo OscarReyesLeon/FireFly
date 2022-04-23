@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('operadorespesados/',OperadorPesadoView.as_view(),name='operador_pesado_list'),
-    path('operadorespesados/new/',OperadorPesadoNew.as_view(),name='operador_pesad_new'),
+    path('operadorespesados/new/',OperadorPesadoNew.as_view(),name='operador_pesado_new'),
     path('solicitantesutilitario/',SolicitantesUtilitarioView.as_view(),name='solicitante_utilitario_list'),
     path('solicitantesutilitario/mew/',SolicitantesUtilitarioNew.as_view(),name='solicitante_utilitari_new'),
     path('vechiculoligero/',VehiculoLigeroView.as_view(),name='vehiculo_ligero_list'),
