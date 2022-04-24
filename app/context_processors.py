@@ -1,3 +1,4 @@
+import string
 from inv.models import Pedido
 from datetime import datetime, timedelta
 
@@ -634,9 +635,60 @@ def pedidos_status(request):
     else:
         diascolor = "text-dark"
 
+    def porcentajeDiesel(carga, descarga):
+        unidad: float = 100 / carga
+        porcentaje: float = descarga * unidad
+        if porcentaje >= 0 and porcentaje <= 100:
+            pass
+        elif porcentaje > 100:
+            porcentaje = 100
+        else:
+            porcentaje = 0
+        porcentaje = round(porcentaje)
+        return porcentaje
+
+    def colorDiesel(porcentaje):
+        if porcentaje >= 98 and porcentaje <= 100:
+            colorDiesel: str = "info"
+        elif porcentaje < 98 and porcentaje >= 50:
+            colorDiesel: str = "success"
+        elif porcentaje < 50 and porcentaje >= 25:
+            colorDiesel: str = "warning"
+        elif porcentaje < 25 and porcentaje >= 8:
+            colorDiesel: str = "danger"
+        else:
+            colorDiesel: str = "secondary"
+        return colorDiesel
+
+    CargaDieselPlanta: float = 20000
+    CargaDieselPatio: float = 20000
+    CargaDieselBanco: float = 4000
+    SumaDescargasPlanta: float = 19400
+    SumaDescargasPatio: float = 1500
+    SumaDescargasBanco: float = 3900
+
+    PorcentajeDieselPlanta: int = porcentajeDiesel(CargaDieselPlanta, SumaDescargasPlanta)
+    PorcentajeDieselPatio: int = porcentajeDiesel(CargaDieselPatio, SumaDescargasPatio)
+    PorcentajeDieselBanco: int = porcentajeDiesel(CargaDieselBanco, SumaDescargasBanco)
+    ColorDieselPlanta: str = colorDiesel(PorcentajeDieselPlanta)
+    ColorDieselPatio: str = colorDiesel(PorcentajeDieselPatio)
+    ColorDieselBanco: str = colorDiesel(PorcentajeDieselBanco)
 
 
-    return {'pedidosstatus1':statusEn1,
+
+    return {'PorcentajeDieselPlanta':PorcentajeDieselPlanta,
+            'PorcentajeDieselPatio':PorcentajeDieselPatio,
+            'PorcentajeDieselBanco':PorcentajeDieselBanco,
+            'CargaDieselPlanta':CargaDieselPlanta,
+            'CargaDieselPatio':CargaDieselPatio,
+            'CargaDieselBanco':CargaDieselBanco,
+            'SumaDescargasPlanta':SumaDescargasPlanta,
+            'SumaDescargasPatio':SumaDescargasPatio,
+            'SumaDescargasBanco':SumaDescargasBanco,
+            'ColorDieselPlanta':ColorDieselPlanta,
+            'ColorDieselPatio':ColorDieselPatio,
+            'ColorDieselBanco':ColorDieselBanco,
+            'pedidosstatus1':statusEn1,
             'pedidosstatus2':statusEn2,
             'pedidosstatus3':statusEn3,
             'pedidosstatus4':statusEn4,
