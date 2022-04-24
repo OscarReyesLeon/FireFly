@@ -81,7 +81,7 @@
       <li class="nav-item {% if cat_url in request.path or s_cat_url in request.path  %} active {% endif %}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-rocket"></i>
-          <span>Movimientos</span>
+          <span>Compras</span>
         </a>
         <div id="collapseTwo" class="collapse {% if cat_url in request.path or s_cat_url in request.path %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -164,6 +164,24 @@
             <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
 
 
+          </div>
+        </div>
+      </li>
+      <li class="nav-item {% if bita_url in request.path  %} active {% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Bitacoras </span>
+        </a>
+        <div id="collapseCompras" class="collapse {% if bita_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Supervision</h6>
+            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
+            <h6 class="collapse-header">Diesel</h6>
+            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
+            <h6 class="collapse-header">Unidades</h6>
+            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
+            <h6 class="collapse-header">Visitas</h6>
+            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
           </div>
         </div>
       </li>

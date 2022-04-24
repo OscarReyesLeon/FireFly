@@ -121,6 +121,7 @@ class TanquesDiesel(ClaseModelo):
 class DescargaDeDiesel(ClaseModelo):
     pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT)
     tanquedediesel = models.ForeignKey(TanquesDiesel, on_delete=models.PROTECT, help_text="en donde se descarga?")
+    residual = models.FloatField()
 class DestinosClientes(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
