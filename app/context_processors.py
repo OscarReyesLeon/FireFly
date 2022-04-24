@@ -648,26 +648,22 @@ def pedidos_status(request):
         return porcentaje
 
     def colorDiesel(porcentaje):
-        if porcentaje >= 98 and porcentaje <= 100:
+        if porcentaje >= 95 and porcentaje <= 100:
             colorDiesel: str = "info"
-        elif porcentaje < 98 and porcentaje >= 50:
+        elif porcentaje < 95 and porcentaje >= 25:
             colorDiesel: str = "success"
-        elif porcentaje < 50 and porcentaje >= 25:
+        elif porcentaje < 25 and porcentaje >= 10:
             colorDiesel: str = "warning"
-        elif porcentaje < 25 and porcentaje >= 8:
-            colorDiesel: str = "danger"
-        elif porcentaje < 8 and porcentaje >= 4:
-            colorDiesel: str = "dark"
         else:
-            colorDiesel: str = "secondary"
+            colorDiesel: str = "danger"
         return colorDiesel
 
     CargaDieselPlanta: float = 20000
     CargaDieselPatio: float = 20000
-    CargaDieselBanco: float = 4000
-    SumaDescargasPlanta: float = 400
-    SumaDescargasPatio: float = 700
-    SumaDescargasBanco: float = 3900
+    CargaDieselBanco: float = 20000
+    SumaDescargasPlanta: float = 2200
+    SumaDescargasPatio: float = 7800
+    SumaDescargasBanco: float = 500
 
     PorcentajeDieselPlanta: int = porcentajeDiesel(CargaDieselPlanta, SumaDescargasPlanta)
     PorcentajeDieselPatio: int = porcentajeDiesel(CargaDieselPatio, SumaDescargasPatio)
