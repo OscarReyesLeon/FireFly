@@ -30,15 +30,14 @@ class VehiculoLigero(ClaseModelo):
     placas = models.CharField(max_length=7, unique=True, help_text='placas sin guiones')
     marca = models.CharField(max_length=20)
     modelo = models.CharField(max_length=20)
-    notas = models.CharField(max_length=100)
+    notas = models.CharField(max_length=100, null=True, blank=True)
     responsable = models.ForeignKey(SolicitantesUtilitario, on_delete=models.PROTECT)
     def __str__(self):
         return '{}'.format(self.numeroeconomico)
     def save(self):
         self.numeroeconomico = self.numeroeconomico.upper()
-        self.placas = self.numeroeconomico.upper()
+        self.placas = self.placas.upper()
         self.modelo = self.modelo.upper()
-        self.notas = self.notas.upper()
         super(VehiculoLigero, self).save()
     class Meta:
         verbose_name_plural = 'Vehiculos Ligeros'
@@ -48,7 +47,7 @@ class VehiculoPesado(ClaseModelo):
     placas = models.CharField(max_length=7, unique=True, help_text='placas sin guiones')
     marca = models.CharField(max_length=20)
     modelo = models.CharField(max_length=20)
-    notas = models.CharField(max_length=100)
+    notas = models.CharField(max_length=100, null=True, blank=True)
     responsable = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT)
     def __str__(self):
         return '{}'.format(self.numeroeconomico)
@@ -56,7 +55,6 @@ class VehiculoPesado(ClaseModelo):
         self.numeroeconomico = self.numeroeconomico.upper()
         self.placas = self.numeroeconomico.upper()
         self.modelo = self.modelo.upper()
-        self.notas = self.notas.upper()
         super(VehiculoPesado, self).save()
     class Meta:
         verbose_name_plural = 'Vehiculos Pesados'
@@ -77,12 +75,9 @@ class LlavesEnResguardo(ClaseModelo):
     golpes = models.BooleanField(default=False, help_text='¿Gopes nuevos?')
     tarjeta = models.BooleanField(default=True, help_text='Tarjeta de circulación')
     poliza = models.BooleanField(default=True, help_text='Poliza de seguro')
-    notas = models.CharField(max_length=300)
+    notas = models.CharField(max_length=300, null=True, blank=True)
     def __str__(self):
         return '{}'.format(self.vehiculo)
-    def save(self):
-        self.notas = self.notas.upper()
-        super(LlavesEnResguardo, self).save()
     class Meta:
         verbose_name_plural = 'Llaves en resguardo'
 
@@ -141,7 +136,7 @@ class DestinosClientes(ClaseModelo):
         self.descripcion = self.descripcion.upper()
         self.razonsocial = self.razonsocial.upper()
         self.rfcempresa = self.rfcempresa.upper()
-        super(Empresa, self).save()
+        super(DestinosClientes, self).save()
 
 class CargaDeDiesel(ClaseModelo):
     vehiculo = models.ForeignKey(VehiculoPesado, on_delete=models.PROTECT)

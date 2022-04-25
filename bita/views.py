@@ -26,7 +26,7 @@ class OperadorPesadoNew(LoginRequiredMixin, generic.CreateView):
 
 class SolicitantesUtilitarioView(LoginRequiredMixin, generic.ListView):
     model = SolicitantesUtilitario
-    template_name = 'bita/operador_ligero_list.html'
+    template_name = 'bita/solicitantes_utilitario_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
 class SolicitantesUtilitarioNew(LoginRequiredMixin, generic.CreateView):
@@ -34,7 +34,7 @@ class SolicitantesUtilitarioNew(LoginRequiredMixin, generic.CreateView):
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
     form_class=SolicitantesUtilitarioForm
-    success_url = reverse_lazy('bita:operador_ligero_list')
+    success_url = reverse_lazy('bita:solicitante_utilitario_list')
     login_url = "bases:login"
 
     def form_valid(self, form):
@@ -100,7 +100,7 @@ class DestinosClientesNew(LoginRequiredMixin, generic.CreateView):
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
     form_class=DestinosClientesForm
-    success_url = reverse_lazy('bita:destinos_cleintes_list')
+    success_url = reverse_lazy('bita:destinos_clientes_list')
     login_url = "bases:login"
 
     def form_valid(self, form):
