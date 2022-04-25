@@ -23,6 +23,17 @@ class OperadorPesadoNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
+class OperadorPesadoEdit(LoginRequiredMixin, generic.UpdateView):
+    model= OperadorPesado
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=OperadorPesadoForm
+    success_url = reverse_lazy('bita:operador_pesado_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.umc = self.request.user.username
+        return super().form_valid(form)
 
 class SolicitantesUtilitarioView(LoginRequiredMixin, generic.ListView):
     model = SolicitantesUtilitario
@@ -39,6 +50,17 @@ class SolicitantesUtilitarioNew(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        return super().form_valid(form)
+class SolicitantesUtilitarioEdit(LoginRequiredMixin, generic.UpdateView):
+    model= SolicitantesUtilitario
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=SolicitantesUtilitarioForm
+    success_url = reverse_lazy('bita:solicitante_utilitario_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
         return super().form_valid(form)
 
 class VehiculoLigeroView(LoginRequiredMixin, generic.ListView):
@@ -57,6 +79,17 @@ class VehiculoLigeroNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
+class VehiculoLigeroEdit(LoginRequiredMixin, generic.UpdateView):
+    model= VehiculoLigero
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=VehiculoLigeroForm
+    success_url = reverse_lazy('bita:vehiculo_ligero_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
 class VehiculoPesadoView(LoginRequiredMixin, generic.ListView):
     model = VehiculoPesado
     template_name = 'bita/vehiculo_pesado_list.html'
@@ -73,6 +106,17 @@ class VehiculoPesadoNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
+class VehiculoPesadoEdit(LoginRequiredMixin, generic.UpdateView):
+    model= VehiculoPesado
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=VehiculoPesadoForm
+    success_url = reverse_lazy('bita:vehiculo_pesado_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
 class MotivoIngresoUnidadView(LoginRequiredMixin, generic.ListView):
     model = MotivoIngresoUnidad
     template_name = 'bita/motivo_ingreso_unidad_list.html'
@@ -88,6 +132,17 @@ class MotivoIngresoUnidadNew(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        return super().form_valid(form)
+class MotivoIngresoUnidadEdit(LoginRequiredMixin, generic.UpdateView):
+    model= MotivoIngresoUnidad
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=MotivoIngresoUnidadForm
+    success_url = reverse_lazy('bita:motivo_ingreso_unidad_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
         return super().form_valid(form)
 
 class DestinosClientesView(LoginRequiredMixin, generic.ListView):
@@ -106,6 +161,17 @@ class DestinosClientesNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
+class DestinosClientesEdit(LoginRequiredMixin, generic.UpdateView):
+    model= DestinosClientes
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=DestinosClientesForm
+    success_url = reverse_lazy('bita:destinos_clientes_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
 
 class MotivoVisitaView(LoginRequiredMixin, generic.ListView):
     model = MotivoVisita
@@ -122,4 +188,15 @@ class MotivoVisitaNew(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
+        return super().form_valid(form)
+class MotivoVisitaEdit(LoginRequiredMixin, generic.UpdateView):
+    model= MotivoVisita
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=MotivoVisitaForm
+    success_url = reverse_lazy('bita:motivo_visita_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
         return super().form_valid(form)
