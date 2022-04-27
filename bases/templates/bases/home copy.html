@@ -2,77 +2,53 @@
 {% load staticfiles %}
 {% block page_content %}
 
-<div class="row">
-
-  <div class="col-xl-8 col-lg-7">
-
-      <!-- Bar Chart -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Diesel Disponible</h6>
-        </div>
-     <div class="card-body">
-          <h4 class="small font-weight-bold">Planta = {{PorcentajeDieselPlanta}}%<span
-            class="float-right">{{SumaDescargasPlanta}} de {{CargaDieselPlanta}} Litros</span></h4>
-    <div class="progress mb-4">
-        <div class="progress-bar bg-{{ColorDieselPlanta}}" role="progressbar" style="width: {{PorcentajeDieselPlanta}}%"
-            aria-valuenow="{{PorcentajeDieselPlanta}}" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="col-xl-9 col-md-2 mb-2">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Diesel</h6>
     </div>
-    <h4 class="small font-weight-bold">Patio = {{PorcentajeDieselPatio}}%<span
-            class="float-right">{{SumaDescargasPatio}} de {{CargaDieselPatio}} Litros</span></h4>
-    <div class="progress mb-4">
-        <div class="progress-bar bg-{{ColorDieselPatio}}" role="progressbar" style="width: {{PorcentajeDieselPatio}}%"
-            aria-valuenow="{{PorcentajeDieselPatio}}" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <h4 class="small font-weight-bold">Banco = {{PorcentajeDieselBanco}}%<span
-            class="float-right">{{SumaDescargasBanco}} de {{CargaDieselBanco}} Litros</span></h4>
-    <div class="progress">
-        <div class="progress-bar bg-{{ColorDieselBanco}}" role="progressbar" style="width: {{PorcentajeDieselBanco}}%"
-            aria-valuenow="{{PorcentajeDieselBanco}}" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-          <hr>
-            Datos de referencia
-        </div>
-    </div>
-
+    <div class="card-body">
+      <h4 class="small font-weight-bold">Planta = {{PorcentajeDieselPlanta}}%<span
+              class="float-right">{{SumaDescargasPlanta}} de {{CargaDieselPlanta}} Litros</span></h4>
+      <div class="progress mb-4">
+          <div class="progress-bar bg-{{ColorDieselPlanta}}" role="progressbar" style="width: {{PorcentajeDieselPlanta}}%"
+              aria-valuenow="{{PorcentajeDieselPlanta}}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <h4 class="small font-weight-bold">Patio = {{PorcentajeDieselPatio}}%<span
+              class="float-right">{{SumaDescargasPatio}} de {{CargaDieselPatio}} Litros</span></h4>
+      <div class="progress mb-4">
+          <div class="progress-bar bg-{{ColorDieselPatio}}" role="progressbar" style="width: {{PorcentajeDieselPatio}}%"
+              aria-valuenow="{{PorcentajeDieselPatio}}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <h4 class="small font-weight-bold">Banco = {{PorcentajeDieselBanco}}%<span
+              class="float-right">{{SumaDescargasBanco}} de {{CargaDieselBanco}} Litros</span></h4>
+      <div class="progress">
+          <div class="progress-bar bg-{{ColorDieselBanco}}" role="progressbar" style="width: {{PorcentajeDieselBanco}}%"
+              aria-valuenow="{{PorcentajeDieselBanco}}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+  </div>
 </div>
-
-<!-- Donut Chart -->
-<div class="col-xl-4 col-lg-5">
-    <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Accesos Rapidos</h6>
-        </div>
-        <!-- Card Body -->
-        <div class="card-body">
-            <div class="chart-pie pt-4">
-              <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span>Compras</a><br><br>
-              <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span>CargaDiesel</a>
-              <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span>PipaDiesel</a><br><br>
-              <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span>Visitas</a>
-            </div>
-        </div>
+<div class="col-xl-12 col-md-2 mb-2">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Accesos Rapidos</h6>
+    </div>
+    <div class="card-body">
+      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span>Compras</a>
+    </div>
     </div>
 </div>
-
-
-
-
-
-
-<div class="col-xl-8 col-md-2 mb-2">
+<div class="col-xl-12 col-md-2 mb-2">
   <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Compras</h6>
     </div>
     <div class="card-body">
       <canvas id="myChart"></canvas>
-      <hr>
       <h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Distribución de los ultimos 31 dias.</h6>
-  </div>
+    </div>
+    </div>
 </div>
-
 <div class="col-xl-12 col-md-2 mb-2">
   <div class="card shadow mb-4">
     <div class="card-header py-3">

@@ -1,4 +1,7 @@
-<div class="modal-dialog modal-lg">
+{% extends 'base/base.html' %}
+{% block page_content %}
+<center>
+<div class="modal-lg">
     <div class="modal-content">
         {% if obj %}
         <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_edit' obj.pk %}" enctype="multipart/form-data" >
@@ -15,7 +18,7 @@
                     <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            {% if obj %} Editar {% else %} Nueva {% endif %} Pedido
+                            {% if obj %} Editar {% else %} Nuevo {% endif %} Pedido
                         </div>
                         <div class="dropdown-divider"></div>
                         {% csrf_token %}
@@ -33,9 +36,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-18">
-                                <div class="col-md-12">{{form.articulo.label}}</div>
-                                <div class="col-md-18">{{form.articulo}}</div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.articulo.label}}</div>
+                                <div class="col-md-6">{{form.articulo}}</div>
                             </div>
                         </div>
                         <div class="row">
@@ -102,9 +105,7 @@
                             <div class="col">
                                 <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
                                 <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
-                                <button type="button" class="btn btn-danger" onclick="return cerrar_modal()">
-                                    Cancelar
-                                </button>
+                                <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
                             </div>
                         </div>
                     </div>
@@ -118,6 +119,7 @@
         </form>
     </div>
 </div>
+</center>
 <script>
   var cuenta=0;
   function antidoblebuton() {
@@ -139,3 +141,8 @@
         });
     });
 </script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block side_bar %}
+{% endblock %}

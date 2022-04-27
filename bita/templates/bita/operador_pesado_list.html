@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base2.html' %}
 
 {% block page_content %}
 <div class="card shadow mb-4">
@@ -64,7 +64,12 @@
 <script>
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
-    $('.table').DataTable();
-  });
+    $('.table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'print'
+        ],
+    });
+} );
 </script>
 {% endblock %}

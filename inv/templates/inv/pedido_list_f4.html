@@ -46,7 +46,7 @@
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_export' %}" onclick="antidoble()" class="btn btn-light" role="button"></i>Exportar</a>
       {% endif %}
-    </div>
+    </div><br>
 
     {% if not obj %}
     <div class="alert alert-info">No Pedidos</div>
@@ -98,6 +98,10 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'print'
+        ],
       "order": [ 0, 'asc' ],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,

@@ -46,7 +46,7 @@
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_export' %}" onclick="antidoble()" class="btn btn-light" role="button"></i>Exportar</a>
       {% endif %}
-    </div>
+    </div><br>
 
     {% if not obj %}
     <div class="alert alert-info">Gustavo no tiene pendientes por autorizar</div>
@@ -107,6 +107,10 @@
   // Call the dataTables jQuery plugin
   $(document).ready(function() {
     $('.table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'print'
+        ],
       "rowCallback": function(row, data, index){
         if(data[9]== 1){
       	$(row).find('td:eq(0)').css('color', 'blue');
