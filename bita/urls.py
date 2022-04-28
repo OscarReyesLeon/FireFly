@@ -24,4 +24,8 @@ urlpatterns = [
     path('motivovisita/',MotivoVisitaView.as_view(),name='motivo_visita_list'),
     path('motivovisita/new/',MotivoVisitaNew.as_view(),name='motivo_visita_new'),
     path('motivovisita/edit/<int:pk>',MotivoVisitaEdit.as_view(),name='motivo_visita_edit'),
+
+    path('cargadeurea/',CargaUreaView.as_view(),name='carga_urea_list'),
+    path('cargadeurea/new/',CargaUreaNew.as_view(),name='carga_urea_new'),
+    path('cargadeurea/edit/<int:pk>',CargaUreaEdit.as_view(),name='carga_urea_edit'),
 ]
