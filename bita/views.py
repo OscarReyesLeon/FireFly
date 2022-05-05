@@ -227,3 +227,57 @@ class CargaUreaEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
+class TanquesDieselView(LoginRequiredMixin, generic.ListView):
+    model = TanquesDiesel
+    template_name = 'bita/tanques_diesel_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+class TanquesDieselNew(LoginRequiredMixin, generic.CreateView):
+    model= TanquesDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=TanquesDieselForm
+    success_url = reverse_lazy('bita:tanques_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+class TanquesDieselEdit(LoginRequiredMixin, generic.UpdateView):
+    model= TanquesDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=TanquesDieselForm
+    success_url = reverse_lazy('bita:tanques_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+class DescargaDeDieselView(LoginRequiredMixin, generic.ListView):
+    model = DescargaDeDiesel
+    template_name = 'bita/descarga_diesel_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+class DescargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
+    model= DescargaDeDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=DescargaDeDieselForm
+    success_url = reverse_lazy('bita:descarga_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+class DescargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
+    model= DescargaDeDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=DescargaDeDieselForm
+    success_url = reverse_lazy('bita:descarga_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)

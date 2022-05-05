@@ -15,6 +15,7 @@ app/settings.py
 .app/settings.py
 .settings.py
 ledsa.db
+ledsa copy.db
 .idea/
 .idea/*
 .vscode/

@@ -1,0 +1,95 @@
+"""revisar anti duplicados en formularios"""
+
+--sinSelect
+OperadorPesado
+SolicitantesUtilitario
+VehiculoLigero
+VehiculoPesado
+MotivoIngresoUnidad
+DestinosClientes
+MotivoVisita
+
+-conSelect
+LlavesEnResguardo
+IngresoUnidadPesada
+DescargaDeDiesel
+CargaDeDiesel
+CargaDeUrea
+Visitantes
+
+dashboard
+graficas de diesel
+
+1
+-----------
+Bitacotra de entrega de llaves
+-- !Es cuando encargan las llaves a caseta.! 
+vechiulo - fore
+Nombre del solicitante - charfield
+Vale de gasolina (interger de 8 digitos)
+Golpes reportados (boleano)
+Tarjeta de circulaciÃ³n (boleano)
+Poliza de seguro (boleano)
+Firma de entrega (boleano)
+Entregada (boleano)
+
+2
+-------
+Bitacora ingreso de unidades 
+
+Vehiculo - Enlazado a unidad
+Nombre del operador (enlazado a la lista de operadores)
+fecha de salida (datatime)
+
+3
+---
+-
+Pipas_de_diesel
+
+Costo_total
+cantidada
+proveedor
+@ PrecioXlitro = costo_total / cantidad
+@cantidadtotal = cantidadtotal + cantidadtotal
+500 = 500 + 20000 [20500-descarga]
+-
+
+
+Bitacora de diesel
+
+PipaProveedor=  pipas_diesel
+Vehiculo = (foreingkey a utilitario)
+Litros =(cantidad)
+Costo = litros * pipas_de_diesel.PrecioXLitro
+Destino (abierto)
+
+Disponible (en la vista....)
+-
+En la vista. de bitacora diesel.
+descarga = self.pidas_de_disel-descargar
+
+4-
+----
+Bitacora de UREA 
+Unidad = fore a utilitario
+Operador = fore a operador
+Litros (numero abierto)
+
+
+template. condicional avisar si hay cargas mayores a 70
+
+5-
+------
+A quien visita
+
+placas = null true, black true
+Salida = datatime
+temperatura = null true, black true
+
+
+
+
+
+
+
+

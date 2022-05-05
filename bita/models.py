@@ -108,15 +108,27 @@ class TanquesDiesel(ClaseModelo):
         return '{}'.format(self.nombre)
     def save(self):
         self.nombre = self.nombre.upper()
-        super(OperadorPesado, self).save()
+        super(TanquesDiesel, self).save()
     class Meta:
         verbose_name_plural = 'Tanques de Diesel'
 
-
+"""Modelo donde la pipa descarga diesel"""
 class DescargaDeDiesel(ClaseModelo):
-    pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT)
+    pedido = models.OneToOneField(Pedido, on_delete=models.PROTECT)
     tanquedediesel = models.ForeignKey(TanquesDiesel, on_delete=models.PROTECT, help_text="en donde se descarga?")
-    residual = models.FloatField()
+    residual = models.FloatField(null=True, blank=True)
+    litrosenbomba = models.FloatField(null=True, blank=True)
+    """
+    def save(self):
+        resilitros = DescargaDeDiesel.objects.filter(tanquedediesel=self.tanquedediesel).order_by('-id')[:1]
+        if not resilitros:
+            self.residual = 0
+        else:
+            pass
+            """
+
+    def __str__(self):
+        return '{}:{}'.format(self.pedido.id, self.pedido)
 class DestinosClientes(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,

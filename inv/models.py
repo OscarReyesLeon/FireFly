@@ -203,6 +203,9 @@ class Pedido(ClaseModelo):
         self.proceso = self.proceso.replace("'","")
         super(Pedido, self).save()
 
+    def __str__(self):
+        return '{}|{}-{}|{}'.format(self.id, self.cantidad, self.UniMed.descripcion, self.uc)
+
 
 class Banco(ClaseModelo):
     descripcion = models.CharField(

@@ -24,8 +24,13 @@ urlpatterns = [
     path('motivovisita/',MotivoVisitaView.as_view(),name='motivo_visita_list'),
     path('motivovisita/new/',MotivoVisitaNew.as_view(),name='motivo_visita_new'),
     path('motivovisita/edit/<int:pk>',MotivoVisitaEdit.as_view(),name='motivo_visita_edit'),
-
     path('cargadeurea/',CargaUreaView.as_view(),name='carga_urea_list'),
     path('cargadeurea/new/',CargaUreaNew.as_view(),name='carga_urea_new'),
     path('cargadeurea/edit/<int:pk>',CargaUreaEdit.as_view(),name='carga_urea_edit'),
+    path('descargadiesel/',DescargaDeDieselView.as_view(),name='descarga_diesel_list'),
+    path('descargadiesel/new/',DescargaDeDieselNew.as_view(),name='descarga_diesel_new'),
+    path('descargadiesel/edit/<int:pk>',DescargaDeDieselEdit.as_view(),name='descarga_diesel_edit'),
+    path('tanquesdiesel/',TanquesDieselView.as_view(),name='tanques_diesel_list'),
+    path('tanquesdiesel/new/',TanquesDieselNew.as_view(),name='tanques_diesel_new'),
+    path('tanquesdiesel/edit/<int:pk>',TanquesDieselEdit.as_view(),name='tanques_diesel_edit'),
 ]

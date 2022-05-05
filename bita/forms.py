@@ -79,3 +79,23 @@ class CargaDeUreaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class':"form-control"})
+
+class TanquesDieselForm(forms.ModelForm):
+    class Meta:
+        model=TanquesDiesel
+        exclude = ['um', 'fm', 'uc', 'fc', 'estado']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class':"form-control"})
+class DescargaDeDieselForm(forms.ModelForm):
+    pedido = forms.ModelChoiceField(queryset=Pedido.objects.filter(UniMed_id=4).order_by('-id')[:20])
+    class Meta:
+        model=DescargaDeDiesel
+        exclude = ['um', 'fm', 'uc', 'fc', 'estado', 'residual']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class':"form-control"})
