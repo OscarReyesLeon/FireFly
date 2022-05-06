@@ -17,7 +17,7 @@ class Almacenista(ClaseModelo):
         super(Almacenista, self).save()
 
     class Meta:
-        verbose_name_plural = "Equipos"
+        verbose_name_plural = "Almacenistas"
 class Comprador(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -33,7 +33,7 @@ class Comprador(ClaseModelo):
         super(Comprador, self).save()
 
     class Meta:
-        verbose_name_plural = "Equipos"
+        verbose_name_plural = "Compradores"
 class AuxCompras(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -49,7 +49,7 @@ class AuxCompras(ClaseModelo):
         super(AuxCompras, self).save()
 
     class Meta:
-        verbose_name_plural = "Equipos"
+        verbose_name_plural = "Auxiliares de compras"
 class Autorizador(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -65,7 +65,7 @@ class Autorizador(ClaseModelo):
         super(AuxCompras, self).save()
 
     class Meta:
-        verbose_name_plural = "Equipos"
+        verbose_name_plural = "Autorizadores"
 class UsuarioCompras(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -81,4 +81,20 @@ class UsuarioCompras(ClaseModelo):
         super(UsuarioCompras, self).save()
 
     class Meta:
-        verbose_name_plural = "Equipos"
+        verbose_name_plural = "Usuarios que pueden comprar"
+class Vigilante(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien hace compras express',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Vigilante, self).save()
+
+    class Meta:
+        verbose_name_plural = "Vigilantes"

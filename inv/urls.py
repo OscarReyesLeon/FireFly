@@ -48,9 +48,9 @@ urlpatterns = [
     path('productos/edit/<int:pk>',ProductoEdit.as_view(), name="producto_edit"),
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
-    path('pedidos/',PedidoView.as_view(), name="pedido_list"),
+    path('pedidostodos/',PedidoView.as_view(), name="pedido_list"),
     path('pedidosexport/',PedidoExport.as_view(), name="pedido_export"),
-    path('pedidosf/',PedidoViewF.as_view(), name="pedido_list_f"),
+    path('pedidos/',PedidoViewF.as_view(), name="pedido_list_f"),
     path('pedidosals/',PedidoViewALS.as_view(), name="pedido_list_als"),
     path('pedidosgls/',PedidoViewGLS.as_view(), name="pedido_list_gls"),
     path('pedidosmls/',PedidoViewMLS.as_view(), name="pedido_list_mls"),
