@@ -510,7 +510,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -545,7 +545,7 @@ def pedido_aprobado_als(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_rechazado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -578,7 +578,7 @@ def pedido_rechazado_als(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_gls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -613,7 +613,7 @@ def pedido_aprobado_gls(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_rechazado_gls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -646,7 +646,7 @@ def pedido_rechazado_gls(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_mls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -681,7 +681,7 @@ def pedido_aprobado_mls(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_rechazado_mls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -714,7 +714,7 @@ def pedido_rechazado_mls(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
+@permission_required("prf.change_comprador",login_url="/login/")
 def pedido_comprando(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -745,7 +745,7 @@ def pedido_comprando(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
+@permission_required("prf.change_comprador",login_url="/login/")
 def pedido_entregado(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -777,7 +777,7 @@ def pedido_entregado(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
+@permission_required("prf.change_comprador",login_url="/login/")
 def pedido_reaut(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -874,7 +874,7 @@ def pedido_acancela(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
+@permission_required("prf.change_almacenista",login_url="/login/")
 def pedido_stock(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -906,7 +906,38 @@ def pedido_stock(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
+@permission_required("prf.change_almacenista",login_url="/login/")
+def pedido_enviado(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+    if not pede:
+        return redirect("inv:pedido_list")
+    if request.method=='GET':
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Enviado-Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f2")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+    if request.method=='POST':
+        if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status2='na'
+            pede.status='Enviado-Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+    return render(request,template_name,contexto)
+@login_required(login_url="/login/")
+@permission_required("prf.change_auxcompras",login_url="/login/")
 def pedido_express(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}

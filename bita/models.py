@@ -133,7 +133,7 @@ class DestinosClientes(ClaseModelo):
     descripcion = models.CharField(
         max_length=50,
         unique=True,
-        help_text='Nombre_Empresa-Dirección_Corta en caso de tener mas de un domicilio la misma empresa'
+        help_text='Nombre Sucursal'
     )
     razonsocial = models.CharField(max_length=200, null=True, blank=True)
     direccionfiscal = models.CharField(max_length=200, null=True, blank=True)

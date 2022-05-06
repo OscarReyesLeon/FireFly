@@ -19,32 +19,32 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a class="btn btn-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Mis Pedidos</a>
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-info" role="button">Cotizar</i></a>
+      <a class="btn btn-outline-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
+      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_autorizador %}
+      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-primary" role="button"></i>X-Pedir</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Proveedor</a>
+      {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
+      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedor</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Terminado</a>
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_autorizador %}
+      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" onclick="antidoble()" class="btn btn-light" role="button"></i>Todo</a>
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>ALS</a>
+      <a href="{% url 'inv:pedido_list' %}" onclick="antidoble()" class="btn btn-outline-light" role="button"></i>Todo</a>
+      {% if perms.prf.change_autorizador %}
+      <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>GLS</a>
+      {% if perms.prf.change_autorizador%}
+      <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>MLS</a>
+      {% if perms.prf.change_autorizador%}
+      <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_export' %}" onclick="antidoble()" class="btn btn-light" role="button"></i>Exportar</a>
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_autorizador %}
+      <a href="{% url 'inv:pedido_export' %}" onclick="antidoble()" class="btn btn-outline-light" role="button"></i>Exportar</a>
       {% endif %}
     </div><br>
 

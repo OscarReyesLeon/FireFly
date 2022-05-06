@@ -1,4 +1,6 @@
-<div class="modal-dialog modal-lg">
+{% extends 'base/base.html' %}
+{% block page_content %}
+<center><div class="modal-dialog modal-lg">
     <div class="modal-content">
         <form role="form" action="{% url 'cmp:compras_del' obj.compra.id obj.pk %}" method="post"  class="form-inline">
             <div class="col-xl-12 col-md-12 mb-12">
@@ -7,7 +9,7 @@
                     <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Eliminar Detalle
+                            Sacar pedido de esta orden de compra
                         </div>
                         <div class="dropdown-divider"></div>
                         {% csrf_token %}
@@ -34,3 +36,9 @@
         </form>
     </div>
 </div> 
+</center>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block side_bar %}
+{% endblock %}
