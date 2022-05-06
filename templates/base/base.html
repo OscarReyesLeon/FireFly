@@ -9,13 +9,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Oscar Reyes León">
-  {% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}
-  <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+  {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+  {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+      {% if pedidosstatus2 > 0 %}
+          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+      {% else %}
+          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+      {% endif %}
   {% else %}
-  <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
   {% endif %}
-  
-  <title>{% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}({{pedidosstatus1}}) - {% endif %}Ledsa FireFly</title>
+
+  <title>
+    {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
+        ({{pedidosstatus1}}) - Ledsa FireFly
+    {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
+        Ledsa FireFly
+    {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+        {% if pedidosstatus2 > 0 %}
+            ({{pedidosstatus2}}) - Ledsa FireFly
+        {% else %}
+            Ledsa FireFly
+        {% endif %}
+    {% else %}
+        Ledsa FireFly
+    {% endif %}
+  </title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -53,7 +75,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-beam"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">FireFly <sup>1.0</sup> </div>
+        <div class="sidebar-brand-text mx-3">FireFly <sup>1.1</sup> </div>
       </a>
 
       <!-- Divider -->
