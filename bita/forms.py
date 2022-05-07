@@ -99,3 +99,13 @@ class DescargaDeDieselForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({'class':"form-control"})
+""
+class CargaDeDieselForm(forms.ModelForm):
+    class Meta:
+        model=CargaDeDiesel
+        exclude = ['um', 'fm', 'uc', 'fc', 'estado']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({'class':"form-control"})

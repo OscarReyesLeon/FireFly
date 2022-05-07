@@ -281,3 +281,31 @@ class DescargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
+""
+class CargaDeDieselView(LoginRequiredMixin, generic.ListView):
+    model = CargaDeDiesel
+    template_name = 'bita/carga_diesel_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+class CargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
+    model= CargaDeDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=CargaDeDieselForm
+    success_url = reverse_lazy('bita:carga_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+class CargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
+    model= CargaDeDiesel
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=CargaDeDieselForm
+    success_url = reverse_lazy('bita:carga_diesel_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)

@@ -33,4 +33,7 @@ urlpatterns = [
     path('tanquesdiesel/',TanquesDieselView.as_view(),name='tanques_diesel_list'),
     path('tanquesdiesel/new/',TanquesDieselNew.as_view(),name='tanques_diesel_new'),
     path('tanquesdiesel/edit/<int:pk>',TanquesDieselEdit.as_view(),name='tanques_diesel_edit'),
+    path('cargadiesel/',CargaDeDieselView.as_view(),name='carga_diesel_list'),
+    path('cargadiesel/new/',CargaDeDieselNew.as_view(),name='carga_diesel_new'),
+    path('cargadiesel/edit/<int:pk>',DescargaDeDieselEdit.as_view(),name='carga_diesel_edit'),
 ]
