@@ -91,17 +91,6 @@ class MotivoIngresoUnidad(ClaseModelo):
     class Meta:
         verbose_name_plural = 'Motivos de ingresos'
 
-class IngresoUnidadPesada(ClaseModelo):
-    vehiculo = models.ForeignKey(VehiculoPesado, on_delete=models.PROTECT)
-    operador = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT)
-    motivo = models.ForeignKey(MotivoIngresoUnidad, on_delete=models.PROTECT)
-    fsalida = models.DateTimeField()
-
-    def __str__(self):
-        return '{}'.format(self.vehiculo)
-    class Meta:
-        verbose_name_plural = 'Ingresos de unidades pesadas'
-
 class TanquesDiesel(ClaseModelo):
     nombre = models.CharField(max_length=50,unique=True,help_text="Banco, Patio, Planta, ETC.")
     def __str__(self):
@@ -111,6 +100,18 @@ class TanquesDiesel(ClaseModelo):
         super(TanquesDiesel, self).save()
     class Meta:
         verbose_name_plural = 'Tanques de Diesel'
+
+class IngresoUnidadPesada(ClaseModelo):
+    vehiculo = models.ForeignKey(VehiculoPesado, on_delete=models.PROTECT)
+    operador = models.ForeignKey(OperadorPesado, on_delete=models.PROTECT)
+    motivo = models.ForeignKey(MotivoIngresoUnidad, on_delete=models.PROTECT)
+    fsalida = models.DateTimeField(null=True, blank=True)
+    ubicacion = models.ForeignKey(TanquesDiesel, on_delete=models.PROTECT)
+    comentarios = models.CharField(max_length=100, null=True, blank=True)
+    def __str__(self):
+        return '{}'.format(self.vehiculo)
+    class Meta:
+        verbose_name_plural = 'Ingresos de unidades pesadas'
 
 """Modelo donde la pipa descarga diesel"""
 class DescargaDeDiesel(ClaseModelo):

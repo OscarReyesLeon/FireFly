@@ -36,4 +36,9 @@ urlpatterns = [
     path('cargadiesel/',CargaDeDieselView.as_view(),name='carga_diesel_list'),
     path('cargadiesel/new/',CargaDeDieselNew.as_view(),name='carga_diesel_new'),
     path('cargadiesel/edit/<int:pk>',DescargaDeDieselEdit.as_view(),name='carga_diesel_edit'),
+    path('ingresounidadpesada/',IngresoUnidadPesadaView.as_view(),name='ingreso_unidad_pesada_list'),
+    path('ingresounidadall/',IngresoUnidadPesadaExport.as_view(),name='ingreso_unidad_pesada_all'),
+    path('ingresounidadpesada/new/',IngresoUnidadPesadaNew.as_view(),name='ingreso_unidad_pesada_new'),
+    path('ingresounidadpesada/edit/<int:pk>',IngresoUnidadPesadaEdit.as_view(),name='ingreso_unidad_pesada_edit'),
+    path('ingresounidadpesada/salida/<int:id>',salida_pesado, name='salida_pesado')
 ]

@@ -100,6 +100,7 @@
       {% url 'inv:proceso_list' as s_cat_url %}
       {% url 'inv:autoriza_list' as aut_url %}
       {% url 'cmp:compras_list' as cmp_url %}
+      {% url 'bita:compras_list' as bita_url %}
 
 
       <!-- Nav Item - Pages Collapse Menu -->
@@ -192,24 +193,36 @@
           </div>
         </div>
       </li>
+      {% if perms.prf.change_vigilante %}
       <li class="nav-item {% if bita_url in request.path  %} active {% endif %}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBita" aria-expanded="true" aria-controls="collapseBita">
           <i class="fas fa-fw fa-folder"></i>
           <span>Bitacoras </span>
         </a>
-        <div id="collapseCompras" class="collapse {% if bita_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseBita" class="collapse {% if bita_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Supervision</h6>
-            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
-            <h6 class="collapse-header">Diesel</h6>
-            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
-            <h6 class="collapse-header">Unidades</h6>
-            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
-            <h6 class="collapse-header">Visitas</h6>
-            <a class="collapse-item {% if bita_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
+            {% if perms.prf.change_editorbitacoras %}
+            <h6 class="collapse-header">Administracion</h6>
+            <a class="collapse-item" href="{% url 'bita:operador_pesado_list' %}">OperadoresPesados</a>
+            <a class="collapse-item" href="{% url 'bita:solicitante_utilitario_list' %}">Autorizados Utilitarios</a>
+            <a class="collapse-item" href="{% url 'bita:vehiculo_ligero_list' %}">Vehiculo Ligeros</a>
+            <a class="collapse-item" href="{% url 'bita:vehiculo_pesado_list' %}">Visitas</a>
+            <a class="collapse-item" href="{% url 'bita:destinos_clientes_list' %}">SucursalesClientes</a>
+            <a class="collapse-item" href="{% url 'bita:motivo_visita_list' %}">MotivosVisita</a>
+            <a class="collapse-item" href="{% url 'bita:tanques_diesel_list' %}">TanquesDiesel</a>
+            <a class="collapse-item" href="{% url 'bita:motivo_ingreso_unidad_list' %}">MotivosIngreUnidad</a>
+            {% endif %}
+            {% if perms.prf.change_vigilante %}
+            <h6 class="collapse-header">Vigilantes</h6>
+            <a class="collapse-item" href="{% url 'bita:carga_diesel_list' %}">Diesel</a>
+            <a class="collapse-item" href="{% url 'bita:ingreso_unidad_pesada_list' %}">IngresoUnidad</a>
+            <a class="collapse-item" href="{% url 'bita:carga_urea_list' %}">Urea</a>
+            <a class="collapse-item" href="{% url 'bita:descarga_diesel_list' %}">RecepciónDiesel</a>
+            {% endif %}
           </div>
         </div>
       </li>
+      {% endif %}
 
       <!-- Nav Item - Utilities Collapse Menu 
       <li class="nav-item">

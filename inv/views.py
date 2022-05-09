@@ -23,8 +23,7 @@ from bases.views import SinPrivilegios
 
 
 
-class EquipoView(SinPrivilegios, \
-    generic.ListView):
+class EquipoView(SinPrivilegios,generic.ListView):
     permission_required = "inv.view_equipo"
     model = Equipo
     template_name = "inv/equipo_list.html"
@@ -228,8 +227,7 @@ class UMView(SinPrivilegios, generic.ListView):
     permission_required="inv.view_unidadmedida"
 
 
-class UMNew(SuccessMessageMixin,SinPrivilegios,
-                   generic.CreateView):
+class UMNew(SuccessMessageMixin,SinPrivilegios,generic.CreateView):
     model=UnidadMedida
     template_name="inv/um_form.html"
     context_object_name = 'obj'

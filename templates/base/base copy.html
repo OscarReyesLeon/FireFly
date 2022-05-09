@@ -9,13 +9,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Oscar Reyes León">
-  {% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}
-  <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+  {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+  {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+      {% if pedidosstatus2 > 0 %}
+          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
+      {% else %}
+          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+      {% endif %}
   {% else %}
-  <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
+      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
   {% endif %}
-  
-  <title>{% if perms.inv.view_autoriza and pedidosstatus1 > 0 %}({{pedidosstatus1}}) - {% endif %}Ledsa FireFly</title>
+
+  <title>
+    {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
+        ({{pedidosstatus1}}) - Ledsa FireFly
+    {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
+        Ledsa FireFly
+    {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+        {% if pedidosstatus2 > 0 %}
+            ({{pedidosstatus2}}) - Ledsa FireFly
+        {% else %}
+            Ledsa FireFly
+        {% endif %}
+    {% else %}
+        Ledsa FireFly
+    {% endif %}
+  </title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -25,7 +47,10 @@
   <link href="{% static  'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
 
    <!-- Custom styles for this page -->
-   <link href="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'base/datatable/jquery.dataTables.min.css'%}">
+  <link rel="stylesheet" href="{% static 'base/datatable/buttons.dataTables.min.css'%}">
+
+
 
    <!-- jQuery Confirm -->
   <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
@@ -50,7 +75,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-beam"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">FireFly <sup>1.0</sup> </div>
+        <div class="sidebar-brand-text mx-3">FireFly <sup>1.1</sup> </div>
       </a>
 
       <!-- Divider -->
@@ -509,15 +534,22 @@
   <script src="{% static  'base/js/sb-admin-2.min.js' %}"></script>
 
   <!-- Page level plugins -->
-  <script src="{% static 'base/vendor/datatables/jquery.dataTables.min.js'%}"></script>
-  <script src="{% static 'base/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
-
+  <script src="{% static 'base/datatable/jquery-3.5.1.js'%}"></script>
+  <script src="{% static 'base/datatable/jquery.dataTables.min.js'%}"></script>
+  <script src="{% static 'base/datatable/dataTables.buttons.min.js'%}"></script>
+  <script src="{% static 'base/datatable/jszip.min.js'%}"></script>
+  <script src="{% static 'base/datatable/pdfmake.min.js'%}"></script>
+  <script src="{% static 'base/datatable/vfs_fonts.js'%}"></script>
+  <script src="{% static 'base/datatable/buttons.html5.min.js'%}"></script>
+  <script src="{% static 'base/datatable/buttons.print.min.js'%}"></script>
+  
   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
-
+ 
   <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
   <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table-locale-all.min.js"></script>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 

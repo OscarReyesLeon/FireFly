@@ -1,18 +1,25 @@
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
+from datetime import datetime
 
 from .models import *
 from .forms import *
 # Create your views h ere.
 
-class OperadorPesadoView(LoginRequiredMixin, generic.ListView):
+class OperadorPesadoView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = OperadorPesado
     template_name = 'bita/operador_pesado_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class OperadorPesadoNew(LoginRequiredMixin, generic.CreateView):
+class OperadorPesadoNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= OperadorPesado
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -23,7 +30,8 @@ class OperadorPesadoNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class OperadorPesadoEdit(LoginRequiredMixin, generic.UpdateView):
+class OperadorPesadoEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= OperadorPesado
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -35,12 +43,14 @@ class OperadorPesadoEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.umc = self.request.user.username
         return super().form_valid(form)
 
-class SolicitantesUtilitarioView(LoginRequiredMixin, generic.ListView):
+class SolicitantesUtilitarioView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = SolicitantesUtilitario
     template_name = 'bita/solicitantes_utilitario_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class SolicitantesUtilitarioNew(LoginRequiredMixin, generic.CreateView):
+class SolicitantesUtilitarioNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= SolicitantesUtilitario
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -51,7 +61,8 @@ class SolicitantesUtilitarioNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class SolicitantesUtilitarioEdit(LoginRequiredMixin, generic.UpdateView):
+class SolicitantesUtilitarioEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= SolicitantesUtilitario
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -63,12 +74,14 @@ class SolicitantesUtilitarioEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
-class VehiculoLigeroView(LoginRequiredMixin, generic.ListView):
+class VehiculoLigeroView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = VehiculoLigero
     template_name = 'bita/vehiculo_ligero_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class VehiculoLigeroNew(LoginRequiredMixin, generic.CreateView):
+class VehiculoLigeroNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= VehiculoLigero
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -79,7 +92,8 @@ class VehiculoLigeroNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class VehiculoLigeroEdit(LoginRequiredMixin, generic.UpdateView):
+class VehiculoLigeroEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= VehiculoLigero
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -90,12 +104,14 @@ class VehiculoLigeroEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
-class VehiculoPesadoView(LoginRequiredMixin, generic.ListView):
+class VehiculoPesadoView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = VehiculoPesado
     template_name = 'bita/vehiculo_pesado_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class VehiculoPesadoNew(LoginRequiredMixin, generic.CreateView):
+class VehiculoPesadoNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= VehiculoPesado
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -106,7 +122,8 @@ class VehiculoPesadoNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class VehiculoPesadoEdit(LoginRequiredMixin, generic.UpdateView):
+class VehiculoPesadoEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= VehiculoPesado
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -117,12 +134,14 @@ class VehiculoPesadoEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
-class MotivoIngresoUnidadView(LoginRequiredMixin, generic.ListView):
+class MotivoIngresoUnidadView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "change_editorbitacoras"
     model = MotivoIngresoUnidad
     template_name = 'bita/motivo_ingreso_unidad_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class MotivoIngresoUnidadNew(LoginRequiredMixin, generic.CreateView):
+class MotivoIngresoUnidadNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "change_editorbitacoras"
     model= MotivoIngresoUnidad
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -133,7 +152,8 @@ class MotivoIngresoUnidadNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class MotivoIngresoUnidadEdit(LoginRequiredMixin, generic.UpdateView):
+class MotivoIngresoUnidadEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= MotivoIngresoUnidad
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -145,12 +165,14 @@ class MotivoIngresoUnidadEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
-class DestinosClientesView(LoginRequiredMixin, generic.ListView):
+class DestinosClientesView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = DestinosClientes
     template_name = 'bita/destinos_clientes_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class DestinosClientesNew(LoginRequiredMixin, generic.CreateView):
+class DestinosClientesNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= DestinosClientes
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -161,7 +183,8 @@ class DestinosClientesNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class DestinosClientesEdit(LoginRequiredMixin, generic.UpdateView):
+class DestinosClientesEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= DestinosClientes
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -173,12 +196,14 @@ class DestinosClientesEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
-class MotivoVisitaView(LoginRequiredMixin, generic.ListView):
+class MotivoVisitaView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_editorbitacoras"
     model = MotivoVisita
     template_name = 'bita/motivo_visita_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class MotivoVisitaNew(LoginRequiredMixin, generic.CreateView):
+class MotivoVisitaNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_editorbitacoras"
     model= MotivoVisita
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -189,7 +214,8 @@ class MotivoVisitaNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class MotivoVisitaEdit(LoginRequiredMixin, generic.UpdateView):
+class MotivoVisitaEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
     model= MotivoVisita
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -200,12 +226,14 @@ class MotivoVisitaEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
-class CargaUreaView(LoginRequiredMixin, generic.ListView):
+class CargaUreaView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
     model = CargaDeUrea
     template_name = 'bita/carga_urea_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class CargaUreaNew(LoginRequiredMixin, generic.CreateView):
+class CargaUreaNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_vigilante"
     model= CargaDeUrea
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -216,7 +244,8 @@ class CargaUreaNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class CargaUreaEdit(LoginRequiredMixin, generic.UpdateView):
+class CargaUreaEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_vigilante"
     model= CargaDeUrea
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -227,12 +256,14 @@ class CargaUreaEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
-class TanquesDieselView(LoginRequiredMixin, generic.ListView):
+class TanquesDieselView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
     model = TanquesDiesel
     template_name = 'bita/tanques_diesel_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class TanquesDieselNew(LoginRequiredMixin, generic.CreateView):
+class TanquesDieselNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_vigilante"
     model= TanquesDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -243,7 +274,8 @@ class TanquesDieselNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class TanquesDieselEdit(LoginRequiredMixin, generic.UpdateView):
+class TanquesDieselEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_vigilante"
     model= TanquesDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -254,12 +286,14 @@ class TanquesDieselEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
-class DescargaDeDieselView(LoginRequiredMixin, generic.ListView):
+class DescargaDeDieselView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
     model = DescargaDeDiesel
     template_name = 'bita/descarga_diesel_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class DescargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
+class DescargaDeDieselNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_vigilante"
     model= DescargaDeDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -270,7 +304,8 @@ class DescargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class DescargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
+class DescargaDeDieselEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_vigilante"
     model= DescargaDeDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -282,12 +317,14 @@ class DescargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 ""
-class CargaDeDieselView(LoginRequiredMixin, generic.ListView):
+class CargaDeDieselView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
     model = CargaDeDiesel
     template_name = 'bita/carga_diesel_list.html'
     context_object_name = 'obj'
     login_url = 'bases:login'
-class CargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
+class CargaDeDieselNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_vigilante"
     model= CargaDeDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -298,7 +335,8 @@ class CargaDeDieselNew(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
-class CargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
+class CargaDeDieselEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_vigilante"
     model= CargaDeDiesel
     template_name = 'bita/form_generico.html'
     context_object_name='obj'
@@ -309,3 +347,75 @@ class CargaDeDieselEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
+"""Ingreso unidad (diferente a motivos"""
+class IngresoUnidadPesadaView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
+    model = IngresoUnidadPesada
+    template_name = 'bita/ingreso_unidad_pesada_list.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+
+    def get_queryset(self):
+        qs = IngresoUnidadPesada.objects.filter(estado=True).order_by('-id')[:100] | IngresoUnidadPesada.objects.filter(estado=False).order_by('-id')[:100]
+        return qs
+class IngresoUnidadPesadaExport(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "prf.change_vigilante"
+    model = IngresoUnidadPesada
+    template_name = 'bita/ingreso_pesada_export.html'
+    context_object_name = 'obj'
+    login_url = 'bases:login'
+
+    def get_queryset(self):
+        qs = IngresoUnidadPesada.objects.filter(estado=True).order_by('-id')[:5000] | IngresoUnidadPesada.objects.filter(estado=False).order_by('-id')[:5000]
+        return qs
+class IngresoUnidadPesadaNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    permission_required = "prf.change_vigilante"
+    model= IngresoUnidadPesada
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=IngresoUnidadPesadaForm
+    success_url = reverse_lazy('bita:ingreso_unidad_pesada_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+class IngresoUnidadPesadaEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    permission_required = "prf.change_editorbitacoras"
+    model= IngresoUnidadPesada
+    template_name = 'bita/form_generico.html'
+    context_object_name='obj'
+    form_class=IngresoUnidadPesadaForm
+    success_url = reverse_lazy('bita:ingreso_unidad_pesada_list')
+    login_url = "bases:login"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+""""""
+@login_required(login_url="/login/")
+@permission_required("prf.change_vigilante",login_url="/login/")
+def salida_pesado(request, id):
+    pede = IngresoUnidadPesada.objects.filter(pk=id).first()
+    contexto={}
+    """template_name="inv/pedidos_brinco.html"-"""
+    if not pede:
+        return redirect("bita:ingreso_unidad_pesada_list")
+    if request.method=='GET':
+        if pede.estado==True:
+            pede.fsalida = datetime.now()
+            pede.estado=False
+            pede.save()
+            return redirect("bita:ingreso_unidad_pesada_list")
+        else:
+            return HttpResponse("Ya se tiene un registro de salida. No se le puede volver a asignar hora de salida.")
+    if request.method=='POST':
+        if pede.estado==True:
+            pede.fsalida = datetime.now()
+            pede.estado=False
+            pede.save()
+            return redirect("bita:ingreso_unidad_pesada_list")
+        else:
+            return HttpResponse("Ya se tiene un registro de salida. No se le puede volver a asignar hora de salida.")
+    return render(request,contexto)
+""",template_name"""
