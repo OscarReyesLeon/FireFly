@@ -1,3 +1,56 @@
+import os
+from os import remove
+
+
+ubicacion = "./piusi/"
+def origenarchivos():
+    archivos = os.listdir('./piusi')
+    return archivos
+
+def archivoindividual(totalarchivos):
+    for individual in totalarchivos:
+        individual = ubicacion+individual
+        """print(individual)"""
+        
+        with open(individual) as f_obj:
+            lines = f_obj.readlines()
+            for line in lines:
+                line = line.split(';')
+                for separador in line:
+                    separador = separador.replace("'","")
+                    print(separador + " - valror individual de cadena")
+                    
+def eliminarleidos(totalarchivos):
+    for individual in totalarchivos:
+        individual = ubicacion+individual
+        print(individual)
+        remove(individual)
+        print(individual + " - removeOK")
+
+totalarchivos = origenarchivos()
+archivoindividual(totalarchivos)
+eliminarleidos(totalarchivos)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------
+
 """revisar anti duplicados en formularios"""
 
 --sinSelect

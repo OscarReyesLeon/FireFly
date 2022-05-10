@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+<center>
+<div class="modal-lg">
+    <div class="modal-content">
+        {% if obj %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'bita:carga_diesel_edit' obj.pk %}" enctype="multipart/form-data" >
+        {% else %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'bita:carga_diesel_new' %}"  enctype="multipart/form-data" >
+        {% endif %}
+            <div class="col-xl-12 col-md-12 mb-12">
+                {% if obj %}
+                <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+                <div class="card border-left-success shadow h-100 py-2">
+                {% endif %}
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            {% if obj %} Editar {% else %} Nuevo {% endif %} Pedido
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        {% csrf_token %}
+                        <div class="row">
+                            {#{ form.as_p }#}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-18">
+                                <div class="col-md-18">{{form.vehiculo.label}}</div>
+                                <div class="col-md-6">{{form.vehiculo}}</div>
+                            </div>
+                            <div class="col-md-18">
+                                <div class="col-md-6">{{form.litros.label}}</div>
+                                <div class="col-md-6">{{form.litros}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-18">
+                                <div class="col-md-12">{{form.destino.label}}</div>
+                                <div class="col-md-18">{{form.destino}}</div>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
+                                <a href="{% url 'bita:carga_diesel_list' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</center>
+{% endblock %}
+{% block js_page %}
+
+<script>
+  var cuenta=0;
+  function antidoblebuton() {
+    if (!cuenta == 0) {
+        document.getElementById('boton').disabled=true;
+        return (false);
+    }
+    else
+  cuenta++;
+          return (true);
+  }
+
+</script>
+<script>
+    $(function() {
+        $('.select2').select2({
+            placeholder: "Selecciona una opcion acorde a lo que buscas",
+            language: "es"
+        });
+    });
+</script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block side_bar %}
+{% endblock %}

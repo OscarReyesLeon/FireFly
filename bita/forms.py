@@ -108,7 +108,13 @@ class CargaDeDieselForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({'class':"form-control"})
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+        self.fields['destino'].widget.attrs['class'] = 'form-control select2'
+        self.fields['vehiculo'].widget.attrs['class'] = 'form-control select2'
+
+    
 class IngresoUnidadPesadaForm(forms.ModelForm):
     class Meta:
         model=IngresoUnidadPesada

@@ -326,7 +326,7 @@ class CargaDeDieselView(LoginRequiredMixin, PermissionRequiredMixin, generic.Lis
 class CargaDeDieselNew(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
     permission_required = "prf.change_vigilante"
     model= CargaDeDiesel
-    template_name = 'bita/form_generico.html'
+    template_name = 'bita/diesel_form.html'
     context_object_name='obj'
     form_class=CargaDeDieselForm
     success_url = reverse_lazy('bita:carga_diesel_list')
@@ -338,7 +338,7 @@ class CargaDeDieselNew(LoginRequiredMixin, PermissionRequiredMixin, generic.Crea
 class CargaDeDieselEdit(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
     permission_required = "prf.change_vigilante"
     model= CargaDeDiesel
-    template_name = 'bita/form_generico.html'
+    template_name = 'bita/diesel_form.html'
     context_object_name='obj'
     form_class=CargaDeDieselForm
     success_url = reverse_lazy('bita:carga_diesel_list')
