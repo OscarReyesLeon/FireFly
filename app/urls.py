@@ -26,7 +26,9 @@ urlpatterns = [
     path('cmp/', include(('cmp.urls', 'cmp'), namespace='cmp')),
     path('fac/', include(('fac.urls', 'fac'), namespace='fac')),
     path('bita/', include(('bita.urls', 'bita'), namespace='bita')),
+    path('logi/', include(('logi.urls', 'logi'), namespace='logi')),
     path('api/', include(('api.urls', 'api'), namespace='api')),
+
     
     path('admin/', admin.site.urls),
 ]

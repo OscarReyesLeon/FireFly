@@ -2,9 +2,9 @@ import os
 from os import remove
 
 
-ubicacion = "./piusi/"
+ubicacion = "/mnt/c/Users/danon/Downloads/archivo/piusi/"
 def origenarchivos():
-    archivos = os.listdir('./piusi')
+    archivos = os.listdir('/mnt/c/Users/danon/Downloads/archivo/piusi/')
     return archivos
 
 def archivoindividual(totalarchivos):
