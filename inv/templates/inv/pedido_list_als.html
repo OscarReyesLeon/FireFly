@@ -46,6 +46,13 @@
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_export' %}" class="btn btn-outline-light" role="button"></i>Exportar</a>
       {% endif %}
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
+      {% endif %}
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
+      {% endif %}
+
     </div><br>
 
     {% if not obj %}
@@ -59,6 +66,7 @@
         <th>Solicitante</th>
         <th>Articulo</th>
       	<th>Cantidad</th>
+      	<th>~</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
         <th class="all">Acciones</th>
@@ -74,6 +82,7 @@
           <td>{{item.uc}}</td>
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
+          <td>{{item.variacion}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}
           <td>
@@ -107,68 +116,81 @@
             'copy', 'csv', 'excel', 'print'
         ],
       "rowCallback": function(row, data, index){
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(0)').css('color', 'black');
         }
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(1)').css('color', 'blue');
         }
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(2)').css('color', 'blue');
         }
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(3)').css('color', 'blue');
         }
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(4)').css('color', 'blue');
         }
-        if(data[10]== 1){
-      	$(row).find('td:eq(5)').css('color', 'blue');
+
+        if(data[6]> 0 && data[11]==1){
+      	$(row).find('td:eq(5)').css('color', 'red');
         }
-        if(data[10]== 1){
-      	$(row).find('td:eq(6)').css('color', 'blue');
+        if(data[6]> 0 && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'red');
         }
-        if(data[10]== 1){
-      	$(row).find('td:eq(7)').css('color', 'blue');
+        if(data[6]> 0 && data[11]==1){
+      	$(row).find('td:eq(7)').css('color', 'red');
         }
-        if(data[10]== 1){
+        if(data[11]== 1 && data[11]==1){
       	$(row).find('td:eq(9)').css('color', 'red');
         }
 
-        if(data[10]== 2){
+        if(data[6]< 0 && data[11]==1){
+      	$(row).find('td:eq(5)').css('color', 'purple');
+        }
+        if(data[6]< 0 && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'purple');
+        }
+        if(data[6]< 0 && data[11]==1){
+      	$(row).find('td:eq(7)').css('color', 'purple');
+        }
+
+        if(data[6]== 0 && data[11]==1){
+      	$(row).find('td:eq(5)').css('color', 'green');
+        }
+        if(data[6]== 0 && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'green');
+        }
+        if(data[6]== 0 && data[11]==1){
+      	$(row).find('td:eq(7)').css('color', 'green');
+        }
+
+
+        if(data[11]== 2){
       	$(row).find('td:eq(0)').css('color', 'black');
         }
-        if(data[10]== 2){
+        if(data[11]== 2){
       	$(row).find('td:eq(1)').css('color', 'orange');
         }
-        if(data[10]== 2){
+        if(data[11]== 2){
       	$(row).find('td:eq(2)').css('color', 'orange');
         }
-        if(data[10]== 2){
+        if(data[11]== 2){
       	$(row).find('td:eq(3)').css('color', 'orange');
         }
-        if(data[10]== 2){
+        if(data[11]== 2){
       	$(row).find('td:eq(4)').css('color', 'orange');
         }
-        if(data[10]== 2){
-      	$(row).find('td:eq(5)').css('color', 'orange');
-        }
-        if(data[10]== 2){
-      	$(row).find('td:eq(6)').css('color', 'orange');
-        }
-        if(data[10]== 2){
-      	$(row).find('td:eq(7)').css('color', 'orange');
-        }
-        if(data[10]== 2){
+        if(data[11]== 2){
       	$(row).find('td:eq(9)').css('color', 'red');
         }
-        if(data[10]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(10)').css('color', 'black');
         }
 
 
       },
-      "order": [[ 10, 'asc' ], [ 0, 'asc' ]], 
+      "order": [[ 11, 'asc' ], [ 0, 'asc' ]], 
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

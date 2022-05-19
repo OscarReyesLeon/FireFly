@@ -512,6 +512,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     precios = Artciulosestandarizados.objects.filter(pk=pedi.idestandarizado)
+    precios = precios.get()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 

@@ -172,6 +172,17 @@ class Pedido(ClaseModelo):
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
     @property
+    def variacion(self):
+        abuscar = self.articulo
+        abuscar = abuscar.upper()
+        if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
+            respuesta = Nombresrelacion.objects.filter(descripcion=abuscar).get()
+            respuesta = respuesta.relacion.preciosugerido
+            respuesta = self.precio_uni - respuesta
+        else:
+            respuesta = 0.0001
+        return respuesta
+    @property
     def descripcioncorregida(self):
         abuscar = self.articulo
         abuscar = abuscar.upper()
@@ -189,7 +200,7 @@ class Pedido(ClaseModelo):
             respuesta = Nombresrelacion.objects.filter(descripcion=abuscar).get()
             respuesta = respuesta.relacion.id
         else:
-            pass
+            respuesta = 1
         return respuesta
 
     @property

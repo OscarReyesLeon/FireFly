@@ -12,9 +12,7 @@
 
   <div class="card-body">
     <div class="buttons-toolbar">
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:articuloes_new' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nuevo Estandarizado</a>
-      {% endif %}
+      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nuevo</a>
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Cotizar</i></a>
@@ -42,7 +40,13 @@
       <a href="{% url 'inv:pedido_export' %}" class="btn btn-outline-light" role="button"></i>Exportar</a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-primary" role="button">Estandarizar Articulos</i></a>
+      <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-primary" role="button">Estandarizar</i></a>
+      {% endif %}
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
+      {% endif %}
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      <a href="{% url 'inv:articuloes_new' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nuevo Estandarizado</a>
       {% endif %}
 
     </div><br>
@@ -55,6 +59,7 @@
 	<table id="export" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
       <thead>
         <th>ID</th>
+        <th>Editar</th>
         <th>Articulo</th>
         <th>PA</th>
         <th>P2</th>
@@ -73,6 +78,9 @@
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
+          <td>
+            <a href="{% url 'inv:articuloes_edit' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a> 
+          </td>
           <td>{{item.descripcion}}</td>
           <td>{{item.preciosugerido}}</td>
           <td>{{item.precio2}}</td>
