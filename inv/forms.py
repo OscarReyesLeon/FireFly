@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Banco, Computadora, Empleado, Equipo, Herramienta, Proceso, Categoria, Puesto, \
-    UnidadMedida, Producto, Pedido, Autoriza, Computadora, Empresa, Genero, Estudios, Departamento
+    UnidadMedida, Producto, Pedido, Autoriza, Computadora, Empresa, Genero, Estudios, Departamento, Nombresrelacion, Artciulosestandarizados
 
 
 class EquipoForm(forms.ModelForm):
@@ -288,3 +288,29 @@ class DepartamentoForm(forms.ModelForm):
                 'class': 'form-control'
             })
 
+
+class ArtciulosestandarizadosForm(forms.ModelForm):
+    class Meta:
+        model = Artciulosestandarizados
+        exclude = ['um', 'fm', 'uc', 'fc', 'estado', 'preciosugerido','precio2','precio3','precio4','fechapreciosugerido','fecha2','fecha3','fecha4']
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+class NombresrelacionForm(forms.ModelForm):
+    class Meta:
+        model = Nombresrelacion
+        exclude = ['um', 'fm', 'uc', 'fc', 'estado']
+        widget = {'descripcion': forms.TextInput}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })

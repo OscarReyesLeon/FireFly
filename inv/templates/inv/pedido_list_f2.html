@@ -55,23 +55,24 @@
       <thead>
         <th>ID</th>
         <th>Solicitante</th>
-        <th>Articulo</th>
-      	<th>Cantidad</th>
+      	<th>Estandarizado</th>
+        <th>Cantidad</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
         <th class="all">Acciones</th>
         <th>Comentarios</th>
+        <th>Articulo</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
           <td>{{item.uc}}</td>
-          <td>{{item.articulo}}</td>
+          <td>{{item.descripcioncorregida}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
-          <td>{{item.fc|date:"d/m/y"}}
-          <td>
+          <td>{{item.fc|date:"d/m/y"}}</td>
+            <td>
             {% if perms.prf.change_comprador and item.indentificador_estado == '2' %}
             <a href="{% url 'inv:pedido_reaut' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
@@ -89,6 +90,8 @@
             {% endif %}
           </td>
           <td>{{item.comentario}}</td>
+          <th>{{item.articulo}}</th>
+
         </tr> 
         {% endfor %}
       </tbody>

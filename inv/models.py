@@ -5,6 +5,33 @@ from bases.models import ClaseModelo
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+class Artciulosestandarizados (ClaseModelo):
+    descripcion = models.CharField(max_length=50, unique=True, null=False, blank=False)
+    fechapreciosugerido = models.DateTimeField(auto_now_add=True) 
+    preciosugerido = models.FloatField(default=0)
+    fecha2 = models.DateTimeField(null=True, blank=True)
+    precio2 = models.FloatField(default=0)
+    fecha3 = models.DateTimeField(null=True, blank=True)
+    precio3 = models.FloatField(default=0)
+    fecha4 = models.DateTimeField(null=True, blank=True)
+    precio4 = models.FloatField(default=0)
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Artciulosestandarizados, self).save()
+
+class Nombresrelacion (ClaseModelo):
+    descripcion = models.CharField(max_length=50, blank=False, null=False, unique=True)
+    relacion = models.ForeignKey(Artciulosestandarizados, on_delete=models.PROTECT)
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Nombresrelacion, self).save()
+
+    class Meta:
+        verbose_name_plural = "Equipos"
 class Equipo(ClaseModelo):
     descripcion = models.CharField(
         max_length=100,
@@ -131,7 +158,7 @@ class Pedido(ClaseModelo):
     status2 = models.CharField(max_length=20, default='Proximo')
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True, blank=True)
-    articulo = models.CharField(max_length=35)
+    articulo = models.CharField(max_length=50)
     proceso = models.CharField(max_length=15)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
     motivo_peticion = models.CharField(max_length=200, null=True, blank=True)
@@ -144,6 +171,27 @@ class Pedido(ClaseModelo):
     divisa = models.CharField(max_length=3, default='MXN')
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
+    @property
+    def descripcioncorregida(self):
+        abuscar = self.articulo
+        abuscar = abuscar.upper()
+        if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
+            respuesta = Nombresrelacion.objects.filter(descripcion=abuscar).get()
+            respuesta = respuesta.relacion.descripcion
+        else:
+            respuesta = "୧༼ಠ益ಠ༽୨"
+        return respuesta
+    @property
+    def idestandarizado(self):
+        abuscar = self.articulo
+        abuscar = abuscar.upper()
+        if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
+            respuesta = Nombresrelacion.objects.filter(descripcion=abuscar).get()
+            respuesta = respuesta.relacion.id
+        else:
+            pass
+        return respuesta
+
     @property
     def oc(self):
         from cmp.models import ComprasDet
@@ -201,6 +249,19 @@ class Pedido(ClaseModelo):
         
         self.articulo = self.articulo.replace("'","")
         self.proceso = self.proceso.replace("'","")
+        abuscar = self.articulo
+        abuscar = abuscar.upper()
+        if self.precio_uni == 0:
+            if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
+                preciosug = Nombresrelacion.objects.filter(descripcion=abuscar).get()
+                preciosug = preciosug.relacion.preciosugerido
+                self.precio_uni = preciosug
+            else:
+                pass
+        else:
+            pass
+
+
         super(Pedido, self).save()
 
     def __str__(self):

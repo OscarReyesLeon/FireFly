@@ -15,7 +15,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, \
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
     EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
     EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, \
-    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, pedido_enviado
+    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, pedido_enviado, ArtciulosestandarizadosNew, ArtciulosestandarizadosEdit, ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView
 
 urlpatterns = [
     path('equipos/',EquipoView.as_view(), name='equipo_list'),
@@ -120,5 +120,13 @@ urlpatterns = [
     path('pcontacto/', ParentescocontactoView.as_view(), name='parentescocontacto_list'),
     path('pcontacto/new', ParentescocontactoNew.as_view(), name='parentescocontacto_new'),
     path('pcontacto/edit/<int:pk>', ParentescocontactoEdit.as_view(), name='parentescocontacto_edit'),
+
+    path('articulosestandarizados/',ArtciulosestandarizadosView.as_view(), name='articuloes_list'),
+    path('articulosestandarizados/new',ArtciulosestandarizadosNew.as_view(), name='articuloes_new'),
+    path('articulosestandarizados/edit/<int:pk>',ArtciulosestandarizadosEdit.as_view(), name='articuloes_edit'),
+
+    path('nombresrelacion/',NombresrelacionView.as_view(), name='nombrerelacion_list'),
+    path('nombresrelacion/new',NombresrelacionNew.as_view(), name='nombrerelacion_new'),
+    path('nombresrelacion/edit/<int:pk>',NombresrelacionEdit.as_view(), name='nombrerelacion_edit'),
 
 ]

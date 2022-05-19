@@ -119,9 +119,10 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 10%">Pedido ID</th>
-                        <th style="width: 10%">Cantidad</th>
-                        <th>Descripcion</th>
+                        <th style="width: 7%">Pedido ID</th>
+                        <th style="width: 7%">Cantidad</th>
+                        <th style="width: 11%">Proceso</th>
+                        <th>Articulo</th>
                         <th style="width: 5%">IVA</th>
                         <th style="width: 12%">Unitario</th>
                         <th style="width: 15%">Total</th>
@@ -132,13 +133,15 @@
                     <tr>
                         <td><span class="small"><center>{{ item.pedido.id }}</center></span></td>
                         <td class="numero"><center>{{ item.cantidad }}</center></td>
-                        <td class="letter">{{ item.pedido.articulo }}</td>
+                        <td class="numero"><center>|<small>{{ item.pedido.proceso }}</small>|</center></td>
+                        <td class="letter">{{ item.pedido.descripcioncorregida }}</td>
                         <td class="letter"><center>{{ item.pedido.iva }}</center></td>
                         <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
                         <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
                     </tr>
                     {% endfor %}
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -158,10 +161,12 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td><h4>Sub Total</h4></td>
                             <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:"2" }}</h4></td>
                     </tr>
                     <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -174,6 +179,7 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td><h4>Total</h4></td>
                             <td class="numero"><h4>$ {{ encabezado.total|floatformat:"2" }}</h4></td>
                     </tr>
@@ -181,7 +187,8 @@
             </table>
         </div>
         <div class="card-header">
-            <h4>Impresión generada con Ledsa FireFly el {{ today|date:"d/m/Y" }} a las {{ today|date:"H:i" }}</h4>
+            <h4>Validado: {{ today|date:"d/m/Y - H:i:s" }} | Verificador: {{ encabezado.clienteuniqueid }}</h4>
+            <h4>Codigo verificador: {{ encabezado.qrverificador}} </h4>
         </div>
     </div>
 </body>

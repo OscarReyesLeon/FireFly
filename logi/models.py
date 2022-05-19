@@ -19,9 +19,13 @@ class DieselPiusiCar(ClaseModelo):
     time = models.CharField(max_length=50, help_text="texto")
     dispensername = models.CharField(max_length=50, help_text="Nombre de la bomba")
     def __str__(self):
-        return '{}'.format(self.nombre)
+        return '{}'.format(self.drivername)
     def save(self):
-        self.nombre = self.nombre.upper()
+        self.date = self.date.upper()
+        self.vehicleplate = self.vehicleplate.upper()
+        self.drivername = self.drivername.upper()
+        self.dispensername = self.dispensername.upper()
+        self.time = self.time.upper()
         super(DieselPiusiCar, self).save()
     class Meta:
         verbose_name_plural = 'Carga de Diesel'

@@ -11,12 +11,12 @@ from datetime import datetime
 
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
     Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
-    Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto
+    Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion
 from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
     UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
     EmpresaForm, GeneroForm, EstudiosForm, \
-    EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm
+    EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm, ArtciulosestandarizadosForm, NombresrelacionForm
 from cmp.models import ComprasDet, ComprasEnc
 
 from bases.views import SinPrivilegios
@@ -511,6 +511,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 @permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
+    precios = Artciulosestandarizados.objects.filter(pk=pedi.idestandarizado)
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
@@ -525,6 +526,15 @@ def pedido_aprobado_als(request, id):
             pedi.status2='Si'
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
+            precios.precio4 = precios.precio3
+            precios.precio3 = precios.precio2
+            precios.precio2 = precios.preciosugerido
+            precios.preciosugerido = pedi.precio_uni
+            precios.fecha4 = precios.fecha3
+            precios.fecha3 = precios.fecha2
+            precios.fecha2 = precios.fechapreciosugerido
+            precios.fechapreciosugerido = datetime.now()
+            precios.save()
             pedi.save()
             return redirect("inv:pedido_list_als")
         else:
@@ -535,6 +545,15 @@ def pedido_aprobado_als(request, id):
             pedi.status2='Si'
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
+            precios.precio4 = precios.precio3
+            precios.precio3 = precios.precio2
+            precios.precio2 = precios.preciosugerido
+            precios.preciosugerido = pedi.precio_uni
+            precios.fecha4 = precios.fecha3
+            precios.fecha3 = precios.fecha2
+            precios.fecha2 = precios.fechapreciosugerido
+            precios.fechapreciosugerido = datetime.now()
+            precios.save()
             pedi.save()
             return redirect("inv:pedido_list_als")
         else:
@@ -1420,3 +1439,77 @@ class DepartamentoEdit(SuccessMessageMixin, SinPrivilegios, \
         return super().form_valid(form)
 
 """Departamento Fin"""
+
+class ArtciulosestandarizadosView(SinPrivilegios,generic.ListView):
+    permission_required = "prf.change_comprador"
+    model = Artciulosestandarizados
+    template_name = "inv/articuloes_list_all.html"
+    context_object_name = "obj"
+    
+
+
+class ArtciulosestandarizadosNew(SuccessMessageMixin,SinPrivilegios,\
+    generic.CreateView):
+    permission_required="prf.change_comprador"
+    model= Artciulosestandarizados
+    template_name="inv/form_generico.html"
+    context_object_name = "obj"
+    form_class=ArtciulosestandarizadosForm
+    success_url=reverse_lazy("inv:articuloes_list")
+    success_message="Articulo estandarizado Creado Satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class ArtciulosestandarizadosEdit(SuccessMessageMixin,SinPrivilegios, \
+    generic.UpdateView):
+    permission_required="prf.change_comprador"
+    model= Artciulosestandarizados
+    template_name="inv/form_generico.html"
+    context_object_name = "obj"
+    form_class=ArtciulosestandarizadosForm
+    success_url=reverse_lazy("inv:articuloes_list")
+    success_message="Articulo estandarizado Actualizado Satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+    
+class NombresrelacionView(SinPrivilegios,generic.ListView):
+    permission_required = "prf.change_comprador"
+    model = Nombresrelacion
+    template_name = "inv/nombresrelacion_list.html"
+    context_object_name = "obj"
+    
+
+
+class NombresrelacionNew(SuccessMessageMixin,SinPrivilegios,\
+    generic.CreateView):
+    permission_required="prf.change_comprador"
+    model=Nombresrelacion
+    template_name="inv/form_generico.html"
+    context_object_name = "obj"
+    form_class=NombresrelacionForm
+    success_url=reverse_lazy("inv:nombrerelacion_list")
+    success_message="Nombre-Relacion Creada Satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+
+class NombresrelacionEdit(SuccessMessageMixin,SinPrivilegios, \
+    generic.UpdateView):
+    permission_required="prf.change_comprador"
+    model=Nombresrelacion
+    template_name="inv/form_generico.html"
+    context_object_name = "obj"
+    form_class=NombresrelacionForm
+    success_url=reverse_lazy("inv:nombrerelacion_list")
+    success_message="Nombre Relación Actualizada Satisfactoriamente"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)

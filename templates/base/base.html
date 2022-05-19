@@ -133,6 +133,12 @@
             {% if perms.inv.view_pedido %}
             <a class="collapse-item" href="{% url 'inv:pedido_list_f' %}">Pedidos</a>
             {% endif %}
+            {% if perms.prf.change_comprador %}
+            <a class="collapse-item" href="{% url 'inv:articuloes_list' %}">ArticulosEs</a>
+            {% endif %}
+            {% if perms.prf.change_comprador %}
+            <a class="collapse-item" href="{% url 'inv:nombrerelacion_list' %}">RelacionArtEs</a>
+            {% endif %}
 
             <h6 class="collapse-header">Catálogos de RH:</h6>
             {% if perms.inv.view_empresa %}
