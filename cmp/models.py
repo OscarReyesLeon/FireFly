@@ -47,7 +47,10 @@ class Proveedor(ClaseModelo):
     nombrecomercial=models.CharField(max_length=70)
     @property
     def cuentabancoauto(self):
-        cuentabanco=self.clabeproveedor[-12:-1]
+        if self.clabeproveedor:
+            cuentabanco=self.clabeproveedor[-12:-1]
+        else:
+            cuentabanco="no-tiene-#C"
         return cuentabanco
 
     def __str__(self):

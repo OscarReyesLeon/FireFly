@@ -24,13 +24,13 @@
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-primary" role="button">Cotizar</i></a>
       {% endif %}
-      {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
-      <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>X-Pedir</a>
+      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
-      {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
+      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedor</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
       {% endif %}
       <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-light" role="button"></i>Todo</a>
@@ -51,6 +51,9 @@
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
+      {% endif %}
+      {% if perms.prf.change_almacenista %}
+      Si ves esto pideme eliminarlo... apunte
       {% endif %}
 
     </div><br>

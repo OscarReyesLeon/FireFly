@@ -12,12 +12,11 @@
 
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nuevo</a>
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Cotizar</i></a>
       {% endif %}
-      {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
+      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>X-Pedir</a>
       {% endif %}
       {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
@@ -149,7 +148,7 @@
         	$(row).find('td:eq(10)').css('color', 'blue');
           }
         },
-          "order": [ 0, 'desc' ],
+          "order": [[ 7, 'desc' ],[ 0, 'desc' ]],
 	        lengthChange: false,
 	        buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]
 	    } );

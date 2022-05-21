@@ -360,7 +360,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:1000]
+        qs = Pedido.objects.order_by('-id')[:500]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -369,7 +369,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:10000]
+        qs = Pedido.objects.order_by('-id')[:500]
         return qs
 
 
@@ -511,6 +511,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 @permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
+    
     precios = Artciulosestandarizados.objects.filter(pk=pedi.idestandarizado)
     precios = precios.get()
     contexto={}
@@ -958,6 +959,8 @@ def pedido_enviado(request, id):
 @permission_required("prf.change_auxcompras",login_url="/login/")
 def pedido_express(request, id):
     pede = Pedido.objects.filter(pk=id).first()
+    precios = Artciulosestandarizados.objects.filter(pk=pede.idestandarizado)
+    precios = precios.get()
     contexto={}
     template_name="inv/pedidos_brinco.html"
     if not pede:
@@ -970,6 +973,16 @@ def pedido_express(request, id):
             pede.status2='na'
             pede.status='Directo'
             pede.indentificador_estado='5'
+            precios.precio4 = precios.precio3
+            precios.precio3 = precios.precio2
+            precios.precio2 = precios.preciosugerido
+            precios.preciosugerido = pede.precio_uni
+            precios.fecha4 = precios.fecha3
+            precios.fecha3 = precios.fecha2
+            precios.fecha2 = precios.fechapreciosugerido
+            precios.fechapreciosugerido = datetime.now()
+            precios.save()
+
             pede.save()
             return redirect("inv:pedido_list_f2")
         else:
@@ -982,14 +995,22 @@ def pedido_express(request, id):
             pede.status2='na'
             pede.status='Directo'
             pede.indentificador_estado='5'
+            precios.precio4 = precios.precio3
+            precios.precio3 = precios.precio2
+            precios.precio2 = precios.preciosugerido
+            precios.preciosugerido = pedi.precio_uni
+            precios.fecha4 = precios.fecha3
+            precios.fecha3 = precios.fecha2
+            precios.fecha2 = precios.fechapreciosugerido
+            precios.fechapreciosugerido = datetime.now()
+            precios.save()
+
             pede.save()
             return redirect("inv:pedido_list")
         else:
             return HttpResponse("Esta opción no está disponible")
     return render(request,template_name,contexto)
 
-@login_required(login_url="/login/")
-@permission_required("inv.change_producto",login_url="/login/")
 def pedido_oc(request, id):
     pede = Pedido.objects.filter(pk=id).get()
     pede = pede.id
@@ -1442,7 +1463,7 @@ class DepartamentoEdit(SuccessMessageMixin, SinPrivilegios, \
 """Departamento Fin"""
 
 class ArtciulosestandarizadosView(SinPrivilegios,generic.ListView):
-    permission_required = "prf.change_comprador"
+    permission_required = "cmp.view_comprasenc"
     model = Artciulosestandarizados
     template_name = "inv/articuloes_list_all.html"
     context_object_name = "obj"
@@ -1479,7 +1500,7 @@ class ArtciulosestandarizadosEdit(SuccessMessageMixin,SinPrivilegios, \
         return super().form_valid(form)
     
 class NombresrelacionView(SinPrivilegios,generic.ListView):
-    permission_required = "prf.change_comprador"
+    permission_required = "cmp.view_comprasenc"
     model = Nombresrelacion
     template_name = "inv/nombresrelacion_list.html"
     context_object_name = "obj"
@@ -1490,7 +1511,7 @@ class NombresrelacionNew(SuccessMessageMixin,SinPrivilegios,\
     generic.CreateView):
     permission_required="prf.change_comprador"
     model=Nombresrelacion
-    template_name="inv/form_generico.html"
+    template_name="inv/relacioncorregida_form.html"
     context_object_name = "obj"
     form_class=NombresrelacionForm
     success_url=reverse_lazy("inv:nombrerelacion_list")
@@ -1505,7 +1526,7 @@ class NombresrelacionEdit(SuccessMessageMixin,SinPrivilegios, \
     generic.UpdateView):
     permission_required="prf.change_comprador"
     model=Nombresrelacion
-    template_name="inv/form_generico.html"
+    template_name="inv/relacioncorregida_form.html"
     context_object_name = "obj"
     form_class=NombresrelacionForm
     success_url=reverse_lazy("inv:nombrerelacion_list")

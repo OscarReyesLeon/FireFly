@@ -110,8 +110,8 @@
                             <td style="width: 20%"><h4>Horario de Entrega:</h4></td>
                             <td style="width: 80%">{{encabezado.empresaoc.horarios}}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
                 <hr>
             </div>
 
@@ -180,12 +180,17 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><h4>Total</h4></td>
-                            <td class="numero"><h4>$ {{ encabezado.total|floatformat:"2" }}</h4></td>
+                            <td><h4>Total</h4><hr></td>
+                            <td class="numero"><h4>$ {{ encabezado.total|floatformat:"2" }}<hr></h4></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div>
+            <br>
+            {{ encabezado.observacion }}
+        </div>
+        <hr>
         <div class="card-header">
             <h4>Validado: {{ today|date:"d/m/Y - H:i:s" }} <br>Verificador: {{ encabezado.clienteuniqueid }}</h4>
         </div>

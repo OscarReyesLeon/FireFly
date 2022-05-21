@@ -289,6 +289,7 @@ class DepartamentoForm(forms.ModelForm):
             })
 
 
+
 class ArtciulosestandarizadosForm(forms.ModelForm):
     class Meta:
         model = Artciulosestandarizados
@@ -306,7 +307,6 @@ class NombresrelacionForm(forms.ModelForm):
     class Meta:
         model = Nombresrelacion
         exclude = ['um', 'fm', 'uc', 'fc', 'estado']
-        widget = {'descripcion': forms.TextInput}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -314,3 +314,4 @@ class NombresrelacionForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+        self.fields['relacion'].widget.attrs['class'] = 'form-control select2'
