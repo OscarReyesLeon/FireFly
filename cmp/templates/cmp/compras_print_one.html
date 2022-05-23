@@ -191,9 +191,17 @@
             {{ encabezado.observacion }}
         </div>
         <hr>
-        <div class="card-header">
-            <h4>Validado: {{ today|date:"d/m/Y - H:i:s" }} <br>Verificador: {{ encabezado.clienteuniqueid }}</h4>
-        </div>
+        <table>
+            <tr>
+                <td> <little>
+                    <b>Autenticidad: </b>El QR deberá llevar al dominio <b>firefly.ledsa.mx</b>  y devolver la misma información de esta impresión.
+                    <br>
+                    <b>Última Verificación:</b> {{ today|date:"d/m/Y - H:i:s" }} <br><b>Verificador:</b> {{ encabezado.clienteuniqueid }}
+                    <br><b>Dominio Validador:</b> firefly.ledsa.mx
+                </td>
+                <td align="left" valign="top"><img src="https://chart.googleapis.com/chart?chs=132x132&cht=qr&chl=https://firefly.ledsa.mx/cmp/ordencompra/{{encabezado.clienteuniqueid}}/oc"></td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

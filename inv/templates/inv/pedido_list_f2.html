@@ -121,6 +121,9 @@
             'copy', 'csv', 'excel', 'print'
         ],
         "rowCallback": function(row, data, index){
+        if(data[2]!= '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(2)').css('color', 'blue');
+        }
         if(data[2]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(0)').css('color', 'black');
         }
