@@ -4,7 +4,17 @@ from bases.models import ClaseModelo
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-
+def normalize(s):
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+    )
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    return s
 class Artciulosestandarizados (ClaseModelo):
     descripcion = models.CharField(max_length=50, unique=True, null=False, blank=False)
     fechapreciosugerido = models.DateTimeField(auto_now_add=True) 
@@ -172,6 +182,15 @@ class Pedido(ClaseModelo):
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
     @property
+    def estandarizadorq(self):
+        abuscar = self.articulo
+        abuscar = abuscar.upper()
+        if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
+            respuesta = "si"
+        else:
+            respuesta = "no"
+        return respuesta
+    @property
     def variacion(self):
         abuscar = self.articulo
         abuscar = abuscar.upper()
@@ -255,10 +274,13 @@ class Pedido(ClaseModelo):
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
     def save(self):
         self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
-        self.articulo = self.articulo.upper()
+
         self.proceso = self.proceso.upper()
         
+        self.articulo = self.articulo.upper()
         self.articulo = self.articulo.replace("'","")
+        self.articulo = normalize(self.articulo)
+        
         self.proceso = self.proceso.replace("'","")
         abuscar = self.articulo
         abuscar = abuscar.upper()

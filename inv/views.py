@@ -369,7 +369,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:500]
+        qs = Pedido.objects.order_by('-id')[:50000]
         return qs
 
 
@@ -382,7 +382,7 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user).order_by('-id')[:500]
+        qs = qs.filter(uc=user).order_by('-id')[:200]
         return qs
 
 class PedidoViewALS(SinPrivilegios, generic.ListView):
@@ -511,9 +511,7 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
 @permission_required("prf.change_autorizador",login_url="/login/")
 def pedido_aprobado_als(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
-    
-    precios = Artciulosestandarizados.objects.filter(pk=pedi.idestandarizado)
-    precios = precios.get()
+
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
@@ -528,15 +526,6 @@ def pedido_aprobado_als(request, id):
             pedi.status2='Si'
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
-            precios.precio4 = precios.precio3
-            precios.precio3 = precios.precio2
-            precios.precio2 = precios.preciosugerido
-            precios.preciosugerido = pedi.precio_uni
-            precios.fecha4 = precios.fecha3
-            precios.fecha3 = precios.fecha2
-            precios.fecha2 = precios.fechapreciosugerido
-            precios.fechapreciosugerido = datetime.now()
-            precios.save()
             pedi.save()
             return redirect("inv:pedido_list_als")
         else:
@@ -547,15 +536,6 @@ def pedido_aprobado_als(request, id):
             pedi.status2='Si'
             pedi.status='Pendiente'
             pedi.indentificador_estado='3'
-            precios.precio4 = precios.precio3
-            precios.precio3 = precios.precio2
-            precios.precio2 = precios.preciosugerido
-            precios.preciosugerido = pedi.precio_uni
-            precios.fecha4 = precios.fecha3
-            precios.fecha3 = precios.fecha2
-            precios.fecha2 = precios.fechapreciosugerido
-            precios.fechapreciosugerido = datetime.now()
-            precios.save()
             pedi.save()
             return redirect("inv:pedido_list_als")
         else:
@@ -767,6 +747,8 @@ def pedido_comprando(request, id):
 @permission_required("prf.change_comprador",login_url="/login/")
 def pedido_entregado(request, id):
     pede = Pedido.objects.filter(pk=id).first()
+    precios = Artciulosestandarizados.objects.filter(pk=pede.idestandarizado)
+    precios = precios.get()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
@@ -778,6 +760,16 @@ def pedido_entregado(request, id):
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
             pede.indentificador_estado='5'
+            precios.precio4 = precios.precio3
+            precios.precio3 = precios.precio2
+            precios.precio2 = precios.preciosugerido
+            precios.preciosugerido = pede.precio_uni
+            precios.fecha4 = precios.fecha3
+            precios.fecha3 = precios.fecha2
+            precios.fecha2 = precios.fechapreciosugerido
+            precios.fechapreciosugerido = datetime.now()
+            precios.save()
+
             pede.save()
             return redirect("inv:pedido_list_f4")
         else:

@@ -62,34 +62,34 @@
     <table class="table table-striped table-hover dt-responsive nowrap compact" style="width:100%">
       <thead>
         <th>ID</th>
-        <th>Aut</th>
-        <th>PA</th>
-      	<th>Cantidad</th>
         <th>Articulo</th>
+      	<th>Cantidad</th>
         <th>$ Unitario</th>
-        <th>Fecha</th>
+        <th>Aut</th>
         <th>Compras</th>
-        <th>Status</th>
-        <th class="all">Cancelar</th>
+        <th>Fecha</th>
+        <th>Cancelar</th>
+        <th>R</th>
+        <th>S</th>
       </thead>
       <tbody>
         {% for item in obj%}
 
         <tr>
           <td>{{item.id}}</td>
-          <td>{{item.pedido.cantidad}}</td>
-          <td>{{item.autpor}}</td>
-      	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.articulo}}</td>
+      	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
-          <td>{{item.fc|date:"d/m/y"}}</td>
+          <td>{{item.status2}}</td>
           <td>{{item.status}}</td>
-          <td>{{item.indentificador_estado}}</td>
+          <td>{{item.fc|date:"d/m/y H:i:s"}}</td>
           <td>
             {%if item.status2 == 'Proximo' and item.status == 'X-Revisar' %}
             <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-dark btn-circle" role="button"><i class="fa fa-times"></i></a>
             {% endif %}
           </td>
+          <td>{{item.estandarizadorq}}</td>
+          <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -108,77 +108,108 @@
             'copy', 'csv', 'excel', 'print'
         ],
       "rowCallback": function(row, data, index){
-        if(data[1]== 'Pendiente'){
-      	$(row).find('td:eq(1)').css('color', 'orange');
+        if(data[8]== "si" && data[9]!= 5){
+      	$(row).find('td:eq(1)').css('color', 'purple');
         }
-        if(data[1]== 'Si'){
-      	$(row).find('td:eq(1)').css('color', 'green');
+        if(data[8]== "si" && data[9]!= 5){
+      	$(row).find('td:eq(2)').css('color', 'purple');
         }
-        if(data[1]== 'No'){
-      	$(row).find('td:eq(1)').css('color', 'red');
-        }
-        if(data[1]== 'sc'){
-      	$(row).find('td:eq(1)').css('color', 'blue');
-        }
-        if(data[1]== 'na'){
-      	$(row).find('td:eq(1)').css('color', 'blue');
+        if(data[8]== "si" && data[9]!= 5){
+      	$(row).find('td:eq(3)').css('color', 'purple');
         }
 
-        if(data[8]== 0){
-      	$(row).find('td:eq(4)').css('color', 'red');
-        }
-        if(data[8]== 2){
-      	$(row).find('td:eq(4)').css('color', 'purple');
-        }
-        if(data[8]== 1){
+        if(data[8]== "si" && data[4]!= "Si" && data[9]!= 5){
       	$(row).find('td:eq(4)').css('color', 'green');
         }
-        if(data[8]== 3){
-      	$(row).find('td:eq(4)').css('color', 'orange');
-        }
-        if(data[8]== 4){
-      	$(row).find('td:eq(4)').css('color', 'blue');
+        if(data[8]== "no" && data[4]!= "Si" && data[9]!= 5){
+      	$(row).find('td:eq(4)').css('color', 'red');
         }
 
-        if(data[7]== 'X-Revisar'){
-      	$(row).find('td:eq(7)').css('color', 'green');
+        if(data[8]== "si" && data[9]!= 5){
+      	$(row).find('td:eq(8)').css('color', 'green');
         }
-        if(data[7]== 'Revisado'){
-      	$(row).find('td:eq(7)').css('color', '#a18262');
+        if(data[8]== "no" && data[9]!= 5){
+      	$(row).find('td:eq(8)').css('color', 'orange');
         }
-        if(data[7]== 'Pendiente'){
-      	$(row).find('td:eq(7)').css('color', 'rgb(255, 99, 132)');
+
+
+
+        if(data[5]== 'X-Revisar'){
+      	$(row).find('td:eq(5)').css('color', 'green');
         }
-        if(data[7]== 'en Proveedor'){
-      	$(row).find('td:eq(7)').css('color', '#33D1FF');
+        if(data[5]== 'Revisado'){
+      	$(row).find('td:eq(5)').css('color', '#a18262');
         }
-        if(data[7]== 'Fin'){
-      	$(row).find('td:eq(7)').css('color', 'purple');
+        if(data[5]== 'Pendiente'){
+      	$(row).find('td:eq(5)').css('color', 'rgb(255, 99, 132)');
         }
-        if(data[7]== 'S-Cancela'){
-      	$(row).find('td:eq(7)').css('color', 'black');
+        if(data[5]== 'en Proveedor'){
+      	$(row).find('td:eq(5)').css('color', '#33D1FF');
         }
-        if(data[7]== 'Fin-Anormal'){
-      	$(row).find('td:eq(7)').css('color', 'black');
+        if(data[5]== 'Fin'){
+      	$(row).find('td:eq(5)').css('color', 'purple');
         }
-        if(data[7]== 'Rechazo'){
-      	$(row).find('td:eq(7)').css('color', 'orange');
+        if(data[5]== 'S-Cancela'){
+      	$(row).find('td:eq(5)').css('color', 'black');
         }
-        if(data[7]== 'Stock'){
-      	$(row).find('td:eq(7)').css('color', 'blue');
+        if(data[5]== 'Fin-Anormal'){
+      	$(row).find('td:eq(5)').css('color', 'black');
         }
-        if(data[7]== 'Enviado-Fin'){
-      	$(row).find('td:eq(7)').css('color', 'blue');
+        if(data[5]== 'Rechazo'){
+      	$(row).find('td:eq(5)').css('color', 'orange');
         }
-        if(data[7]== 'Directo'){
-      	$(row).find('td:eq(7)').css('color', 'orange');
+        if(data[5]== 'Stock'){
+      	$(row).find('td:eq(5)').css('color', 'blue');
         }
-        if(data[7]== 'X asignar OC'){
-      	$(row).find('td:eq(7)').css('color', 'red');
+        if(data[5]== 'Enviado-Fin'){
+      	$(row).find('td:eq(5)').css('color', 'blue');
         }
+        if(data[5]== 'Directo'){
+      	$(row).find('td:eq(5)').css('color', 'orange');
+        }
+        if(data[5]== 'X asignar OC'){
+      	$(row).find('td:eq(5)').css('color', 'red');
+        }
+        if(data[5]== 'X-Revisar'){
+          $(row).find('td:eq(0)').css('color', 'green');
+        }
+        if(data[5]== 'Revisado'){
+          $(row).find('td:eq(0)').css('color', '#a18262');
+        }
+        if(data[5]== 'Pendiente'){
+          $(row).find('td:eq(0)').css('color', 'rgb(255, 99, 132)');
+        }
+        if(data[5]== 'en Proveedor'){
+          $(row).find('td:eq(0)').css('color', '#33D1FF');
+        }
+        if(data[5]== 'Fin'){
+          $(row).find('td:eq(0)').css('color', 'purple');
+        }
+        if(data[5]== 'S-Cancela'){
+          $(row).find('td:eq(0)').css('color', 'black');
+        }
+        if(data[5]== 'Fin-Anormal'){
+          $(row).find('td:eq(0)').css('color', 'black');
+        }
+        if(data[5]== 'Rechazo'){
+          $(row).find('td:eq(0)').css('color', 'orange');
+        }
+        if(data[5]== 'Stock'){
+          $(row).find('td:eq(0)').css('color', 'blue');
+        }
+        if(data[5]== 'Enviado-Fin'){
+          $(row).find('td:eq(0)').css('color', 'blue');
+        }
+        if(data[5]== 'Directo'){
+          $(row).find('td:eq(0)').css('color', 'orange');
+        }
+        if(data[5]== 'X asignar OC'){
+          $(row).find('td:eq(0)').css('color', 'red');
+        }
+
 
       },
-      "order": [[ 8, 'asc' ], [ 0, 'desc' ]],
+      "order": [[ 9, 'asc' ], [ 0, 'desc' ]],
       "lengthMenu": [ 100, 250, 500, 1000],
       "scrollX": true,
       "language": {
