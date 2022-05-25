@@ -25,7 +25,7 @@
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-info" role="button">Cotizar</i></a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
-      <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>X-Pedir</a>
+      <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>OC</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Proveedor</a>

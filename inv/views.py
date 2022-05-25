@@ -797,8 +797,8 @@ def pedido_reaut(request, id):
     if not pede:
         return redirect("inv:pedido_list_f2")
     if request.method=='GET':
-        if pede.precio_uni==0 or pede.cantidad==0:
-            return HttpResponse("Ingresa el precio primero")
+        if pede.precio_uni==0 or pede.cantidad==0 or pede.estandarizadorq=="no":
+            return HttpResponse("Ingresa el precio primero y revisar que este relacionado")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
@@ -809,7 +809,7 @@ def pedido_reaut(request, id):
         else:
             return HttpResponse("no se puede mandar a autorizar")
     if request.method=='POST':
-        if pede.precio_uni==0 or pede.cantidad==0:
+        if pede.precio_uni==0 or pede.cantidad==0 or pede.estandarizadorq=="no":
             return HttpResponse("Ingresa el precio primero")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -893,6 +893,8 @@ def pedido_stock(request, id):
     if not pede:
         return redirect("inv:pedido_list")
     if request.method=='GET':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -904,6 +906,8 @@ def pedido_stock(request, id):
         else:
             return HttpResponse("Esta opción no está disponible")
     if request.method=='POST':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -925,6 +929,8 @@ def pedido_enviado(request, id):
     if not pede:
         return redirect("inv:pedido_list")
     if request.method=='GET':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -936,6 +942,8 @@ def pedido_enviado(request, id):
         else:
             return HttpResponse("Esta opción no está disponible")
     if request.method=='POST':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
@@ -958,6 +966,8 @@ def pedido_express(request, id):
     if not pede:
         return redirect("inv:pedido_list")
     if request.method=='GET':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.precio_uni==0 or pede.cantidad==0 or pede.folio_ingreso=="--":
             return HttpResponse("Primero ingresa el monto $ de la compra Directo y/o el Proveedor C Directo")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
@@ -980,6 +990,8 @@ def pedido_express(request, id):
         else:
             return HttpResponse("Esta opción no está disponible")
     if request.method=='POST':
+        if  pede.estandarizadorq=="no":
+            return HttpResponse("Primero estandarizar y relacionar pedido")
         if pede.precio_uni==0 or pede.cantidad==0:
             return HttpResponse("Primero ingresa el monto $ de la compra Directo")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
