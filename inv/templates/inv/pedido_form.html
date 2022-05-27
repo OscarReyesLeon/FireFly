@@ -40,8 +40,10 @@
                                 <div class="col-md-6">{{form.articulo.label}}</div>
                                 <div class="col-md-6">{{form.articulo}}</div>
                             </div>
-                        </div>
-                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.comentario.label}}</div>
+                                <div class="col-md-6">{{form.comentario}}</div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="col-md-6">{{form.proceso.label}}</div>
                                 <div class="col-md-6">{{form.proceso}}</div>
@@ -50,13 +52,24 @@
                                 <div class="col-md-6">Autorizante</div>
                                 <div class="col-md-6">{{form.autpor}}</div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">{{form.motivo_peticion.label}}</div>
-                                <div class="col-md-6">{{form.motivo_peticion}}</div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
+                                <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
                             </div>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Campos exclusivos para compras:
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
-                                <div class="col-md-6">{{form.comentario.label}}</div>
-                                <div class="col-md-6">{{form.comentario}}</div>
+                                <div class="col-md-6">OC compras</div>
+                                <div class="col-md-6">{{form.motivo_peticion}}</div>
                             </div>
                             <div class="col-md-6">
                                 <div class="col-md-6">Precio Unitario</div>
@@ -79,16 +92,8 @@
                                 <div class="col-md-6">{{form.um}}</div>
                             </div>
                             <div class="col-md-6">
-                                <div class="col-md-6">Fecha Revisado</div>
-                                <div class="col-md-6">{{form.fecha_recotizado}}</div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="col-md-6">{{form.fecha_aprobado.label}}</div>
                                 <div class="col-md-6">{{form.fecha_aprobado}}</div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Fecha Proveedor</div>
-                                <div class="col-md-6">{{form.fecha_requerido}}</div>
                             </div>
                             <div class="col-md-6">
                                 <div class="col-md-6">{{form.fecha_finalizado.label}}</div>
@@ -99,15 +104,9 @@
                                 <div class="col-md-6">{{form.folio_ingreso}}</div>
                             </div>
                         </div>
-                        
                         <div class="dropdown-divider"></div>
-                        <div class="row">
-                            <div class="col">
-                                <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
-                                <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
-                                <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
-                            </div>
-                        </div>
+
+
                     </div>
                     <div class="col-auto">
                         <i class="far fa-calendar-plus fa-2x text-gray-300"></i>

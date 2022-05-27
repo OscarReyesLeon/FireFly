@@ -110,7 +110,7 @@ class ProductoForm(forms.ModelForm):
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
-        fields = ['cantidad', 'UniMed', 'articulo', 'proceso', 'autpor', 'motivo_peticion', 'comentario', 'precio_uni', 'iva', 'divisa', 'preciotransaccion', 'um', 'fecha_aprobado', 'fecha_requerido', 'fecha_recotizado', 'fecha_finalizado', 'folio_ingreso']
+        fields = ['cantidad', 'UniMed', 'articulo', 'proceso', 'autpor', 'motivo_peticion', 'comentario', 'precio_uni', 'iva', 'divisa', 'preciotransaccion', 'folio_ingreso']
         """exclude = ['status', 'status2', 'fc', 'uc', 'fm', 'fecha_rechazo', indentificador_estado]"""
 
     def __init__(self, *args, **kwargs):
@@ -120,11 +120,8 @@ class PedidoForm(forms.ModelForm):
                 'class': 'form-control'
             })
         self.fields['preciotransaccion'].widget.attrs['readonly'] = True
-        self.fields['um'].widget.attrs['readonly'] = True
-        self.fields['fecha_aprobado'].widget.attrs['readonly'] = True        
-        self.fields['fecha_requerido'].widget.attrs['readonly'] = True        
-        self.fields['fecha_recotizado'].widget.attrs['readonly'] = True        
-        self.fields['fecha_finalizado'].widget.attrs['readonly'] = True 
+        """self.fields['um'].widget.attrs['readonly'] = True"""
+        """self.fields['fecha_finalizado'].widget.attrs['readonly'] = True"""
         """self.fields['fecha_rechazo'].widget.attrs['readonly'] = True"""
 
 class BancoForm(forms.ModelForm):

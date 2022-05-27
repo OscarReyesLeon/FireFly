@@ -62,20 +62,21 @@
       <thead>
         <th>ID</th>
         <th>Solicitante</th>
-      	<th>Estandarizado</th>
+        <th>Articulo</th>
         <th>Cantidad</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
         <th class="all">Acciones</th>
+        <th>Proceso</th>
         <th>Comentarios</th>
-        <th>Articulo</th>
+      	<th>Estandarizado</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
           <td>{{item.uc}}</td>
-          <td>{{item.descripcioncorregida}}</td>
+          <th>{{item.articulo}}</th>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
@@ -96,8 +97,9 @@
             <a href="{% url 'inv:pedido_express' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
             {% endif %}      
           </td>
+          <td>{{item.proceso}}</td>
           <td>{{item.comentario}}</td>
-          <th>{{item.articulo}}</th>
+          <td>{{item.descripcioncorregida}}</td>
 
         </tr> 
         {% endfor %}
@@ -118,25 +120,25 @@
             'copy', 'csv', 'excel', 'print'
         ],
         "rowCallback": function(row, data, index){
-        if(data[2]!= '୧༼ಠ益ಠ༽୨'){
+        if(data[9]!= '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(2)').css('color', 'blue');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(0)').css('color', 'black');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(1)').css('color', 'black');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(2)').css('color', 'red');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(3)').css('color', 'black');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(4)').css('color', 'black');
         }
-        if(data[2]== '୧༼ಠ益ಠ༽୨'){
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
       	$(row).find('td:eq(5)').css('color', 'black');
         }
 

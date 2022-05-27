@@ -360,7 +360,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:500]
+        qs = Pedido.objects.order_by('-id')[:200]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -369,7 +369,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:50000]
+        qs = Pedido.objects.order_by('-id')[:10000]
         return qs
 
 
@@ -1481,8 +1481,7 @@ class ArtciulosestandarizadosNew(SuccessMessageMixin,SinPrivilegios,\
     template_name="inv/form_generico.html"
     context_object_name = "obj"
     form_class=ArtciulosestandarizadosForm
-    success_url=reverse_lazy("inv:articuloes_list")
-    success_message="Articulo estandarizado Creado Satisfactoriamente"
+    success_url=reverse_lazy("inv:articuloes_new")
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -1518,8 +1517,7 @@ class NombresrelacionNew(SuccessMessageMixin,SinPrivilegios,\
     template_name="inv/relacioncorregida_form.html"
     context_object_name = "obj"
     form_class=NombresrelacionForm
-    success_url=reverse_lazy("inv:nombrerelacion_list")
-    success_message="Nombre-Relacion Creada Satisfactoriamente"
+    success_url=reverse_lazy("inv:nombrerelacion_new")
 
     def form_valid(self, form):
         form.instance.uc = self.request.user

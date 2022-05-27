@@ -287,6 +287,8 @@ class Pedido(ClaseModelo):
         if self.precio_uni == 0:
             if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
                 preciosug = Nombresrelacion.objects.filter(descripcion=abuscar).get()
+                nombrecorrecto = preciosug.relacion.descripcion
+                self.motivo_peticion = nombrecorrecto
                 preciosug = preciosug.relacion.preciosugerido
                 self.precio_uni = preciosug
             else:
@@ -461,7 +463,7 @@ class Empleado(ClaseModelo):
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, null=True, blank=True)
     nominaBanco = models.ForeignKey(Banco, on_delete=models.PROTECT)
     cuenta = models.BigIntegerField(validators=[MinValueValidator(10000000000), MaxValueValidator(99999999999)],unique=True)
-    clabe_banco = models.BigIntegerField(validators=[MinValueValidator(111111111111111111), MaxValueValidator(999999999999999999)], unique=True)
+    clabe_banco = models.BigIntegerField(validators=[MinValueValidator(99999999999999999), MaxValueValidator(999999999999999999)], unique=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
 
 

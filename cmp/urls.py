@@ -6,7 +6,7 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     UsoFacturaInactivar, \
     ComprasView, compras, CompraDetDelete
 
-from .reportes import reporte_compras, imprimir_compra, imprimir_compra2
+from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3
 
 urlpatterns = [
     path('proveedores/',ProveedorView.as_view(), name="proveedor_list"),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('ordencompra/listado', reporte_compras, name='compras_print_all'),
     path('ordencompra/<int:compra_id>/imprimir', imprimir_compra,name="compras_print_one"),
     path('ordencompra/<slug:clienteuniqueid>/oc', imprimir_compra2,name="compras_print_client"),
+    path('ordencompra/<slug:clienteuniqueid>/ocold', imprimir_compra3,name="compras_print_three"),
 
 ]
