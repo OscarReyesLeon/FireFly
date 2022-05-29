@@ -360,7 +360,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:200]
+        qs = Pedido.objects.order_by('-id')[:1000]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -369,7 +369,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.change_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:10000]
+        qs = Pedido.objects.order_by('-id')[:40000]
         return qs
 
 
@@ -1467,7 +1467,7 @@ class DepartamentoEdit(SuccessMessageMixin, SinPrivilegios, \
 """Departamento Fin"""
 
 class ArtciulosestandarizadosView(SinPrivilegios,generic.ListView):
-    permission_required = "cmp.view_comprasenc"
+    permission_required = "inv.view_artciulosestandarizados"
     model = Artciulosestandarizados
     template_name = "inv/articuloes_list_all.html"
     context_object_name = "obj"
@@ -1476,7 +1476,7 @@ class ArtciulosestandarizadosView(SinPrivilegios,generic.ListView):
 
 class ArtciulosestandarizadosNew(SuccessMessageMixin,SinPrivilegios,\
     generic.CreateView):
-    permission_required="prf.change_comprador"
+    permission_required="inv.add_artciulosestandarizados"
     model= Artciulosestandarizados
     template_name="inv/form_generico.html"
     context_object_name = "obj"
@@ -1490,7 +1490,7 @@ class ArtciulosestandarizadosNew(SuccessMessageMixin,SinPrivilegios,\
 
 class ArtciulosestandarizadosEdit(SuccessMessageMixin,SinPrivilegios, \
     generic.UpdateView):
-    permission_required="prf.change_comprador"
+    permission_required="inv.change_artciulosestandarizados"
     model= Artciulosestandarizados
     template_name="inv/form_generico.html"
     context_object_name = "obj"
@@ -1503,7 +1503,7 @@ class ArtciulosestandarizadosEdit(SuccessMessageMixin,SinPrivilegios, \
         return super().form_valid(form)
     
 class NombresrelacionView(SinPrivilegios,generic.ListView):
-    permission_required = "cmp.view_comprasenc"
+    permission_required = "inv.view_nombresrelacion"
     model = Nombresrelacion
     template_name = "inv/nombresrelacion_list.html"
     context_object_name = "obj"
@@ -1512,11 +1512,12 @@ class NombresrelacionView(SinPrivilegios,generic.ListView):
 
 class NombresrelacionNew(SuccessMessageMixin,SinPrivilegios,\
     generic.CreateView):
-    permission_required="prf.change_comprador"
+    permission_required="inv.add_nombresrelacion"
     model=Nombresrelacion
     template_name="inv/relacioncorregida_form.html"
     context_object_name = "obj"
     form_class=NombresrelacionForm
+    success_message="Relacion Registada"
     success_url=reverse_lazy("inv:nombrerelacion_new")
 
     def form_valid(self, form):
@@ -1526,7 +1527,7 @@ class NombresrelacionNew(SuccessMessageMixin,SinPrivilegios,\
 
 class NombresrelacionEdit(SuccessMessageMixin,SinPrivilegios, \
     generic.UpdateView):
-    permission_required="prf.change_comprador"
+    permission_required="inv.change_nombresrelacion"
     model=Nombresrelacion
     template_name="inv/relacioncorregida_form.html"
     context_object_name = "obj"

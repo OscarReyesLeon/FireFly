@@ -19,12 +19,8 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'cmp:compras_new' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
-      {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Regresar</a>
-      {% endif %}
     </div>
 
   <div class="card-body">

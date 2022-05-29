@@ -60,6 +60,7 @@ urlpatterns = [
     path('pedidosf5/',PedidoViewF5.as_view(), name="pedido_list_f5"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
     path('pedidos/edit/<int:pk>',PedidoEdit.as_view(), name="pedido_edit"),
+    path('pedidos/rechazadosc/<int:id>',pedido_scancela, name="scancela"),
     path('pedidos/rechazadoac/<int:id>',pedido_acancela, name="acancela"),
     path('pedidos/aprobadoals/<int:id>',pedido_aprobado_als, name="pedido_aprobado_als"),
     path('pedidos/rechazadoals/<int:id>',pedido_rechazado_als, name="pedido_rechazado_als"),

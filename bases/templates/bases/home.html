@@ -1,148 +1,78 @@
 {% extends 'base/base.html' %}
 {% load staticfiles %}
 {% block page_content %}
-
-<div class="row">
-
-  <div class="col-xl-8 col-lg-7">
-
-      <!-- Bar Chart -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Diesel Disponible</h6>
-        </div>
-     <div class="card-body">
-          <h4 class="small font-weight-bold">Planta = {{PorcentajeDieselPlanta}}%<span
-            class="float-right">{{SumaDescargasPlanta}} de {{CargaDieselPlanta}} Litros</span></h4>
-    <div class="progress mb-4">
-        <div class="progress-bar bg-{{ColorDieselPlanta}}" role="progressbar" style="width: {{PorcentajeDieselPlanta}}%"
-            aria-valuenow="{{PorcentajeDieselPlanta}}" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <h4 class="small font-weight-bold">Patio = {{PorcentajeDieselPatio}}%<span
-            class="float-right">{{SumaDescargasPatio}} de {{CargaDieselPatio}} Litros</span></h4>
-    <div class="progress mb-4">
-        <div class="progress-bar bg-{{ColorDieselPatio}}" role="progressbar" style="width: {{PorcentajeDieselPatio}}%"
-            aria-valuenow="{{PorcentajeDieselPatio}}" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <h4 class="small font-weight-bold">Banco = {{PorcentajeDieselBanco}}%<span
-            class="float-right">{{SumaDescargasBanco}} de {{CargaDieselBanco}} Litros</span></h4>
-    <div class="progress">
-        <div class="progress-bar bg-{{ColorDieselBanco}}" role="progressbar" style="width: {{PorcentajeDieselBanco}}%"
-            aria-valuenow="{{PorcentajeDieselBanco}}" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-          <hr>
-            Datos de referencia
-        </div>
-    </div>
-
-</div>
-
-<!-- Donut Chart -->
-<div class="col-xl-4 col-lg-5">
-    <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Accesos Rapidos</h6>
-        </div>
-        <!-- Card Body -->
+    <div class="col-xl-9 col-md-5 mb-5">
+        <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
-            <div class="chart-pie pt-4">
-              <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-success"></span>Compras</a><br><br>
-              <a href="{% url 'bita:carga_diesel_list' %}" class="btn btn-success"></span>CargaDiesel</a>
-              <a href="{% url 'bita:descarga_diesel_list' %}" class="btn btn-success"></span>PipaDiesel</a><br><br>
-              <a href="{% url 'logi:leer_pius' %}" class="btn btn-success"></span>Piusi</a><br><br>
-              <a href="#" class="btn btn-success"></span>Visitas</a>
+            <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span> Mis Pedidos</a>
+                        <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info"></span> Departamento Compras</a>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-
-
-
-
-<div class="col-xl-8 col-md-2 mb-2">
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Compras</h6>
-    </div>
-    <div class="card-body">
-      <canvas id="myChart"></canvas>
-      <hr>
-      <h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Distribución de los ultimos 31 dias.</h6>
-  </div>
-</div>
-
-<div class="col-xl-12 col-md-2 mb-2">
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Indicadores de Diesel:</h6>
-    </div>
-    <div class="card-body">
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Metodo</h6>
-      Proximamente
-      <br><br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Desviación (Sesgo)</h6>
-      Proximamente
+        </div>
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+<br>      <div>    <h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Distribución de los ultimos 31 dias.</h6>
+      </div>
+      <div><br>      <div><audio src="{% static  'base/img/cancion.flac' %}" preload="none" controls></audio></audio></div>
       <br>
-    </div>
-  </div>
-    <div class="col-xl-12 col-md-2 mb-2">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Musica:</h6>
-        </div>
-        <div class="card-body">
-          <audio src="{% static  'base/img/cancion.flac' %}" preload="none" controls ></audio>
-        </div>
-        </div>
-    </div>
-    </div><div class="col-xl-12 col-md-2 mb-2">
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Estados de Pëdidos:</h6>
-    </div>
-    <div class="card-body">
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Acerca de los estados "compras" en los pedidos</h6>
-      Cada pedido maneja tres tipos de estados simultáneos.<br><br>
-      <h6 class="m-0 font-weight-bold text-dark" align="left">El estado "Compras" es la 8a columna de tu ventana de pedidos, es el que vamos a referirnos aquí:</h6>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Acerca de los estados "compras" en los pedidos</h6>
+        Cada pedido maneja tres tipos de estados simultáneos.<br><br>
+        <h6 class="m-0 font-weight-bold text-dark" align="left">El estado "Compras" es la 8a columna de tu ventana de pedidos, es el que vamos a referirnos aquí:</h6>
 <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">X-Revisar</h6>
-      El pedido fue recibido y está en proceso de cotizar.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">S-Cancela</h6>
-      El mismo usuario que solicitó el pedido, lo canceló.<br>
-      "Compras" ya no dará seguimiento a los pedidos que son cancelados por el usuario.<br>
-      Después de levantar un pedido, el usuario solicitante tiene unos minutos para cancelar.<br>
-      Es para uso en errores o correcciones.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Revisado</h6>
-      El pedido se encuentra a la espera de que un Gerente o autorizador revise y apruebe la compra.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Pendiente</h6>
-      El pedido está en la espera de que "Compras" formalice la solicitud con el proveedor.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">X asignar OC</h6>
-      La solicitud con el proveedor falló y "Compras" está buscando una alternativa.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">en Proveedor</h6>
-      El pedido está por recibirse. El tiempo depende de los acuerdos, tiempos y formas de entrega que se tenga con el proveedor.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Directo</h6>
-      El pedido directo son casos únicos que por el monto mínimo, falta de proveedor, o la situación, se realizaron fuera del proceso normal.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Stock</h6>
-      Lo solicitado en el pedido. Ya se encontraba en el almacén.<br>
-      <br>
-      <h6 class="m-0 font-weight-bold text-primary" align="left">Rechazo</h6>
-      El pedido no fue autorizado para su compra.
-    </div>
-    </div>
-</div>
-
-
-<!-- termina lo visiual -->
+        <h6 class="m-0 font-weight-bold text-primary" align="left">X-Revisar</h6>
+        El pedido fue recibido y está en proceso de cotizar.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">S-Cancela</h6>
+        El mismo usuario que solicitó el pedido, lo canceló.<br>
+        "Compras" ya no dará seguimiento a los pedidos que son cancelados por el usuario.<br>
+        Después de levantar un pedido, el usuario solicitante tiene unos minutos para cancelar.<br>
+        Es para uso en errores o correcciones.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Revisado</h6>
+        El pedido se encuentra a la espera de que un Gerente o autorizador revise y apruebe la compra.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Pendiente</h6>
+        El pedido está en la espera de que "Compras" formalice la solicitud con el proveedor.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">X asignar OC</h6>
+        La solicitud con el proveedor falló y "Compras" está buscando una alternativa.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">en Proveedor</h6>
+        El pedido está por recibirse. El tiempo depende de los acuerdos, tiempos y formas de entrega que se tenga con el proveedor.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Directo</h6>
+        El pedido directo son casos únicos que por el monto mínimo, falta de proveedor, o la situación, se realizaron fuera del proceso normal.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Stock</h6>
+        Lo solicitado en el pedido. Ya se encontraba en el almacén.<br>
+        <br>
+        <h6 class="m-0 font-weight-bold text-primary" align="left">Rechazo</h6>
+        El pedido no fue autorizado para su compra.<br>
+        
+        <!--
+        <table class="default">
+          <tr>
+            <td><b>Status de compras</b>Celda 1</td>
+            <td>Celda 2</td>
+            <td>Celda 3</td>
+          </tr>
+          <tr>
+            <td>Celda 4</td>
+            <td>Celda 5</td>
+            <td>Celda 6</td>
+          </tr>
+        </table>-->
+      </div><br><br>
+      
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
