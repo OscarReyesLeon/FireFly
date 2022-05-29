@@ -36,7 +36,7 @@
         <th>F-Proveedor</th>
         <th>F-Finalizado</th>
         <th>F-Rechazo</th>
-        <th>OC compras</th>
+        <th>OC descripción</th>
         <th>Comentario</th>
         <th>IO</th>
         <th>Proveedor Directo</th>
@@ -48,7 +48,7 @@
           <td>{{item.id}}</td>
           <td>
             {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-success" role="button"><i class="fas fa-print"></i></i></a>
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info" role="button"><i class="fas fa-print"></i></i></a>
             {% endif %}
             {% if perms.prf.change_autorizador and item.indentificador_estado != '5'%}
             <a href="{% url 'inv:pedido_edit' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>

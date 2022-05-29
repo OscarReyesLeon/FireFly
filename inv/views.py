@@ -389,7 +389,7 @@ class PedidoViewALS(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_als.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:200]
@@ -399,7 +399,7 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_gls.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:200]
@@ -409,7 +409,7 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_mls.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:200]
@@ -419,7 +419,7 @@ class PedidoViewF2(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:200]
@@ -429,7 +429,7 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f3.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:200]
@@ -439,7 +439,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f4.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:200]
@@ -449,7 +449,7 @@ class PedidoViewF5(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f5.html"
     context_object_name = "obj"
-    permission_required="inv.view_pedido"
+    permission_required="inv.change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(status="Fin").order_by('-id')[:200] | Pedido.objects.filter(status="Directo").order_by('-id')[:200] | Pedido.objects.filter(status="Stock").order_by('-id')[:200]
@@ -1538,3 +1538,4 @@ class NombresrelacionEdit(SuccessMessageMixin,SinPrivilegios, \
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
+    
