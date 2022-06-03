@@ -82,7 +82,7 @@
           <td>{{item.uc}}</td>
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
-          <td>{{item.variacion}}</td>
+          <td>{{item.variacion|floatformat:2}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}
           <td>
@@ -96,7 +96,7 @@
             <a href="{% url 'inv:pedido_rechazado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
           </td>
-          <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>
+          <td>{{item.divisa}}$ {{item.preciotransaccion}}</td>
           <td>{{item.indentificador_estado}}</td>
         </tr>
         {% endfor %}

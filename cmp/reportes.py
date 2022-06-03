@@ -5,6 +5,7 @@ from django.template import Context
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 from .models import ComprasEnc, ComprasDet
 

@@ -15,7 +15,7 @@ from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
 from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
     UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
-    EmpresaForm, GeneroForm, EstudiosForm, \
+    EmpresaForm, GeneroForm, EstudiosForm, PedidoComprasForm,\
     EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm, ArtciulosestandarizadosForm, NombresrelacionForm
 from cmp.models import ComprasDet, ComprasEnc
 
@@ -409,7 +409,7 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_mls.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="prf.view_autorizantemls"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:200]
@@ -486,9 +486,9 @@ class PedidoNew(SuccessMessageMixin,SinPrivilegios,
 class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
                    generic.UpdateView):
     model=Pedido
-    template_name="inv/pedido_form.html"
+    template_name="inv/pedido_form_compras.html"
     context_object_name = 'obj'
-    form_class=PedidoForm
+    form_class=PedidoComprasForm
     success_url= reverse_lazy("inv:pedido_list_f2")
     permission_required="inv.change_pedido"
 
@@ -645,7 +645,7 @@ def pedido_rechazado_gls(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("prf.change_autorizador",login_url="/login/")
+@permission_required("prf.view_autorizantemls",login_url="/login/")
 def pedido_aprobado_mls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -680,7 +680,7 @@ def pedido_aprobado_mls(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("prf.change_autorizador",login_url="/login/")
+@permission_required("prf.view_autorizantemls",login_url="/login/")
 def pedido_rechazado_mls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -1478,7 +1478,7 @@ class ArtciulosestandarizadosNew(SuccessMessageMixin,SinPrivilegios,\
     generic.CreateView):
     permission_required="inv.add_artciulosestandarizados"
     model= Artciulosestandarizados
-    template_name="inv/form_generico.html"
+    template_name="inv/form_ae_estandar.html"
     context_object_name = "obj"
     form_class=ArtciulosestandarizadosForm
     success_url=reverse_lazy("inv:articuloes_new")
@@ -1492,7 +1492,7 @@ class ArtciulosestandarizadosEdit(SuccessMessageMixin,SinPrivilegios, \
     generic.UpdateView):
     permission_required="inv.change_artciulosestandarizados"
     model= Artciulosestandarizados
-    template_name="inv/form_generico.html"
+    template_name="inv/form_ae_estandar.html"
     context_object_name = "obj"
     form_class=ArtciulosestandarizadosForm
     success_url=reverse_lazy("inv:articuloes_list")

@@ -86,13 +86,13 @@
           <td>{{item.precio3}}</td>
           <td>{{item.precio4}}</td>
           <td>{{item.fechapreciosugerido|date:"d-m-y"}}</td>
-          <td>{{item.fecha2|date:"d-m-y"}}</td>
-      	  <td>{{item.fecha3|date:"d-m-y"}}</td>
-          <td>{{item.fecha4|date:"d-m-y"}}</td> 
+          <td>{{item.fecha2|date:"y-m-d"}}</td>
+      	  <td>{{item.fecha3|date:"y-m-d"}}</td>
+          <td>{{item.fecha4|date:"y-m-d"}}</td> 
           <td>{{item.uc}}</td>
           <td>{{item.um}}</td>
-          <td>{{item.fc|date:"d-m-y"}}
-          <td>{{item.fm|date:"d-m-y"}}
+          <td>{{item.fc|date:"y-m-d"}}
+          <td>{{item.fm|date:"y-m-d"}}
         </tr>
         {% endfor %}
       </tbody>

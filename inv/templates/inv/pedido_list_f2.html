@@ -40,7 +40,7 @@
       {% if perms.prf.change_autorizador%}
       <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
-      {% if perms.prf.change_autorizador%}
+      {% if perms.prf.view_autorizantemls %}
       <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
@@ -78,7 +78,7 @@
           <td>{{item.uc}}</td>
           <th>{{item.articulo}}</th>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
-          <td>{{item.divisa}}$ {{item.precio_uni}}</td>
+          <td>{{item.divisa}}$ {{item.precio_uni|floatformat:2}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
             <td>
             {% if perms.prf.change_comprador and item.indentificador_estado == '2' %}

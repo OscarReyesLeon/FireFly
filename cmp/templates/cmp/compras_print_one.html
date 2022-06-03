@@ -120,7 +120,7 @@
                 <thead>
                     <tr>
                         <th style="width: 7%">Pedido ID</th>
-                        <th style="width: 7%">Cantidad</th>
+                        <th style="width: 8%">Cantidad</th>
                         <th style="width: 11%">Proceso</th>
                         <th>Articulo</th>
                         <th style="width: 5%">IVA</th>
@@ -131,8 +131,8 @@
                 <tbody>
                     {% for item in detalle %}
                     <tr>
-                        <td><span class="small"><center>{{ item.pedido.id }}</center></span></td>
-                        <td class="numero"><center>{{ item.cantidad }}</center></td>
+                        <td><span class="small"><center><small>|{{ item.pedido.id }}|</small></center></span></td>
+                        <td class="numero"><center>{{ item.cantidad }} {{ item.pedido.UniMed }}</center></td>
                         <td class="numero"><center>|<small>{{ item.pedido.proceso }}</small>|</center></td>
                         <td class="letter">{{ item.pedido.motivo_peticion }}</td>
                         <td class="letter"><center>{{ item.pedido.iva }}</center></td>

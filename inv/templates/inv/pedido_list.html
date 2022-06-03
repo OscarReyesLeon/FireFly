@@ -40,7 +40,7 @@
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}
       <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>GLS</a>
       {% endif %}
-      {% if perms.inv.view_autoriza or perms.inv.change_producto%}
+      {% if perms.prf.view_autorizantemls %}
       <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.inv.view_autoriza or perms.inv.change_producto%}

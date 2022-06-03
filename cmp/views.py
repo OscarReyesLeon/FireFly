@@ -10,6 +10,9 @@ from django.http import HttpResponse
 import json
 from django.db.models import Sum
 
+from django.contrib.humanize.templatetags.humanize import intcomma
+
+
 from .models import Proveedor, ComprasEnc, ComprasDet, Empresa, UsoFactura
 from cmp.forms import ProveedorForm,ComprasEncForm, UsoFacturaForm
 from bases.views import SinPrivilegios

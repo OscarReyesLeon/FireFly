@@ -9,6 +9,9 @@ from django.http import HttpResponse
 from bases.models import ClaseModelo
 from inv.models import Pedido, Banco, Empresa
 
+from django.contrib.humanize.templatetags.humanize import intcomma
+
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 

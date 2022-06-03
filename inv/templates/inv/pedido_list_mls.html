@@ -40,7 +40,7 @@
       {% if perms.prf.change_autorizador%}
       <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
-      {% if perms.prf.change_autorizador%}
+      {% if perms.prf.view_autorizantemls %}
       <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-primary" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
@@ -63,8 +63,10 @@
         <th>ID</th>
         <th>Status</th>
         <th>Solicitante</th>
+        <th>Proceso</th>
         <th>Articulo</th>
       	<th>Cantidad</th>
+      	<th>~</th>
         <th>$ Unitario</th>
         <th>Fecha</th>
         <th class="all">Acciones</th>
@@ -77,18 +79,21 @@
           <td>{{item.id}}</td>
           <td>{{item.status2}}</td>
           <td>{{item.uc}}</td>
+          <td>{{item.proceso}}</td>
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
+          <td>{{item.variacion|floatformat:2}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
           <td>
+            {% if perms.prf.view_autorizantemls and item.indentificador_estado == '1' %}
+            <a href="{% url 'inv:pedido_aprobado_mls' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            {% endif %}
+            -----
             {% if perms.inv.view_autoriza %}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
-            {% if perms.inv.view_autoriza and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
-            <a href="{% url 'inv:pedido_aprobado_mls' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
-            {% endif %}
-            {% if perms.inv.view_autoriza and item.indentificador_estado == '1' %}
+            {% if perms.prf.view_autorizantemls and item.indentificador_estado == '1' %}
             <a href="{% url 'inv:pedido_rechazado_mls' item.id %}" onclick="antidoble()" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
             {% if perms.inv.change_producto and item.indentificador_estado == '3' %}
@@ -119,32 +124,32 @@
             'copy', 'csv', 'excel', 'print'
         ],
       "rowCallback": function(row, data, index){
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(0)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(1)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(2)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(3)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(4)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(5)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(6)').css('color', 'blue');
         }
-        if(data[9]== 1){
+        if(data[11]== 1){
       	$(row).find('td:eq(8)').css('color', 'red');
         }
       },
-      "order": [[ 9, 'asc' ], [ 0, 'asc' ]],
+      "order": [[ 11, 'asc' ], [ 0, 'asc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

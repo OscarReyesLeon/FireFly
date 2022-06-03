@@ -115,3 +115,20 @@ class EditorBitacoras(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Editor de Bitacoras"
+
+class AutorizanteMLS(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien puede autorizar compras de ALR',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(AutorizanteMLS, self).save()
+
+    class Meta:
+        verbose_name_plural = "Editor de Bitacoras"
