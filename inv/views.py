@@ -412,7 +412,7 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     permission_required="prf.view_autorizantemls"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:500] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=3).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=4).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=5).filter(autpor=3).order_by('-id')[:100]
         return qs
 
 class PedidoViewF2(SinPrivilegios, generic.ListView):
@@ -1002,7 +1002,7 @@ def pedido_express(request, id):
             precios.precio4 = precios.precio3
             precios.precio3 = precios.precio2
             precios.precio2 = precios.preciosugerido
-            precios.preciosugerido = pedi.precio_uni
+            precios.preciosugerido = pede.precio_uni
             precios.fecha4 = precios.fecha3
             precios.fecha3 = precios.fecha2
             precios.fecha2 = precios.fechapreciosugerido
@@ -1022,7 +1022,7 @@ def pedido_oc(request, id):
         if ComprasDet.objects.filter(pedido_id=pede).exists() == True:
             triplebusqueda = ComprasDet.objects.filter(pedido_id=pede).get()
             triplebusqueda = ComprasEnc.objects.filter(id=triplebusqueda.compra_id).get()
-            return redirect("cmp:compras_print_client",clienteuniqueid=triplebusqueda.clienteuniqueid)
+            return redirect("cmp:compras_print_three",clienteuniqueid=triplebusqueda.clienteuniqueid)
         else:
             return HttpResponse("Esta pedido no esta en ninguna orden de compra. Pudo ser oc-cancela, Pedido Directo, ó Stock")
     return redirect("inv:pedidos_list")

@@ -77,7 +77,7 @@
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
-          <td>{{item.status2}}</td>
+          <td>{{item.status}}</td>
           <td>{{item.uc}}</td>
           <td>{{item.proceso}}</td>
           <td>{{item.articulo}}</td>
@@ -148,8 +148,60 @@
         if(data[11]== 1){
       	$(row).find('td:eq(8)').css('color', 'red');
         }
+
+        if(data[11]== 2){
+      	$(row).find('td:eq(4)').css('color', 'orange');
+        }
+        if(data[11]== 3){
+      	$(row).find('td:eq(4)').css('color', 'pink');
+        }
+        if(data[11]== 4){
+      	$(row).find('td:eq(4)').css('color', 'green');
+        }
+        if(data[11]== 5){
+      	$(row).find('td:eq(4)').css('color', 'purple');
+        }
+
+        if(data[11]== 2){
+      	$(row).find('td:eq(0)').css('color', 'orange');
+        }
+        if(data[11]== 3){
+      	$(row).find('td:eq(0)').css('color', 'pink');
+        }
+        if(data[11]== 4){
+      	$(row).find('td:eq(0)').css('color', 'green');
+        }
+        if(data[11]== 5){
+      	$(row).find('td:eq(0)').css('color', 'purple');
+        }
+
+        if(data[11]== 2){
+      	$(row).find('td:eq(1)').css('color', 'orange');
+        }
+        if(data[11]== 3){
+      	$(row).find('td:eq(1)').css('color', 'pink');
+        }
+        if(data[11]== 4){
+      	$(row).find('td:eq(1)').css('color', 'green');
+        }
+        if(data[11]== 5){
+      	$(row).find('td:eq(1)').css('color', 'purple');
+        }
+
+        if(data[11]== 2){
+      	$(row).find('td:eq(3)').css('color', 'orange');
+        }
+        if(data[11]== 3){
+      	$(row).find('td:eq(3)').css('color', 'pink');
+        }
+        if(data[11]== 4){
+      	$(row).find('td:eq(3)').css('color', 'green');
+        }
+        if(data[11]== 5){
+      	$(row).find('td:eq(3)').css('color', 'purple');
+        }
       },
-      "order": [[ 11, 'asc' ], [ 0, 'asc' ]],
+      "order": [[ 11, 'asc' ], [ 0, 'desc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {
