@@ -181,6 +181,7 @@ class Pedido(ClaseModelo):
     divisa = models.CharField(max_length=3, default='MXN')
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
+    recibidos = models.FloatField(default=0)
     @property
     def estandarizadorq(self):
         abuscar = self.articulo
@@ -522,3 +523,33 @@ class Herramienta(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Herramientas"
+
+class Almacen(ClaseModelo):
+    descripcion = models.CharField(max_length=10)
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Almacen, self).save()
+
+class Tipomovimiento(ClaseModelo):
+    descripcion = models.CharField(max_length=10)
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Tipomovimiento, self).save()
+
+class Existencias(ClaseModelo):
+    pedidoorigen = models.ForeignKey(Pedido, on_delete=models.PROTECT)
+    codigobarras = models.CharField(max_length=4296, null=False, blank=False)
+    almacen = models.ForeignKey(Almacen, on_delete=models.PROTECT)
+    posi1 = models.CharField(max_length=3)
+    posi2 = models.CharField(max_length=3)
+    posi3 = models.CharField(max_length=3)
+
+class Bitacoramov(ClaseModelo):
+    movido = models.ForeignKey(Existencias, on_delete=models.PROTECT)
+    tipomov = models.ForeignKey(Tipomovimiento, on_delete=models.PROTECT)
+    oposi1 = models.CharField(max_length=3)
+    oposi2 = models.CharField(max_length=3)
+    oposi3 = models.CharField(max_length=3)
+    nposi1 = models.CharField(max_length=3)
+    nposi2 = models.CharField(max_length=3)
+    nposi3 = models.CharField(max_length=3)
