@@ -157,7 +157,7 @@ class ComprasView(SinPrivilegios, generic.ListView):
 
 
 @login_required(login_url='/login/')
-@permission_required('cmp.edit_comprasenc', login_url='bases:sin_privilegios')
+@permission_required('cmp.change_comprasenc', login_url='bases:sin_privilegios')
 def compras(request,compra_id=None):
     template_name="cmp/compras.html"
     prod=Pedido.objects.filter(indentificador_estado=3)

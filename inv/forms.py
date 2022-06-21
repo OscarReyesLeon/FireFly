@@ -3,6 +3,8 @@ from django import forms
 from .models import Banco, Computadora, Empleado, Equipo, Herramienta, Proceso, Categoria, Puesto, \
     UnidadMedida, Producto, Pedido, Autoriza, Computadora, Empresa, Genero, Estudios, Departamento, Nombresrelacion, Artciulosestandarizados
 
+from cmp.models import ComprasEnc
+
 
 class EquipoForm(forms.ModelForm):
     class Meta:
@@ -110,7 +112,7 @@ class ProductoForm(forms.ModelForm):
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
-        fields = ['cantidad', 'UniMed', 'articulo', 'proceso', 'autpor', 'comentario']
+        fields = ['cantidad', 'UniMed', 'articulo', 'proceso', 'autpor', 'comentario', 'precio_uni']
         """exclude = ['status', 'status2', 'fc', 'uc', 'fm', 'fecha_rechazo', indentificador_estado]"""
 
     def __init__(self, *args, **kwargs):
@@ -136,8 +138,6 @@ class PedidoComprasForm(forms.ModelForm):
                 'class': 'form-control'
             })
         self.fields['preciotransaccion'].widget.attrs['readonly'] = True
-        self.fields['cantidad'].widget.attrs['readonly'] = True
-        self.fields['UniMed'].widget.attrs['readonly'] = True
         self.fields['articulo'].widget.attrs['readonly'] = True
         self.fields['proceso'].widget.attrs['readonly'] = True
         self.fields['autpor'].widget.attrs['readonly'] = True
@@ -330,3 +330,26 @@ class NombresrelacionForm(forms.ModelForm):
                 'class': 'form-control'
             })
         self.fields['relacion'].widget.attrs['class'] = 'form-control select2'
+
+
+class ComprasEncForm(forms.ModelForm):
+    fecha_compra = forms.DateInput()
+    fecha_factura = forms.DateInput()
+
+    class Meta:
+        model = ComprasEnc
+        fields = ['proveedor', 'fecha_compra', 'observacion',
+                  'no_factura', 'fecha_factura', 'sub_total',
+                  'descuento', 'total']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in iter(self.fields):
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+        self.fields['fecha_compra'].widget.attrs['readonly'] = True
+        self.fields['fecha_factura'].widget.attrs['readonly'] = True
+        self.fields['sub_total'].widget.attrs['readonly'] = True
+        self.fields['descuento'].widget.attrs['readonly'] = True
+        self.fields['total'].widget.attrs['readonly'] = True

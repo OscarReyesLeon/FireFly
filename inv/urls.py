@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import EquipoView, EquipoNew, EquipoEdit, \
+from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     EquipoDel, \
     AutorizaView, AutorizaNew, AutorizaEdit, \
     AutorizaDel, \
@@ -128,5 +128,8 @@ urlpatterns = [
     path('nombresrelacion/',NombresrelacionView.as_view(), name='nombrerelacion_list'),
     path('nombresrelacion/new',NombresrelacionNew.as_view(), name='nombrerelacion_new'),
     path('nombresrelacion/edit/<int:pk>',NombresrelacionEdit.as_view(), name='nombrerelacion_edit'),
+
+    path('almacen/nuevoingreso',ingresoalmacen, name="ingreso_new"),
+    path('almacen/ingreso/<int:oc>',ingresoalmacen, name="ingreso_edit"),
 
 ]
