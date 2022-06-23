@@ -68,7 +68,7 @@
         <th>Proceso</th>
         <th>Compras</th>
         <th>Fecha</th>
-        <th>Cancelar</th>
+        <th>Opciones</th>
         <th>R</th>
         <th>S</th>
       </thead>
@@ -86,6 +86,9 @@
           <td>
             {%if item.status2 == 'Proximo' and item.status == 'X-Revisar' %}
             <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-dark btn-circle" role="button"><i class="fa fa-times"></i></a>
+            {% endif %}
+            {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fas fa-print"></i></i></a>
             {% endif %}
           </td>
           <td>{{item.estandarizadorq}}</td>
