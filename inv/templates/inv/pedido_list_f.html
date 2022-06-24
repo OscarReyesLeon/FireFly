@@ -19,7 +19,7 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i> Nuevo</a>
+      <a class="btn btn-outline-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button"></i>Mis Pedidos</a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>

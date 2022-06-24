@@ -14,7 +14,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
     EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
-    EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, \
+    EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, PedidoSecondNew, \
     ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, pedido_enviado, ArtciulosestandarizadosNew, ArtciulosestandarizadosEdit, ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView
 
 urlpatterns = [
@@ -59,6 +59,7 @@ urlpatterns = [
     path('pedidosf4/',PedidoViewF4.as_view(), name="pedido_list_f4"),
     path('pedidosf5/',PedidoViewF5.as_view(), name="pedido_list_f5"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
+    path('pedido/news', PedidoSecondNew.as_view(), name="pedido_news"),
     path('pedidos/edit/<int:pk>',PedidoEdit.as_view(), name="pedido_edit"),
     path('pedidos/rechazadosc/<int:id>',pedido_scancela, name="scancela"),
     path('pedidos/rechazadoac/<int:id>',pedido_acancela, name="acancela"),

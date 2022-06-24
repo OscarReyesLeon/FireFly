@@ -168,10 +168,10 @@ class Pedido(ClaseModelo):
     status2 = models.CharField(max_length=20, default='Proximo')
     precio_uni = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
     preciotransaccion = models.FloatField(null=True, blank=True)
-    articulo = models.CharField(max_length=50)
+    articulo = models.CharField(max_length=50, null=True, blank=True, default='NA')
     proceso = models.CharField(max_length=15)
     UniMed = models.ForeignKey(UnidadMedida, on_delete=models.PROTECT)
-    motivo_peticion = models.CharField(max_length=200, null=True, blank=True)
+    motivo_peticion = models.CharField(max_length=200, null=True, blank=True, default='NA')
     fecha_aprobado = models.CharField(max_length=200, null=True, blank=True)
     fecha_requerido = models.CharField(max_length=200, null=True, blank=True)
     fecha_recotizado = models.CharField(max_length=200, null=True, blank=True)
@@ -182,6 +182,7 @@ class Pedido(ClaseModelo):
     indentificador_estado = models.CharField(max_length=20, default='2')
     iva = models.FloatField(default=.16)
     recibidos = models.FloatField(default=0)
+    estandarizadoprodu = models.ForeignKey(Artciulosestandarizados, null=True, blank=True, on_delete=models.PROTECT)
     @property
     def estandarizadorq(self):
         abuscar = self.articulo
@@ -275,17 +276,26 @@ class Pedido(ClaseModelo):
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
     def save(self):
         self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
-
         self.proceso = self.proceso.upper()
-        
-        self.articulo = self.articulo.upper()
-        self.articulo = self.articulo.replace("'","")
-        self.articulo = normalize(self.articulo)
-        
         self.proceso = self.proceso.replace("'","")
-        abuscar = self.articulo
-        abuscar = abuscar.upper()
-        if self.precio_uni == 0:
+        if self.articulo != 'NA' and self.motivo_peticion == 'NA':
+            self.articulo = self.articulo.upper()
+            self.articulo = self.articulo.replace("'", "")
+            self.articulo = normalize(self.articulo)
+            self.motivo_peticion = self.articulo
+        elif self.motivo_peticion == 'NA':
+            self.motivo_peticion = self.estandarizadoprodu.descripcion
+            self.articulo = self.estandarizadoprodu.descripcion
+        else:
+            pass
+        super(Pedido, self).save()
+
+"""       if self.estandarizadoprodu is None:
+            self.motivo_peticion = chr(abuscar)
+        else:
+            self.motivo_peticion = self.estandarizadoprodu.descripcion"""
+
+"""        if self.estandarizadoprodu == 0:
             if Nombresrelacion.objects.filter(descripcion=abuscar).exists():
                 preciosug = Nombresrelacion.objects.filter(descripcion=abuscar).get()
                 nombrecorrecto = preciosug.relacion.descripcion
@@ -295,13 +305,10 @@ class Pedido(ClaseModelo):
             else:
                 pass
         else:
-            pass
+            self.motivo_peticion = self.articulo"""
 
 
-        super(Pedido, self).save()
 
-    def __str__(self):
-        return '{}|{}-{}|{}'.format(self.id, self.cantidad, self.UniMed.descripcion, self.uc)
 
 
 class Banco(ClaseModelo):

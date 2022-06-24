@@ -37,9 +37,11 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="col-md-6">{{form.articulo.label}}</div>
-                                <div class="col-md-6">{{form.articulo}}</div>
+                                <div class="col-md-6">Articulo Listado</div>
+                                <div class="col-md-6">{{form.estandarizadoprodu}}</div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="col-md-6">{{form.comentario.label}}</div>
                                 <div class="col-md-6">{{form.comentario}}</div>
@@ -65,7 +67,17 @@
                                 <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
                             </div>
                         </div>
-
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                Busca el artículo que solicitas en el listado desplegable de "Artículo Listado". <br>
+                                Si es un artículo que no ha sido solicitado, o si el artículo no se encuentra en el listado, puedes usar la "Solicitud No Estandarizada".<br><br>
+                                <b>Se pide encarecidamente primero buscar el Artículo en el listado.</b>
+                                <div class="dropdown-divider"></div>
+                                <a href="{% url 'inv:pedido_news' %}" class="btn btn-info"><span class="fa fa-stroopwafel"></span>Solicitud "No Estandarizada"</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
 
                     </div>
                     <div class="col-auto">

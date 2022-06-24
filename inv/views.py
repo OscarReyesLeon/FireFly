@@ -12,7 +12,7 @@ from cmp.forms import ComprasEncForm
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
     Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
     Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion
-from .forms import EquipoForm, ProcesoForm, CategoriaForm, \
+from .forms import EquipoForm, ProcesoForm, CategoriaForm, PedidoSecondForm, \
     UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
     EmpresaForm, GeneroForm, EstudiosForm, PedidoComprasForm,\
@@ -468,7 +468,7 @@ class PedidoNew(SuccessMessageMixin,SinPrivilegios,
     context_object_name = 'obj'
     form_class=PedidoForm
     success_url= reverse_lazy("inv:pedido_list_f")
-    success_message="Pedido Creado"
+    success_message="Pedido Solicitado"
     permission_required="inv.add_pedido"
 
     def form_valid(self, form):
@@ -481,6 +481,25 @@ class PedidoNew(SuccessMessageMixin,SinPrivilegios,
         context["procesos"] = Proceso.objects.all()
         return context
 """revisar equipo y proceso"""
+
+
+class PedidoSecondNew(SuccessMessageMixin, SinPrivilegios,
+                generic.CreateView):
+    model = Pedido
+    template_name = "inv/form_generico.html"
+    context_object_name = 'obj'
+    form_class = PedidoSecondForm
+    success_url = reverse_lazy("inv:pedido_list_f")
+    success_message = "Pedido Solicitado"
+    permission_required = "inv.add_pedido"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PedidoSecondNew, self).get_context_data(**kwargs)
+        return context
 
 
 class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
@@ -797,8 +816,8 @@ def pedido_reaut(request, id):
     if not pede:
         return redirect("inv:pedido_list_f2")
     if request.method=='GET':
-        if pede.precio_uni==0 or pede.cantidad==0 or pede.estandarizadorq=="no":
-            return HttpResponse("Ingresa el precio primero y revisar que este relacionado")
+        if pede.precio_uni==0 or pede.cantidad==0:
+            return HttpResponse("Ingresa el precio primero y revisar cantidad")
         if pede.status2=='Proximo' and pede.status=='X-Revisar' or pede.status2=='Prox' and pede.status=='X-Revisar':
             pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='Pendiente'
@@ -1022,7 +1041,7 @@ def pedido_oc(request, id):
         if ComprasDet.objects.filter(pedido_id=pede).exists() == True:
             triplebusqueda = ComprasDet.objects.filter(pedido_id=pede).get()
             triplebusqueda = ComprasEnc.objects.filter(id=triplebusqueda.compra_id).get()
-            return redirect("cmp:compras_print_three",clienteuniqueid=triplebusqueda.clienteuniqueid)
+            return redirect("cmp:compras_print_client",clienteuniqueid=triplebusqueda.clienteuniqueid)
         else:
             return HttpResponse("Esta pedido no esta en ninguna orden de compra. Pudo ser oc-cancela, Pedido Directo, ó Stock")
     return redirect("inv:pedidos_list")
