@@ -24,13 +24,7 @@
   {% endif %}
 
   <title>
-    {% if perms.prf.view_autorizantemls %}
-        {% if statusenml > 0 %}
-            ({{statusenml}}) - Ledsa FireFly
-        {% else %}
-            Ledsa Firefly
-        {% endif %}
-    {% elif perms.prf.change_autorizador and pedidosstatus1 > 0 %}
+    {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
         ({{pedidosstatus1}}) - Ledsa FireFly
     {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
         Ledsa FireFly
