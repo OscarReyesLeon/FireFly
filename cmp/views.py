@@ -179,6 +179,7 @@ def compras(request,compra_id=None):
                 'no_factura': enc.no_factura,
                 'sub_total': enc.sub_total,
                 'descuento': enc.descuento,
+                'descuento2': enc.descuento2,
                 'total':enc.total
             }
             form_compras = ComprasEncForm(e)

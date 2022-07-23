@@ -70,7 +70,7 @@ class ComprasEncForm(forms.ModelForm):
         model=ComprasEnc
         fields=['proveedor','empresaoc','fecha_compra','observacion',
             'no_factura','sub_total',
-            'descuento','total']
+            'descuento','descuento2','total']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -83,4 +83,5 @@ class ComprasEncForm(forms.ModelForm):
         """self.fields['fecha_factura'].widget.attrs['readonly'] = True"""
         self.fields['sub_total'].widget.attrs['readonly'] = True
         self.fields['descuento'].widget.attrs['readonly'] = True
+        """self.fields['descuento2'].widget.attrs['readonly'] = True"""
         self.fields['total'].widget.attrs['readonly'] = True
