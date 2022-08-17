@@ -479,6 +479,7 @@ class PedidoNew(SuccessMessageMixin,SinPrivilegios,
         context = super(PedidoNew, self).get_context_data(**kwargs)
         context["equipos"] = Equipo.objects.all()
         context["procesos"] = Proceso.objects.all()
+        context["articulos"] = Artciulosestandarizados.objects.all() 
         return context
 """revisar equipo y proceso"""
 
