@@ -278,16 +278,17 @@ class Pedido(ClaseModelo):
         self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
         self.proceso = self.proceso.upper()
         self.proceso = self.proceso.replace("'","")
-        if self.articulo != 'NA' and self.motivo_peticion == 'NA':
+
+        estandar = Artciulosestandarizados.objects.filter(descripcion=self.articulo)
+        if estandar.exists():
+            self.estandarizadoprodu = estandar.first()
+            self.motivo_peticion = self.estandarizadoprodu.descripcion
+            self.articulo = self.estandarizadoprodu.descripcion
+        elif self.articulo != 'NA' and self.motivo_peticion == 'NA':
             self.articulo = self.articulo.upper()
             self.articulo = self.articulo.replace("'", "")
             self.articulo = normalize(self.articulo)
             self.motivo_peticion = self.articulo
-        elif self.motivo_peticion == 'NA':
-            self.motivo_peticion = self.estandarizadoprodu.descripcion
-            self.articulo = self.estandarizadoprodu.descripcion
-        else:
-            pass
         super(Pedido, self).save()
 
 """       if self.estandarizadoprodu is None:

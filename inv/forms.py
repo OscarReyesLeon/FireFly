@@ -112,16 +112,16 @@ class ProductoForm(forms.ModelForm):
 class PedidoForm(forms.ModelForm):
     class Meta:
         model = Pedido
-        fields = ['cantidad', 'UniMed', 'estandarizadoprodu', 'proceso', 'autpor', 'comentario', 'precio_uni']
+        fields = ['cantidad', 'UniMed', 'proceso', 'autpor', 'comentario', 'precio_uni', 'articulo']
         """exclude = ['status', 'status2', 'fc', 'uc', 'fm', 'fecha_rechazo', indentificador_estado]"""
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)        
         for field in iter(self.fields):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        self.fields['estandarizadoprodu'].widget.attrs['class'] = 'form-control select2'
+        #self.fields['estandarizadoprodu'].widget.attrs['class'] = 'form-control select2'
         """self.fields['preciotransaccion'].widget.attrs['readonly'] = True"""
         """self.fields['um'].widget.attrs['readonly'] = True"""
         """self.fields['fecha_finalizado'].widget.attrs['readonly'] = True"""
