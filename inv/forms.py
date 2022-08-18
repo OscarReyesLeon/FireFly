@@ -121,7 +121,7 @@ class PedidoForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
-        self.fields['estandarizadoprodu'].widget.attrs['class'] = 'form-control select2'
+        #self.fields['estandarizadoprodu'].widget.attrs['class'] = 'form-control select2'
         """self.fields['preciotransaccion'].widget.attrs['readonly'] = True"""
         """self.fields['um'].widget.attrs['readonly'] = True"""
         """self.fields['fecha_finalizado'].widget.attrs['readonly'] = True"""
