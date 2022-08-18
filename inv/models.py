@@ -211,7 +211,7 @@ class Pedido(ClaseModelo):
             respuesta = Nombresrelacion.objects.filter(descripcion=abuscar).get()
             respuesta = respuesta.relacion.descripcion
         else:
-            respuesta = "୧༼ಠ益ಠ༽୨"
+            respuesta = "No"
         return respuesta
     @property
     def idestandarizado(self):

@@ -20,7 +20,7 @@
         <th>Autorizado</th>
         <th>Solicitante</th>
         <th>Articulo</th>
-        <th>Corregido</th>
+        <th>Estandarización</th>
       	<th>Cantidad</th>
         <th>Unidad Medida</th>
         <th>Divisa</th>
@@ -29,24 +29,25 @@
         <th>$ Total</th>
         <th>Estado</th>
         <th>Proceso</th>
-        <th>F-Registro</th>
-        <th>F-Modificado</th>
-        <th>F-Cotizado</th>
-        <th>F-Aprobado</th>
-        <th>F-Proveedor</th>
-        <th>F-Finalizado</th>
-        <th>F-Rechazo</th>
+        <th>Fecha de Solicitud</th>
+        <th>Ultima modificación</th>
+        <th>Cotizado</th>
+        <th>Aprobado</th>
+        <th>Atendido por Proveedor</th>
+        <th>Finalizado</th>
+        <th>Si fue rechazo</th>
         <th>OC descripción</th>
         <th>Comentario</th>
         <th>IO</th>
-        <th>Proveedor Directo</th>
-        <th>Proveedor de OC</th>
+        <th>Proveedor</th>
+        <th>Compra Directa</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{item.id}}</td>
           <td>
+            {{item.idestandarizado}}
             {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
             <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info" role="button"><i class="fas fa-print"></i></i></a>
             {% endif %}
@@ -60,7 +61,7 @@
           <td>{{item.status2}}</td>
           <td>{{item.uc}}</td>
           <td>{{item.motivo_peticion}}</td>
-          <td>{{item.descripcioncorregida}}</td>
+          <td>{{item.estandarizadorq}}</td>
       	  <td>{{item.cantidad}}</td>
           <td>{{item.UniMed}}</td>
           <td>{{item.divisa}}</td>
@@ -78,8 +79,8 @@
           <td>{{item.fecha_rechazo}}</td>
           <td>{{item.motivo_peticion}}</td>
           <td>{{item.comentario}}</td>
-          <td>{{item.indentificador_estado}}</td>
           <td>{{item.folio_ingreso}}</td>
+          <td>{{item.indentificador_estado}}</td>
 
 <!--          <td>{{item.oc}}</td> -->
           <td>{{item.proveedoroc}}</td>

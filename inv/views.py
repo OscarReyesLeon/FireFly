@@ -382,7 +382,19 @@ class PedidoViewF(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user).order_by('-id')[:200]
+        qs = qs.filter(uc=user).exclude(indentificador_estado=5).order_by('-id')[:100]
+        return qs
+
+class PedidoViewH(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_h.html"
+    context_object_name = "obj"
+    permission_required="inv.view_pedido"
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = super().get_queryset()
+        qs = qs.filter(uc=user).order_by('-id')[:500]
         return qs
 
 class PedidoViewALS(SinPrivilegios, generic.ListView):
