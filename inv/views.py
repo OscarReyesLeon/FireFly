@@ -411,10 +411,10 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_gls.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="prf.view_autorizantegls"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:200] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:500] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:100]
         return qs
 
 class PedidoViewMLS(SinPrivilegios, generic.ListView):
@@ -609,7 +609,7 @@ def pedido_rechazado_als(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("prf.change_autorizador",login_url="/login/")
+@permission_required("prf.view_autorizantegls",login_url="/login/")
 def pedido_aprobado_gls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
@@ -644,7 +644,7 @@ def pedido_aprobado_gls(request, id):
 
 
 @login_required(login_url="/login/")
-@permission_required("prf.change_autorizador",login_url="/login/")
+@permission_required("prf.view_autorizantegls",login_url="/login/")
 def pedido_rechazado_gls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
     contexto={}
