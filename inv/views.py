@@ -414,7 +414,7 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     permission_required="prf.view_autorizantegls"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:500] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=2).order_by('-id')[:100]
+        qs = Pedido.objects.filter(autpor=2).exclude(indentificador_estado=5).order_by('-id')[:500] | Pedido.objects.filter(autpor=2).filter(indentificador_estado=5).order_by('-id')[:200]
         return qs
 
 class PedidoViewMLS(SinPrivilegios, generic.ListView):
@@ -612,6 +612,7 @@ def pedido_rechazado_als(request, id):
 @permission_required("prf.view_autorizantegls",login_url="/login/")
 def pedido_aprobado_gls(request, id):
     pedi = Pedido.objects.filter(pk=id).first()
+
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
@@ -641,6 +642,7 @@ def pedido_aprobado_gls(request, id):
         else:
             return HttpResponse("el pedido no esta en condición de ser re-autorizado")
     return render(request,template_name,contexto)
+
 
 
 @login_required(login_url="/login/")

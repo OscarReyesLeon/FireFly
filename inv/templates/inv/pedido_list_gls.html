@@ -87,14 +87,16 @@
           <td>{{item.fc|date:"d/m/y"}}</td>
           <td>
             {% if perms.prf.view_autorizantegls and item.indentificador_estado == '1' %}
-            <a href="{% url 'inv:pedido_aprobado_gls' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            <a href="{% url 'inv:pedido_aprobado_gls' item.id %}" onclick="antidoble()" class="btn btn-success" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
-            -----
-            {% if perms.view_autorizantegls %}
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
+            {% if perms.prf.view_autorizantegls and item.indentificador_estado == '1' or perms.prf.view_autorizantegls and item.indentificador_estado == '2' %}
+            <button class="btn btn-warning" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
             {% if perms.prf.view_autorizantegls and item.indentificador_estado == '1' %}
-            <a href="{% url 'inv:pedido_rechazado_gls' item.id %}" onclick="antidoble()" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
+            <a href="{% url 'inv:pedido_rechazado_gls' item.id %}" onclick="antidoble()" class="btn btn-danger" role="button"><i class="far fa-thumbs-down"></i></a>
+            {% endif %}
+            {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-outline-info" role="button"><i class="fas fa-print"></i></a>
             {% endif %}
           </td>
           <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>
@@ -119,77 +121,77 @@
         ],
       "rowCallback": function(row, data, index){
         if(data[11]== 1){
-      	$(row).find('td:eq(0)').css('color', 'blue');
+      	$(row).find('td:eq(0)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(1)').css('color', 'blue');
+      	$(row).find('td:eq(1)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(2)').css('color', 'blue');
+      	$(row).find('td:eq(2)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(3)').css('color', 'blue');
+      	$(row).find('td:eq(3)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(4)').css('color', 'blue');
+      	$(row).find('td:eq(4)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(5)').css('color', 'blue');
+      	$(row).find('td:eq(5)').css('color', 'green');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(6)').css('color', 'blue');
+      	$(row).find('td:eq(7)').css('color', 'red');
         }
         if(data[11]== 1){
-      	$(row).find('td:eq(8)').css('color', 'red');
+      	$(row).find('td:eq(10)').css('color', 'red');
         }
 
         if(data[11]== 2){
-      	$(row).find('td:eq(4)').css('color', 'orange');
+      	$(row).find('td:eq(4)').css('color', 'blue');
         }
         if(data[11]== 3){
-      	$(row).find('td:eq(4)').css('color', 'pink');
+      	$(row).find('td:eq(4)').css('color', 'orange');
         }
         if(data[11]== 4){
-      	$(row).find('td:eq(4)').css('color', 'green');
+      	$(row).find('td:eq(4)').css('color', 'red');
         }
         if(data[11]== 5){
       	$(row).find('td:eq(4)').css('color', 'purple');
         }
 
         if(data[11]== 2){
-      	$(row).find('td:eq(0)').css('color', 'orange');
+      	$(row).find('td:eq(0)').css('color', 'blue');
         }
         if(data[11]== 3){
-      	$(row).find('td:eq(0)').css('color', 'pink');
+      	$(row).find('td:eq(0)').css('color', 'orange');
         }
         if(data[11]== 4){
-      	$(row).find('td:eq(0)').css('color', 'green');
+      	$(row).find('td:eq(0)').css('color', 'red');
         }
         if(data[11]== 5){
       	$(row).find('td:eq(0)').css('color', 'purple');
         }
 
         if(data[11]== 2){
-      	$(row).find('td:eq(1)').css('color', 'orange');
+      	$(row).find('td:eq(1)').css('color', 'blue');
         }
         if(data[11]== 3){
-      	$(row).find('td:eq(1)').css('color', 'pink');
+      	$(row).find('td:eq(1)').css('color', 'orange');
         }
         if(data[11]== 4){
-      	$(row).find('td:eq(1)').css('color', 'green');
+      	$(row).find('td:eq(1)').css('color', 'red');
         }
         if(data[11]== 5){
       	$(row).find('td:eq(1)').css('color', 'purple');
         }
 
         if(data[11]== 2){
-      	$(row).find('td:eq(3)').css('color', 'orange');
+      	$(row).find('td:eq(3)').css('color', 'blue');
         }
         if(data[11]== 3){
-      	$(row).find('td:eq(3)').css('color', 'pink');
+      	$(row).find('td:eq(3)').css('color', 'orange');
         }
         if(data[11]== 4){
-      	$(row).find('td:eq(3)').css('color', 'green');
+      	$(row).find('td:eq(3)').css('color', 'red');
         }
         if(data[11]== 5){
       	$(row).find('td:eq(3)').css('color', 'purple');

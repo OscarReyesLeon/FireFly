@@ -86,13 +86,13 @@
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
           <td>{{item.fc|date:"d/m/y"}}
           <td>
-            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor == 'ALS' %}
+            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
             <a href="{% url 'inv:pedido_aprobado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
             {% if perms.prf.change_autorizador %}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
-            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor == 'ALS' %}
+            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
             <a href="{% url 'inv:pedido_rechazado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
           </td>
@@ -170,16 +170,16 @@
       	$(row).find('td:eq(0)').css('color', 'black');
         }
         if(data[11]== 2){
-      	$(row).find('td:eq(1)').css('color', 'orange');
+      	$(row).find('td:eq(1)').css('color', 'green');
         }
         if(data[11]== 2){
-      	$(row).find('td:eq(2)').css('color', 'orange');
+      	$(row).find('td:eq(2)').css('color', 'green');
         }
         if(data[11]== 2){
-      	$(row).find('td:eq(3)').css('color', 'orange');
+      	$(row).find('td:eq(3)').css('color', 'green');
         }
         if(data[11]== 2){
-      	$(row).find('td:eq(4)').css('color', 'orange');
+      	$(row).find('td:eq(4)').css('color', 'green');
         }
         if(data[11]== 2){
       	$(row).find('td:eq(9)').css('color', 'red');

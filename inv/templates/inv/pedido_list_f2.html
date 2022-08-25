@@ -37,7 +37,7 @@
       {% if perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
-      {% if perms.prf.change_autorizador%}
+      {% if perms.prf.view_autorizantegls%}
       <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.prf.view_autorizantemls %}
