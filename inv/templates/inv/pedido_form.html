@@ -26,19 +26,9 @@
                             {#{ form.as_p }#}
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-6">{{form.cantidad.label}}</div>
-                                <div class="col-md-6">{{form.cantidad}}</div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-6">Unidad de medida</div>
-                                <div class="col-md-6">{{form.UniMed}}</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="col-md-6">Articulo Listado</div>
-                                <div class="col-md-6">
+                            <div class="col-md-12">
+                                <div class="col-md-12">Selecciona un articulo del listado</div>
+                                <div class="col-md-12">
                                     <select class="form-control select2" placeholder="Seleccione un articulo" name="articulo" id="articulo" style="width: 100%;" required>
                                         <option value="">Seleccione un articulo</option>
                                         {% for articulo in articulos %}
@@ -46,6 +36,17 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.cantidad.label}}</div>
+                                <div class="col-md-6">{{form.cantidad}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Unidad de medida</div>
+                                <div class="col-md-6">{{form.UniMed}}</div>
                             </div>
                         </div>
                         <div class="row">
@@ -103,7 +104,7 @@
 <script>
     $(function() {
         $('.select2').select2({
-            placeholder: "Selecciona una opcion acorde a lo que buscas",
+            placeholder: "Utiliza el buscador y confirma con Enter (o clic)",
             language: "es",
             tags: true
         });
