@@ -18,7 +18,8 @@ from .forms import EquipoForm, ProcesoForm, CategoriaForm, PedidoSecondForm, \
     EmpresaForm, GeneroForm, EstudiosForm, PedidoComprasForm,\
     EcivilForm, DepartamentoForm, PuestoForm, ParentescocontactoForm, ArtciulosestandarizadosForm, NombresrelacionForm
 from cmp.models import ComprasDet, ComprasEnc
-
+from django.db.models import OuterRef, Exists
+from inv.serializers import PedidoSerializer
 from bases.views import SinPrivilegios
 
 
@@ -238,7 +239,6 @@ class UMNew(SuccessMessageMixin,SinPrivilegios,generic.CreateView):
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
-        print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -254,7 +254,6 @@ class UMEdit(SuccessMessageMixin,SinPrivilegios,
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
-        print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -368,6 +367,48 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     template_name = "inv/pedido_list_export.html"
     context_object_name = "obj"
     permission_required="inv.change_pedido"
+
+    def obtener_informacion_reporte(self):
+        fecha_inicial = self.request.GET.get('fecha_inicial', None)
+        fecha_final = self.request.GET.get('fecha_final', None)
+        estado = self.request.GET.get('estado', None)
+        estandarizado = self.request.GET.get('estandarizado', None)
+        pedido = Pedido.objects.all().annotate(
+            estandarizado=Exists(Artciulosestandarizados.objects.filter(descripcion__icontains=OuterRef('articulo')))
+        )
+        if fecha_inicial: pedido = pedido.filter(fc__gte=fecha_inicial)
+        if fecha_final: pedido = pedido.filter(fc__lte=fecha_final)
+        if estado: pedido = pedido.filter(indentificador_estado__in=estado.split(",",1))
+        if estandarizado and estandarizado in ["0", "1"]:
+            pedido = pedido.filter(estandarizado=bool(int(estandarizado)))
+        return pedido
+    
+    def obtener_archivo_xlsx(self, pedido):
+        import pandas as pd
+        from io import BytesIO
+        with BytesIO() as b:
+            data = pd.DataFrame(
+                data=PedidoSerializer(pedido, many=True).data,
+            )
+            data.columns = PedidoSerializer.Meta.nombre_columnas
+            with pd.ExcelWriter(b) as writer:
+                data.to_excel(writer, sheet_name="Data", index=False)
+            hoy = datetime.now()
+            filename = "reporte_pedidos-{}.xlsx".format(hoy.strftime("%d-%m-%Y"))
+            res = HttpResponse(
+                b.getvalue(),
+                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+            res['Content-Disposition'] = f'attachment; filename={filename}'
+            return res
+
+    def get(self, request, *args, **kwargs):
+        reporte = request.GET.get('reporte', None)
+        if request.is_ajax() or reporte:
+            pedido = self.obtener_informacion_reporte()
+            return self.obtener_archivo_xlsx(pedido)
+        return super().get(request, *args, **kwargs)
+        
     def get_queryset(self):
         qs = Pedido.objects.order_by('-id')[:40000]
         return qs

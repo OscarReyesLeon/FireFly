@@ -25,10 +25,8 @@ class ProveedorForm(forms.ModelForm):
             )
 
             if not self.instance.pk:
-                print("Registro ya existe")
                 raise forms.ValidationError("Registro Ya Existe")
             elif self.instance.pk!=sc.pk:
-                print("Cambio no permitido")
                 raise forms.ValidationError("Cambio No Permitido")
         except Proveedor.DoesNotExist:
             pass
@@ -54,10 +52,8 @@ class UsoFacturaForm(forms.ModelForm):
             )
 
             if not self.instance.pk:
-                print("Registro ya existe")
                 raise forms.ValidationError("Registro Ya Existe")
             elif self.instance.pk!=sc.pk:
-                print("Cambio no permitido")
                 raise forms.ValidationError("Cambio No Permitido")
         except UsoFactura.DoesNotExist:
             pass

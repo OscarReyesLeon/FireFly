@@ -589,7 +589,6 @@ def pedidos_status(request):
 
     abiertoscontados = abiertos.count()
     cierrecontados = todosenrango.count()
-    print(todosenrango.count())
 
     tiempospendientes = []
     for i in range(abiertos.count()):

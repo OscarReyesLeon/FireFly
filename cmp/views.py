@@ -49,7 +49,6 @@ class ProveedorNew(SuccessMessageMixin, SinPrivilegios,\
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
-        #print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -65,7 +64,6 @@ class ProveedorEdit(SuccessMessageMixin, SinPrivilegios,\
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
-        print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -108,7 +106,6 @@ class UsoFacturaNew(SuccessMessageMixin, SinPrivilegios,\
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
-        #print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -124,7 +121,6 @@ class UsoFacturaEdit(SuccessMessageMixin, SinPrivilegios,\
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
-        print(self.request.user.id)
         return super().form_valid(form)
 
 
@@ -193,9 +189,12 @@ def compras(request,compra_id=None):
         no_factura = request.POST.get("no_factura")
         proveedor = request.POST.get("proveedor")
         empresaoc = request.POST.get("empresaoc")
-        sub_total = 0
-        descuento = 0
-        total = 0
+        sub_total = request.POST.get("sub_total")
+        descuento = request.POST.get("descuento2")
+        iva = request.POST.get("descuento")
+        total = request.POST.get("total")
+
+        total = float(sub_total) - float(descuento) + float(iva)
 
         if not compra_id:
             prov=Proveedor.objects.get(pk=proveedor)
@@ -207,6 +206,10 @@ def compras(request,compra_id=None):
                 empresaoc=emproc,
                 proveedor=prov,
                 uc = request.user,
+                sub_total=sub_total,
+                descuento2=descuento,
+                descuento=iva,
+                total=total
             )
             if enc:
                 enc.clienteuniqueid = id_generator()
@@ -220,6 +223,10 @@ def compras(request,compra_id=None):
                 enc.no_factura=no_factura
                 enc.um=request.user.id
                 enc.clienteuniqueid = id_generator()
+                enc.sub_total=sub_total
+                enc.descuento2=descuento
+                enc.descuento=iva
+                enc.total=total
                 enc.save()
 
         if not compra_id:
@@ -231,29 +238,30 @@ def compras(request,compra_id=None):
         descuento_detalle  = request.POST.get("id_descuento_detalle")
         total_detalle  = request.POST.get("id_total_detalle")
 
-        prod = Pedido.objects.get(pk=pedido)
+        if pedido:
+            prod = Pedido.objects.get(pk=pedido)
 
-        det = ComprasDet(
-            compra=enc,
-            pedido=prod,
-            cantidad=cantidad,
-            precio_prv=precio,
-            descuento=descuento_detalle,
-            costo=0,
-            uc = request.user,
-        )
+            det = ComprasDet(
+                compra=enc,
+                pedido=prod,
+                cantidad=cantidad,
+                precio_prv=precio,
+                descuento=descuento_detalle,
+                costo=0,
+                uc = request.user,
+            )
 
-        if det:
-            if ComprasDet.objects.filter(pedido_id=pedido).exists() == True:
-                antiduplicado = ComprasDet.objects.filter(pedido_id=pedido).get()
-                return redirect("cmp:compras_edit",compra_id=antiduplicado.compra_id)
-            det.save()
+            if det:
+                if ComprasDet.objects.filter(pedido_id=pedido).exists() == True:
+                    antiduplicado = ComprasDet.objects.filter(pedido_id=pedido).get()
+                    return redirect("cmp:compras_edit",compra_id=antiduplicado.compra_id)
+                det.save()
 
-            sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
-            descuento=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('descuento'))
-            enc.sub_total = sub_total["sub_total__sum"]
-            enc.descuento=descuento["descuento__sum"]
-            enc.save()
+                sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
+                descuento=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('descuento'))
+                enc.sub_total = sub_total["sub_total__sum"]
+                enc.descuento=descuento["descuento__sum"]
+                enc.save()
 
         return redirect("cmp:compras_edit",compra_id=compra_id)
 
