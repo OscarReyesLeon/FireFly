@@ -6,7 +6,7 @@
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h6 class="m-0 font-weight-bold text-primary">Listado de Pedidos</h6>
-    <h6 class="m-0 font-weight-bold text-info" align="center">Abiertos: ({{pedidosstatus2}} + {{pedidosstatus3}} + {{pedidosstatus4 }} ) + {{pedidosstatus1}} = {{pedidosstatusall}} </h6><h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Cerrados: {{cierrecontados}} con {{promedio32}} días. | Atrasados: {{abiertoscontados}} con {{diaspromedio}} días.</h6>    <div class="dropdown no-arrow">
+    <h6 class="m-0 font-weight-bold text-info" align="center">Abiertos: ({{pedidosstatus2}} + {{pedidosstatus3}} + {{pedidosstatus4 }} ) + {{statusenal}} + {{statusengl}} = {{pedidosstatusall}} </h6><h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Cerrados: {{cierrecontados}} con {{promedio32}} días. | Atrasados: {{abiertoscontados}} con {{diaspromedio}} días.</h6>    <div class="dropdown no-arrow">
       <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
       </a>
@@ -84,15 +84,15 @@
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
           <td>{{item.variacion|floatformat:2}}</td>
           <td>{{item.divisa}}$ {{item.precio_uni}}</td>
-          <td>{{item.fc|date:"d/m/y"}}
+          <td>{{item.fc|date:"d/m"}}</td>
           <td>
-            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' or perms.inv.view_autoriza and item.status == 'Rechazo' %}
+            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
             <a href="{% url 'inv:pedido_aprobado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
             {% if perms.prf.change_autorizador %}
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
-            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' %}
+            {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
             <a href="{% url 'inv:pedido_rechazado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
           </td>
@@ -116,81 +116,185 @@
             'copy', 'csv', 'excel', 'print'
         ],
       "rowCallback": function(row, data, index){
-        if(data[11]== 1){
-      	$(row).find('td:eq(0)').css('color', 'black');
-        }
-        if(data[11]== 1){
-      	$(row).find('td:eq(1)').css('color', 'blue');
-        }
-        if(data[11]== 1){
+        if(data[2]== "ALS" && data[11]==1){
       	$(row).find('td:eq(2)').css('color', 'blue');
         }
-        if(data[11]== 1){
-      	$(row).find('td:eq(3)').css('color', 'blue');
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(2)').css('color', 'black');
         }
-        if(data[11]== 1){
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(2)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(3)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(3)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(3)').css('color', 'green');
+        }
+
+        if(data[2]== "ALS"){
       	$(row).find('td:eq(4)').css('color', 'blue');
         }
-
-        if(data[6]> 0 && data[11]==1){
-      	$(row).find('td:eq(5)').css('color', 'red');
+        if(data[2]== "MLS"){
+      	$(row).find('td:eq(4)').css('color', 'black');
         }
-        if(data[6]> 0 && data[11]==1){
-      	$(row).find('td:eq(6)').css('color', 'red');
-        }
-        if(data[6]> 0 && data[11]==1){
-      	$(row).find('td:eq(7)').css('color', 'red');
-        }
-        if(data[11]== 1 && data[11]==1){
-      	$(row).find('td:eq(9)').css('color', 'red');
+        if(data[2]== "GLS"){
+      	$(row).find('td:eq(4)').css('color', 'purple');
         }
 
-        if(data[6]< 0 && data[11]==1){
-      	$(row).find('td:eq(5)').css('color', 'purple');
-        }
-        if(data[6]< 0 && data[11]==1){
-      	$(row).find('td:eq(6)').css('color', 'purple');
-        }
-        if(data[6]< 0 && data[11]==1){
-      	$(row).find('td:eq(7)').css('color', 'purple');
-        }
-
-        if(data[6]== 0 && data[11]==1){
+        if(data[2]== "ALS" && data[11]==1){
       	$(row).find('td:eq(5)').css('color', 'green');
         }
-        if(data[6]== 0 && data[11]==1){
-      	$(row).find('td:eq(6)').css('color', 'green');
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(5)').css('color', 'green');
         }
-        if(data[6]== 0 && data[11]==1){
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(5)').css('color', 'green');
+        }
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(7)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(7)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
       	$(row).find('td:eq(7)').css('color', 'green');
         }
 
-
-        if(data[11]== 2){
-      	$(row).find('td:eq(0)').css('color', 'black');
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(10)').css('color', 'blue');
         }
-        if(data[11]== 2){
-      	$(row).find('td:eq(1)').css('color', 'orange');
-        }
-        if(data[11]== 2){
-      	$(row).find('td:eq(2)').css('color', 'orange');
-        }
-        if(data[11]== 2){
-      	$(row).find('td:eq(3)').css('color', 'orange');
-        }
-        if(data[11]== 2){
-      	$(row).find('td:eq(4)').css('color', 'orange');
-        }
-        if(data[11]== 2){
-      	$(row).find('td:eq(9)').css('color', 'red');
-        }
-        if(data[11]== 1){
+        if(data[2]== "MLS" && data[11]==1){
       	$(row).find('td:eq(10)').css('color', 'black');
         }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(10)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(0)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(0)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(0)').css('color', 'green');
+        }
+
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(1)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(1)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(1)').css('color', 'green');
+        }
+
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(6)').css('color', 'green');
+        }
+
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(8)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(8)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(8)').css('color', 'green');
+        }
+
+
+        if(data[2]== "ALS" && data[11]==1){
+      	$(row).find('td:eq(11)').css('color', 'green');
+        }
+        if(data[2]== "MLS" && data[11]==1){
+      	$(row).find('td:eq(11)').css('color', 'green');
+        }
+        if(data[2]== "GLS" && data[11]==1){
+      	$(row).find('td:eq(11)').css('color', 'green');
+        }
+
+
+        if(data[2]== "ALS" && data[11]==2){
+      	$(row).find('td:eq(2)').css('color', 'blue');
+        }
+        if(data[2]== "MLS" && data[11]==2){
+      	$(row).find('td:eq(2)').css('color', 'black');
+        }
+        if(data[2]== "GLS" && data[11]==2){
+      	$(row).find('td:eq(2)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==2){
+      	$(row).find('td:eq(3)').css('color', 'blue');
+        }
+        if(data[2]== "MLS" && data[11]==2){
+      	$(row).find('td:eq(3)').css('color', 'black');
+        }
+        if(data[2]== "GLS" && data[11]==2){
+      	$(row).find('td:eq(3)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS"){
+      	$(row).find('td:eq(4)').css('color', 'blue');
+        }
+        if(data[2]== "MLS"){
+      	$(row).find('td:eq(4)').css('color', 'black');
+        }
+        if(data[2]== "GLS"){
+      	$(row).find('td:eq(4)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==2){
+      	$(row).find('td:eq(5)').css('color', 'blue');
+        }
+        if(data[2]== "MLS" && data[11]==2){
+      	$(row).find('td:eq(5)').css('color', 'black');
+        }
+        if(data[2]== "GLS" && data[11]==2){
+      	$(row).find('td:eq(5)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==2){
+      	$(row).find('td:eq(7)').css('color', 'blue');
+        }
+        if(data[2]== "MLS" && data[11]==2){
+      	$(row).find('td:eq(7)').css('color', 'black');
+        }
+        if(data[2]== "GLS" && data[11]==2){
+      	$(row).find('td:eq(7)').css('color', 'purple');
+        }
+
+        if(data[2]== "ALS" && data[11]==2){
+      	$(row).find('td:eq(10)').css('color', 'blue');
+        }
+        if(data[2]== "MLS" && data[11]==2){
+      	$(row).find('td:eq(10)').css('color', 'black');
+        }
+        if(data[2]== "GLS" && data[11]==2){
+      	$(row).find('td:eq(10)').css('color', 'purple');
+        }
+
 
 
       },
-      "order": [[ 11, 'asc' ], [ 0, 'asc' ]], 
+      "order": [[ 11, 'asc' ], [ 2, 'desc' ], [ 0, 'asc' ]], 
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

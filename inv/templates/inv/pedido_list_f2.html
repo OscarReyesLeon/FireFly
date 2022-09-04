@@ -6,7 +6,7 @@
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h6 class="m-0 font-weight-bold text-primary">Listado de Pedidos</h6>
-    <h6 class="m-0 font-weight-bold text-info" align="center">Abiertos: ({{pedidosstatus2}} + {{pedidosstatus3}} + {{pedidosstatus4 }} ) + {{pedidosstatus1}} = {{pedidosstatusall}} </h6><h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Cerrados: {{cierrecontados}} con {{promedio32}} días. | Atrasados: {{abiertoscontados}} con {{diaspromedio}} días.</h6>    <div class="dropdown no-arrow">
+    <h6 class="m-0 font-weight-bold text-info" align="center">Abiertos: ({{pedidosstatus2}} + {{pedidosstatus3}} + {{pedidosstatus4 }} ) + {{statusenal}} + {{statusengl}} = {{pedidosstatusall}} </h6><h6 class="m-0 font-weight-bold {{diascolor}}" align="center">Cerrados: {{cierrecontados}} con {{promedio32}} días. | Atrasados: {{abiertoscontados}} con {{diaspromedio}} días.</h6>    <div class="dropdown no-arrow">
       <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
       </a>
@@ -37,7 +37,7 @@
       {% if perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
-      {% if perms.prf.change_autorizador%}
+      {% if perms.prf.view_autorizantegls%}
       <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.prf.view_autorizantemls %}

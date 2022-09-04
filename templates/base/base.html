@@ -9,35 +9,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="Oscar Reyes León">
-  {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
-      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
-  {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
-      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
-  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
-      {% if pedidosstatus2 > 0 %}
-          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/favicon.ico"/>
-      {% else %}
-          <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
-      {% endif %}
-  {% else %}
-      <link rel="shortcut icon" type="image/jpg" href="https://ledsa.mx/ff/firefly.png"/>
-  {% endif %}
 
-  <title>
-    {% if perms.prf.change_autorizador and pedidosstatus1 > 0 %}
-        ({{pedidosstatus1}}) - Ledsa FireFly
-    {% elif perms.prf.change_autorizador and pedidosstatus1 == 0 %}
-        Ledsa FireFly
-    {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
-        {% if pedidosstatus2 > 0 %}
-            ({{pedidosstatus2}}) - Ledsa FireFly
-        {% else %}
-            Ledsa FireFly
-        {% endif %}
-    {% else %}
-        Ledsa FireFly
-    {% endif %}
-  </title>
+  {% if perms.prf.change_autorizador and statusenal > 0 %}
+    <link rel="shortcut icon" type="image/ico" href="https://ledsa.mx/ff/favicon.ico"/>
+    <title>({{statusenal}}) - Aaron</title>
+  {% elif perms.prf.change_autorizador and statusenal == 0 %}
+    <link rel="shortcut icon" type="image/ico" href="https://ledsa.mx/ff/firefly.png"/>
+    <title>FireFly</title>
+  {% elif perms.prf.view_autorizantegls and statusengl > 0 %}
+    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/favicon.ico"/>
+    <title>({{statusengl}}) - Revisar</title>
+  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/pendiente.png"/>
+    <title>({{pedidosstatus2}}) - Cotizar</title>
+  {% else %}
+    <link rel="shortcut icon" type="image/png" href="https://ledsa.mx/ff/firefly.png"/>
+    <title>Ledsa FireFly</title>
+  {% endif %}
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -647,7 +635,7 @@
     //Función actualizar
   function actualizar(){location.reload(true);}
   //Función para actualizar cada 5 segundos(5000 milisegundos)
-  setInterval("actualizar()",1800000);
+  setInterval("actualizar()",600000);
 </script>
 
   {% endblock%}
