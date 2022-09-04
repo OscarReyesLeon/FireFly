@@ -19,7 +19,7 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a class="btn btn-outline-success" onclick="return abrir_modal('{% url 'inv:pedido_new' %}')"><i cass="far fa-calendar-plus"></i> Nuevo</a>
+      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success"></i> Nuevo</a>
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Abiertos</a>
       <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-info" role="button">Histórico</i></a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
