@@ -105,7 +105,7 @@ class ComprasEnc(ClaseModelo):
         if self.sub_total == None  or self.descuento == None:
             self.sub_total = 0
             self.descuento = 0
-        self.total = (self.sub_total + self.descuento) - self.descuento2
+        self.total = float(self.sub_total) + float(self.descuento) - float(self.descuento2)
         super(ComprasEnc,self).save()
 
     class Meta:

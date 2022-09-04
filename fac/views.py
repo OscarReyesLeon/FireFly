@@ -51,15 +51,10 @@ class ClienteNew(VistaBaseCreate):
     permission_required="fac.add_cliente"
 
     def get(self, request, *args, **kwargs):
-        print("sobre escribir get")
-        
         try:
             t = request.GET["t"]
         except:
-            t = None
-
-        print(t)
-        
+            t = None        
         form = self.form_class(initial=self.initial)
         return render(request, self.template_name, {'form': form, 't':t})
 
@@ -72,21 +67,14 @@ class ClienteEdit(VistaBaseEdit):
     permission_required="fac.change_cliente"
 
     def get(self, request, *args, **kwargs):
-        print("sobre escribir get en editar")
-
-        print(request)
-        
         try:
             t = request.GET["t"]
         except:
             t = None
-
-        print(t)
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         context = self.get_context_data(object=self.object, form=form,t=t)
-        print(form_class,form,context)
         return self.render_to_response(context)
 
 
@@ -112,17 +100,13 @@ class FacturaView(SinPrivilegios, generic.ListView):
 
     def get_queryset(self):
         user = self.request.user
-        # print(user,"usuario")
         qs = super().get_queryset()
-        for q in qs:
-            print(q.uc,q.id)
-        
+        # for q in qs:
+        #     print(q.uc,q.id)
         if not user.is_superuser:
             qs = qs.filter(uc=user)
-
-        for q in qs:
-            print(q.uc,q.id)
-
+        # for q in qs:
+        #     print(q.uc,q.id)
         return qs
 
 
