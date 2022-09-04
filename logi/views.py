@@ -23,14 +23,14 @@ def separador(lines):
         reloj = 0
         for separador in line:
             separador2 = remplaceclean(separador)
-            print(separador2 + " - valror individual de cadena")
+            # print(separador2 + " - valror individual de cadena")
             reloj = reloj + 1
-            print(reloj)
+            # print(reloj)
             cadenaresult.append(separador2)
-        print("================================================================")
-        print('\n'.join(map(str, cadenaresult)))
-        print("================================================================")
-        print(cadenaresult[1])
+        # print("================================================================")
+        # print('\n'.join(map(str, cadenaresult)))
+        # print("================================================================")
+        # print(cadenaresult[1])
         preguardarbd(cadenaresult)
         
 

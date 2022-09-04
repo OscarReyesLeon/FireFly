@@ -251,7 +251,6 @@
         $("#frmCompras").submit(function(e){
 
             var  no_fact = $("#id_no_factura").val();
-            console.log(no_fact);
 
 /*            if(no_fact.trim()==""){
                 e.preventDefault()
@@ -287,6 +286,38 @@
         /*Fin Validar Envío de Detalle */
 
     });
+
+
+    $("#id_descuento2").change(function(){
+        calcular_detalle();
+    });
+
+    $("#id_sub_total").change(function(){
+        calcular_detalle();
+    });
+
+    $("#id_descuento").change(function(){
+        calcular_detalle();
+    });
+
+
+
+    function get_value_number(id){
+        let value = $("#"+id).val();
+        if (isNaN(value)){
+            value = 0;
+            $("#"+id).val(value);
+        }
+        return parseFloat(value);
+    }
+
+    function calcular_detalle(){
+        let subtotal = get_value_number("id_sub_total");
+        let descuento = get_value_number("id_descuento2");
+        let iva = get_value_number("id_descuento");
+        let total = subtotal - descuento + iva;
+        $("#id_total").val(total);
+    }
 
     function selectProducto(id,descripcion,cantidad,precio_uni,transaccion_iva,preciotransaccion,transaccionconiva)
     {
