@@ -87,13 +87,13 @@
           <td>{{item.fc|date:"d/m"}}</td>
           <td>
             {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
-            <a href="{% url 'inv:pedido_aprobado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
+            <a href="{% url 'inv:pedido_aprobado_als' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a>
             {% endif %}
             {% if perms.prf.change_autorizador %}
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
+            <button class="btn btn-outline-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
             {% endif %}
             {% if perms.prf.change_autorizador and item.indentificador_estado == '1' and item.autpor.descripcion != 'GLS' %}
-            <a href="{% url 'inv:pedido_rechazado_als' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
+            <a href="{% url 'inv:pedido_rechazado_als' item.id %}" onclick="antidoble()" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
           </td>
           <td>{{item.divisa}}$ {{item.preciotransaccion}}</td>
@@ -294,7 +294,7 @@
 
 
       },
-      "order": [[ 11, 'asc' ], [ 2, 'desc' ], [ 0, 'desc' ]], 
+      "order": [[ 11, 'asc' ], [ 2, 'asc' ], [ 0, 'desc' ]], 
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

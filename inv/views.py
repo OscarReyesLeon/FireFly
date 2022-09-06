@@ -731,8 +731,8 @@ def pedido_aprobado_mls(request, id):
 
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='Si'
-            pedi.status='Pendiente'
-            pedi.indentificador_estado='3'
+            pedi.status='Cotizando'
+            pedi.indentificador_estado='2'
             pedi.save()
             return redirect("inv:pedido_list_mls")
         else:
@@ -741,8 +741,8 @@ def pedido_aprobado_mls(request, id):
         if pedi.status2=='Proximo' and pedi.status=='X-Autorizar':
             pedi.fecha_aprobado = datetime.now().strftime('%d-%m-%y %H:%M')
             pedi.status2='Si'
-            pedi.status='Pendiente'
-            pedi.indentificador_estado='3'
+            pedi.status='Cotizando'
+            pedi.indentificador_estado='2'
             pedi.save()
             return redirect("inv:pedido_list_mls")
         else:
