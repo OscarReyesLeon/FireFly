@@ -69,6 +69,7 @@
         <th class="all">Acciones</th>
         <th>Proceso</th>
         <th>Comentarios</th>
+        <th>IO</th>
       </thead>
       <tbody>
         {% for item in obj%}
@@ -98,6 +99,7 @@
           </td>
           <td>{{item.proceso}}</td>
           <td>{{item.comentario}}</td>
+          <td>{{item.indentificador_estado}}</td>
 
         </tr> 
         {% endfor %}
@@ -145,7 +147,7 @@
 
 
 
-      "order": [ 0, 'desc' ],
+      "order": [[ 9, 'asc' ],[ 0, 'desc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

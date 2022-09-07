@@ -19,9 +19,12 @@
   {% elif perms.prf.view_autorizantegls and statusengl > 0 %}
     <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/favicon.ico"/>
     <title>({{statusengl}}) - Revisar</title>
-  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador and statusEn2 %}
-    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/pendiente.png"/>
-    <title>({{pedidosstatus2}}) - Cotizar</title>
+    {% elif perms.prf.view_autorizantegls and statusenml > 0 %}
+    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/favicon.ico"/>
+    <title>({{statusengl}}) - Revisar</title>
+  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
+    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/firefly.png"/>
+    <title>({{pedidosstatus2}}) - Revisar</title>
   {% else %}
     <link rel="shortcut icon" type="image/png" href="https://ledsa.mx/ff/firefly.png"/>
     <title>Ledsa FireFly</title>

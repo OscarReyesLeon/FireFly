@@ -475,7 +475,7 @@ class PedidoViewF2(SinPrivilegios, generic.ListView):
     permission_required="inv.change_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:200]
         return qs
 
 class PedidoViewF3(SinPrivilegios, generic.ListView):
