@@ -24,6 +24,9 @@
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-primary" role="button">Cotizar</i></a>
       {% endif %}
+      {% if perms.prf.change_almacenista %}
+      <a href="{% url 'inv:pedido_list_f6' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Transferir</a>
+      {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}

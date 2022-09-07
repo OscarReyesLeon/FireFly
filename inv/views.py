@@ -467,7 +467,6 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:500] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=3).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=4).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=5).filter(autpor=3).order_by('-id')[:100]
         return qs
-
 class PedidoViewF2(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f2.html"
@@ -507,7 +506,15 @@ class PedidoViewF5(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         qs = Pedido.objects.filter(status="Fin").order_by('-id')[:200] | Pedido.objects.filter(status="Directo").order_by('-id')[:200] | Pedido.objects.filter(status="Stock").order_by('-id')[:200]
         return qs
+class PedidoViewF6(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_f6.html"
+    context_object_name = "obj"
+    permission_required="prf.change_almacenista"
 
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=6).order_by('-id')[:200]
+        return qs
 class PedidoViewAll(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_inverso.html"
@@ -1007,6 +1014,35 @@ def pedido_enviado(request, id):
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='X-Trasladar'
             pede.indentificador_estado='6'
+            pede.save()
+            return redirect("inv:pedido_list")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+    return render(request,template_name,contexto)
+@login_required(login_url="/login/")
+@permission_required("prf.change_almacenista",login_url="/login/")
+def pedido_transferido(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+    if not pede:
+        return redirect("inv:pedido_list")
+    if request.method=='GET':
+        if pede.status2=='Si' and pede.status=='X-Trasladar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='Enviado-Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f2")
+        else:
+            return HttpResponse("Esta opción no está disponible")
+    if request.method=='POST':
+        if pede.status2=='Si' and pede.status=='X-Trasladar':
+            pede.fecha_recotizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='Enviado-Fin'
+            pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list")
         else:
