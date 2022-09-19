@@ -287,15 +287,39 @@ def OC_autoALS(request, id):
     if not pede:
         return redirect("cmp:compras_list")
     if request.method=='GET':
-        if pede.autorizacion=='OC: Autorización Pendiente':
+        if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Autorizada'
             pede.save()
             return redirect("cmp:compras_list")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     if request.method=='POST':
-        if pede.autorizacion=='OC: Autorización Pendiente':
+        if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Autorizada'
+            pede.save()
+            return redirect("cmp:compras_list")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
+@permission_required("prf.change_comprador",login_url="/login/")
+def Cierre_OC(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_list")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Editando - Incompleta':
+            pede.autorizacion='OC: Autorización en Revisión'
+            pede.save()
+            return redirect("cmp:compras_list")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Editando - Incompleta':
+            pede.autorizacion='OC: Autorización en Revisión'
             pede.save()
             return redirect("cmp:compras_list")
         else:

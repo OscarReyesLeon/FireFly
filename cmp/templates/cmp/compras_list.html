@@ -42,12 +42,17 @@
           <td>{{ item.proveedor }}</td>
           <td>{{item.fechalistado}}</td>
           <td>
-            {% if perms.prf.change_autorizador and item.autorizacion == "OC: Autorización Pendiente" %}
+            {% if perms.prf.change_autorizador and item.autorizacion == "OC: Autorización en Revisión" %}
             <a href="{% url 'cmp:autoALS' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a> --->>> 
+            {% endif %}
+            {% if item.autorizacion == "OC: Editando - Incompleta" %}
+            <a href="{% url 'cmp:Cierre_OC' item.id %}" onclick="antidoble()" class="btn btn-info btn-circle" role="button"><i class="fa fa-recycle"></i></a> --->>> 
             {% endif %}
             ${{ item.total|floatformat:"0" }}</td>
           <td>
+            {% if item.autorizacion == "OC: Editando - Incompleta" %}
             <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edit' item.id %}"><i class="far fa-edit"></i></a>
+            {% endif %}
             <a class="btn btn-outline-success btn-circle" href="{% url 'cmp:compras_print_three' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
             <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_client' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
           </td>
