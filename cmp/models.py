@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 
 #Para los signals
@@ -92,6 +93,7 @@ class ComprasEnc(ClaseModelo):
     empresaoc=models.ForeignKey(Empresa,on_delete=models.PROTECT, null=True)
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
     clienteuniqueid = models.CharField(max_length=100, null=True, blank=True)
+    autorizacion = models.CharField(max_length=50, default="OC: Autorización Pendiente")
     @property
     def fechalistado(self):
         fechalistado = self.fm.strftime('%y-%m-%d %H:%M.%S')

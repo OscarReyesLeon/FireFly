@@ -277,3 +277,27 @@ class CompraDetDelete(SinPrivilegios, generic.DeleteView):
     def get_success_url(self):
         compra_id=self.kwargs['compra_id']
         return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
+
+@login_required(login_url="/login/")
+@permission_required("cmp.change_autorizador",login_url="/login/")
+def OC_autoALS(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_list")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Autorización Pendiente':
+            pede.autorizacion='OC: Autorizada'
+            pede.save()
+            return redirect("cmp:compras_list")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Autorización Pendiente':
+            pede.autorizacion='OC: Autorizada'
+            pede.save()
+            return redirect("cmp:compras_list")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)

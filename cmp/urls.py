@@ -4,7 +4,7 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     proveedorInactivar, \
         UsoFacturaView,UsoFacturaNew, UsoFacturaEdit, \
     UsoFacturaInactivar, \
-    ComprasView, compras, CompraDetDelete
+    ComprasView, compras, CompraDetDelete, OC_autoALS
 
 from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3
 
@@ -21,6 +21,7 @@ urlpatterns = [
 
 
     path('ordencompra/',ComprasView.as_view(), name="compras_list"),
+    path('ordencompra/autals/<int:id>',OC_autoALS, name="autoALS"),
     path('ordencompra/new',compras, name="compras_new"),
     path('ordencompra/edit/<int:compra_id>',compras, name="compras_edit"),
     path('ordencompra/<int:compra_id>/delete/<int:pk>',CompraDetDelete.as_view(), name="compras_del"),
