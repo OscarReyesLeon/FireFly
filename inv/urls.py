@@ -9,7 +9,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewH, PedidoViewF, PedidoViewALS, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_acancela, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewH, PedidoViewF, PedidoViewALS, PedidoViewGLSH, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_acancela, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
     PuestoView, PuestoNew, PuestoEdit, PedidoViewF5, PedidoViewF6,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
@@ -54,6 +54,7 @@ urlpatterns = [
     path('pedidosh/',PedidoViewH.as_view(), name="pedido_list_h"),
     path('pedidosals/',PedidoViewALS.as_view(), name="pedido_list_als"),
     path('pedidosgls/',PedidoViewGLS.as_view(), name="pedido_list_gls"),
+    path('pedidosglsh/',PedidoViewGLSH.as_view(), name="pedido_list_glsh"),
     path('pedidosmls/',PedidoViewMLS.as_view(), name="pedido_list_mls"),
     path('pedidosf2/',PedidoViewF2.as_view(), name="pedido_list_f2"),
     path('pedidosf3/',PedidoViewF3.as_view(), name="pedido_list_f3"),

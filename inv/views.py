@@ -455,7 +455,16 @@ class PedidoViewGLS(SinPrivilegios, generic.ListView):
     permission_required="prf.view_autorizantegls"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(autpor=2).exclude(indentificador_estado=5).order_by('-id')[:500] | Pedido.objects.filter(autpor=2).filter(indentificador_estado=5).order_by('-id')[:200]
+        qs = Pedido.objects.filter(autpor=2).filter(indentificador_estado=1).order_by('-id')[:500]
+        return qs
+class PedidoViewGLSH(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_glsh.html"
+    context_object_name = "obj"
+    permission_required="prf.view_autorizantegls"
+
+    def get_queryset(self):
+        qs = Pedido.objects.filter(autpor=2).filter(indentificador_estado=2).order_by('-id')[:500] | Pedido.objects.filter(autpor=2).filter(indentificador_estado=3).order_by('-id')[:500] |  Pedido.objects.filter(autpor=2).filter(indentificador_estado=4).order_by('-id')[:500]
         return qs
 
 class PedidoViewMLS(SinPrivilegios, generic.ListView):
