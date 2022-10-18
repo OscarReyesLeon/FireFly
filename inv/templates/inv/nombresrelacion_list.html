@@ -23,7 +23,7 @@
       <div class="buttons-toolbar">
 
         {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-        <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
+        <a href="#" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
         {% endif %}
         {% if perms.prf.change_comprador or perms.prf.change_autorizador %}
         <a href="{% url 'inv:pedido_list_f3' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>

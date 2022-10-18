@@ -22,7 +22,7 @@
       <a class="btn btn-outline-success" href="{% url 'inv:pedido_new' %}" target="_blank"><i cass="far fa-calendar-plus"></i> Nuevo</a>
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
+      <a href="#" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-primary" role="button"></i>OC</a>

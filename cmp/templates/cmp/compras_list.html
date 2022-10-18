@@ -11,7 +11,8 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
         <div class="dropdown-header">Acciones:</div>
-        <a class="dropdown-item" href="{% url 'cmp:compras_new' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
+        <a class="dropdown-item" href="{% url 'cmp:compras_newo' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
+        <a class="dropdown-item" href="{% url 'cmp:compras_newp' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_print_all' %}" target="reportes"><i class="fas fa-print"></i> Listado</a>
       </div>
     </div>
@@ -19,7 +20,12 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a href="{% url 'cmp:compras_new' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      {% endif %}
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_newp' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      {% endif %}
       <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Regresar</a>
     </div>
 
@@ -34,27 +40,74 @@
         <th>Y-M-D H:M.s</th>
         <th>Total</th>
         <th class="all">Acciones</th>
+        <th>IO</th>
       </thead>
       <tbody>
         {% for item in obj%}
         <tr>
           <td>{{ item.id }}</td>
           <td>{{ item.proveedor }}</td>
-          <td>{{item.fechalistado}}</td>
+          <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
           <td>
-            {% if perms.prf.change_autorizador and item.autorizacion == "OC: Autorización en Revisión" %}
-            <a href="{% url 'cmp:autoALS' item.id %}" onclick="antidoble()" class="btn btn-success btn-circle" role="button"><i class="far fa-thumbs-up"></i></a> --->>> 
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasalr %}
+            <a href="{% url 'cmp:EnviarAutALR' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-truck"></i></a> --- 
             {% endif %}
-            {% if item.autorizacion == "OC: Editando - Incompleta" %}
-            <a href="{% url 'cmp:Cierre_OC' item.id %}" onclick="antidoble()" class="btn btn-info btn-circle" role="button"><i class="fa fa-recycle"></i></a> --->>> 
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
+            <a href="{% url 'cmp:EnviarAutLedsaOfi' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-laptop"></i></a>
             {% endif %}
-            ${{ item.total|floatformat:"0" }}</td>
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
+            <a href="{% url 'cmp:EnviarAutPlanta' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+
+            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasalr %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a> --- 
+            {% endif %}
+            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasoficinas %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasplanta %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+
+
+            {% if perms.prf.change_autorizanteals and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "ALS" %}
+            <a href="{% url 'cmp:autorizarocals' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+            {% if perms.prf.change_autorizanteals and item.autorizacion == "OC: Autorización en Revisión" %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+
+            {% if perms.prf.change_autorizantegls and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "GLS" %}
+            <a href="{% url 'cmp:autorizarocgls' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+            {% if perms.prf.change_autorizantegls and item.autorizacion == "OC: Autorización en Revisión" %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+
+            {% if perms.prf.change_autorizantemls and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
+            <a href="{% url 'cmp:autorizarocmls' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+            {% if perms.prf.change_autorizantemls and item.autorizacion == "OC: Autorización en Revisión" %}
+            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+
+            {% if perms.prf.change_cxp and item.io == 3 %}
+            <a href="{% url 'cmp:provisionar' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
+
+            -> ${{ item.total|floatformat:"0" }}</td>
           <td>
-            {% if item.autorizacion == "OC: Editando - Incompleta" %}
-            <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edit' item.id %}"><i class="far fa-edit"></i></a>
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
+            <a class="btn btn-outline-warning btn-circle" href="{% url 'cmp:compras_edito' item.id %}"><i class="far fa-edit"></i></a>
+            {% endif %}
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
+            <a class="btn btn-outline-warning btn-circle" href="{% url 'cmp:compras_editp' item.id %}"><i class="far fa-edit"></i></a>
             {% endif %}
             <a class="btn btn-outline-success btn-circle" href="{% url 'cmp:compras_print_three' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
             <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_client' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
+          </td>
+          <td>
+            {{ item.io }}
           </td>
         </tr>
         {% endfor %}
@@ -68,7 +121,7 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   $('.table').DataTable({
-    "order": [ 2, 'desc' ],
+    "order": [[ 5, 'asc' ],[ 0, 'desc' ]],
     "lengthMenu": [ 100, 250, 500, 1000],
     "language": {
       "sProcessing": "Procesando...",
@@ -96,5 +149,6 @@ $(document).ready(function() {
     }
   });
 });
+$("#sidebarToggle").click();
 </script>
 {% endblock %}

@@ -4,7 +4,9 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     proveedorInactivar, \
         UsoFacturaView,UsoFacturaNew, UsoFacturaEdit, \
     UsoFacturaInactivar, \
-    ComprasView, compras, CompraDetDelete, OC_autoALS, Cierre_OC
+    ComprasView, comprasOficina, comprasPlanta, CompraDetDelete, \
+    EnviarAutALR, EnviarAutLedsaOfi, EnviarAutLedsaPlanta, \
+    AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, AutorizarOCReciclar, Provisionar
 
 from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3
 
@@ -21,10 +23,22 @@ urlpatterns = [
 
 
     path('ordencompra/',ComprasView.as_view(), name="compras_list"),
-    path('ordencompra/autals/<int:id>',OC_autoALS, name="autoALS"),
-    path('ordencompra/cierreoc/<int:id>',Cierre_OC, name="Cierre_OC"),
-    path('ordencompra/new',compras, name="compras_new"),
-    path('ordencompra/edit/<int:compra_id>',compras, name="compras_edit"),
+    
+    path('ordencompra/cierreofi/<int:id>',EnviarAutLedsaOfi, name="EnviarAutLedsaOfi"),
+    path('ordencompra/cierrealr/<int:id>',EnviarAutALR, name="EnviarAutALR"),
+    path('ordencompra/cierreplanta/<int:id>',EnviarAutLedsaPlanta, name="EnviarAutPlanta"),
+    
+    path('ordencompra/autorizarocals/<int:id>',AutorizarOCALS, name="autorizarocals"),
+    path('ordencompra/autorizarocgls/<int:id>',AutorizarOCGLS, name="autorizarocgls"),
+    path('ordencompra/autorizarocmls/<int:id>',AutorizarOCMLS, name="autorizarocmls"),
+
+    path('ordencompra/reciclar/<int:id>',AutorizarOCReciclar, name="reciclaroc"),
+    path('ordencompra/provisionar/<int:id>',Provisionar, name="provisionar"),
+
+    path('ordencompra/newo',comprasOficina, name="compras_newo"),
+    path('ordencompra/newp',comprasPlanta, name="compras_newp"),
+    path('ordencompra/edito/<int:compra_id>',comprasOficina, name="compras_edito"),
+    path('ordencompra/editp/<int:compra_id>',comprasPlanta, name="compras_editp"),
     path('ordencompra/<int:compra_id>/delete/<int:pk>',CompraDetDelete.as_view(), name="compras_del"),
 
     path('ordencompra/listado', reporte_compras, name='compras_print_all'),

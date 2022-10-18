@@ -23,7 +23,7 @@
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Abiertos</a>
       <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-info" role="button">Histórico</i></a>
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
+      <a href="#" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>

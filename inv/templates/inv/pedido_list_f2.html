@@ -19,41 +19,39 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a class="btn btn-outline-success" href="{% url 'inv:pedido_new' %}" target="_blank"><i cass="far fa-calendar-plus"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_list_f2' %}" onclick="antidoble()" class="btn btn-primary" role="button">Cotizar</i></a>
+
+      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success"></i> Nuevo</a>
+      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Abiertos</a>
+      <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Histórico</i></a>
+
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Oficina</a>
       {% endif %}
-      {% if perms.prf.change_almacenista %}
-      <a href="{% url 'inv:pedido_list_f6' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Transferir</a>
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Planta</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% if perms.prf.change_cxp %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CXP</a>
       {% endif %}
+      {% if perms.prf.change_autorizanteals %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
+      {% endif %}
+      {% if perms.prf.change_autorizantegls %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
+      {% endif %}
+      {% if perms.prf.change_autorizantemls %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
+      {% endif %}
+      <a href="#" onclick="antidoble()" class="btn btn-primary" role="button"></i>Cotizar</a>
       {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedor</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_comprador %}
-      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
-      {% endif %}
       <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-light" role="button"></i>Todo</a>
-      {% if perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
-      {% endif %}
-      {% if perms.prf.view_autorizantegls%}
-      <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
-      {% endif %}
-      {% if perms.prf.view_autorizantemls %}
-      <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
-      {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_export' %}" class="btn btn-outline-light" role="button"></i>Exportar</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      {% if perms.prf.change_almacenista %}
       <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
-      {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
       {% endif %}
 
     </div><br>
@@ -84,21 +82,12 @@
           <td>{{item.divisa}}$ {{item.precio_uni|floatformat:2}}</td>
           <td>{{item.fc|date:"d/m/y"}}</td>
             <td>
-            {% if perms.prf.change_comprador and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_reaut' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% if perms.prf.change_comprasoficinas %}
+            <a href="{% url 'inv:pedido_edito' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-edit"></i></i></a>
             {% endif %}
-            {% if perms.prf.change_almacenista and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_stock' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-cubes"></i></i></a>
+            {% if perms.prf.change_comprasplanta %}
+            <a href="{% url 'inv:pedido_editp' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-edit"></i></i></a>
             {% endif %}
-            {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
-            <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:pedido_edit' item.id %}')"><i class="far fa-edit"></i></button>
-            {% endif %}
-            {% if perms.prf.change_almacenista and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_enviado' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-truck"></i></i></a>
-            {% endif %}
-            {% if perms.prf.change_auxcompras and item.indentificador_estado == '2' %}
-            <a href="{% url 'inv:pedido_express' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
-            {% endif %}      
           </td>
           <td>{{item.proceso}}</td>
           <td>{{item.comentario}}</td>

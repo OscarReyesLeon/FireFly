@@ -94,6 +94,11 @@ class ComprasEnc(ClaseModelo):
     proveedor=models.ForeignKey(Proveedor,on_delete=models.CASCADE)
     clienteuniqueid = models.CharField(max_length=100, null=True, blank=True)
     autorizacion = models.CharField(max_length=50, default="OC: Editando - Incompleta")
+    autorizante = models.CharField(max_length=3, null=True, blank=True)
+    io = models.IntegerField(default=1)
+    compras = models.BooleanField(default=False)
+    autorizado = models.BooleanField(default=False)
+    cxp = models.BooleanField(default=False)
     @property
     def fechalistado(self):
         fechalistado = self.fm.strftime('%y-%m-%d %H:%M.%S')

@@ -4,7 +4,7 @@
 <div class="modal-lg">
     <div class="modal-content">
         {% if obj %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_edit' obj.pk %}" enctype="multipart/form-data" >
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_edito' obj.pk %}" enctype="multipart/form-data" >
         {% else %}
         <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_new' %}"  enctype="multipart/form-data" >
         {% endif %}
@@ -100,7 +100,7 @@
                             <div class="col">
                                 <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
                                 <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
-                                <a href="{% url 'inv:pedido_list_f2' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
+                                <a href="{% url 'inv:cotiza_planta' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
                             </div>
                             <div class="dropdown-divider"></div>
                         </div>

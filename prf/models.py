@@ -149,3 +149,117 @@ class AutorizanteGLS(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Autorizante planta"
+        
+class AutorizanteALS(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien puede autorizar planta',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(AutorizanteALS, self).save()
+
+    class Meta:
+        verbose_name_plural = "Autorizante planta"
+
+class ComprasALR(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien puede autorizar planta',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(ComprasALR, self).save()
+
+    class Meta:
+        verbose_name_plural = "Comprador Oficinas"
+class ComprasOficinas(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien puede autorizar planta',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(ComprasOficinas, self).save()
+
+    class Meta:
+        verbose_name_plural = "Comprador Oficinas"
+class ComprasPlanta(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Quien puede autorizar planta',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(ComprasPlanta, self).save()
+
+    class Meta:
+        verbose_name_plural = "Comprador Planta"
+class AlmacenistaPlanta(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Almacenista',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(AlmacenistaPlanta, self).save()
+
+    class Meta:
+        verbose_name_plural = "Almacenistas"
+class AlmacenistaOficina(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Almacenista',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(AlmacenistaOficina, self).save()
+
+    class Meta:
+        verbose_name_plural = "Almacenistas"
+class CXP(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Cuentas por pagar',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(CXP, self).save()
+
+    class Meta:
+        verbose_name_plural = "ComprasPorPagar"

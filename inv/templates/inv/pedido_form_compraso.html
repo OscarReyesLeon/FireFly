@@ -1,0 +1,147 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+<center>
+<div class="modal-lg">
+    <div class="modal-content">
+        {% if obj %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_edito' obj.pk %}" enctype="multipart/form-data" >
+        {% else %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:pedido_new' %}"  enctype="multipart/form-data" >
+        {% endif %}
+            <div class="col-xl-12 col-md-12 mb-12">
+                {% if obj %}
+                <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+                <div class="card border-left-success shadow h-100 py-2">
+                {% endif %}
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            {% if obj %} Editar {% else %} Nuevo {% endif %} Pedido
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        {% csrf_token %}
+                        <div class="row">
+                            {#{ form.as_p }#}
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.cantidad.label}}</div>
+                                <div class="col-md-6">{{form.cantidad}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Unidad de medida</div>
+                                <div class="col-md-6">{{form.UniMed}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.articulo.label}}</div>
+                                <div class="col-md-6">{{form.articulo}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.comentario.label}}</div>
+                                <div class="col-md-6">{{form.comentario}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.proceso.label}}</div>
+                                <div class="col-md-6">{{form.proceso}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Autorizante</div>
+                                <div class="col-md-6">{{form.autpor}}</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Campos exclusivos para compras:
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">OC descripción</div>
+                                <div class="col-md-6">{{form.motivo_peticion}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Precio Unitario</div>
+                                <div class="col-md-6">{{form.precio_uni}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">IVA en enteros</div>
+                                <div class="col-md-6">{{form.iva}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Divisa</div>
+                                <div class="col-md-6">{{form.divisa}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Precio Total</div>
+                                <div class="col-md-6">{{form.preciotransaccion}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Modificante</div>
+                                <div class="col-md-6">{{form.um}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.fecha_aprobado.label}}</div>
+                                <div class="col-md-6">{{form.fecha_aprobado}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.fecha_finalizado.label}}</div>
+                                <div class="col-md-6">{{form.fecha_finalizado}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-6">Proveedor C Directo</div>
+                                <div class="col-md-6">{{form.folio_ingreso}}</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" id="boton" onclick="antidoblebuton()" class="btn btn-success"><span class="fa fa-save"></span> Guardar</button>
+                                <!-- <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a> -->
+                                <a href="{% url 'inv:cotiza_oficina' %}" class="btn btn-danger"><span class="fa fa-undo"></span>Cancelar</a>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-auto">
+                        <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</center>
+<script>
+  var cuenta=0;
+  function antidoblebuton() {
+    if (!cuenta == 0) {
+        document.getElementById('boton').disabled=true;
+        return (false);
+    }
+    else
+  cuenta++;
+          return (true);
+  }
+
+</script>
+<script>
+    $(function() {
+        $('.select2').select2({
+            placeholder: "Selecciona una opcion acorde a lo que buscas",
+            language: "es"
+        });
+    });
+</script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block side_bar %}
+{% endblock %}

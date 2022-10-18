@@ -10,25 +10,8 @@
   <meta name="description" content="">
   <meta name="author" content="Oscar Reyes León">
 
-  {% if perms.prf.change_autorizador and statusenal > 0 %}
-    <link rel="shortcut icon" type="image/ico" href="https://ledsa.mx/ff/favicon.ico"/>
-    <title>({{statusenal}}) - Aaron</title>
-  {% elif perms.prf.change_autorizador and statusenal == 0 %}
-    <link rel="shortcut icon" type="image/ico" href="https://ledsa.mx/ff/firefly.png"/>
-    <title>FireFly</title>
-  {% elif perms.prf.view_autorizantegls and statusengl > 0 %}
-    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/favicon.ico"/>
-    <title>({{statusengl}}) - Revisar</title>
-    {% elif perms.prf.view_autorizantegls and statusenml > 0 %}
-    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/favicon.ico"/>
-    <title>({{statusengl}}) - Revisar</title>
-  {% elif perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_comprador %}
-    <link rel="shortcut icon" type="image/gif" href="https://ledsa.mx/ff/firefly.png"/>
-    <title>({{pedidosstatus2}}) - Revisar</title>
-  {% else %}
     <link rel="shortcut icon" type="image/png" href="https://ledsa.mx/ff/firefly.png"/>
     <title>Ledsa FireFly</title>
-  {% endif %}
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">

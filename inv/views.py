@@ -476,14 +476,23 @@ class PedidoViewMLS(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:500] | Pedido.objects.filter(indentificador_estado=2).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=3).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=4).filter(autpor=3).order_by('-id')[:100] | Pedido.objects.filter(indentificador_estado=5).filter(autpor=3).order_by('-id')[:100]
         return qs
-class PedidoViewF2(SinPrivilegios, generic.ListView):
+class PedidoViewOficinaCot(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="prf.comprasoficinas"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).order_by('-id')[:2] | Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=1).exclude(autpor=2).order_by('-id')[:200]
+        return qs
+class PedidoViewPlantaCot(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_f2.html"
+    context_object_name = "obj"
+    permission_required="prf.comprasplanta"
+
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:200]
         return qs
 
 class PedidoViewF3(SinPrivilegios, generic.ListView):
@@ -572,14 +581,14 @@ class PedidoSecondNew(SuccessMessageMixin, SinPrivilegios,
         return context
 
 
-class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
+class PedidoEditO(SuccessMessageMixin,SinPrivilegios,
                    generic.UpdateView):
     model=Pedido
-    template_name="inv/pedido_form_compras.html"
+    template_name="inv/pedido_form_compraso.html"
     context_object_name = 'obj'
     form_class=PedidoComprasForm
-    success_url= reverse_lazy("inv:pedido_list_f2")
-    permission_required="inv.change_pedido"
+    success_url= reverse_lazy("inv:cotiza_oficina")
+    permission_required="prf.change_comprasoficinas"
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -588,7 +597,29 @@ class PedidoEdit(SuccessMessageMixin,SinPrivilegios,
     def get_context_data(self, **kwargs):
         pk = self.kwargs.get('pk')
 
-        context = super(PedidoEdit, self).get_context_data(**kwargs)
+        context = super(PedidoEditO, self).get_context_data(**kwargs)
+        context["equipos"] = Equipo.objects.all()
+        context["procesos"] = Proceso.objects.all()
+        context["obj"] = Pedido.objects.filter(pk=pk).first()
+
+        return context
+class PedidoEditP(SuccessMessageMixin,SinPrivilegios,
+                   generic.UpdateView):
+    model=Pedido
+    template_name="inv/pedido_form_comprasp.html"
+    context_object_name = 'obj'
+    form_class=PedidoComprasForm
+    success_url= reverse_lazy("inv:cotiza_planta")
+    permission_required="prf.change_comprasplanta"
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        pk = self.kwargs.get('pk')
+
+        context = super(PedidoEditP, self).get_context_data(**kwargs)
         context["equipos"] = Equipo.objects.all()
         context["procesos"] = Proceso.objects.all()
         context["obj"] = Pedido.objects.filter(pk=pk).first()

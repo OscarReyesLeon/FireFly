@@ -5,17 +5,24 @@ from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     AutorizaView, AutorizaNew, AutorizaEdit, \
     AutorizaDel, \
     BancoView, BancoNew, BancoEdit, pedido_transferido, \
-    BancoDel, \
+    BancoDel, PedidoViewPlantaCot, PedidoViewOficinaCot, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
     UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
-    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, PedidoView, PedidoViewH, PedidoViewF, PedidoViewALS, PedidoViewGLSH, PedidoViewGLS, PedidoViewMLS, PedidoViewF2, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEdit, pedido_acancela, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
+    ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, \
+    PedidoView, PedidoViewH, PedidoViewF, PedidoViewALS, PedidoViewGLSH, PedidoViewGLS, \
+    PedidoViewMLS, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEditO, PedidoEditP, \
+    pedido_acancela, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, \
+    pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, \
+    pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
     PuestoView, PuestoNew, PuestoEdit, PedidoViewF5, PedidoViewF6,\
     EmpleadoView, EmpleadoNew, EmpleadoEdit,\
     ComputadoraView, ComputadoraNew, ComputadoraEdit, HerramientaView, HerramientaNew, HerramientaEdit, \
     EmpresaView, EmpresaNew, EmpresaEdit, GeneroView, GeneroNew, GeneroEdit, EstudiosView, EstudiosNew, EstudiosEdit, \
     EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, PedidoSecondNew, \
-    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, pedido_enviado, ArtciulosestandarizadosNew, ArtciulosestandarizadosEdit, ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView
+    ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, \
+    pedido_enviado, ArtciulosestandarizadosNew, ArtciulosestandarizadosEdit, \
+    ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView
 
 urlpatterns = [
     path('equipos/',EquipoView.as_view(), name='equipo_list'),
@@ -56,14 +63,16 @@ urlpatterns = [
     path('pedidosgls/',PedidoViewGLS.as_view(), name="pedido_list_gls"),
     path('pedidosglsh/',PedidoViewGLSH.as_view(), name="pedido_list_glsh"),
     path('pedidosmls/',PedidoViewMLS.as_view(), name="pedido_list_mls"),
-    path('pedidosf2/',PedidoViewF2.as_view(), name="pedido_list_f2"),
+    path('pedidosCotOficina/',PedidoViewOficinaCot.as_view(), name="cotiza_oficina"),
+    path('pedidosCotPlanta/',PedidoViewPlantaCot.as_view(), name="cotiza_planta"),
     path('pedidosf3/',PedidoViewF3.as_view(), name="pedido_list_f3"),
     path('pedidosf4/',PedidoViewF4.as_view(), name="pedido_list_f4"),
     path('pedidosf5/',PedidoViewF5.as_view(), name="pedido_list_f5"),
     path('pedidosf6/',PedidoViewF6.as_view(), name="pedido_list_f6"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
     #path('pedido/news', PedidoSecondNew.as_view(), name="pedido_news"),
-    path('pedidos/edit/<int:pk>',PedidoEdit.as_view(), name="pedido_edit"),
+    path('pedidos/edito/<int:pk>',PedidoEditO.as_view(), name="pedido_edito"),
+    path('pedidos/editp/<int:pk>',PedidoEditP.as_view(), name="pedido_editp"),
     path('pedidos/rechazadosc/<int:id>',pedido_scancela, name="scancela"),
     path('pedidos/rechazadoac/<int:id>',pedido_acancela, name="acancela"),
     path('pedidos/aprobadoals/<int:id>',pedido_aprobado_als, name="pedido_aprobado_als"),

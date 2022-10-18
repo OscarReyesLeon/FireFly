@@ -52,7 +52,7 @@
             <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info" role="button"><i class="fas fa-print"></i></a>
             {% endif %}
             {% if perms.prf.change_autorizador and item.indentificador_estado != '5'%}
-            <a href="{% url 'inv:pedido_edit' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-cubes"></i></a>
+            <a href="#" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-cubes"></i></a>
             {% endif %}
             </td>
           <td>
