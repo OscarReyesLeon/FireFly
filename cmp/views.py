@@ -149,7 +149,7 @@ class ComprasView(SinPrivilegios, generic.ListView):
     model = ComprasEnc
     template_name = "cmp/compras_list.html"
     context_object_name = "obj"
-    permission_required="cmp.view_comprasenc"
+    permission_required="prf.view_universal"
     def get_queryset(self):
         qs = ComprasEnc.objects.order_by('-id')[:500]
         return qs

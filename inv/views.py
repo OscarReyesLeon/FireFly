@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from datetime import datetime
 
 from cmp.forms import ComprasEncForm
+from prf.models import *
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
     Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
     Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion
@@ -481,7 +482,6 @@ class PedidoViewOficinaCot(SinPrivilegios, generic.ListView):
     template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
     permission_required="prf.comprasoficinas"
-
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).exclude(autpor=2).order_by('-id')[:200]
         return qs
@@ -509,7 +509,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f4.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="prf.universal"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:200]
