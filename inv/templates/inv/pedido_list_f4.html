@@ -33,7 +33,6 @@
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-light" role="button"></i>Todo</a>
       {% if perms.prf.change_autorizador or perms.prf.change_comprador %}
       <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
@@ -42,9 +41,6 @@
       {% endif %}
       {% if perms.prf.view_autorizantemls %}
       <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
-      {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_export' %}" class="btn btn-outline-light" role="button"></i>Exportar</a>
       {% endif %}
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>

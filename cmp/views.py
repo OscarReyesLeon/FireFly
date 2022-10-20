@@ -151,7 +151,9 @@ class ComprasView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="prf.view_universal"
     def get_queryset(self):
-        qs = ComprasEnc.objects.order_by('-id')[:500]
+        user = self.request.user
+        qs = super().get_queryset()
+        qs = qs.filter(uc=user).filter(io=1).order_by('-id')[:500]
         return qs
 class ComprasViewO(SinPrivilegios, generic.ListView):
     model = ComprasEnc
@@ -159,15 +161,20 @@ class ComprasViewO(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="prf.view_comprasoficinas"
     def get_queryset(self):
-        qs = ComprasEnc.objects.filter(io=1).order_by('-id')[:500] | ComprasEnc.objects.exclude(io=1).exclude(autorizante="GLS").order_by('-id')[:500]
+        user = self.request.user
+        qs = super().get_queryset()
+        qs = qs.filter(io=1).filter(uc=user).order_by('-id')[:100] | ComprasEnc.objects.exclude(io=1).exclude(autorizante="GLS").order_by('-id')[:500]
         return qs
+
 class ComprasViewP(SinPrivilegios, generic.ListView):
     model = ComprasEnc
     template_name = "cmp/compras_list.html"
     context_object_name = "obj"
     permission_required="prf.view_comprasplanta"
     def get_queryset(self):
-        qs = ComprasEnc.objects.filter(io=1).order_by('-id')[:500] | ComprasEnc.objects.exclude(io=1).filter(autorizante="GLS").order_by('-id')[:500]
+        user = self.request.user
+        qs = super().get_queryset()
+        qs = qs.filter(io=1).filter(uc=user).order_by('-id')[:200] | ComprasEnc.objects.exclude(io=1).filter(autorizante="GLS").order_by('-id')[:200]
         return qs
 class ComprasViewA(SinPrivilegios, generic.ListView):
     model = ComprasEnc
@@ -192,6 +199,14 @@ class ComprasViewM(SinPrivilegios, generic.ListView):
     permission_required="prf.view_autorizantemls"
     def get_queryset(self):
         qs = ComprasEnc.objects.exclude(io=1).filter(autorizante="MLS").order_by('-id')[:500]
+        return qs
+class ComprasViewCXP(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_cxp"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.filter(io=3).order_by('-id')[:500] |  ComprasEnc.objects.filter(io=4).order_by('-id')[:500]
         return qs
 
 
@@ -744,13 +759,13 @@ def Provisionar(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listcxp")
     if request.method=='GET':
         if pede.io == 3:
             pede.io = 4
             pede.cxp = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listcxp")
         else:
             return HttpResponse("La orden no ha sido autorizada")
     if request.method=='POST':
@@ -758,7 +773,7 @@ def Provisionar(request, id):
             pede.io = 4
             pede.cxp = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listcxp")
         else:
             return HttpResponse("La orden no ha sido autorizada")
     return render(request,template_name,contexto)

@@ -5,6 +5,7 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
         UsoFacturaView,UsoFacturaNew, UsoFacturaEdit, \
     UsoFacturaInactivar, \
     ComprasView, ComprasViewO, ComprasViewP, ComprasViewA, ComprasViewG, ComprasViewM,\
+    ComprasViewCXP,\
     comprasOficina, comprasPlanta, CompraDetDelete, \
     EnviarAutALR, EnviarAutLedsaOfi, EnviarAutLedsaPlanta, \
     AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, Provisionar, \
@@ -27,6 +28,7 @@ urlpatterns = [
     path('ordencompra/',ComprasView.as_view(), name="compras_list"),
     path('ordencomprao/',ComprasViewO.as_view(), name="compras_listo"),
     path('ordencomprap/',ComprasViewP.as_view(), name="compras_listp"),
+    path('ordencompracxp/',ComprasViewCXP.as_view(), name="compras_listcxp"),
     
     path('ordencompraa/',ComprasViewA.as_view(), name="compras_lista"),
     path('ordencomprag/',ComprasViewG.as_view(), name="compras_listg"),
@@ -45,8 +47,6 @@ urlpatterns = [
     path('ordencompra/reciclarm/<int:id>',AutorizarOCReciclarM, name="reciclarocm"),
     path('ordencompra/reciclaro/<int:id>',AutorizarOCReciclarO, name="reciclaroco"),
     path('ordencompra/reciclarp/<int:id>',AutorizarOCReciclarP, name="reciclarocp"),
-
-    path('ordencompra/provisionar/<int:id>',Provisionar, name="provisionar"),
 
     path('ordencompra/provisionar/<int:id>',Provisionar, name="provisionar"),
 
