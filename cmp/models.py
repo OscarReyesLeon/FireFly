@@ -157,7 +157,7 @@ def detalle_compra_borrar(sender,instance, **kwargs):
     prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
         prod.status='X asignar OC'
-        prod.indentificador_estado='3'
+        prod.indentificador_estado='1'
         prod.save()
 
 @receiver(post_save, sender=ComprasDet)

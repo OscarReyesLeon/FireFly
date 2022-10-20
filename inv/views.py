@@ -9,7 +9,6 @@ from django.http import HttpResponse
 from datetime import datetime
 
 from cmp.forms import ComprasEncForm
-from prf.models import *
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
     Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
     Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion
@@ -481,7 +480,7 @@ class PedidoViewOficinaCot(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
-    permission_required="prf.comprasoficinas"
+    permission_required="prf.change_comprasoficinas"
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).exclude(autpor=2).order_by('-id')[:200]
         return qs
@@ -489,7 +488,7 @@ class PedidoViewPlantaCot(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f2.html"
     context_object_name = "obj"
-    permission_required="prf.comprasplanta"
+    permission_required="prf.change_comprasplanta"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=2).order_by('-id')[:200]
@@ -499,7 +498,7 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f3.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="inv.change_change_pedido"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:200]
@@ -509,7 +508,7 @@ class PedidoViewF4(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f4.html"
     context_object_name = "obj"
-    permission_required="prf.universal"
+    permission_required="prf.change_universal"
 
     def get_queryset(self):
         qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:200]

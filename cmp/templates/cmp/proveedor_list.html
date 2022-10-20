@@ -17,6 +17,17 @@
   </div>
   <!-- Card Body -->
   <div class="card-body">
+    <a href="{% url 'cmp:proveedor_new' %}" onclick="antidoble()" class="btn btn-warning" role="button"></i>Registrar Proveedor</a>
+    {% if perms.prf.change_comprasoficinas %}
+    <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nueva-OC</a>
+    <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+    {% endif %}
+    {% if perms.prf.change_comprasplanta %}
+    <a href="{% url 'cmp:compras_newp' %}" onclick="antidoble()" class="btn btn-outline-success" role="button"></i>Nueva-OC</a>
+    <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+    {% endif %}
+
+
     {% if not obj %}
     <div class="alert alert-info">No Proveedores</div>
     {% endif %}
@@ -39,7 +50,7 @@
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'cmp:proveedor_edit' item.id %}')"><i class="far fa-edit"></i></button>
-            <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:proveedor_inactivar' item.id %}')">
+            ---->>>XXX<button class="btn btn-outline-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:proveedor_inactivar' item.id %}')">
               <i class="far fa-thumbs-down"></i>
             </button>
           </td>

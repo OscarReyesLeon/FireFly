@@ -21,12 +21,21 @@
   <div class="card-body">
     <div class="buttons-toolbar">
       {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% endif %}
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_listp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% endif %}
+      {% if perms.prf.change_comprasoficinas %}
       <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
       <a href="{% url 'cmp:compras_newp' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Regresar</a>
+
+      <a href="{% url 'cmp:proveedor_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedores</a>
     </div>
 
   <div class="card-body">
@@ -123,6 +132,29 @@ $(document).ready(function() {
   $('.table').DataTable({
     "order": [[ 5, 'asc' ],[ 0, 'desc' ]],
     "lengthMenu": [ 100, 250, 500, 1000],
+    "rowCallback": function(row, data, index){
+        if(data[5]== 1){
+        $(row).find('td:eq(0)').css('color', 'purple');
+      	$(row).find('td:eq(1)').css('color', 'purple');
+      	$(row).find('td:eq(2)').css('color', 'purple');
+      	$(row).find('td:eq(3)').css('color', 'purple');
+        $(row).find('td:eq(5)').css('color', 'purple');
+        }
+        if(data[5]== 2){
+        $(row).find('td:eq(0)').css('color', 'black');
+        $(row).find('td:eq(1)').css('color', 'black');
+      	$(row).find('td:eq(2)').css('color', 'black');
+      	$(row).find('td:eq(3)').css('color', 'black');
+        $(row).find('td:eq(5)').css('color', 'black');
+        }
+        if(data[5]== 3){
+        $(row).find('td:eq(0)').css('color', 'green');
+      	$(row).find('td:eq(1)').css('color', 'green');
+      	$(row).find('td:eq(2)').css('color', 'green');
+      	$(row).find('td:eq(3)').css('color', 'green');
+        $(row).find('td:eq(5)').css('color', 'green');
+        }
+      },
     "language": {
       "sProcessing": "Procesando...",
       "sLengthMenu": "Mostrar _MENU_ registros",

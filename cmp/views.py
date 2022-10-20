@@ -35,7 +35,7 @@ class ProveedorView(SinPrivilegios, generic.ListView):
     model = Proveedor
     template_name = "cmp/proveedor_list.html"
     context_object_name = "obj"
-    permission_required="cmp.view_proveedor"
+    permission_required="prf.view_universal"
 
 class ProveedorNew(SuccessMessageMixin, SinPrivilegios,\
                    generic.CreateView):
@@ -45,7 +45,7 @@ class ProveedorNew(SuccessMessageMixin, SinPrivilegios,\
     form_class=ProveedorForm
     success_url= reverse_lazy("cmp:proveedor_list")
     success_message="Proveedor Nuevo"
-    permission_required="cmp.add_proveedor"
+    permission_required="prf.view_universal"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -60,7 +60,7 @@ class ProveedorEdit(SuccessMessageMixin, SinPrivilegios,\
     form_class=ProveedorForm
     success_url= reverse_lazy("cmp:proveedor_list")
     success_message="Proveedor Editado"
-    permission_required="cmp.change_proveedor"
+    permission_required="prf.view_universal"
 
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -152,6 +152,46 @@ class ComprasView(SinPrivilegios, generic.ListView):
     permission_required="prf.view_universal"
     def get_queryset(self):
         qs = ComprasEnc.objects.order_by('-id')[:500]
+        return qs
+class ComprasViewO(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_comprasoficinas"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.filter(io=1).order_by('-id')[:500] | ComprasEnc.objects.exclude(io=1).exclude(autorizante="GLS").order_by('-id')[:500]
+        return qs
+class ComprasViewP(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_comprasplanta"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.filter(io=1).order_by('-id')[:500] | ComprasEnc.objects.exclude(io=1).filter(autorizante="GLS").order_by('-id')[:500]
+        return qs
+class ComprasViewA(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_autorizanteals"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.exclude(io=1).filter(autorizante="ALS").order_by('-id')[:500]
+        return qs
+class ComprasViewG(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_autorizantegls"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.exclude(io=1).filter(autorizante="GLS").order_by('-id')[:500]
+        return qs
+class ComprasViewM(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_autorizantemls"
+    def get_queryset(self):
+        qs = ComprasEnc.objects.exclude(io=1).filter(autorizante="MLS").order_by('-id')[:500]
         return qs
 
 
@@ -390,13 +430,13 @@ def comprasPlanta(request,compra_id=None):
 
 
 class CompraDetDelete(SinPrivilegios, generic.DeleteView):
-    permission_required = "cmp.delete_comprasdet"
+    permission_required = "prf.delete_universal"
     model = ComprasDet
     template_name = "cmp/compras_det_del.html"
     context_object_name = 'obj'
     def get_success_url(self):
         compra_id=self.kwargs['compra_id']
-        return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
+        return reverse_lazy('cmp:compras_editp', kwargs={'compra_id': compra_id})
 
 @login_required(login_url="/login/")
 @permission_required("prf.change_comprasalr",login_url="/login/")

@@ -4,7 +4,8 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     proveedorInactivar, \
         UsoFacturaView,UsoFacturaNew, UsoFacturaEdit, \
     UsoFacturaInactivar, \
-    ComprasView, comprasOficina, comprasPlanta, CompraDetDelete, \
+    ComprasView, ComprasViewO, ComprasViewP, ComprasViewA, ComprasViewG, ComprasViewM,\
+    comprasOficina, comprasPlanta, CompraDetDelete, \
     EnviarAutALR, EnviarAutLedsaOfi, EnviarAutLedsaPlanta, \
     AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, AutorizarOCReciclar, Provisionar
 
@@ -23,6 +24,11 @@ urlpatterns = [
 
 
     path('ordencompra/',ComprasView.as_view(), name="compras_list"),
+    path('ordencomprao/',ComprasViewO.as_view(), name="compras_listo"),
+    path('ordencomprap/',ComprasViewP.as_view(), name="compras_listp"),
+    path('ordencompraa/',ComprasViewA.as_view(), name="compras_lista"),
+    path('ordencomprag/',ComprasViewG.as_view(), name="compras_listg"),
+    path('ordencompram/',ComprasViewM.as_view(), name="compras_listm"),
     
     path('ordencompra/cierreofi/<int:id>',EnviarAutLedsaOfi, name="EnviarAutLedsaOfi"),
     path('ordencompra/cierrealr/<int:id>',EnviarAutALR, name="EnviarAutALR"),

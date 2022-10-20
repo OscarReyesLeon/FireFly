@@ -28,7 +28,7 @@
                 </td>
                 <td>
                     <div class="card-header" align="right">
-                        <h4>Orden de compra ID: {{encabezado.id}}<br>UM ID: {{ encabezado.um }} | UM: {{ encabezado.fm|date:"d/m/Y"}} - {{encabezado.fm|date:"H:i:s"}}<br>Comprador: {{ encabezado.uc }} <br> {{ encabezado.autorizacion}}</h4>
+                        <h4>Orden de compra ID: {{encabezado.id}}<br>UM ID: {{ encabezado.um }} | UM: {{ encabezado.fm|date:"d/m/Y"}} - {{encabezado.fm|date:"H:i:s"}}<br>Comprador: {{ encabezado.uc }} <br> <u>{{ encabezado.autorizacion}}</u></h4>
                     </div>
                 </td>
             </tr>
@@ -198,7 +198,7 @@
                     <br>
                     <b>Última Verificación:</b> {{ today|date:"d/m/Y - H:i:s" }} <br><b>Verificador:</b> {{ encabezado.clienteuniqueid }}
                     <br><b>Dominio Validador:</b> firefly.ledsa.mx
-                    <br> {{ encabezado.autorizacion}}
+                    <br><br><b><u> {{ encabezado.autorizacion}}</u></b>
                 </td>
                 <td align="left" valign="top"><img src="https://chart.googleapis.com/chart?chs=132x132&cht=qr&chl=https://firefly.ledsa.mx/cmp/ordencompra/{{encabezado.clienteuniqueid}}/ocold"></td>
             </tr>
