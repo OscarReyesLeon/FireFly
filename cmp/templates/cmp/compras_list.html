@@ -68,36 +68,29 @@
             <a href="{% url 'cmp:EnviarAutPlanta' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-check"></i></a>
             {% endif %}
 
-            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasalr %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a> --- 
-            {% endif %}
-            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasoficinas %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
-            {% endif %}
-            {% if item.autorizacion == "OC: Autorización en Revisión" and perms.prf.change_comprasplanta %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
-            {% endif %}
-
-
             {% if perms.prf.change_autorizanteals and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "ALS" %}
             <a href="{% url 'cmp:autorizarocals' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
-            {% endif %}
-            {% if perms.prf.change_autorizanteals and item.autorizacion == "OC: Autorización en Revisión" %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            <a href="{% url 'cmp:reciclaroca' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
 
             {% if perms.prf.change_autorizantegls and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "GLS" %}
             <a href="{% url 'cmp:autorizarocgls' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
-            {% endif %}
-            {% if perms.prf.change_autorizantegls and item.autorizacion == "OC: Autorización en Revisión" %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            <a href="{% url 'cmp:reciclarocg' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
 
             {% if perms.prf.change_autorizantemls and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
             <a href="{% url 'cmp:autorizarocmls' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+            <a href="{% url 'cmp:reciclarocm' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
-            {% if perms.prf.change_autorizantemls and item.autorizacion == "OC: Autorización en Revisión" %}
-            <a href="{% url 'cmp:reciclaroc' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+
+            {% if perms.prf.change_comprasoficinas and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "ALS" %}
+            <a href="{% url 'cmp:reciclaroco' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+            {% if perms.prf.change_comprasoficinas and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
+            <a href="{% url 'cmp:reciclaroco' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-recycle"></i></a>
+            {% endif %}
+            {% if perms.prf.change_comprasplanta and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "GLS" %}
+            <a href="{% url 'cmp:reciclarocp' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-recycle"></i></a>
             {% endif %}
 
             {% if perms.prf.change_cxp and item.io == 3 %}

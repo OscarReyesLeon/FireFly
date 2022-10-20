@@ -445,7 +445,7 @@ def EnviarAutALR(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listo")
     if request.method=='GET':
         if pede.autorizacion=='OC: Editando - Incompleta':
             pede.autorizacion='OC: Autorización en Revisión'
@@ -453,7 +453,7 @@ def EnviarAutALR(request, id):
             pede.autorizante = "MLS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listo")
         else:
             return HttpResponse("La orden no puede ser enviada a autorizar")
     if request.method=='POST':
@@ -463,7 +463,7 @@ def EnviarAutALR(request, id):
             pede.autorizante = "MLS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listo")
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
@@ -473,7 +473,7 @@ def EnviarAutLedsaOfi(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listo")
     if request.method=='GET':
         if pede.autorizacion=='OC: Editando - Incompleta':
             pede.autorizacion='OC: Autorización en Revisión'
@@ -481,7 +481,7 @@ def EnviarAutLedsaOfi(request, id):
             pede.autorizante = "ALS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listo")
         else:
             return HttpResponse("La orden no puede ser enviada a autorizar")
     if request.method=='POST':
@@ -491,7 +491,7 @@ def EnviarAutLedsaOfi(request, id):
             pede.autorizante = "ALS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listo")
     return render(request,template_name,contexto)
 @login_required(login_url="/login/")
 @permission_required("prf.change_comprasplanta",login_url="/login/")
@@ -500,7 +500,7 @@ def EnviarAutLedsaPlanta(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listp")
     if request.method=='GET':
         if pede.autorizacion=='OC: Editando - Incompleta':
             pede.autorizacion='OC: Autorización en Revisión'
@@ -508,7 +508,7 @@ def EnviarAutLedsaPlanta(request, id):
             pede.autorizante = "GLS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listp")
         else:
             return HttpResponse("La orden no puede ser enviada a autorizar")
     if request.method=='POST':
@@ -518,7 +518,7 @@ def EnviarAutLedsaPlanta(request, id):
             pede.autorizante = "GLS"
             pede.compras = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listp")
     return render(request,template_name,contexto)
 @login_required(login_url="/login/")
 @permission_required("prf.change_autorizanteals",login_url="/login/")
@@ -527,14 +527,14 @@ def AutorizarOCALS(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_lista")
     if request.method=='GET':
         if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Autorizó ALS'
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_lista")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     if request.method=='POST':
@@ -543,7 +543,7 @@ def AutorizarOCALS(request, id):
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_lista")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     return render(request,template_name,contexto)
@@ -554,14 +554,14 @@ def AutorizarOCGLS(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listg")
     if request.method=='GET':
         if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Autorizó GLS'
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listg")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     if request.method=='POST':
@@ -570,7 +570,7 @@ def AutorizarOCGLS(request, id):
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listg")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     return render(request,template_name,contexto)
@@ -581,14 +581,14 @@ def AutorizarOCMLS(request, id):
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listm")
     if request.method=='GET':
         if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Autorizó MLS'
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listm")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     if request.method=='POST':
@@ -597,24 +597,25 @@ def AutorizarOCMLS(request, id):
             pede.io = 3
             pede.autorizado = True
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listm")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     return render(request,template_name,contexto)
 @login_required(login_url="/login/")
-def AutorizarOCReciclar(request, id):
+@permission_required("prf.change_autorizantegls",login_url="/login/")
+def AutorizarOCReciclarG(request, id):
     pede = ComprasEnc.objects.filter(pk=id).first()
     contexto={}
     template_name="cmp/orden_brinco.html"
     if not pede:
-        return redirect("cmp:compras_list")
+        return redirect("cmp:compras_listg")
     if request.method=='GET':
         if pede.autorizacion=='OC: Autorización en Revisión':
             pede.autorizacion='OC: Editando - Incompleta'
             pede.io = 1
             pede.compras = False
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listg")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     if request.method=='POST':
@@ -623,7 +624,116 @@ def AutorizarOCReciclar(request, id):
             pede.io = 1
             pede.compras = False
             pede.save()
-            return redirect("cmp:compras_list")
+            return redirect("cmp:compras_listg")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)
+@login_required(login_url="/login/")
+@permission_required("prf.change_autorizantemls",login_url="/login/")
+def AutorizarOCReciclarM(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_listm")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listm")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listm")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)
+@login_required(login_url="/login/")
+@permission_required("prf.change_comprasoficinas",login_url="/login/")
+def AutorizarOCReciclarO(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_listo")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listo")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listo")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)
+@login_required(login_url="/login/")
+@permission_required("prf.change_comprasplanta",login_url="/login/")
+def AutorizarOCReciclarP(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_listp")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listp")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_listp")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    return render(request,template_name,contexto)
+
+@login_required(login_url="/login/")
+@permission_required("prf.change_autorizanteals",login_url="/login/")
+def AutorizarOCReciclarA(request, id):
+    pede = ComprasEnc.objects.filter(pk=id).first()
+    contexto={}
+    template_name="cmp/orden_brinco.html"
+    if not pede:
+        return redirect("cmp:compras_lista")
+    if request.method=='GET':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_lista")
+        else:
+            return HttpResponse("La orden no puede ser autorizada")
+    if request.method=='POST':
+        if pede.autorizacion=='OC: Autorización en Revisión':
+            pede.autorizacion='OC: Editando - Incompleta'
+            pede.io = 1
+            pede.compras = False
+            pede.save()
+            return redirect("cmp:compras_lista")
         else:
             return HttpResponse("La orden no puede ser autorizada")
     return render(request,template_name,contexto)

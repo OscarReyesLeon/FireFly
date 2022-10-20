@@ -34,13 +34,13 @@
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CXP</a>
       {% endif %}
       {% if perms.prf.change_autorizanteals %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
+      <a href="{% url 'cmp:compras_lista' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
       {% if perms.prf.change_autorizantegls %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
+      <a href="{% url 'cmp:compras_listg' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.prf.change_autorizantemls %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
+      <a href="{% url 'cmp:compras_listm' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
       <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>

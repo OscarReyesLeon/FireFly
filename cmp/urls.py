@@ -7,7 +7,8 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     ComprasView, ComprasViewO, ComprasViewP, ComprasViewA, ComprasViewG, ComprasViewM,\
     comprasOficina, comprasPlanta, CompraDetDelete, \
     EnviarAutALR, EnviarAutLedsaOfi, EnviarAutLedsaPlanta, \
-    AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, AutorizarOCReciclar, Provisionar
+    AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, Provisionar, \
+    AutorizarOCReciclarA, AutorizarOCReciclarG, AutorizarOCReciclarM, AutorizarOCReciclarO, AutorizarOCReciclarP
 
 from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('ordencompra/',ComprasView.as_view(), name="compras_list"),
     path('ordencomprao/',ComprasViewO.as_view(), name="compras_listo"),
     path('ordencomprap/',ComprasViewP.as_view(), name="compras_listp"),
+    
     path('ordencompraa/',ComprasViewA.as_view(), name="compras_lista"),
     path('ordencomprag/',ComprasViewG.as_view(), name="compras_listg"),
     path('ordencompram/',ComprasViewM.as_view(), name="compras_listm"),
@@ -38,8 +40,16 @@ urlpatterns = [
     path('ordencompra/autorizarocgls/<int:id>',AutorizarOCGLS, name="autorizarocgls"),
     path('ordencompra/autorizarocmls/<int:id>',AutorizarOCMLS, name="autorizarocmls"),
 
-    path('ordencompra/reciclar/<int:id>',AutorizarOCReciclar, name="reciclaroc"),
+    path('ordencompra/reciclara/<int:id>',AutorizarOCReciclarA, name="reciclaroca"),
+    path('ordencompra/reciclarg/<int:id>',AutorizarOCReciclarG, name="reciclarocg"),
+    path('ordencompra/reciclarm/<int:id>',AutorizarOCReciclarM, name="reciclarocm"),
+    path('ordencompra/reciclaro/<int:id>',AutorizarOCReciclarO, name="reciclaroco"),
+    path('ordencompra/reciclarp/<int:id>',AutorizarOCReciclarP, name="reciclarocp"),
+
     path('ordencompra/provisionar/<int:id>',Provisionar, name="provisionar"),
+
+    path('ordencompra/provisionar/<int:id>',Provisionar, name="provisionar"),
+
 
     path('ordencompra/newo',comprasOficina, name="compras_newo"),
     path('ordencompra/newp',comprasPlanta, name="compras_newp"),
