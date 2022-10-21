@@ -100,10 +100,10 @@
             -> ${{ item.total|floatformat:"0" }}</td>
           <td>
             {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
-            <a class="btn btn-outline-warning btn-circle" href="{% url 'cmp:compras_edito' item.id %}"><i class="far fa-edit"></i></a>
+            <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edito' item.id %}"><i class="far fa-edit"></i></a>
             {% endif %}
             {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
-            <a class="btn btn-outline-warning btn-circle" href="{% url 'cmp:compras_editp' item.id %}"><i class="far fa-edit"></i></a>
+            <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_editp' item.id %}"><i class="far fa-edit"></i></a>
             {% endif %}
             <a class="btn btn-outline-success btn-circle" href="{% url 'cmp:compras_print_three' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
             <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_client' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>

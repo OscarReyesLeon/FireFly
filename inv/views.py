@@ -947,7 +947,7 @@ def pedido_scancela(request, id):
     if not pede:
         return redirect("inv:pedido_list_f2")
     if request.method=='GET':
-        if pede.status2=='Proximo' and pede.status=='X-Autorizar':
+        if pede.status=='Cotizando':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='sc'
             pede.status='S-Cancela'
@@ -957,7 +957,7 @@ def pedido_scancela(request, id):
         else:
             return HttpResponse("El pedido ya fue revisado por compras y no lo puedes cancelar desde aquí. comunicate con compras")
     if request.method=='POST':
-        if pede.status2=='Proximo' and pede.status=='X-Autorizar':
+        if pede.status=='Cotizando':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='SC'
             pede.status='S-Cancela'
@@ -969,32 +969,32 @@ def pedido_scancela(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("inv.view_autoriza",login_url="/login/")
+@permission_required("prf.change_universal",login_url="/login/")
 def pedido_acancela(request, id):
     pede = Pedido.objects.filter(pk=id).first()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
     if not pede:
-        return redirect("inv:pedido_list_f4")
+        return redirect("cmp:compras_list")
     if request.method=='GET':
-        if pede.status=='en Proveedor' and pede.status2=='Si':
+        if pede.indentificador_estado=='1':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='sc'
-            pede.status='Fin-Anormal'
+            pede.status='Rechazado'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list_f4")
+            return redirect("cmp:compras_list")
         else:
             return HttpResponse("El pedido no puede ser finalizado de forma anormal")
     if request.method=='POST':
-        if pede.status=='en Proveedor' and pede.status2=='Si':
+        if pede.indentificador_estado=='1':
             pede.fecha_rechazo = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status2='SC'
-            pede.status='Fin-Anormal'
+            pede.status='Rechazado'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list_f4")
+            return redirect("cmp:compras_list")
         else:
             return HttpResponse("El pedido no puede ser finalizado de forma anormal")
     return render(request,template_name,contexto)

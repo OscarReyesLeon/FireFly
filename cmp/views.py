@@ -153,7 +153,7 @@ class ComprasView(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(uc=user).filter(io=1).order_by('-id')[:500]
+        qs = qs.filter(uc=user).filter(io=1).order_by('-id')[:500] | qs.filter(uc=user).exclude(io=1).order_by('-id')[:50]
         return qs
 class ComprasViewO(SinPrivilegios, generic.ListView):
     model = ComprasEnc

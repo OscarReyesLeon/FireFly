@@ -90,8 +90,8 @@
           <td>{{item.status}}</td>
           <td>{{item.fc|date:"d/m/y H:i:s"}}</td>
           <td>
-            {%if item.status2 == 'Proximo' and item.status == 'X-Revisar' %}
-            <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-dark btn-circle" role="button"><i class="fa fa-times"></i></a>
+            {% if item.status == "Cotizando" %}
+            <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-trash"></i></a>
             {% endif %}
             {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
             <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fas fa-print"></i></i></a>
