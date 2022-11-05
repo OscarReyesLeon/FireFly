@@ -1,0 +1,73 @@
+
+
+<div class="card">
+  <div class="card-header">
+    <table class="">
+      <tr>
+          <td>
+              <div class="card-header" align="left">
+                  <img src="{{obj.empresaoc.urllogoempresa}}">
+              </div>
+          </td>
+          <td>
+              <div class="card-header" align="right">
+                  <h6>Orden de compra ID: {{obj.id}}<br>
+                    UM ID: {{ obj.um }} | UM: {{ obj.fm|date:"d/m/Y"}} - {{obj.fm|date:"H:i:s"}}<br>
+                    Comprador: {{ obj.uc }} <br> 
+                    <u>{{ obj.autorizacion}}</u></h6>
+              </div>
+          </td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <h6>Proveedor:  {{obj.proveedor.descripcion}}</h6>
+        <h6>RFC: {{obj.proveedor.rfcproveedor}}</h6>
+        <h6>Fecha de entrega: {{obj.fecha_compra}}</h6>
+      </div>
+      <div class="col-6">
+        <h6>Subtotal: $ {{ obj.sub_total|floatformat:"2" }} </h6>
+        <h6>Descuento: $ {{ obj.descuento|floatformat:"2" }} </h6>
+        <h6>Total: $ {{ obj.total|floatformat:"2" }} </h6>
+      </div>
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Pedido</th>
+                <th>Cantidad</th>
+                <th>Proceso</th>
+                <th>Articulo</th>
+                <th>IVA</th>
+                <th>Unitario</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in detalle %}
+                <tr>
+                  <td>{{item.pedido.id}}</td>
+                  <td>{{item.cantidad}} {{item.pedido.UniMed}}</td>
+                  <td>{{item.pedido.proceso}}</td>
+                  <td>{{item.pedido.motivo_peticion}}</td>
+                  <td>{{item.pedido.iva}}</td>
+                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
+                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
+                </tr>  
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% block js_modal %}
+
+{% endblock %}

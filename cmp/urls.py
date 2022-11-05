@@ -9,9 +9,10 @@ from .views import ProveedorView,ProveedorNew, ProveedorEdit, \
     comprasOficina, comprasPlanta, CompraDetDelete, \
     EnviarAutALR, EnviarAutLedsaOfi, EnviarAutLedsaPlanta, \
     AutorizarOCALS, AutorizarOCGLS, AutorizarOCMLS, Provisionar, \
-    AutorizarOCReciclarA, AutorizarOCReciclarG, AutorizarOCReciclarM, AutorizarOCReciclarO, AutorizarOCReciclarP
+    AutorizarOCReciclarA, AutorizarOCReciclarG, AutorizarOCReciclarM, AutorizarOCReciclarO, AutorizarOCReciclarP, \
+    importar_compras_excel
 
-from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3
+from .reportes import reporte_compras, imprimir_compra, imprimir_compra2, imprimir_compra3, reporte_compras_modal
 
 urlpatterns = [
     path('proveedores/',ProveedorView.as_view(), name="proveedor_list"),
@@ -61,5 +62,6 @@ urlpatterns = [
     path('ordencompra/<int:compra_id>/imprimir', imprimir_compra,name="compras_print_one"),
     path('ordencompra/<slug:clienteuniqueid>/oc', imprimir_compra2,name="compras_print_client"),
     path('ordencompra/<slug:clienteuniqueid>/ocold', imprimir_compra3,name="compras_print_three"),
-
+    path('ordencompra/modal', reporte_compras_modal,name="compras_print_modal"),
+    path('ordencompra/importar', importar_compras_excel,name="compras_importar"),
 ]
