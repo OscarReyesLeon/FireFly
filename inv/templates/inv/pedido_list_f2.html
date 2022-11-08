@@ -43,8 +43,11 @@
       <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
       <a href="#" class="btn btn-primary" role="button"></i>Cotizar</a>
-      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedor</a>
+      {% if perms.prf.change_almacenistaoficina %}
+      <a href="{% url 'inv:pedido_list_f4o' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
+      {% endif %}
+      {% if perms.prf.change_almacenistaplanta %}
+      <a href="{% url 'inv:pedido_list_f4p' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
       {% endif %}
       {% if perms.prf.change_almacenista %}
       <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
@@ -79,12 +82,12 @@
           <td>{{item.fc|date:"d/m/y"}}</td>
             <td>
             {% if perms.prf.change_comprasoficinas %}
-            <a href="{% url 'inv:acancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-times"></i></a>
             <a href="{% url 'inv:pedido_edito' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="fa fa-edit"></i></i></a>----
+            <a href="{% url 'inv:acancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-times"></i></a>
             {% endif %}
             {% if perms.prf.change_comprasplanta %}
+            <a href="{% url 'inv:pedido_editp' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="fa fa-edit"></i></i></a>----
             <a href="{% url 'inv:acancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-times"></i></a>
-            <a href="{% url 'inv:pedido_editp' item.id %}" onclick="antidoble()" class="btn btn-warning btn-circle" role="button"><i class="fa fa-edit"></i></i></a>
             {% endif %}
           </td>
           <td>{{item.proceso}}</td>
