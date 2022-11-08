@@ -504,14 +504,23 @@ class PedidoViewF3(SinPrivilegios, generic.ListView):
         qs = Pedido.objects.filter(indentificador_estado=3).order_by('-id')[:200]
         return qs
 
-class PedidoViewF4(SinPrivilegios, generic.ListView):
+class PedidoViewF4o(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_f4.html"
     context_object_name = "obj"
-    permission_required="prf.change_universal"
+    permission_required="prf.change_almacenistaoficina"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=4).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=4).exclude(autpor=2).order_by('-id')[:200]
+        return qs
+class PedidoViewF4p(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_f4.html"
+    context_object_name = "obj"
+    permission_required="prf.change_almacenistaplanta"
+
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=4).filter(autpor=2).order_by('-id')[:200]
         return qs
 
 class PedidoViewF5(SinPrivilegios, generic.ListView):
@@ -861,44 +870,58 @@ def pedido_comprando(request, id):
     return render(request,template_name,contexto)
 
 @login_required(login_url="/login/")
-@permission_required("prf.change_comprador",login_url="/login/")
-def pedido_entregado(request, id):
+@permission_required("prf.change_almacenistaoficina" or "prf.change_almacenistaplanta",login_url="/login/")
+def pedido_entregadoo(request, id):
     pede = Pedido.objects.filter(pk=id).first()
-    precios = Artciulosestandarizados.objects.filter(pk=pede.idestandarizado)
-    precios = precios.get()
     contexto={}
     template_name="inv/pedidos_brinco.html"
 
     if not pede:
-        return redirect("inv:pedido_list_f4")
+        return redirect("inv:pedido_list_f4o")
     
     if request.method=='GET':
-        if pede.status=='en Proveedor' and pede.status2=='Si':
+        if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
             pede.indentificador_estado='5'
-            precios.precio4 = precios.precio3
-            precios.precio3 = precios.precio2
-            precios.precio2 = precios.preciosugerido
-            precios.preciosugerido = pede.precio_uni
-            precios.fecha4 = precios.fecha3
-            precios.fecha3 = precios.fecha2
-            precios.fecha2 = precios.fechapreciosugerido
-            precios.fechapreciosugerido = datetime.now()
-            precios.save()
-
             pede.save()
-            return redirect("inv:pedido_list_f4")
+            return redirect("inv:pedido_list_f4o")
+        else:
+            return HttpResponse("el pedido aun no está en atención o ya está terminado")
+    if request.method=='POST':
+        if pede.indentificador_estado=='4':
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f4o")
+        else:
+            return HttpResponse("el pedido aun no está en atención o ya está terminado")
+def pedido_entregadop(request, id):
+    pede = Pedido.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/pedidos_brinco.html"
+
+    if not pede:
+        return redirect("inv:pedido_list_f4p")
+    
+    if request.method=='GET':
+        if pede.indentificador_estado=='4':
+            pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
+            pede.status='Fin'
+            pede.indentificador_estado='5'
+            pede.save()
+            return redirect("inv:pedido_list_f4p")
         else:
             return HttpResponse("el pedido aun no está en atención o ya está terminado")
     
     if request.method=='POST':
-        if pede.status=='en Proveedor' and pede.status2=='Si':
+        if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
             pede.status='Fin'
             pede.indentificador_estado='5'
             pede.save()
-            return redirect("inv:pedido_list_f4")
+            return redirect("inv:pedido_list_f4p")
         else:
             return HttpResponse("el pedido aun no está en atención o ya está terminado")
     return render(request,template_name,contexto)

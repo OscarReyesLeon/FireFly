@@ -8,10 +8,10 @@ from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     BancoDel, PedidoViewPlantaCot, PedidoViewOficinaCot, \
     ProcesoView, ProcesoNew, ProcesoEdit, ProcesoDel, \
     CategoriaView, CategoriaNew, CategoriaEdit, categoria_inactivar, \
-    UMView, UMNew, UMEdit, pedido_entregado, um_inactivar,\
+    UMView, UMNew, UMEdit, pedido_entregadoo, pedido_entregadop, um_inactivar,\
     ProductoView, ProductoEdit, ProductoNew, producto_inactivar, PedidoNew, \
     PedidoView, PedidoViewH, PedidoViewF, PedidoViewALS, PedidoViewGLSH, PedidoViewGLS, \
-    PedidoViewMLS, PedidoViewF3, PedidoViewF4, PedidoViewF5, PedidoEditO, PedidoEditP, \
+    PedidoViewMLS, PedidoViewF3, PedidoViewF4o, PedidoViewF4p, PedidoViewF5, PedidoEditO, PedidoEditP, \
     pedido_acancela, pedido_scancela, pedido_aprobado_als, pedido_rechazado_als, pedido_aprobado_gls, \
     pedido_rechazado_gls, pedido_aprobado_mls, pedido_rechazado_mls, pedido_comprando, \
     pedido_reaut, pedido_stock, pedido_express, pedido_oc,\
@@ -62,7 +62,8 @@ urlpatterns = [
     path('pedidosCotOficina/',PedidoViewOficinaCot.as_view(), name="cotiza_oficina"),
     path('pedidosCotPlanta/',PedidoViewPlantaCot.as_view(), name="cotiza_planta"),
     path('pedidosf3/',PedidoViewF3.as_view(), name="pedido_list_f3"),
-    path('pedidosf4/',PedidoViewF4.as_view(), name="pedido_list_f4"),
+    path('pedidosf4o/',PedidoViewF4o.as_view(), name="pedido_list_f4o"),
+    path('pedidosf4p/',PedidoViewF4p.as_view(), name="pedido_list_f4p"),
     path('pedidosf5/',PedidoViewF5.as_view(), name="pedido_list_f5"),
     path('pedidosf6/',PedidoViewF6.as_view(), name="pedido_list_f6"),
     path('pedidos/new',PedidoNew.as_view(), name="pedido_new"),
@@ -78,7 +79,8 @@ urlpatterns = [
     path('pedidos/aprobadomls/<int:id>',pedido_aprobado_mls, name="pedido_aprobado_mls"),
     path('pedidos/rechazadomls/<int:id>',pedido_rechazado_mls, name="pedido_rechazado_mls"),
     path('pedidos/comprando/<int:id>',pedido_comprando, name="pedido_comprando"),
-    path('pedidos/entregado/<int:id>',pedido_entregado, name="pedido_entregado"),
+    path('pedidos/entregadoo/<int:id>',pedido_entregadoo, name="pedido_entregadoo"),
+    path('pedidos/entregadop/<int:id>',pedido_entregadop, name="pedido_entregadop"),
     path('pedidos/reaut/<int:id>',pedido_reaut, name="pedido_reaut"),
     path('pedidos/stock/<int:id>',pedido_stock, name="pedido_stock"),
     path('pedidos/enviado/<int:id>',pedido_enviado, name="pedido_enviado"),
