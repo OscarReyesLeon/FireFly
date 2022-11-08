@@ -43,36 +43,31 @@
     {% if not obj %}
     <div class="alert alert-info">No hay Ordenes de Compras</div>
     {% endif %}
-      <div class="row">
-        <div class="col-12">
-          <div class="table-responsive">
-            <table id="tabla_principal" class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
-              <thead>
-                <th>Id</th>
-                <th>Razon Social</th>
-                <th>Y-M-D H:M.s</th>
-                <th>Total</th>
-                <th class="all">Acciones</th>
-                <th>IO</th>
-              </thead>
-              <tbody>
-                {% for item in obj%}
-                <tr>
-                  <td>
-                    <a data_id="{{item.id}}" class="btn btn-outline-info btn-sm search_details">{{item.id}}</a>
-                  </td>
-                  <td>{{ item.proveedor }}</td>
-                  <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
-                  <td>
-                    {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasalr %}
-                    <a href="{% url 'cmp:EnviarAutALR' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-truck"></i></a> --- 
-                    {% endif %}
-                    {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
-                    <a href="{% url 'cmp:EnviarAutLedsaOfi' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-laptop"></i></a>
-                    {% endif %}
-                    {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
-                    <a href="{% url 'cmp:EnviarAutPlanta' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-check"></i></a>
-                    {% endif %}
+    <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
+      <thead>
+        <th>Id</th>
+        <th>Razon Social</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th class="all">Acciones</th>
+        <th>IO</th>
+      </thead>
+      <tbody>
+        {% for item in obj%}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.proveedor }}</td>
+          <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
+          <td>
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasalr %}
+            <a href="{% url 'cmp:EnviarAutALR' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-truck"></i></a> --- 
+            {% endif %}
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
+            <a href="{% url 'cmp:EnviarAutLedsaOfi' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-laptop"></i></a>
+            {% endif %}
+            {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
+            <a href="{% url 'cmp:EnviarAutPlanta' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-check"></i></a>
+            {% endif %}
 
                     {% if perms.prf.change_autorizanteals and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "ALS" %}
                     <a href="{% url 'cmp:autorizarocals' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
