@@ -777,22 +777,3 @@ def Provisionar(request, id):
         else:
             return HttpResponse("La orden no ha sido autorizada")
     return render(request,template_name,contexto)
-
-import pandas as pd
-def importar_compras_excel(request):
-    if request.method == 'POST':
-        file = request.FILES.get('excel')
-        if file:
-            read = pd.read_excel(file)
-            for i in range(len(read)):
-                current = read.iloc[i]
-                dict_data = {
-                    'cantidad': current.iloc[0],
-                    'articulo': current.iloc[1],
-                    'unidad': current.iloc[2],
-                    'comentario': current.iloc[3],
-                    'id': current.iloc[4],
-                    'precio': current.iloc[5],
-                }
-                print(dict_data)
-    return render(request, 'cmp/importar_compras_excel.html',{})

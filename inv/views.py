@@ -11,7 +11,7 @@ from datetime import datetime
 from cmp.forms import ComprasEncForm
 from .models import Autoriza, Equipo, Pedido,Proceso, Categoria, UnidadMedida, \
     Producto, Pedido, Banco, Puesto, Empleado, Computadora, Herramienta, Empresa, \
-    Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion
+    Genero, Estudios, Ecivil, Departamento, Puesto, Parentescocontacto, Artciulosestandarizados, Nombresrelacion, normalize
 from .forms import EquipoForm, ProcesoForm, CategoriaForm, PedidoSecondForm, \
     UMForm, ProductoForm, PedidoForm, AutorizaForm, BancoForm, \
     EmpleadoForm, ComputadoraForm, HerramientaForm, \
@@ -1767,3 +1767,46 @@ def ingresoalmacen(request, oc=None):
 
     return render(request, template_name, contexto)
 
+import pandas as pd
+from django.db import transaction
+def importar_compras_excel(request):
+    if request.method == 'POST':
+        file = request.FILES.get('excel')
+        array_pedidos = []
+        if file:
+            read = pd.read_excel(file)
+            articuloQ =  Artciulosestandarizados.objects.all()
+            with transaction.atomic():
+                for i in range(len(read)):
+                    fila_actual = read.iloc[i]
+                    pedido_actual = Pedido()
+                    pedido_actual.cantidad = fila_actual.iloc[0]
+                    pedido_actual.articulo = fila_actual.iloc[1].upper()
+                    pedido_actual.UniMed_id = fila_actual.iloc[2]
+                    pedido_actual.comentario = fila_actual.iloc[3]
+                    pedido_actual.autpor_id = fila_actual.iloc[4]
+                    pedido_actual.precio_uni = fila_actual.iloc[5]
+                    pedido_actual.proceso = fila_actual.iloc[6].upper()
+                    pedido_actual.status2 = ""
+                    pedido_actual.uc_id = request.user.id
+
+                    #Si lo que quieres hacer es un guardado másivo, puedes hacerlo con un array y luego hacer un bulk_create,
+                    #pero esto no entrará al save, asi que tendrás que hacer la lógica del save aquí mismo
+                    # # pedido_actual.proceso = pedido_actual.proceso.replace("'","")
+                    # # pedido_actual.preciotransaccion =  float(float(pedido_actual.cantidad)) * float(pedido_actual.precio_uni)
+                    # print(request.user.id, fila_actual.iloc[2] )
+                    # # articulo_actual = articuloQ.filter(descripcion=pedido_actual.articulo).first()
+                    # # if articulo_actual:
+                    # #     pedido_actual.estandarizadoprodu = articulo_actual
+                    # #     pedido_actual.motivo_peticion = articulo_actual.descripcion
+                    # #     pedido_actual.articulo = articulo_actual.descripcion
+                    # # elif pedido_actual.articulo != 'NA' and pedido_actual.motivo_peticion == 'NA':
+                    # #     pedido_actual.articulo = pedido_actual.articulo.upper()
+                    # #     pedido_actual.articulo = pedido_actual.articulo.replace("'", "")
+                    # #     pedido_actual.articulo = normalize(pedido_actual.articulo)
+                    # #     pedido_actual.motivo_peticion = pedido_actual.articulo
+                    # # array_pedidos.append(pedido_actual)
+                    
+                    pedido_actual.save()
+            # Pedido.objects.bulk_create(array_pedidos)
+    return render(request, 'inv/importar_excel.html',{})
