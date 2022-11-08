@@ -6,7 +6,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
 from django.contrib.humanize.templatetags.humanize import intcomma
-
+from django.template.loader import render_to_string
 from .models import ComprasEnc, ComprasDet
 
 from django.contrib.auth.decorators import login_required, permission_required
@@ -64,6 +64,20 @@ def reporte_compras(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+def reporte_compras_modal(request):
+    template_path = "cmp/details.html"
+    id = request.GET.get('id')
+    compra = ComprasEnc.objects.get(id=id)
+    details = ComprasDet.objects.filter(compra__id=id)
+    #render template 
+    context = {
+        'obj': compra,
+        'detalle': details,
+        }
+    html = render_to_string(template_name=template_path, context=context)
+    return HttpResponse(html)
+    
 @login_required(login_url="/login/")
 @permission_required("cmp.view_comprasenc",login_url="/login/")
 def imprimir_compra(request, compra_id):

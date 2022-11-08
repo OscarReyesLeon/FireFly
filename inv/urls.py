@@ -22,7 +22,7 @@ from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     EcivilView, EcivilNew, EcivilEdit, DepartamentoNew, DepartamentoView, DepartamentoEdit, PedidoSecondNew, \
     ParentescocontactoView, ParentescocontactoNew, ParentescocontactoEdit, PedidoExport, \
     pedido_enviado, ArtciulosestandarizadosNew, ArtciulosestandarizadosEdit, \
-    ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView
+    ArtciulosestandarizadosView, NombresrelacionNew, NombresrelacionEdit, NombresrelacionView, importar_compras_excel
 
 urlpatterns = [
     path('equipos/',EquipoView.as_view(), name='equipo_list'),
@@ -55,6 +55,7 @@ urlpatterns = [
     path('productos/edit/<int:pk>',ProductoEdit.as_view(), name="producto_edit"),
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
+    path('pedidos/importar', importar_compras_excel,name="pedidos_importar"),
     path('pedidostodos/',PedidoView.as_view(), name="pedido_list"),
     path('pedidosexport/',PedidoExport.as_view(), name="pedido_export"),
     path('pedidos/',PedidoViewF.as_view(), name="pedido_list_f"),

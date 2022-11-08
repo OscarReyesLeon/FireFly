@@ -27,18 +27,18 @@ class Artciulosestandarizados (ClaseModelo):
     precio4 = models.FloatField(default=0)
     def __str__(self):
         return '{}'.format(self.descripcion)
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Artciulosestandarizados, self).save()
+        super().save(*args, **kwargs)
 
 class Nombresrelacion (ClaseModelo):
     descripcion = models.CharField(max_length=50, blank=False, null=False, unique=True)
     relacion = models.ForeignKey(Artciulosestandarizados, on_delete=models.PROTECT)
     def __str__(self):
         return '{}'.format(self.descripcion)
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Nombresrelacion, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Equipos"
@@ -52,9 +52,9 @@ class Equipo(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Equipo, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Equipos"
@@ -70,9 +70,9 @@ class Proceso(ClaseModelo):
     def __str__(self):
         return '{}:{}'.format(self.equipo.descripcion, self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Proceso, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Procesos"
@@ -89,9 +89,9 @@ class Autoriza(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Autoriza, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Autorizantes"
@@ -107,9 +107,9 @@ class Categoria(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Categoria, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Categoria"
@@ -125,9 +125,9 @@ class UnidadMedida(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(UnidadMedida, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Unidades de Medida"
@@ -151,9 +151,9 @@ class Producto(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Producto, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Productos"
@@ -274,7 +274,7 @@ class Pedido(ClaseModelo):
         return preciotransaccioniva
     # Apunte consulta
     # cotizar = Pedido.objects.filter(indentificador_estado=2).order_by('-id')[:999].count()
-    def save(self):
+    def save(self, *args, **kwargs):
         self.preciotransaccion = float(float(self.cantidad)) * float(self.precio_uni)
         self.proceso = self.proceso.upper()
         self.proceso = self.proceso.replace("'","")
@@ -289,7 +289,7 @@ class Pedido(ClaseModelo):
             self.articulo = self.articulo.replace("'", "")
             self.articulo = normalize(self.articulo)
             self.motivo_peticion = self.articulo
-        super(Pedido, self).save()
+        super().save(*args, **kwargs)
 
 """       if self.estandarizadoprodu is None:
             self.motivo_peticion = chr(abuscar)
@@ -322,9 +322,9 @@ class Banco(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Banco, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Bancos"
@@ -345,11 +345,11 @@ class Empresa(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
         self.rfcempresa = self.rfcempresa.upper()
         self.razonsocial = self.razonsocial.upper()
-        super(Empresa, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Empresas"
@@ -364,9 +364,9 @@ class Genero(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Genero, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Genero"
@@ -381,9 +381,9 @@ class Estudios(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Estudios, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Estudios"
@@ -398,9 +398,9 @@ class Ecivil(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Ecivil, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Estadocivil"
@@ -415,9 +415,9 @@ class Parentescocontacto(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Parentescocontacto, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Parentescocontactos"
@@ -432,9 +432,9 @@ class Departamento(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Departamento, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Departamentos"
@@ -449,9 +449,9 @@ class Puesto(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Puesto, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Puestos"
@@ -476,11 +476,11 @@ class Empleado(ClaseModelo):
     puesto = models.ForeignKey(Puesto, on_delete=models.PROTECT)
 
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.nombre = self.nombre.upper()
         self.apellido_paterno = self.nombre.upper()
         self.apellido_materno = self.nombre.upper()
-        super(Empleado, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Empleados"
@@ -501,12 +501,12 @@ class Computadora(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion, self.macEth, self.macWifi, self.serie)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
         self.macEth = self.macEth.upper()
         self.macWifi = self.macWifi.upper()
         self.serie = self.serie.upper()
-        super(Computadora, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Computadoras"
@@ -524,25 +524,25 @@ class Herramienta(ClaseModelo):
     def __str__(self):
         return '{}'.format(self.descripcion, self.macEth, self.macWifi, self.serie)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
         self.serie = self.serie.upper()
-        super(Herramienta, self).save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Herramientas"
 
 class Almacen(ClaseModelo):
     descripcion = models.CharField(max_length=10)
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Almacen, self).save()
+        super().save(*args, **kwargs)
 
 class Tipomovimiento(ClaseModelo):
     descripcion = models.CharField(max_length=10)
-    def save(self):
+    def save(self, *args, **kwargs):
         self.descripcion = self.descripcion.upper()
-        super(Tipomovimiento, self).save()
+        super().save(*args, **kwargs)
 
 class Existencias(ClaseModelo):
     pedidoorigen = models.ForeignKey(Pedido, on_delete=models.PROTECT)
