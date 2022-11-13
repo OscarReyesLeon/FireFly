@@ -124,7 +124,7 @@ def imprimir_compra2(request, clienteuniqueid):
         compra_id = ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).get()
         compra_id = compra_id.id
     else:
-        return redirect("inv:pedido_list_f4")
+        return redirect("inv:pedido_list_f4p")
     
     enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:
@@ -164,7 +164,7 @@ def imprimir_compra3(request, clienteuniqueid):
         compra_id = ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).get()
         compra_id = compra_id.id
     else:
-        return redirect("inv:pedido_list_f4")
+        return redirect("inv:pedido_list_f4p")
     
     enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:
