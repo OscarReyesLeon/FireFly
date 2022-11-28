@@ -55,9 +55,7 @@
       <tbody>
         {% for item in obj%}
         <tr>
-          <td> 
-            <a data_id="{{item.id}}" class="btn btn-outline-info btn-sm search_details">{{item.id}}</a>
-          </td>
+          <td><a data_id="{{item.id}}" class="btn btn-outline-info btn-sm search_details">{{item.id}}</a></td>
           <td>{{ item.proveedor }}</td>
           <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
           <td>
@@ -135,7 +133,7 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   
-  $('#tabla_principal').DataTable({
+  $('.table').DataTable({
     "order": [[ 5, 'asc' ],[ 0, 'desc' ]],
     "lengthMenu": [ 100, 250, 500, 1000],
     "rowCallback": function(row, data, index){
