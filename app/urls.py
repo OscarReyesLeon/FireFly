@@ -28,7 +28,7 @@ urlpatterns = [
     path('bita/', include(('bita.urls', 'bita'), namespace='bita')),
     path('logi/', include(('logi.urls', 'logi'), namespace='logi')),
     path('api/', include(('api.urls', 'api'), namespace='api')),
-
+    path('external/', include(('external.urls', 'external'), namespace='external')),
     
     path('admin/', admin.site.urls),
 ]
