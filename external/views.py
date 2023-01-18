@@ -36,7 +36,7 @@ def get_values(request):
     elif promedio == 'Diario':
         values = ['fecha__day', 'fecha__month', 'fecha__year']
     if promedio == 'Hora':
-        values = ['fecha__day', 'fecha__month', 'fecha__year', 'fecha__hour']
+        values = ['fecha__year', 'fecha__month', 'fecha__day', 'fecha__hour']
     values.append('maquina')
     return dict_filter, values, promedio
 
@@ -45,7 +45,9 @@ def report_sensor(request):
         dict_filter, values, promedio = get_values(request)
         lectura = LecturaModel.objects.filter(**dict_filter).using('sensor')
         machines = lectura.values('maquina', 'maquina__nombre').distinct()
-        lectura = lectura.values(*values).annotate(valor=Avg('valor')).order_by(*values).distinct()
+        lectura = lectura.values(*values).annotate(valor=Avg('valor')).order_by(
+            *["-{}".format(v) for v in values]
+        ).distinct()
         lectura_values = pd.DataFrame(list(lectura))
         values_by_machine = values[:-1]
         #Columna valor a dos decimales
@@ -64,8 +66,10 @@ def report_sensor(request):
             lectura_values['Fecha'] = lectura_values['fecha__day'].astype(str) + '-' + lectura_values['fecha__month'].astype(str) + '-' + lectura_values['fecha__year'].astype(str)
         
         orden_filas = ['Fecha']
+        ordenar_por = ["Fecha"]
         if "fecha__hour" in lectura_values.columns:
             orden_filas.append("Hora")
+            ordenar_por.append("Hora")
 
         sobreescribir_nombre_columnas = {
             "fecha__hour": "Hora"
@@ -81,8 +85,9 @@ def report_sensor(request):
         lectura_values.rename(columns = sobreescribir_nombre_columnas, inplace = True)
 
         lectura_values = lectura_values[orden_filas]
+        lectura_values.sort_values(by=ordenar_por, inplace=True, ascending=False)
         export_report = request.POST.get('export_report', 'false')
-        if export_report == 'true':
+        if export_report in ['1','true']:
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=category.csv'
             lectura_values.to_csv(path_or_buf=response)
