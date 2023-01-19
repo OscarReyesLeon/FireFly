@@ -13,7 +13,7 @@ def get_values(request):
     fecha_final = request.POST.get('fecha_final', timezone.now().strftime('%Y-%m-%d'))
     fecha_inicial = timezone.datetime.strptime(fecha_inicial, '%Y-%m-%d')
     fecha_final = timezone.datetime.strptime(fecha_final, '%Y-%m-%d')
-
+    fecha_final = fecha_final.replace(hour=23, minute=59, second=59)
     maquina = request.POST.getlist('maquina[]', "")
     dict_filter = {
         'fecha__range': [fecha_inicial, fecha_final],
