@@ -22,12 +22,21 @@ def get_values(request):
 
     if maquina:
         dict_filter.update({'maquina__in': maquina,})
-    hora_inicial = request.POST.get('hora_inicial', '00:00').split(':')
-    hora_final = request.POST.get('hora_final', '23:59').split(':')
-    dict_filter.update({
-        'fecha__hour__range': [hora_inicial[0], hora_final[0]],
-        'fecha__minute__range': [hora_inicial[1], hora_final[1]],
-    })
+    turno = request.POST.get('turno', '')
+    dict_exclude = {}
+    if turno:
+        if turno == '1':
+            hora_inicial, hora_final = 6, 12
+        elif turno == '2':
+            hora_inicial, hora_final = 13, 21
+        if turno == '3':
+            dict_exclude.update({
+                'fecha__hour__range': [6, 21],
+            })
+        else:
+            dict_filter.update({
+                'fecha__hour__range': [hora_inicial, hora_final],
+            })
     promedio = request.POST.get('promedio', 'Hora')
     if promedio == 'Anual':
         values = [ 'fecha__year']         
@@ -40,12 +49,14 @@ def get_values(request):
     if promedio == 'Hora':
         values = ['fecha__day', 'fecha__month', 'fecha__year', 'fecha__hour']
     values.append('maquina')
-    return dict_filter, values, promedio
+    return dict_filter, dict_exclude, values, promedio
 
 def report_sensor(request):
     if request.method == 'POST':
-        dict_filter, values, promedio = get_values(request)
+        dict_filter, dict_exclude, values, promedio = get_values(request)
         lectura = LecturaModel.objects.filter(**dict_filter).using('sensor')
+        if dict_exclude:
+            lectura = lectura.exclude(**dict_exclude)
         machines = lectura.values('maquina', 'maquina__nombre').distinct()
         lectura = lectura.values(*values).annotate(valor=Avg('valor')).order_by(*values).distinct()
         if not lectura:
@@ -53,10 +64,10 @@ def report_sensor(request):
         lectura_values = pd.DataFrame(list(lectura))
         values_by_machine = values[:-1]
         #Columna valor a dos decimales
-        lectura_values['valor'] = lectura_values['valor'].round(2)
+        lectura_values['valor'] = lectura_values['valor'].round(4)
         lectura_values = lectura_values.pivot(index=values_by_machine, 
             columns='maquina', values='valor').reset_index()
-        lectura_values.replace(np.nan, 0, inplace=True)
+        lectura_values.replace(np.nan, 0, inplace=True) 
 
         if promedio == 'Anual':
             lectura_values['Fecha'] = lectura_values['fecha__year'].astype(str)
