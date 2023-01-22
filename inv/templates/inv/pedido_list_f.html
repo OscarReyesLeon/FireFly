@@ -39,6 +39,9 @@
       {% if perms.prf.change_autorizantegls %}
       <a href="{% url 'cmp:compras_listg' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
+      {% if perms.prf.change_autorizantegls %}
+      <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Sundara</a>
+      {% endif %}
       {% if perms.prf.change_autorizantemls %}
       <a href="{% url 'cmp:compras_listm' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}

@@ -14,7 +14,6 @@ def get_values(request):
     fecha_inicial = timezone.datetime.strptime(fecha_inicial, '%Y-%m-%d')
     fecha_final = timezone.datetime.strptime(fecha_final, '%Y-%m-%d')
     fecha_final = fecha_final.replace(hour=23, minute=59, second=59)
-
     maquina = request.POST.getlist('maquina[]', "")
     dict_filter = {
         'fecha__range': [fecha_inicial, fecha_final],
@@ -28,7 +27,7 @@ def get_values(request):
         if turno == '1':
             hora_inicial, hora_final = 6, 12
         elif turno == '2':
-            hora_inicial, hora_final = 13, 21
+            hora_inicial, hora_final = 13, 20
         if turno == '3':
             dict_exclude.update({
                 'fecha__hour__range': [6, 21],
@@ -100,7 +99,7 @@ def report_sensor(request):
         lectura_values = lectura_values[orden_filas]
         lectura_values.sort_values(by=ordenar_por, inplace=True, ascending=False)
         export_report = request.POST.get('export_report', 'false')
-        if export_report == 'true':
+        if export_report in ['1','true']:
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=category.csv'
             lectura_values.to_csv(path_or_buf=response)

@@ -38,4 +38,3 @@ class ReportSensorForm(forms.Form):
     # hora_final = forms.TimeField(
     #     widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'value': '23:59', 'min': '00:00', 'max': '23:59', 'step': '1'})
     # )
-    
