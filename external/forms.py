@@ -10,7 +10,7 @@ class ReportSensorForm(forms.Form):
             ('Mensual', 'Mensual'),
             ('Anual', 'Anual'),
         ],
-        initial='Anual',
+        initial='Hora',
         widget=forms.Select(attrs={'class': 'form-control'}),
         label='Agrupar por'
     )
@@ -18,15 +18,23 @@ class ReportSensorForm(forms.Form):
         queryset=MaquinaModel.objects.all().using('sensor').order_by('nombre'),
         widget=forms.SelectMultiple(attrs={'class': 'form-control select2'})
     )
+    turno = forms.ChoiceField(
+        choices=[
+            ('', 'Todos'),
+            ('1', 'Turno Matutino'),
+            ('2', 'Turno Vespertino'),
+            ('3', 'Turno Nocturno'),
+        ], widget=forms.Select(attrs={'class': 'form-control select2'})
+    )
     fecha_inicial = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'value': timezone.now().strftime('%Y-%m-%d') })
     )
-    hora_inicial = forms.TimeField(
-        widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'value': '00:00', 'min': '00:00', 'max': '23:59', 'step': '1'})
-    )
+    # hora_inicial = forms.TimeField(
+    #     widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'value': '00:00', 'min': '00:00', 'max': '23:59', 'step': '1'})
+    # )
     fecha_final = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'value': timezone.now().strftime('%Y-%m-%d')})
     )
-    hora_final = forms.TimeField(
-        widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'value': '23:59', 'min': '00:00', 'max': '23:59', 'step': '1'})
-    )
+    # hora_final = forms.TimeField(
+    #     widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control', 'value': '23:59', 'min': '00:00', 'max': '23:59', 'step': '1'})
+    # )

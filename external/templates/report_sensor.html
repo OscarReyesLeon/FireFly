@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="row">
             {% for field in form %}
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                         {{ field }}
@@ -25,6 +25,8 @@
                     </div>
                 </div>
             {% endfor %}   
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <a class="btn btn-primary mr-5 pr-3" id="btn_generar">Generar reporte</a>
                 <a class="btn btn-primary" id="btn_export">Exportar reporte</a>
@@ -68,12 +70,11 @@
         function generate_report(export_report=0){
             fecha_inicial = $("#id_fecha_inicial").val();
             fecha_final = $("#id_fecha_final").val();
-            hora_inicial = $("#id_hora_inicial").val();
-            hora_final = $("#id_hora_final").val();
             promedio = $("#id_promedio").val();
             maquina = $("#id_maquina").val();
+            turno = $("#id_turno").val();
             
-            if(fecha_inicial == "" || fecha_final == "" || hora_inicial == "" || hora_final == "" || promedio == ""){
+            if(fecha_inicial == "" || fecha_final == "" || promedio == ""){
                 mensaje("Todos los campos son obligatorios");
                 return;
             }
@@ -92,11 +93,10 @@
                 data: {
                     fecha_inicial:fecha_inicial,
                     fecha_final:fecha_final,
-                    hora_inicial:hora_inicial,
-                    hora_final:hora_final,
                     promedio:promedio,
                     maquina:maquina,
                     export_report:export_report,
+                    turno: turno,
                 }
             })
             .done(function(r,textStatus,xhr){
@@ -128,6 +128,15 @@
                     "order": [],
                     "lengthMenu": [ 1000, 2500, 5000, 10000],
                     responsive: true,
+                    createdRow: function(row, data, dataIndex){
+                        let value = data.Hora;
+                        if(value || value == 0){
+                            if(value >= 6 && value <= 12) $(row).addClass('text-info');
+                            else if(value >=13 && value <= 20) $(row).addClass('text-success');
+                            else if(value ==21) $(row).addClass('font-weight-bold text-primary');
+                            else $(row).addClass('text-dark');
+                        }
+                    }
 
                 });
             }).fail(function (error) {
