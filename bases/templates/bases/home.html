@@ -1,14 +1,27 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block page_content %}
+    {% if perms.prf.change_sundara %}
     <div class="col-xl-9 col-md-5 mb-5">
         <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
-                    <div class="col">
-                        <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span> Mis Pedidos</a>
-        </div>
+            <div class="col">
+                <h3>Tienes permisos especiales para Sundara</h3><br>
+                <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-success"></span> Mis Pedidos</a>
+                <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-primary"></span> Sundara</a>
+            </div>
         </div>
     </div>
+    </div>
+    {% else %}
+    <div class="col-xl-9 col-md-5 mb-5">
+        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="col">
+                        <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-success"></span> Mis Pedidos</a>
+            </div>
+        </div>
     </div>
     <meta http-equiv="refresh" content="0;url={% url 'inv:pedido_list_f' %}" />
+    {% endif %}
 {% endblock %}

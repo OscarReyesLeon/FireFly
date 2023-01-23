@@ -6,8 +6,11 @@ from django.db.models import Avg
 from .models import LecturaModel
 import pandas as pd
 import numpy as np
-# from dateutil.rrule import rrule, MONTHLY, YEARLY, WEEKLY, DAILY, HOURLY
+from django.contrib.auth.decorators import login_required, permission_required
 
+# from dateutil.rrule import rrule, MONTHLY, YEARLY, WEEKLY, DAILY, HOURLY
+@login_required(login_url='/login/')
+@permission_required('prf.change_sundara', login_url='bases:sin_privilegios')
 def get_values(request):
     fecha_inicial = request.POST.get('fecha_inicial', timezone.now().strftime('%Y-%m-%d'))
     fecha_final = request.POST.get('fecha_final', timezone.now().strftime('%Y-%m-%d'))
@@ -50,6 +53,8 @@ def get_values(request):
     values.append('maquina')
     return dict_filter, dict_exclude, values, promedio
 
+@login_required(login_url='/login/')
+@permission_required('prf.change_sundara', login_url='bases:sin_privilegios')
 def report_sensor(request):
     if request.method == 'POST':
         dict_filter, dict_exclude, values, promedio = get_values(request)

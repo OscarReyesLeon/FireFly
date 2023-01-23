@@ -279,3 +279,19 @@ class Universal(ClaseModelo):
 
     class Meta:
         verbose_name_plural = "Administrativo de compras general"
+class Sundara(ClaseModelo):
+    descripcion = models.CharField(
+        max_length=100,
+        help_text='Produccion reportes',
+        unique=True
+    )
+
+    def __str__(self):
+        return '{}'.format(self.descripcion)
+
+    def save(self):
+        self.descripcion = self.descripcion.upper()
+        super(Universal, self).save()
+
+    class Meta:
+        verbose_name_plural = "Sundara"

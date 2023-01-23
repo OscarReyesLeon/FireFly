@@ -52,6 +52,10 @@
       {% if perms.prf.change_almacenista %}
       <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
       {% endif %}
+      {% if perms.prf.change_sundara %}
+      <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Sundara</a>
+      {% endif %}
+
 
     </div><br>
 
