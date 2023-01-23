@@ -91,7 +91,7 @@
           <td>{{item.id}}</td>
           <td>{{item.articulo}}</td>
       	  <td>{{item.cantidad}} {{item.UniMed}}</td>
-          <td>{{item.divisa}}$ {{item.precio_uni}}</td>
+          <td>{{item.divisa}}$ {{item.precio_uni|floatformat:2}}</td>
           <td>{{item.proceso}}</td>
           <td>{{item.status}}</td>
           <td>{{item.fc|date:"d/m/y H:i:s"}}</td>

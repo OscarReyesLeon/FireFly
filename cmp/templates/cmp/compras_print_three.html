@@ -136,8 +136,8 @@
                         <td class="numero"><center>|<small>{{ item.pedido.proceso }}</small>|</center></td>
                         <td class="letter">{{ item.pedido.descripcioncorregida }}</td>
                         <td class="letter"><center>{{ item.pedido.iva }}</center></td>
-                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
-                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:2 }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:2 }}</td>
                     </tr>
                     {% endfor %}
                     <tr>
@@ -163,7 +163,7 @@
                             <td></td>
                             <td></td>
                             <td><h4>Sub Total</h4></td>
-                            <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:"2" }}</h4></td>
+                            <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:2 }}</h4></td>
                     </tr>
                     <tr>
                             <td></td>
@@ -172,7 +172,7 @@
                             <td></td>
                             <td></td>
                             <td><h4>IVA</h4></td>
-                            <td class="numero"><h4>$ {{ encabezado.descuento|floatformat:"2" }}</h4></td>
+                            <td class="numero"><h4>$ {{ encabezado.descuento|floatformat:2 }}</h4></td>
                     </tr>
                     <tr>
                             <td></td>

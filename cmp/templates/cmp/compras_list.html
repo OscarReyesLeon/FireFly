@@ -96,7 +96,7 @@
                     <a href="{% url 'cmp:provisionar' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-check"></i></a>
                     {% endif %}
 
-            -> ${{ item.total|floatformat:"0" }}</td>
+            -> ${{ item.total|floatformat:0 }}</td>
             <td>{{ item.proveedor }}</td>
             <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
   
