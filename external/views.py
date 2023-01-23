@@ -63,7 +63,11 @@ def report_sensor(request):
         lectura_values = pd.DataFrame(list(lectura))
         values_by_machine = values[:-1]
         #Columna valor a dos decimales
-        lectura_values['valor'] = lectura_values['valor'].round(4)
+        lectura_values2 = lectura_values['valor'].round(0)
+        for index, value in enumerate(lectura_values2):
+            if value <= 2:
+                lectura_values2[index] = 0
+        lectura_values['valor'] = lectura_values2
         lectura_values = lectura_values.pivot(index=values_by_machine, 
             columns='maquina', values='valor').reset_index()
         lectura_values.replace(np.nan, 0, inplace=True) 

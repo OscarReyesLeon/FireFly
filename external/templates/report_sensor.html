@@ -131,10 +131,10 @@
                     createdRow: function(row, data, dataIndex){
                         let value = data.Hora;
                         if(value || value == 0){
-                            if(value >= 6 && value <= 12) $(row).addClass('text-info');
-                            else if(value >=13 && value <= 20) $(row).addClass('text-success');
-                            else if(value ==21) $(row).addClass('font-weight-bold text-primary');
-                            else $(row).addClass('text-dark');
+                            if(value >= 6 && value <= 12) $(row).addClass('text-success');
+                            else if(value >=13 && value <= 20) $(row).addClass('text-info');
+                            else if(value ==21) $(row).addClass('font-weight-bold text-danger');
+                            else $(row).addClass('text-primary');
                         }
                     }
 
@@ -152,6 +152,6 @@
             generate_report(export_report=1); 
         })
     });
-
+    $("#sidebarToggle").click();
 </script>
 {% endblock %}
