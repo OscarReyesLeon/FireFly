@@ -366,7 +366,7 @@ class PedidoExport(SinPrivilegios, generic.ListView):
     model = Pedido
     template_name = "inv/pedido_list_export.html"
     context_object_name = "obj"
-    permission_required="inv.change_pedido"
+    permission_required="inv.view_pedido"
 
     def obtener_informacion_reporte(self):
         fecha_inicial = self.request.GET.get('fecha_inicial', None)
