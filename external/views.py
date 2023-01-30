@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from .forms import ReportSensorForm
+from .forms import ReportSensorForm, ReportSensorMForm
 from django.shortcuts import render
 from django.utils import timezone
 from django.db.models import Avg
@@ -124,7 +124,7 @@ def report_sensor(request):
         lectura_values_dict = lectura_values.to_dict('records')
         return JsonResponse(lectura_values_dict, safe=False)
     else:
-        form = ReportSensorForm()
+        form = ReportSensorMForm()
         return render(request, 'report_sensor.html', {'form': form})
 @login_required(login_url='/login/')
 @permission_required('prf.change_sundara', login_url='bases:sin_privilegios')

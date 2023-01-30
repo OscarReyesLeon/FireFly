@@ -5,11 +5,11 @@
 <div class="card shadow mb-4">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold text-success">Reporte externo</h6>
+      <h6 class="m-0 font-weight-bold text-success">Reporte Sundara</h6>
     </div>
     <div align="left";>
-    <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Por omisión</a>
-    <a href="{% url 'external:report_remplazo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Por remplazo</a>
+    <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Activo</a>
+    <a href="{% url 'external:report_remplazo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Estandar</a>
     <a href="{% url 'external:report_crudo' %}" onclick="antidoble()" class="btn btn-info" role="button">Crudo</a>
     </div>
 
