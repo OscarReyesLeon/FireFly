@@ -4,6 +4,7 @@ from django import forms
 class ReportSensorForm(forms.Form):
     promedio = forms.ChoiceField(
         choices=[
+            ('Minuto', 'Minuto'),
             ('Hora', 'Hora'),
             ('Diario', 'Diario'),
             ('Semanal', 'Semanal'),
@@ -24,6 +25,7 @@ class ReportSensorForm(forms.Form):
             ('1', 'Turno Matutino'),
             ('2', 'Turno Vespertino'),
             ('3', 'Turno Nocturno'),
+            ('4', 'Mantenimiento'),
         ], widget=forms.Select(attrs={'class': 'form-control select2'})
     )
     fecha_inicial = forms.DateField(
