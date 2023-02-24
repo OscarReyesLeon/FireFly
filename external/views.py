@@ -70,7 +70,6 @@ def report_sensor(request):
         if not lectura:
             return JsonResponse('No hay datos para mostrar', status=404, safe=False)
         lectura_values = pd.DataFrame(list(lectura))
-        print(lectura_values)
         values_by_machine = values[:-1]
         #Columna valor a dos decimales
         lectura_values['valor'] = lectura_values['valor'].round(0)
