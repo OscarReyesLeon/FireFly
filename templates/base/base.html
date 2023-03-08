@@ -174,12 +174,12 @@
         </div>
       </li>
       {% if perms.prf.change_vigilante %}
-      <li class="nav-item {% if bita_url in request.path  %} active {% endif %}">
+      <li class="nav-item {% if 'bita/' in request.path  %} active {% endif %}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBita" aria-expanded="true" aria-controls="collapseBita">
           <i class="fas fa-fw fa-folder"></i>
           <span>Bitacoras </span>
         </a>
-        <div id="collapseBita" class="collapse {% if bita_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseBita" class="collapse {% if 'bita/' in request.path  %} show  {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             {% if perms.prf.change_editorbitacoras %}
             <h6 class="collapse-header">Administracion</h6>
@@ -213,6 +213,18 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Reporte Sundara</h6>
             <a class="collapse-item" href="{% url 'external:report_sensor' %}">Exportar a excel</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item {% if 'administracion/' in request.path  %} active {% endif %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministracion" aria-expanded="true" aria-controls="collapseAdministracion">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Administración</span>
+        </a>
+        <div id="collapseAdministracion" class="collapse {% if 'administracion/' in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="{% url 'external:report_sensor' %}">Productos</a>
           </div>
         </div>
       </li>
