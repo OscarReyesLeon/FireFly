@@ -1,0 +1,31 @@
+{% extends 'layouts/partial/list_base.html' %}
+{% load humanize %}
+
+{% block contenidoTabla %}
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Código completo</th>
+            <th>Grupos</th>
+            <th>Usuarios asignados directamente</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object }}</td>
+            <td>
+                {% for grupo in object.group_set.all %}
+                    <span class="badge badge-primary">{{ grupo.name }}</span>
+                {% endfor %}
+            </td>
+            <td>
+                {{ object.user_set.all.count }}
+            </td>
+            {% include 'layouts/partial/accion_list_base.html'%}
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% url 'inv:equipo_list' as cat_url %}
+{% url 'inv:proceso_list' as s_cat_url %}
+{% url 'inv:autoriza_list' as aut_url %}
+{% url 'cmp:compras_list' as cmp_url %}
+{% url 'bita:compras_list' as bita_url %}
+
+{% block 'urlPasadas' %} <!--Cambiar a nueva versión-->
+  <li class="nav-item {% if cat_url in request.path or s_cat_url in request.path  %} active {% endif %}">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-rocket"></i>
+      <span>Compras</span>
+    </a>
+    <div id="collapseTwo" class="collapse {% if cat_url in request.path or s_cat_url in request.path %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Catálogos de Compras</h6>
+        {% if perms.inv.view_equipo %}
+        <a class="collapse-item {% if cat_url in request.path %} active {% endif %}" href="{{cat_url}}">Equipos</a>
+        {% endif %}
+        {% if perms.inv.view_proceso %}
+        <a class="collapse-item {% if s_cat_url in request.path %} active {% endif %}" href="{{s_cat_url}}">Procesos</a>
+        {% endif %}
+        {% if perms.inv.view_autoriza %}
+        <a class="collapse-item {% if aut_url in request.path %} active {% endif %}" href="{{aut_url}}">Autorizantes</a>
+        {% endif %}
+        {% if perms.inv.view_categoria %}
+        <a class="collapse-item" href="{% url 'inv:categoria_list' %}">Categoria</a>
+        {% endif %}
+        {% if perms.inv.view_unidadmedida %}
+        <a class="collapse-item" href="{% url 'inv:um_list' %}">Unidad Medida</a>
+        {% endif %}
+        {% if perms.inv.view_producto %}
+        <a class="collapse-item" href="{% url 'inv:producto_list' %}">Producto</a>
+        {% endif %}
+        {% if perms.inv.view_pedido %}
+        <a class="collapse-item" href="{% url 'inv:pedido_list_f' %}">Pedidos</a>
+        {% endif %}
+        {% if perms.prf.change_comprador %}
+        <a class="collapse-item" href="{% url 'inv:articuloes_list' %}">ArticulosEs</a>
+        {% endif %}
+        {% if perms.prf.change_comprador %}
+        <a class="collapse-item" href="{% url 'inv:nombrerelacion_list' %}">RelacionArtEs</a>
+        {% endif %}
+
+        <h6 class="collapse-header">Catálogos de RH:</h6>
+        {% if perms.inv.view_empresa %}
+        <a class="collapse-item" href="{% url 'inv:empresa_list' %}">Empresas</a>
+        {% endif %}
+        {% if perms.inv.view_banco %}
+        <a class="collapse-item" href="{% url 'inv:banco_list' %}">Bancos</a>
+        {% endif %}
+        {% if perms.inv.view_puesto %}
+        <a class="collapse-item" href="{% url 'inv:puesto_list' %}">Puestos</a>
+        {% endif %}
+        {% if perms.inv.view_genero %}
+        <a class="collapse-item" href="{% url 'inv:genero_list' %}">Generos</a>
+        {% endif %}
+        {% if perms.inv.view_estudios %}
+        <a class="collapse-item" href="{% url 'inv:estudios_list' %}">Estudios</a>
+        {% endif %}
+        {% if perms.inv.view_empleado %}
+        <a class="collapse-item" href="{% url 'inv:empleado_list' %}">Empleados</a>
+        {% endif %}
+        {% if perms.inv.view_computadora %}
+        <a class="collapse-item" href="{% url 'inv:computadora_list' %}">Computadoras</a>
+        {% endif %}
+        {% if perms.inv.view_herramienta %}
+        <a class="collapse-item" href="{% url 'inv:herramienta_list' %}">Herramienta</a>
+        {% endif %}
+        
+        <h6 class="collapse-header">Catálogos de Compras:</h6>
+        
+        {% if perms.prf.view_universal %}
+        <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
+        {% endif %}
+        {% if perms.cmp.view_UsoFactura %}
+        <a class="collapse-item" href="{% url 'cmp:usofactura_list' %}">Claves SAT</a>
+        {% endif %}
+
+        <h6 class="collapse-header">Catálogos de Facturación:</h6>
+        
+        {% if perms.fac.view_cliente %}
+        <a class="collapse-item" href="{% url 'fac:cliente_list' %}">Clientes</a>
+        {% endif %}
+        <a class="collapse-item" href="{% url 'bases:idiomas' %}">Idiomas</a>
+        <a class="collapse-item" href="{% url 'bases:frases' %}">Frases</a>
+      </div>
+    </div>
+  </li>
+
+  
+  <li class="nav-item {% if cmp_url in request.path  %} active {% endif %}">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCompras" aria-expanded="true" aria-controls="collapseCompras">
+      <i class="fas fa-fw fa-truck"></i>
+      <span>Contabilidad</span>
+    </a>
+    <div id="collapseCompras" class="collapse {% if cmp_url in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Compras</h6>
+        <a class="collapse-item {% if cmp_url in request.path  %} active {% endif %}" href="{% url 'cmp:compras_list' %}">Listado OC</a>
+
+
+      </div>
+    </div>
+  </li>
+  {% if perms.prf.change_vigilante %}
+  <li class="nav-item {% if 'bita/' in request.path  %} active {% endif %}">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBita" aria-expanded="true" aria-controls="collapseBita">
+      <i class="fas fa-fw fa-folder"></i>
+      <span>Bitacoras </span>
+    </a>
+    <div id="collapseBita" class="collapse {% if 'bita/' in request.path  %} show  {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        {% if perms.prf.change_editorbitacoras %}
+        <h6 class="collapse-header">Administracion</h6>
+        <a class="collapse-item" href="{% url 'bita:operador_pesado_list' %}">OperadoresPesados</a>
+        <a class="collapse-item" href="{% url 'bita:solicitante_utilitario_list' %}">Autorizados Utilitarios</a>
+        <a class="collapse-item" href="{% url 'bita:vehiculo_ligero_list' %}">Vehiculo Ligeros</a>
+        <a class="collapse-item" href="{% url 'bita:vehiculo_pesado_list' %}">Visitas</a>
+        <a class="collapse-item" href="{% url 'bita:destinos_clientes_list' %}">SucursalesClientes</a>
+        <a class="collapse-item" href="{% url 'bita:motivo_visita_list' %}">MotivosVisita</a>
+        <a class="collapse-item" href="{% url 'bita:tanques_diesel_list' %}">TanquesDiesel</a>
+        <a class="collapse-item" href="{% url 'bita:motivo_ingreso_unidad_list' %}">MotivosIngreUnidad</a>
+        {% endif %}
+        {% if perms.prf.change_vigilante %}
+        <h6 class="collapse-header">Vigilantes</h6>
+        <a class="collapse-item" href="{% url 'bita:carga_diesel_list' %}">Diesel</a>
+        <a class="collapse-item" href="{% url 'bita:ingreso_unidad_pesada_list' %}">IngresoUnidad</a>
+        <a class="collapse-item" href="{% url 'bita:carga_urea_list' %}">Urea</a>
+        <a class="collapse-item" href="{% url 'bita:descarga_diesel_list' %}">RecepciónDiesel</a>
+        {% endif %}
+      </div>
+    </div>
+  </li>
+  {% endif %}
+{% endblock %}

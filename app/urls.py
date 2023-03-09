@@ -27,8 +27,10 @@ urlpatterns = [
     path('fac/', include(('fac.urls', 'fac'), namespace='fac')),
     path('bita/', include(('bita.urls', 'bita'), namespace='bita')),
     path('logi/', include(('logi.urls', 'logi'), namespace='logi')),
-    path('api/', include(('api.urls', 'api'), namespace='api')),
-    path('external/', include(('external.urls', 'external'), namespace='external')),
+    path('external/', include(('apps.external.urls', 'external'), namespace='external')),
+    path('administration/', include(('apps.administration.urls', 'administration'), namespace='administration')),
+    path('auth/', include(('apps.users.urls', 'user'), namespace='user')),
+    path('address/', include(('apps.address.urls', 'address'), namespace='address')),
     
     path('admin/', admin.site.urls),
 ]

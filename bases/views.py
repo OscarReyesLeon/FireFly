@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin,\
      PermissionRequiredMixin
 from django.views import generic
+from django.http import JsonResponse
 
 from .models import Idioma,Frase
 

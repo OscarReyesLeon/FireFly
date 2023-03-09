@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% if titlePage %}
+      {{ titlePage }}
+    {% else %}
+      Ledsa FireFly
+    {% endif %}
+  </title>
+  <link rel="shortcut icon" type="image/png" href="https://ledsa.mx/ff/firefly.png"/>
+
+    <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="{% static  'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'base/js/sweetalert2.js' %}"></script>
+
+    {% block css_page %}
+    {% endblock %}
+
+</head>
+<body>
+  <div id="wrapper">
+      {% include 'layouts/sidebar.html' %}
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          {% include 'layouts/navbar.html' %}
+
+          {% block page_content %}
+          <div class="container-fluid">
+            <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          </div>
+        {% endblock %}
+        </div>
+        {% include 'layouts/footer.html' %}
+        {% include 'layouts/logout_modal.html' %}
+      </div>
+  </div>
+    
+
+
+    <script src="{% static  'base/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static  'base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static  'base/js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'base/other/select2.min.js'%}"></script>
+    <script src="{% static  'base/js/base.js' %}"></script>
+    {% block js_page %}
+    {% endblock %} 
+</body>
+</html>

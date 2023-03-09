@@ -1,8 +1,7 @@
 from django.db import models
-
+from crum import get_current_user, get_current_request
 from django.contrib.auth.models import User
 from django_userforeignkey.models.fields import UserForeignKey
-
 
 class ClaseModelo(models.Model):
     estado = models.BooleanField(default=True)
@@ -13,7 +12,6 @@ class ClaseModelo(models.Model):
 
     class Meta:
         abstract=True
-
 
 class ClaseModelo2(models.Model):
     estado = models.BooleanField(default=True)

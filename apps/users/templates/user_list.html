@@ -1,0 +1,36 @@
+{% extends 'layouts/partial/list_base.html' %}
+{% load humanize %}
+
+{% block contenidoTabla %}
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Nombre de usuario</th>
+            <th>Correo</th>
+            <th>Activo</th>
+            <th>Grupos</th>
+            <th>Permisos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.first_name }}</td>
+            <td>{{ object.last_name }}</td>
+            <td>{{ object.username }}</td>
+            <td>{{ object.email }}</td>
+            <td>{{ object.is_active|yesno:"Activo,Inactivo"}}</td>
+            <td>
+                {% for grupo in object.groups.all %}
+                    <span class="badge badge-primary">{{ grupo.name }}</span>
+                {% endfor %}
+            </td>
+            <td>{{ object.user_permissions.all.count }}</td>
+            {% include 'layouts/partial/accion_list_base.html' %}
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}

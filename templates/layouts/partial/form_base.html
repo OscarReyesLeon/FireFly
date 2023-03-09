@@ -1,0 +1,76 @@
+{% extends 'layouts/new_base.html' %}{% load static %}
+{% block css_page %}
+<style>
+    .form-check-label  {
+    padding: 2px;
+    display: block;
+    float: left;
+    width: 160px;
+}
+.select2-container.form-control {
+     height: auto !important;
+}
+
+</style>
+
+<link rel="stylesheet" href="{% static 'base/other/select2.min.css'%}">
+
+{% endblock %}
+{% block page_content %}
+
+<div class="row m-3">
+    <div class="col-md-6">
+        <h3 class="text-center"><b>{{ c_title_form }}</b></h3>
+    </div>
+    <div class="col-md-6 mb-3">
+        <a href="{% url c_url_list %}"  class="btn btn-danger float-right cancelarFormulario">Volver a listado</a>
+    </div>
+
+
+    <form action="" method="POST" class="col-md-12" enctype="multipart/form-data" id="formGeneral">
+        {% csrf_token %}
+        <div class="row">
+            {% for field in form %}
+            <div class="col-{{ field.field.widget.attrs.col_default }}">
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}"
+                        {% if field.field.widget.input_type == 'checkbox' %}
+                            class="form-check-label"
+                        {% endif %}
+                    >{{ field.label }}
+                        {% if field.field.required %}
+                        <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ field }}
+                    <small>{{ field.help_text }}</small>
+                    {% if field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in field.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary m-3 enviarFormulario">{{c_text_button}}</button>
+            <a href="{% url c_url_list %}" class="btn btn-danger m-3 cancelarFormulario">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% block extraForm %}
+{% endblock %}
+{% endblock %}
+
+{% block js_page %}
+<script src="{% static 'base/lista'}"></script>
+{% block jsForm %}
+{% endblock %}
+
+{% endblock %}

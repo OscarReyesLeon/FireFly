@@ -1,0 +1,26 @@
+{% extends 'layouts/partial/list_base.html' %}
+{% load humanize %}
+
+{% block contenidoTabla %}
+    <thead>
+        <tr>
+            <th>Número económico</th>
+            <th>Placas</th>
+            <th>Tipo de remolque</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.economic_number }}</td>
+            <td>{{ object.plates }}</td>
+            <td>{{ object.get_type_truck_display }}</td>
+            <td>{{ object.is_active|yesno:"SI,NO" }}</td>
+            {% include 'layouts/partial/accion_list_base.html' %}
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}
+

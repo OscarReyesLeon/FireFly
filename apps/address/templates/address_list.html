@@ -1,0 +1,28 @@
+{% extends 'layouts/partial/list_base.html' %}
+{% load humanize %}
+
+{% block contenidoTabla %}
+    <thead>
+        <tr>
+            <th>Calle</th>
+            <th>Número exterior</th>
+            <th>Número interior</th>
+            <th>Colonia</th>
+            <th>Referencia</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.street }}</td>
+            <td>{{ object.number_ext }}</td>
+            <td>{{ object.number_int }}</td>
+            <td>{{ object.neighborhood }}</td>
+            <th>{{ object.reference }}</th>
+            {% include 'layouts/partial/accion_list_base.html' %}
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}
+

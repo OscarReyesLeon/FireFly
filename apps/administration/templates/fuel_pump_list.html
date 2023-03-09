@@ -1,0 +1,26 @@
+{% extends 'layouts/partial/list_base.html' %}
+{% load humanize %}
+
+{% block contenidoTabla %}
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Ubicación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ object.name }}</td>
+            <td>{{ object.description }}</td>
+            <td>{{ object.get_type_fuel_pump_display }}</td>
+            <td>{{ object.get_location_display }}</td>
+            {% include 'layouts/partial/accion_list_base.html' %}
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}
+
