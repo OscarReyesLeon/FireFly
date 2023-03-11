@@ -16,3 +16,34 @@ class GeneralForm(forms.ModelForm):
                 'class': class_name,
                 'col_default': 6
             })
+
+    def validate_unique_field(self, field, value):
+        if not field.unique:
+            return
+        qs = self.Meta.model.objects
+        try:
+            qs = qs.filter(**{field.name:
+                 value.upper() if isinstance(value, str) else value})
+        except:
+            qs = qs.none()
+        if self.instance.pk is not None:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError({
+                field.name: 'Ya existe un registro con este valor'
+            })
+        
+    def clean(self):
+        cleaned_data = super().clean()
+        for field in self.fields:
+            if field in cleaned_data:
+                try:
+                    current_field = self._meta.model._meta.get_field(field)
+                except:
+                    continue
+                self.validate_unique_field(
+                    current_field,
+                    cleaned_data[field]
+                )
+        return cleaned_data
+            

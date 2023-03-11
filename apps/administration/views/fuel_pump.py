@@ -1,5 +1,6 @@
 from django.urls import reverse
 from apps.core.views  import ListViewMixin, CreateViewMixin, UpdateViewMixin, DeleteViewMixin
+from apps.administration.serializers import FuelPumpSerializer
 from apps.administration.forms import FuelPumpForm 
 
 PREFIX_URL = 'fuel_pump'
@@ -12,6 +13,10 @@ class InitCurrentClassMixin:
             'prefix': PREFIX_URL,
             'prefix_text': 'bomba de combustible',
             'prefix_app_url': 'administration',
+
+            #API
+            'current_serializer': FuelPumpSerializer,
+            'fields_full_text_search': ['name', 'description'],
         }, **kwargs)
 
 

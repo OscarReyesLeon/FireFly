@@ -1,4 +1,5 @@
 from apps.core.views  import ListViewMixin, CreateViewMixin, UpdateViewMixin, DeleteViewMixin
+from apps.users.serializers import UserSerializer
 from apps.users.forms import UserForm
 
 PREFIX_URL = 'user'
@@ -9,6 +10,10 @@ class InitCurrentClassMixin:
             'prefix': PREFIX_URL,
             'prefix_text': 'usuario',
             'prefix_app_url': 'user',
+
+            #API
+            'current_serializer': UserSerializer,
+            'fields_full_text_search': ['first_name', 'last_name', 'email'],
         }, **kwargs)
 
 class UserListView(InitCurrentClassMixin, ListViewMixin):
@@ -18,9 +23,7 @@ class UserCreateView(InitCurrentClassMixin, CreateViewMixin):
     pass
 
 class UserUpdateView(InitCurrentClassMixin,UpdateViewMixin):
-    def get_title_form_update(self):
-        texto = super().get_title_form_update()
-        return texto + ': ' + self.get_object().get_full_name()
+    pass
 
 class UserDeleteView(InitCurrentClassMixin, DeleteViewMixin):
     pass

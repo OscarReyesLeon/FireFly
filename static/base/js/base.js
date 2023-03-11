@@ -241,40 +241,172 @@ const languageDataTable = {
     }
 }
 
-$(document).ready(function() {
-        let table = $('#tablaGeneral')
-        if(table.length > 0){
-            table = table.DataTable({
-                language: languageDataTable,
-                responsive: true,
-        
-            });
-        }
-    
-
-    var csrfcookie = function() {
-        var cookieValue = null,
-            name = 'csrftoken';
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
         }
-        return cookieValue;
-    };
+    }
+    return cookieValue;
+};
 
+function render_dt_badge_cicle(data, type, row){
+    var html = '';
+    for (var i = 0; i < data.length; i++) {
+        html += '<span class="badge badge-primary">' + data[i] + '</span>';
+    }
+    return html;
+}
+
+function render_dt_yes_no(data, type, row){
+    if(data == true){
+        return '<span class="badge badge-success">SI</span>';
+    }
+    return '<span class="badge badge-danger">NO</span>';
+}
+function render_dt_activo_inactivo(data, type, row){
+    if(data == true){
+        return '<span class="badge badge-success">ACTIVO</span>';
+    }
+    return '<span class="badge badge-danger">INACTIVO</span>';
+}
+
+
+
+function createDataTable(extra_params) {
+    let table = $('#tablaGeneral')
+    let actions = {
+        'data': null,
+        'title': 'Acciones',
+        'orderable': false,
+        'searchable': false,
+    }
+    //agregar a extra_params.columns
+    if(extra_params.columns){
+        extra_params.columns.push(actions)
+    }
+
+    if(table.length > 0){
+        let  = []
+        table = table.DataTable({
+                ...extra_params, 
+                language: languageDataTable,
+                destroy: true,
+                responsive: true,
+                "processing": true,
+                serverSide: true,
+                ajax: {
+                    url: window.location.href + '?get_data_table=true',
+                    type: 'GET',
+                    data: function (d) {
+                        name_colum_order = d.columns[d.order[0].column].data
+                        return {
+                            length : d.length,
+                            start: d.start,
+                            draw: d.draw,
+                            search: d.search.value,
+                            order_column: name_colum_order,
+                            order_dir: d.order[0].dir,
+                        }
+                    },
+                    headers: {
+                        'X-CSRFToken': csrfcookie()
+                    },  
+                },
+                StayOnPage: true,
+                columnDefs: [{
+                    targets: -1,
+                    data: null,
+                    render: function (data, type, row) {
+                        let url_edit = window.location.href + 'update/' + data.id + '/';
+                        let url_delete = window.location.href + 'delete/' + data.id + '/';
+                        return `
+                        <a 
+                        href="${url_edit}" 
+                        class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                    <a 
+                        url="${url_delete}" 
+                        idrow="${data.id}" namerow="${data.instance}" 
+                        class="btn btn-danger btn-sm btn-eliminar text-white eliminarAsync"><i class="fas fa-trash-alt"></i></a>
+                        `;
+                        }
+                }],          
+            },
+        );
+    }
+}
+
+const NotificationToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 7000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+async function saveFormAsync(url, method, data,function_success, function_error){
+    await $.ajax({
+        url: url,
+        type: method,
+        dataType: "json",
+        headers: {
+            'X-CSRFToken': csrfcookie()
+        },
+        data: data,
+        success: function (data) {
+            console.log(data.url_rediredt, "Si pasa acá")
+            if(data.url_redirect){
+                const serverUrl = window.location.protocol + "//" + window.location.host;
+                window.location.href = serverUrl + data.url_redirect;
+            }
+            function_success(data)
+        },
+        error: function (data) {
+            function_error(data)
+        }
+    })
+}
+
+async function getDataAsync(url, function_success){
+    await $.ajax({
+        url: url,
+        type: 'GET',
+        headers: {
+            'X-CSRFToken': csrfcookie()
+        },
+        success: function (data) {
+            function_success(data)
+        },
+        error: function (data) {
+            let error_message = data.responseJSON
+            if(error_message){
+                Swal.fire(error_message.msg, '', 'error')
+            }else{
+                Swal.fire('Ocurrió un error inesperado', '', 'error')
+            }
+        }
+    })
+}
+
+$(document).ready(function() {
     $('#tablaGeneral').on('click', '.eliminarAsync', async function () {
         let url = $(this).attr('url');
         let namerow = $(this).attr('namerow');
-        let current_row = table.row($(this).parents('tr'));
+        let current_row = $('#tablaGeneral').DataTable().row($(this).parents('tr'));
 
         await Swal.fire({
-            title: namerow + "?",
+            title: `¿Desea eliminar el registro: ${namerow}?`,
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Si, eliminar',
@@ -291,7 +423,11 @@ $(document).ready(function() {
                 },
                 success: function (data) {
                     current_row.remove().draw();
-                    Swal.fire(data.msg, '', 'success')
+                    // Swal.fire(data.msg, '', 'success')
+                    NotificationToast.fire({
+                        icon: 'success',
+                        title: data.msg
+                    })
                 },
                 error: function (data) {
                     Swal.fire(data.responseJSON.msg, '', 'error')
@@ -324,9 +460,7 @@ $(document).ready(function() {
         language: 'es',
         placeholder: 'Seleccione una opción',
         height: '100%',
-        allowClear: true,
         closeOnSelect: true,
-        height: '200%',
     })
 
     $(".select2-multiple").select2({

@@ -49,7 +49,7 @@ class TruckVehicleForm(GeneralForm):
 class VehicleForm(GeneralForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['responsible'].queryset = User.objects.filter(groups__name='CHOFER')
+        # self.fields['responsible'].queryset = User.objects.filter(groups__name='CHOFER')
         self.fields['is_active'].initial = True
     
     class Meta:

@@ -3,4 +3,4 @@ from apps.address.views import (
 )
 from apps.core.urls import get_urls_by_view
 list_views = [state, municipality, neighborhood, address]
-urlpatterns = get_urls_by_view(list_views)
+urlpatterns = get_urls_by_view(list_views, with_uuid=True)

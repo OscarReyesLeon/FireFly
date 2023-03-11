@@ -31,8 +31,13 @@ urlpatterns = [
     path('administration/', include(('apps.administration.urls', 'administration'), namespace='administration')),
     path('auth/', include(('apps.users.urls', 'user'), namespace='user')),
     path('address/', include(('apps.address.urls', 'address'), namespace='address')),
+    path('clients/', include(('apps.clients.urls', 'client'), namespace='client')),
     
     path('admin/', admin.site.urls),
+
+    #PATH de API
+    path('api/v1/address/', include(('apps.address.urls_api', 'api_address'), namespace='api_address')),
+    path('api/v1/clients/', include(('apps.clients.urls_api', 'api_client'), namespace='api_client')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

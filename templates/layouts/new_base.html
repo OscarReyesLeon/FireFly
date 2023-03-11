@@ -30,16 +30,19 @@
         <div id="content">
           {% include 'layouts/navbar.html' %}
 
-          {% block page_content %}
-          <div class="container-fluid">
-            <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+          
+          <div class="container-fluid" id="appVue">
+            {% block page_content %}
+            <h1 class="h3 mb-4 text-gray-800">Blank Pagedsdsa</h1>
+            {% endblock %}
           </div>
-        {% endblock %}
         </div>
         {% include 'layouts/footer.html' %}
         {% include 'layouts/logout_modal.html' %}
       </div>
   </div>
+
+
     
 
 
@@ -48,6 +51,17 @@
     <script src="{% static  'base/js/sb-admin-2.min.js' %}"></script>
     <script src="{% static 'base/other/select2.min.js'%}"></script>
     <script src="{% static  'base/js/base.js' %}"></script>
+
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+      NotificationToast.fire({
+        icon: '{{ message.tags }}',
+        title: '{{ message }}'
+      })
+    </script>
+  {% endfor %}
+{% endif %}
     {% block js_page %}
     {% endblock %} 
 </body>

@@ -1,4 +1,5 @@
 from apps.core.views  import ListViewMixin, CreateViewMixin, UpdateViewMixin, DeleteViewMixin
+from apps.administration.serializers import ProductSerializer
 from apps.administration.forms import ProductForm
 
 PREFIX_URL = 'product'
@@ -11,6 +12,10 @@ class InitCurrentClassMixin:
             'prefix_text': 'producto',
             'table_title_complete': 'unidades de medida',
             'prefix_app_url': 'administration',
+
+            #API
+            'current_serializer': ProductSerializer,
+            'fields_full_text_search': ['name', 'description','category__name', 'unit_measure__name'],
         }, **kwargs)
 
 

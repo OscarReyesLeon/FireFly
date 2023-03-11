@@ -206,50 +206,7 @@
       </li>
       {% endif %}
 
-      <li class="nav-item {% if external in request.path  %} active {% endif %}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseExternal" aria-expanded="true" aria-controls="collapseExternal">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>External </span>
-        </a>
-        <div id="collapseExternal" class="collapse {% if external in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Reporte Sundara</h6>
-            <a class="collapse-item" href="{% url 'external:report_sensor' %}">Exportar a excel</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item {% if 'administration/' in request.path  %} active {% endif %}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadministration" aria-expanded="true" aria-controls="collapseadministration">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Administración</span>
-        </a>
-        <div id="collapseadministration" class="collapse {% if 'administration/' in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{% url 'administration:category_product_list' %}">Categorias</a>
-            <a class="collapse-item" href="{% url 'administration:unit_measure_list' %}">Unidad de médida</a>
-            <a class="collapse-item" href="{% url 'administration:product_list' %}">Productos</a>
-            <a class="collapse-item" href="{% url 'administration:fuel_pump_list' %}">Bomba de combustible</a>
-            <a class="collapse-item" href="{% url 'administration:truck_vehicle_list' %}">Remolques</a>
-            <a class="collapse-item" href="{% url 'administration:brand_vehicle_list' %}">Marcas de vehículos</a>
-            <a class="collapse-item" href="{% url 'administration:vehicle_list' %}">Vehiculos</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item {% if 'auth/' in request.path  %} active {% endif %}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="true" aria-controls="collapseUsuarios">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Usuarios</span>
-        </a>
-        <div id="collapseUsuarios" class="collapse {% if 'auth/' in request.path  %} show {% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{% url 'user:user_list' %}">Usuarios</a>
-            <a class="collapse-item" href="{% url 'user:group_list' %}">Grupos</a>
-            <a class="collapse-item" href="{% url 'user:permission_list' %}">Permisos</a>
-          </div>
-        </div>
-      </li>
+      {% include 'layouts/sidebar_new.html' %}
       <hr class="sidebar-divider d-none d-md-block">
 
       <!-- Sidebar Toggler (Sidebar) -->

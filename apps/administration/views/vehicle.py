@@ -1,4 +1,5 @@
 from apps.core.views  import ListViewMixin, CreateViewMixin, UpdateViewMixin, DeleteViewMixin
+from apps.administration.serializers import VehicleSerializer
 from apps.administration.forms import VehicleForm
 
 PREFIX_URL = 'vehicle'
@@ -10,6 +11,10 @@ class InitCurrentClassMixin:
             'prefix': PREFIX_URL,
             'prefix_text': 'vehículo',
             'prefix_app_url': 'administration',
+
+            #API
+            'current_serializer': VehicleSerializer,
+            'fields_full_text_search': ['economic_number', 'plates', 'brand__name', 'model'],
         }, **kwargs)
 
 

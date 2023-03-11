@@ -191,64 +191,9 @@ class VehicleModel(BaseModel):
         ordering = ['economic_number']
         db_table = 'administration_vehicle'
 
-# class ClienteModel(BaseModel):
-#     razon_social = models.CharField(max_length=50, unique=True)
-#     rfc = models.CharField(max_length=13, unique=True)
-#     email = models.EmailField(max_length=50, null=True, blank=True)
-#     telefono = models.CharField(max_length=10, null=True, blank=True)
-#     nombre = models.CharField(max_length=50)
-#     apellido_paterno = models.CharField(max_length=50, null=True, blank=True)
-#     apellido_materno = models.CharField(max_length=50, null=True, blank=True)
-
-#     def __str__(self):
-#         return f'{self.razon_social} ({self.rfc})'
-    
-#     @property
-#     def nombre_completo(self):
-#         return f'{self.nombre} {self.apellido_paterno} {self.apellido_materno}'
-    
-#     class Meta:
-#         verbose_name_plural = "Clientes"
-#         verbose_name = "Cliente"
-#         ordering = ['razon_social']
-#         db_table = 'administracion_cliente'
-# class CreditoModel(BaseModel):
-#     descripcion = models.CharField(max_length=100, null=True, blank=True)
-#     monto = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-#     fecha_limite = models.DateField(null=True, blank=True)
-#     cliente = models.ForeignKey(ClienteModel, on_delete=models.PROTECT)
-
-#     def __str__(self):
-#         return f'{self.cliente} - {self.monto}'
-    
-#     class Meta:
-#         verbose_name_plural = "Creditos"
-#         verbose_name = "Credito"
-#         ordering = ['cliente']
-#         db_table = 'administracion_credito'
 
 
 
-# class DireccionClienteModel(BaseModel):
-#     cliente = models.ForeignKey(ClienteModel, on_delete=models.PROTECT,
-#                     help_text="Cliente al que pertenece la direccion")
-#     calle = models.CharField(max_length=50,
-#                     help_text="Calle")
-#     numero_interior = models.CharField(max_length=20, null=True, blank=True,
-#                     help_text="Numero interior")
-#     numero_exterior = models.CharField(max_length=20,
-#                     help_text="Numero exterior")
-#     colonia = models.ForeignKey(ColoniaModel, on_delete=models.PROTECT,
-#                     help_text="Colonia")
-
-#     def __str__(self):
-#         return f'{self.cliente} - {self.calle} {self.numero_exterior}'
-    
-#     class Meta:
-#         verbose_name_plural = "Direcciones de Clientes"
-#         verbose_name = "Direccion de Cliente"
-#         ordering = ['cliente']
-#         db_table = 'direccion_cliente'
 
 
 # class PedidoModel(ClaseModelo):

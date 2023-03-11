@@ -1,13 +1,19 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from apps.core.models import BaseModel
 
+
 class StateModel(BaseModel):
-    name = models.CharField(max_length=50, unique=True,
+    name = models.CharField(max_length=100, unique=True,
                 help_text="Ingresa el nombre del estado de la república (Ej. Jalisco, Veracruz, etc.)",
                 verbose_name="Nombre del estado")
+    code = models.CharField(max_length=5, blank=True, null=True,
+                help_text="Ingresa el código del estado de la república (Ej. 14, 30, etc.)",
+                verbose_name="Código del estado")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.code})"
     
     class Meta:
         verbose_name_plural = "Estados"
@@ -16,9 +22,12 @@ class StateModel(BaseModel):
         db_table = 'address_state'
 
 class MunicipalityModel(BaseModel):
-    name = models.CharField(max_length=50,
+    name = models.CharField(max_length=100,
                 help_text="Nombre del municipio (Ej. Zapopan, Tlaquepaque, etc.)",
                 verbose_name="Nombre del municipio")
+    code = models.CharField(max_length=5, blank=True, null=True,
+                help_text="Código del municipio (Ej. 001, 002, etc.)",
+                verbose_name="Código del municipio")
     state = models.ForeignKey(StateModel, on_delete=models.PROTECT,
                 help_text="Estado al que pertenece el municipio(Ej. Jalisco, Veracruz, etc.)",
                 verbose_name="Estado de la república")
@@ -33,9 +42,18 @@ class MunicipalityModel(BaseModel):
         db_table = 'address_municipality'
 
 class NeighborhoodModel(BaseModel):
-    name = models.CharField(max_length=50,
+    name = models.CharField(max_length=100,
                 help_text="Nombre de la colonia (Ej. San Juan de Dios, San Pedro, etc.)",
                 verbose_name="Nombre de la colonia")
+    code = models.CharField(max_length=5, blank=True, null=True,
+                help_text="Código de la colonia (Ej. 001, 002, etc.)",
+                verbose_name="Código de la colonia")
+    type_neighborhood = models.CharField(max_length=50,
+                help_text="Tipo de colonia (Ej. Colonia, Fraccionamiento, etc.)",
+                verbose_name="Tipo de colonia")
+    type_zone = models.CharField(max_length=50,
+                help_text="Tipo de zona (Ej. Urbana, Rural, etc.)",
+                verbose_name="Tipo de zona")
     municipality = models.ForeignKey(MunicipalityModel, on_delete=models.PROTECT,
                 help_text="Municipio al que pertenece la colonia",
                 verbose_name="Municipio")
@@ -77,3 +95,6 @@ class AddressModel(BaseModel):
         verbose_name = "Dirección"
         ordering = ['street']
         db_table = 'address_address'
+
+    
+

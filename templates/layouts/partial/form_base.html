@@ -17,17 +17,18 @@
 
 {% endblock %}
 {% block page_content %}
-
 <div class="row m-3">
     <div class="col-md-6">
         <h3 class="text-center"><b>{{ c_title_form }}</b></h3>
     </div>
     <div class="col-md-6 mb-3">
-        <a href="{% url c_url_list %}"  class="btn btn-danger float-right cancelarFormulario">Volver a listado</a>
+        {% if c_url_list %}
+            <a href="{% url c_url_list %}"  class="btn btn-danger float-right cancelarFormulario">Volver a listado</a>
+        {% endif %}
     </div>
 
-
-    <form action="" method="POST" class="col-md-12" enctype="multipart/form-data" id="formGeneral">
+    <form action="" method="POST" class="col-md-12" enctype="multipart/form-data" 
+        id="formGeneral" ref="formGeneral" @submit.prevent="submit_form">
         {% csrf_token %}
         <div class="row">
             {% for field in form %}
@@ -54,22 +55,31 @@
                 </div>
             </div>
             {% endfor %}
-            
-            
         </div>
-
+        {% block extraForm %}
+        {% endblock %}
         <div class="row">
             <button type="submit" class="btn btn-primary m-3 enviarFormulario">{{c_text_button}}</button>
-            <a href="{% url c_url_list %}" class="btn btn-danger m-3 cancelarFormulario">Cancelar</a>
+            {% if c_url_list %}
+                <a href="{% url c_url_list %}" class="btn btn-danger m-3 cancelarFormulario">Cancelar</a>
+            {% endif %}
         </div>
     </form>
 </div>
-{% block extraForm %}
-{% endblock %}
 {% endblock %}
 
 {% block js_page %}
-<script src="{% static 'base/lista'}"></script>
+{% if form_with_address %}
+    <script src="{% static 'base/js/address.js' %}"></script>
+{% endif %}
+
+{% if with_vue %}
+<link rel="stylesheet" href="{% static 'base/js/vue/files/vue-select.css' %}">
+<script src="{% static 'base/js/vue/files/vue3.min.js' %}"></script>
+<script src="{% static 'base/js/vue/files/vue-select.min.js' %}"></script>
+
+{% endif %}
+
 {% block jsForm %}
 {% endblock %}
 

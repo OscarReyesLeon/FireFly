@@ -1,4 +1,5 @@
 from apps.core.views  import ListViewMixin, CreateViewMixin, UpdateViewMixin, DeleteViewMixin
+from apps.address.serializers import StateSerializer
 from apps.address.forms import StateForm
 
 PREFIX_URL = 'state'
@@ -10,6 +11,10 @@ class InitCurrentClassMixin:
             'prefix': PREFIX_URL,
             'prefix_text': 'estado',
             'prefix_app_url': 'address',
+
+            #API
+            'current_serializer': StateSerializer,
+            'fields_full_text_search': ['name'],
         }, **kwargs)
 
 
