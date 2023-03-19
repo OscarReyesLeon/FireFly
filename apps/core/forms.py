@@ -47,3 +47,12 @@ class GeneralForm(forms.ModelForm):
                 )
         return cleaned_data
             
+
+class GeneralFormVue(GeneralForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'v-model': 'form.' + field,
+            })

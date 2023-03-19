@@ -1,15 +1,7 @@
-from apps.core.forms import GeneralForm
+from apps.core.forms import GeneralFormVue
 from apps.clients.models import ClientModel
 
-class ClientForm(GeneralForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'v-model': 'form.' + field,
-            })
-
+class ClientForm(GeneralFormVue):
     class Meta:
         model = ClientModel
         fields = '__all__'

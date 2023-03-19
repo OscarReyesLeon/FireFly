@@ -1,4 +1,3 @@
-from django.conf.global_settings import AUTH_USER_MODEL
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -8,7 +7,8 @@ from apps.core.choices import (
     # OPCIONES_TIPO_BOMBA, UBICACION_BOMBA, OPCIONES_TIPO_CAMION
 )
 from apps.core.models import BaseModel
-
+from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import User
 """
 ----------------------PRODUCTS---------------------
             Modelos relacionados a productos
@@ -86,6 +86,15 @@ class ProductModel(BaseModel):
             Modelos relacionados a vehiculos
 ---------------------------------------------------
 """
+class CustomUserManager(UserManager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).filter(groups__name="CHOFER")
+
+class DriverModel(User):
+    objects = CustomUserManager()
+
+    class Meta:
+        proxy = True
 
 class FuelPumpModel(BaseModel):
     name = models.CharField(max_length=50, unique=True,
@@ -171,7 +180,7 @@ class VehicleModel(BaseModel):
     type_vehicle = models.PositiveSmallIntegerField(choices=CHOICES_TYPE_VEHICLE, default=0,
             help_text='Tipo de vehiculo (Ligero, pesado, etc)',
             verbose_name="Tipo de vehiculo")
-    responsible = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+    responsible = models.ForeignKey(DriverModel, on_delete=models.SET_NULL, null=True, blank=True,
             help_text='Chofer responsable del vehiculo (Opcional)',
             verbose_name="Chofer responsable")
     asigned_truck = models.ManyToManyField(TruckVehicleModel,
@@ -190,39 +199,3 @@ class VehicleModel(BaseModel):
         verbose_name = "Vehiculo"
         ordering = ['economic_number']
         db_table = 'administration_vehicle'
-
-
-
-
-
-
-# class PedidoModel(ClaseModelo):
-#     clave_pedido = models.CharField(max_length=50, unique=True, help_text='Orden de compra')
-#     estatus = models.PositiveSmallIntegerField(choices=OPCIONES_PROCESO_ESTATUS, default=1)
-#     facturacion = models.PositiveSmallIntegerField(choices=OPCIONES_FACTURA_PROCESO, default=0)
-#     fecha_entrega = models.DateField(null=True, blank=True)
-
-# class TrasladoModel(ClaseModelo):
-#     pedido = models.OneToOneField(PedidoModel, on_delete=models.CASCADE)
-#     vehiculo = models.ForeignKey(VehicleModel, on_delete=models.PROTECT, blank=True, null=True, related_name='vehiculo')
-#     chofer = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, related_name='chofer')
-#     tipo_traslado = models.PositiveSmallIntegerField(choices=OPCIONES_TIPO_TRASLADO, default=0)
-#     lugar_entrega = models.ForeignKey(DireccionClienteModel, on_delete=models.PROTECT)
-#     km_salida = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-#     km_entrada = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-#     tonelaje_salida = models.FloatField(default=0, validators=[MinValueValidator(0.0)]) #Sale del almacén
-#     tonelaje_entregado = models.FloatField(default=0, validators=[MinValueValidator(0.0)]) #Entregado al cliente
-#     litros_recargados = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-#     bomba = models.ForeignKey(FuelPumpModel, on_delete=models.PROTECT, null=True, blank=True)    
-    
-# class DetallesPedidoModel(ClaseModelo):
-#     producto = models.ForeignKey(ProductModel, on_delete=models.PROTECT)
-#     pedido = models.ForeignKey(PedidoModel, on_delete=models.CASCADE)
-#     cantidad_previa = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-#     cantidad = models.FloatField(default=0, validators=[MinValueValidator(0.0)])
-
-# class LogPedidoModel(ClaseModelo):
-#     pedido = models.ForeignKey(PedidoModel, on_delete=models.CASCADE)
-#     estatus = models.PositiveSmallIntegerField(choices=OPCIONES_PROCESO_ESTATUS, default=1)
-#     descripcion = models.TextField(null=True, blank=True)
-#     cambios = models.JSONField(blank=True, null=True) #Cambios de PedidoModel y DetallesPedidoModel

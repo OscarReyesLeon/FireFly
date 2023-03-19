@@ -260,7 +260,7 @@ var csrfcookie = function() {
 function render_dt_badge_cicle(data, type, row){
     var html = '';
     for (var i = 0; i < data.length; i++) {
-        html += '<span class="badge badge-primary">' + data[i] + '</span>';
+        html += '<span class="badge badge-primary m-3">' + data[i] + '</span>';
     }
     return html;
 }
@@ -378,7 +378,7 @@ async function saveFormAsync(url, method, data,function_success, function_error)
     })
 }
 
-async function getDataAsync(url, function_success){
+async function getDataAsync(url, function_success, function_error=null){
     await $.ajax({
         url: url,
         type: 'GET',
@@ -389,11 +389,15 @@ async function getDataAsync(url, function_success){
             function_success(data)
         },
         error: function (data) {
-            let error_message = data.responseJSON
-            if(error_message){
-                Swal.fire(error_message.msg, '', 'error')
+            if(function_error){
+                function_error(data)
             }else{
-                Swal.fire('Ocurrió un error inesperado', '', 'error')
+                let error_message = data.responseJSON
+                if(error_message){
+                    Swal.fire(error_message.msg, '', 'error')
+                }else{
+                    Swal.fire('Ocurrió un error inesperado', '', 'error')
+                }
             }
         }
     })

@@ -1,14 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from apps.clients.serializers import ClientCompleteSerializer
+from apps.clients.serializers import ClientCompleteSerializer, ClientOptionsSerializer, ClientAddressOptionsSerializer
 from django.db import transaction
 from django.urls import reverse
 from django.contrib import messages
 from rest_framework.exceptions import NotFound
-
+import json
 def convert_array_directions(request):
-    data = eval(request.data.get("data", "{}"))
+    data = json.loads(request.data.get("data", "{}"))
     if 'address' in data:
         for address in data['address']:
             address["neighborhood"] = address["neighborhood"].get("id", None)
@@ -31,6 +31,7 @@ class ClientCreateCompleteAPIView(APIView):
         return Response({'message': 'Hello, world!'})
     
 class ClientGetUpdateCompleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ClientCompleteSerializer
     model = serializer_class.Meta.model
 
@@ -54,5 +55,28 @@ class ClientGetUpdateCompleteAPIView(APIView):
         client_serializer.is_valid(raise_exception=True)
         client_serializer.save()
         return Response({
-            "msg": "Información del cliente actualizada exitosamente",
-        })
+                "msg": "Información del cliente guardada exitosamente",
+                "url_redirect": reverse("client:client_list")
+            })
+    
+class ClientOptionsAPIVIew(APIView):
+    permission_classes = [IsAuthenticated]
+    model = ClientOptionsSerializer.Meta.model
+
+    def get(self, request, *args, **kwargs):
+        return Response(
+            ClientOptionsSerializer(self.model.objects.all(), many=True).data,
+        )
+
+from apps.clients.models import ClientAddressModel
+class ClientAddressOptionsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    model = ClientAddressModel
+    serializer_class = ClientAddressOptionsSerializer
+
+    def get(self, request, *args, **kwargs):
+        client_id = self.kwargs.get("pk", None)
+        queryset = self.model.objects.filter(client=client_id)
+        return Response(
+            self.serializer_class(queryset, many=True).data,
+        )

@@ -12,8 +12,7 @@ from django.contrib import messages
 
 class General(LoginRequiredMixin):
     def __init__(self, 
-        form_class,
-        prefix_app_url, prefix, prefix_text=None,
+        prefix_app_url, prefix,form_class=None, prefix_text=None,
         femenine=False,
         text_form_create=None,
         model = None,
@@ -73,7 +72,8 @@ class GenericListMixin(General):
 class GenericFormMixin(General): 
     def __init__(self, template_form=None, form_with_address=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.view_type = None
+        if not hasattr(self, 'view_type'):
+            self.view_type = None
         self.template_form = 'layouts/partial/form_base.html' if template_form is None else template_form
         self.form_with_address = form_with_address
         self.url_list = '{}:{}_list'.format(self.prefix_app_url, self.prefix)
@@ -81,7 +81,7 @@ class GenericFormMixin(General):
         self.delete_message = 'Registro eliminado correctamente'
 
     def get_title_form_update(self, button_text):
-        return f'{button_text}: {self.object}'
+        return f'{button_text}: {self.get_object()}'
     
     def form_valid(self, form):
             data = super().form_valid(form)
@@ -99,6 +99,7 @@ class GenericFormMixin(General):
         data = super().get_context_data(**kwargs)
        
         self.success_url = reverse(self.url_list)
+        print(self.view_type)
         if self.view_type == 'update':
             text_button = "Actualizar {}".format(self.prefix_text)
             title_form = self.get_title_form_update(text_button)
@@ -136,7 +137,6 @@ class ListViewAjaxMixin:
                         list_order.append(f'{prefix}{column}')
                     qs = qs.order_by(*list_order)
             else:
-                print("NO se encuentra", self.order_complex_fields)
                 prefix = '-' if order_dir == 'desc' else ''
                 qs = qs.order_by(f'{prefix}{order_column}')
         return qs

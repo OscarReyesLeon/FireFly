@@ -32,12 +32,16 @@ urlpatterns = [
     path('auth/', include(('apps.users.urls', 'user'), namespace='user')),
     path('address/', include(('apps.address.urls', 'address'), namespace='address')),
     path('clients/', include(('apps.clients.urls', 'client'), namespace='client')),
+    path('orders/', include(('apps.orders.urls', 'order'), namespace='order')),
     
     path('admin/', admin.site.urls),
 
     #PATH de API
+    path('api/v1/administration/', include(('apps.administration.urls_api', 'api_administration'), namespace='api_administration')),
     path('api/v1/address/', include(('apps.address.urls_api', 'api_address'), namespace='api_address')),
     path('api/v1/clients/', include(('apps.clients.urls_api', 'api_client'), namespace='api_client')),
+    path('api/v1/orders/', include(('apps.orders.urls_api', 'api_order'), namespace='api_order')),
+    path('api/v1/users/', include(('apps.users.urls_api', 'api_user'), namespace='api_user')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

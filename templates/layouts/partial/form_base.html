@@ -1,17 +1,6 @@
 {% extends 'layouts/new_base.html' %}{% load static %}
 {% block css_page %}
-<style>
-    .form-check-label  {
-    padding: 2px;
-    display: block;
-    float: left;
-    width: 160px;
-}
-.select2-container.form-control {
-     height: auto !important;
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'base/css/form_general.css'%}">
 
 <link rel="stylesheet" href="{% static 'base/other/select2.min.css'%}">
 
@@ -26,6 +15,8 @@
             <a href="{% url c_url_list %}"  class="btn btn-danger float-right cancelarFormulario">Volver a listado</a>
         {% endif %}
     </div>
+
+    {% block completeForm %}
 
     <form action="" method="POST" class="col-md-12" enctype="multipart/form-data" 
         id="formGeneral" ref="formGeneral" @submit.prevent="submit_form">
@@ -65,6 +56,7 @@
             {% endif %}
         </div>
     </form>
+    {% endblock %}
 </div>
 {% endblock %}
 

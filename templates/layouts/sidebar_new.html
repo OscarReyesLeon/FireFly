@@ -103,3 +103,17 @@
   </div>
 </div>
 </li>
+
+<li class="nav-item">
+  <a data-target="#collapseOrders" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
+    <i class="fas fa-address-book	"></i>
+    <span>Proceso entrega</span>
+  </a>
+  <div id="collapseOrders" class="collapse {% if 'orders/' in request.path  %} show {% endif %}">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="{% url 'order:order_list' %}">
+          <i class="fas fa-map"></i> Ordenes
+      </a>
+    </div>
+  </div>
+  </li>

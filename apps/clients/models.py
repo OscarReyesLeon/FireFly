@@ -28,6 +28,7 @@ class ClientModel(BaseModel):
             verbose_name="Apellido materno")
     address = models.ManyToManyField(AddressModel, blank=True,
                 help_text="Dirección del cliente (Opcional)", 
+                through='ClientAddressModel',
                 verbose_name="Dirección")
 
     def __str__(self):
@@ -46,6 +47,22 @@ class ClientModel(BaseModel):
         verbose_name = "Cliente"
         ordering = ['business_name']
         db_table = 'clients_client'
+
+class ClientAddressModel(BaseModel):
+        client = models.ForeignKey(ClientModel, on_delete=models.PROTECT,
+                        help_text="Cliente al que pertenece la dirección",
+                        verbose_name="Cliente", related_name='address_set')
+        address = models.ForeignKey(AddressModel, on_delete=models.PROTECT,
+                        help_text="Dirección del cliente",
+                        verbose_name="Dirección")
+        def __str__(self):
+                return f'{self.client} - {self.address}'
+        
+        class Meta:
+                verbose_name_plural = "Direcciones de clientes"
+                verbose_name = "Dirección de cliente"
+                ordering = ['client']
+                db_table = 'clients_client_address'
         
 class CreditModel(BaseModel):
     description = models.CharField(max_length=100, 

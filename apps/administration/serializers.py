@@ -1,8 +1,9 @@
 from apps.administration.models import (CategoryProductModel, 
     BrandVehicleModel, FuelPumpModel, ProductModel,
-    TruckVehicleModel, UnitMeasureModel, VehicleModel
+    TruckVehicleModel, UnitMeasureModel, VehicleModel, DriverModel
 )
 from apps.core.serializers import SerializerBase
+from rest_framework import serializers
 
 class CategorySerializer(SerializerBase):
     class Meta:
@@ -50,3 +51,30 @@ class VehicleSerializer(SerializerBase):
                 'responsible', 'asigned_truck',
                 'is_active'
             )
+        
+class VehicleOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VehicleModel
+        fields = ('id', 'name')
+
+class DriverOptionSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='get_full_name')
+    class Meta:
+        model = DriverModel
+        fields = ('id', 'name')
+
+class FuelPumpOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FuelPumpModel
+        fields = ('id', 'name')
+
+class ProductOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductModel
+        fields = ('id', 'name')
+
+class TruckVehicleOptionSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='economic_number')
+    class Meta:
+        model = TruckVehicleModel
+        fields = ('id', 'name')

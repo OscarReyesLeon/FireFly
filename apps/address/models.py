@@ -90,6 +90,10 @@ class AddressModel(BaseModel):
     def __str__(self):
         return self.street
     
+    @property
+    def get_full_address(self):
+        return f"{self.street} {self.number_ext} {self.neighborhood.name}. Referencia: {self.reference}"
+    
     class Meta:
         verbose_name_plural = "Direcciones"
         verbose_name = "Dirección"

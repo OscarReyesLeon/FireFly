@@ -21,6 +21,20 @@ const tableComponent = defineComponent({
         title_table: {
             type: String,
             required: true
+        },
+        perms: {
+            type: Object,
+            required: false
+        },
+        perm_delete: {
+            type: Boolean,
+            required: false,
+            default: true
+        },
+        perm_add: {
+            type: Boolean,
+            required: false,
+            default: true
         }
 
     },
@@ -39,7 +53,7 @@ const tableComponent = defineComponent({
                         <div class="col-6">
                             <h4 class="text-center">{$ title_table $}</h4>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" v-if="perm_add">
                             <a type="button" class="btn btn-primary text-white float-right" @click="array_data.push({...initial_data})">{$ text_button_add $}</a>
                         </div>
                     </div>
@@ -53,7 +67,7 @@ const tableComponent = defineComponent({
                                     <thead>
                                         <tr>
                                             <th v-for="header in headers_table">{$ header $}</th>
-                                            <th>Eliminar</th>
+                                            <th v-if="perm_delete">Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
