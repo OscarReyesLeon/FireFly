@@ -11,9 +11,6 @@ __pycache__/
 local_settings.py
 db.sqlite3
 media
-app/settings.py
-.app/settings.py
-.settings.py
 ledsa.db
 ledsa copy.db
 .idea/
