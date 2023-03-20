@@ -14,9 +14,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label>Folio del pedido</label>
-                        <input type="text" class="form-control" v-model="form_order.key_order" @change="change_key_order" 
-                            required maxlength="10" minlength="5">
-                        <small class="error-message" v-if="form_order.errors.key_order">{$ form_order.errors.key_order$}</small>
+                        <input type="text" class="form-control" v-model="form_order.key_order" placeholder="Por definir" disabled>
                     </div>
                 </div>
                 <div class="col-6">
@@ -24,15 +22,14 @@
                         <label>¿Proceso con facturación?</label>
                         <v-select :options="options_invoice_filter"
                             placeholder="Selecciona si el proceso es con facturación" id="id" label="name" :clearable="false"
-                            
-                            v-model="form_order.invoice_status"></v-select>
+                            v-model="form_order.invoice_status" :disabled="disabled_fields"></v-select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label>Estatus del pedido</label>
                         <v-select :options="options_status_filter" placeholder="Selecciona el estatus del pedido" :clearable="false"
-                            label="name" v-model="form_order.status" :disabled="!perms.super_user"></v-select>
+                            label="name" v-model="form_order.status" :disabled="disabled_fields"></v-select>
                         <small>Para avanzar el pedido a la siguiente fase, favor de cambiar su estatus.</small>
                     </div>
                 </div>
@@ -40,7 +37,7 @@
                 <div class="col-6" v-if="perms.autorize_order">
                     <div class="form-check mt-5 mb-3 mr-3">
                         <input class="form-check-input" type="checkbox" 
-                            checked v-model="form_order.autorization">
+                            checked v-model="form_order.autorization" :disabled="disabled_fields">
                         <label class="form-check-label">
                             ¿Pedido autorizado?
                         </label>
@@ -53,7 +50,7 @@
                         <label>Cliente</label>
                         <v-select :options="options_clients" placeholder="Selecciona el cliente" label="name" :clearable="false"
                             
-                            v-model="form_order.client"></v-select>
+                            v-model="form_order.client" :disabled="disabled_fields"></v-select>
                             <small class="error-message" v-if="form_order.errors.client && !form_order.client">{$ form_order.errors.client$}</small>
                     </div>
                 </div>
@@ -62,7 +59,7 @@
                         <label>Dirección de entrega</label>
                         <v-select :options="options_address" placeholder="Selecciona la dirección de entrega" :clearable="false"
                             
-                            label="name" v-model="form_order.address"></v-select>
+                            label="name" v-model="form_order.address" :disabled="disabled_fields"></v-select>
                         <small v-if="form_order.address && form_order.address.name" class="text-muted">{$ form_order.address.name $}</small>
                             <small class="error-message" v-if="form_order.errors.address && !form_order.address">{$ form_order.errors.address $}</small>
                     </div>
@@ -73,7 +70,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label>Fecha de entrega estimada</label>
-                        <input type="date" class="form-control" v-model="form_order.delivery_date_estimated" required>
+                        <input type="date" class="form-control" v-model="form_order.delivery_date_estimated" required :disabled="disabled_fields">
                     </div>
                 </div>
 
@@ -91,39 +88,39 @@
 
     <hr>
 
-    <div class="card mt-5"  v-if="perms.asign_vehicle || perms.asign_pump">
+    <div class="card mt-5"  v-if="perms.asign_vehicle || perms.asign_pump || perms.detail_view">
         <div class="card-header">
             <h5 class="card-title">Datos generales del traslado</h5>
         </div>
-        <div class="row m-2" v-if="perms.asign_vehicle">
+        <div class="row m-2" v-if="perms.asign_vehicle || perms.detail_view">
             <div class="col-6">
                 <div class="form-group">
                     <label>Vehículo</label>
                     <v-select :options="options_vehicles" placeholder="Selecciona el vehículo" label="name" :clearable="false"
-                        v-model="form_order.vehicle"></v-select>
+                        v-model="form_order.vehicle" :disabled="disabled_fields"></v-select>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>Chofer</label>
                     <v-select :options="options_drivers" placeholder="Selecciona un chofer" label="name" :clearable="false"
-                        v-model="form_order.driver"></v-select>
+                        v-model="form_order.driver" :disabled="disabled_fields"></v-select>
                 </div>
             </div>
         </div>
 
-        <div class="row m-2" v-if="perms.asign_pump">
+        <div class="row m-2" v-if="perms.asign_pump || perms.detail_view">
             <div class="col-6">
                 <div class="form-group">
                     <label>Bomba de combustible</label>
                     <v-select :options="options_fuel_pump" placeholder="Selecciona la bomba de combustible" label="name" :clearable="false"
-                        v-model="form_order.fuel_pump"></v-select>
+                        v-model="form_order.fuel_pump" :disabled="disabled_fields"></v-select>
                 </div>
             </div>
             <div class="col-6">
                 <div class="form-group">
                     <label>Litros de combustible</label>
-                    <input type="number" class="form-control" v-model="form_order.fuel_liters" required>
+                    <input type="number" class="form-control" v-model="form_order.fuel_liters" required :disabled="disabled_fields">
                 </div>
             </div>
         </div>
@@ -138,32 +135,32 @@
         title_table="Productos del pedido"
         :headers_table="header_table_products"
         :perms="perms"
-        :perm_delete="perms.delete_product"
-        :perm_add="perms.add_product"
+        :perm_delete="perms.delete_product && !disabled_fields"
+        :perm_add="perms.add_product && !disabled_fields"
         >
         <template #body_table>
             <tr v-for="(product, index) in array_products" :key="index">
                 <td style="width:25%">
                     <v-select :options="options_products" placeholder="Selecciona un producto" label="name" :clearable="false"
-                        v-model="product.product" :disabled="!perms.change_product"></v-select>
+                        v-model="product.product" :disabled="!perms.change_product || disabled_fields"></v-select>
                 <td style="width:25%" v-if="perms.asign_truck">
                     <v-select :options="options_trucks" placeholder="Selecciona un remolque" label="name" :clearable="false"
-                        v-model="product.truck"></v-select>
+                        v-model="product.truck" :disabled="disabled_fields"></v-select>
                 </td>
                 <td>
-                    <input type="number" class="form-control" v-model="product.quantity_order" :disabled="!perms.quantity_order" required>
+                    <input type="number" class="form-control" v-model="product.quantity_order" :disabled="!perms.quantity_order || disabled_fields" required>
                     <small class="error-message" v-if="product.errors && product.errors.quantity_order">{$ product.errors.quantity_order $}</small>
                 </td>
                 <td v-if="perms.quantity_transfer">
-                    <input type="number" class="form-control" v-model="product.quantity_transfer" required>
+                    <input type="number" class="form-control" v-model="product.quantity_transfer" required :disabled="disabled_fields">
                     <small class="error-message" v-if="product.errors &&  product.errors.quantity_transfer">{$ product.errors.quantity_transfer $}</small>
                 </td>
                 
                 <td v-if="perms.ton_out">
-                    <input type="number" class="form-control" v-model="product.ton_out" required>
+                    <input type="number" class="form-control" v-model="product.ton_out" required :disabled="disabled_fields">
                     <small class="error-message" v-if="product.errors &&  product.errors.ton_out">{$ product.errors.ton_out $}</small>
                 </td>
-                <td v-if="perms.delete_product">
+                <td v-if="perms.delete_product && !disabled_fields">
                     <a type="button" class="btn btn-danger text-white"
                     @click="array_products.splice(index,1)">Eliminar</button>
                 </td>
@@ -173,7 +170,7 @@
         </table-component>
     </div>
 
-    <div class="row">
+    <div class="row"  v-if="!disabled_fields">
         <button type="submit" class="btn btn-primary m-3 enviarFormulario">{{c_text_button}}</button>
         {% if c_url_list %}
         <a href="{% url c_url_list %}" class="btn btn-danger m-3 cancelarFormulario">Cancelar</a>
@@ -204,7 +201,8 @@
                 driver: null,
                 liters: null,
                 pump: null,
-                errors: {}
+                errors: {},
+                initial_status: null,
             }
 
             const initial_form_product = {
@@ -247,21 +245,6 @@
             }
         },
         methods: {
-            change_key_order(){
-                if(!this.form_order.key_order || this.form_order.key_order.length < 5){
-                    this.form_order.errors.key_order = "La clave debe tener al menos 5 caracteres"
-                    return
-                }
-                this.form_order.key_order = this.form_order.key_order.toUpperCase()
-                this.form_order.errors.key_order = null
-                getDataAsync(this.url_order + "?key_order=" + this.form_order.key_order, (data) => {
-                }, (error) => {
-                    let error_message = error.responseJSON
-                    if (error_message.key_order) {
-                        this.form_order.errors.key_order = error_message.key_order
-                    }
-                })
-            },
             submit_form(){
                 let with_error = false
                 if (!this.$refs.formGeneralVue.checkValidity()) {
@@ -290,6 +273,14 @@
                         })
                         with_error = true
                     }
+                }
+
+                if(this.form_order.autorization == false && this.form_order.status.id  > 2){
+                    NotificationToast.fire({
+                        icon: 'error',
+                        title: 'No puedes cambiar el estatus de la orden si no esta autorizada'
+                    })
+                    with_error = true
                 }
 
                 if(with_error) return
@@ -384,6 +375,15 @@
                     return this.options_invoice_status.filter((item) => item.id < 2)
                 return this.options_invoice_status
             },
+            disabled_fields(){
+                if(this.perms.detail_view) return true
+                if(this.perms.super_user) return false
+                if(this.form_order.status){
+                    if(this.form_order.status.id >= 5 && this.form_order.initial_status != 4)
+                        return true
+                }
+                return false
+            }
         },
         async mounted() {
             await getDataAsync(this.url_users + "permissions/order_view/", (data) => {
@@ -395,6 +395,8 @@
                 this.options_order_status = data.order_status
                 this.form_order.status = data.order_status[0]
                 this.form_order.invoice_status = data.invoice_status[0]
+                this.form_order.key_order = data.current_key_order
+                this.form_order.initial_status = 1
             })
 
             await getDataAsync(this.url_client + "options/", (data) => {
@@ -415,7 +417,7 @@
                 let url_get = `${this.url_order}${pk}/`
                 let self = this
 
-                getDataAsync(url_get,(data)=>{
+                await getDataAsync(url_get,(data)=>{
                     let products = data.detail
                     delete data.detail
                     for(let prod of products){
@@ -442,17 +444,16 @@
                         fuel_pump: self.asign_value_select(data.fuel_pump, self.options_fuel_pump),
                         truck: self.asign_value_select(data.truck, self.options_trucks),
                         address_initial: data.address,
+                        initial_status: data.status,
                     }
                 })
-           
-           
-                if(this.perms.super_user)
-                    this.options_status_filter = this.options_order_status
-                else{
-                    next_status = this.form_order.status ? this.form_order.status.id + 1 : 1
-                    this.options_status_filter = this.options_order_status.filter((item) => [next_status, next_status-1].includes(item.id))
-                }
+            }
 
+            if(this.perms.super_user)
+                    this.options_status_filter = this.options_order_status
+            else{
+                let next_status = this.form_order.status ? this.form_order.status.id : 1
+                this.options_status_filter = this.options_order_status.filter((item) => [next_status, next_status+1].includes(item.id))
             }
         },
         components: {

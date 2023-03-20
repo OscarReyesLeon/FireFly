@@ -6,10 +6,15 @@ from apps.core.models import BaseModel
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from crum import get_current_user
+from datetime import datetime
 
+class LogOrderModel(BaseModel):
+    pedido = models.ForeignKey('OrderModel', on_delete=models.CASCADE)
+    estatus = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1)
+    api_gps = models.JSONField(blank=True, null=True) #Cambios de PedidoModel y DetallesPedidoModel
 class OrderManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
+        queryset = super().get_queryset(*args, **kwargs).order_by("-key_order")
         user = get_current_user()
         if user.is_superuser:
             return queryset
@@ -32,12 +37,27 @@ class OrderManager(models.Manager):
         if autorization is not None:
             queryset = queryset.filter(autorization=autorization)
         return queryset
+    
+    def get_next_key_order(self, *args, **kwargs):
+        query =  self.get_queryset(*args, **kwargs)
+        search_key = True
+        if query.first():
+            last_key = query.first().key_order + 1
+        else:
+            return 1
+        while search_key:
+            if query.filter(key_order=last_key).exists():
+                last_key += 1
+            else:
+                search_key = False
+        return last_key
+
 
 class OrderModel(BaseModel):
     objects = OrderManager()
-    key_order = models.CharField(max_length=50, unique=True,
-                    verbose_name='Folio del pedido',
-                    help_text='Folio que está aociado al pédido',)
+    key_order = models.IntegerField(unique=True,
+                    verbose_name='Folio de la orden',
+                    help_text='Folio de la orden',)
     status = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1,
                     verbose_name='Estatus del pedido',
                     help_text='Estatus del pedido',)
@@ -68,7 +88,7 @@ class OrderModel(BaseModel):
                                 verbose_name='Vehículo',
                                 help_text='Vehículo que se utilizará para el traslado')
     
-    driver = models.ForeignKey(User, on_delete=models.PROTECT,
+    driver = models.ForeignKey('administration.DriverModel', on_delete=models.PROTECT,
                                 null=True, related_name='driver_transfer',
                                 verbose_name='Conductor',
                                 help_text='Conductor que realizará el traslado')
@@ -88,6 +108,28 @@ class OrderModel(BaseModel):
         verbose_name = "Pedido"
         ordering = ['key_order']
         db_table = 'orders_order'
+
+    def save(self, *args, **kwargs):
+        if not self.key_order:
+            self.key_order = self.__class__.objects.get_next_key_order()
+        if self.status == 4:
+            #Si ya se genero carta porte, todo bien
+            pass
+        if self.status == 6:
+            self.delivery_date = datetime.now().date()
+            #Generar fáctura
+        if self.status in [4, 5,6,7,8]:
+            #Consultar API GPS
+            pass
+
+        if self.pk:
+            LogOrderModel.objects.create(
+                order=self,
+                status=self.status,
+                api_gps=None
+            )
+        super().save(*args, **kwargs)
+        
 
 class DetailOrderModel(BaseModel):
     order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, related_name='order_detail',
@@ -115,13 +157,6 @@ class DetailOrderModel(BaseModel):
     ton_receiver = models.FloatField(default=0, validators=[MinValueValidator(0.0)], null=True, blank=True,
                                verbose_name="Peso recibido por el cliente (en toneladas)",
                                help_text="Peso que entregó el vehiculo al cliente") #Entregado al cliente
-    
-    # producto 1 - 60 T
-    # producto 2 30 T
-
-    # producto 1 - 30 productos - Truck 1 #Factura 1
-    # Producto 1 - 30 productos - Truck 2 #Factura 2
-    # #No se pueden seleccionar más de 2 remolques en el mismo pedido 
 
 class InvoiceModel(BaseModel):
     key_invoice = models.CharField(max_length=50, unique=True,
@@ -153,7 +188,3 @@ class InvoiceModel(BaseModel):
         ordering = ['key_invoice']
         db_table = 'orders_invoice'
 
-class LogOrderModel(BaseModel):
-    pedido = models.ForeignKey(OrderModel, on_delete=models.CASCADE)
-    estatus = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1)
-    api_gps = models.JSONField(blank=True, null=True) #Cambios de PedidoModel y DetallesPedidoModel

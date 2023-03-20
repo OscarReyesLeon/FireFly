@@ -14,8 +14,6 @@ class PermissionOrderAPIView(APIView):
             capture_order = groups_user.filter(name='CAPTURISTA_ORDEN').exists()
             autorize_order = groups_user.filter(name='AUTORIZAR_ORDEN').exists()
             exit_order = groups_user.filter(name='CAPTURISTA_TRASLADO').exists()
-        # capture_order = True
-        autorize_order = True
         default_permissions = {
             "autorize_order": False,
             "change_product": False,
@@ -27,6 +25,7 @@ class PermissionOrderAPIView(APIView):
             "asign_vehicle": False,
             "asign_truck": False,
             "super_user": super_user,
+            "detail_view": False
         }
 
         if capture_order or autorize_order:

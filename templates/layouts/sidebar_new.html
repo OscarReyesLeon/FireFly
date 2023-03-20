@@ -112,7 +112,19 @@
   <div id="collapseOrders" class="collapse {% if 'orders/' in request.path  %} show {% endif %}">
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="{% url 'order:order_list' %}">
-          <i class="fas fa-map"></i> Ordenes
+          <i class="fas fa-box-open"></i> Pedidos
+      </a>
+      <a class="collapse-item" href="{% url 'order:delivery_output' %}">
+        <i class="fas fa-weight-hanging"></i> Capturar báscula
+      </a>
+      <a class="collapse-item" href="{% url 'order:delivery_customer' %}">
+        <i class="fas fa-truck-moving"></i> Entrega al cliente
+      </a>
+      <a class="collapse-item" href="{% url 'order:delivery_end_transfer' %}">
+        <i class="fas fa-check-double"></i> Finalizar viaje (Chofer)
+      </a>
+      <a class="collapse-item" href="{% url 'order:delivery_fuel' %}">
+        <i class="fas fa-gas-pump"></i> Captura de combustible
       </a>
     </div>
   </div>

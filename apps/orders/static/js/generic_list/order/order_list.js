@@ -10,7 +10,6 @@ $(document).ready(function() {
             'title': 'Autorizado',
             'data': 'autorization',
             'render': function(data, type, row) {
-                console.log(data, type, row)
                 return render_dt_yes_no(data,type, row)
             }
         },{

@@ -1,0 +1,242 @@
+{% extends 'layouts/partial/form_base.html' %}
+{% load static %}
+{% block completeForm %}
+<form action="" method="POST" class="col-md-12" enctype="multipart/form-data" 
+        id="formGeneralVue" ref="formGeneralVue" @submit.prevent="submit_form">
+        {% csrf_token %}
+        <input type="text" id="step_id" disabled value="{{step}}"> {$ this.order.status $}
+
+        <div class="row">
+            <div class="col-6">
+                <label>Folio de pedido</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control"  v-model="key_order"
+                        placeholder="Capturar folio de pedido" aria-describedby="button-search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-search"
+                        @click="search_order"
+                        >Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <label>Paso actual</label>
+                <input type="text" class="form-control" :value="order.status_display" disabled>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Folio de pedido</label>
+                    <input type="text" class="form-control" :value="order.key_order" disabled>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <input type="text" class="form-control" :value="order.client" disabled>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Dirección de entrega</label>
+                    <input type="text" class="form-control" :value="order.address" disabled>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Vehículo</label>
+                    <input type="text" class="form-control" :value="order.vehicle" disabled>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Chofer</label>
+                    <input type="text" class="form-control" :value="order.driver" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" v-if="order.status >= 7">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Bomba de combustible</label>
+                    <v-select :options="options_fuel_pump" placeholder="Selecciona la bomba de combustible" label="name" :clearable="false"
+                        v-model="order.fuel_pump" :disabled="disabled"></v-select>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Litros de combustible</label>
+                    <input type="number" class="form-control" v-model="order.fuel_liters" placeholder="Cantidad de combustible" required :disabled="disabled">
+                </div>
+            </div>
+        </div>
+        <table-component 
+            :array_data="products"
+            :headers_table="headers_table"
+            title_table="Productos del pedido"
+            :text_button_add="''"
+            :perm_delete="false"
+            :perm_add="false"
+            >
+            <template #body_table >
+                <tr v-for="(product, index) in products" :key="index">
+                    <td>{$ product.product $}</td>
+                    <td>{$ product.truck $}</td>
+                    <td>{$ product.quantity_transfer $}</td>
+                    <td>
+                        <input type="number" class="form-control"  v-if="order.status == 4"
+                        v-model="product.ton_out" required :disabled="disabled">
+                        <input type="number" class="form-control"  v-else
+                        :value="product.ton_out" required :disabled="true">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" v-if="order.status == 5"
+                            v-model="product.ton_receiver" required :disabled="disabled">
+                        <input type="number" class="form-control"  v-else
+                        :value="product.ton_receiver" required :disabled="true">
+                        
+                    </td>
+                </tr>
+            </template>
+        </table-component>
+
+        <div class="row mt-5" v-if="!disabled && order.id">
+            <div class="col-12 mb-3">
+                <h6 class="text-success">Recuerda que, al generar la carta porte, ya no podrás modificar la salida.</h6>
+            </div>
+            <div class="col-12">
+                <a type="button"
+                    class="btn btn-primary text-white"
+                    @click="submit_form(0)"
+                >Guardar</a>
+
+                <a type="button" v-if="order.status >= 4 && order.status <= 7"
+                    class="btn btn-primary text-white ml-3"
+                    @click="submit_form(1)"
+                >
+                <span v-if="order.status == 4"> Generar carte porte y salida </span>
+                <span v-else-if="order.status==5"> Confirmar entrega </span>
+                <span v-else-if="order.status==6"> Finalizar viaje (Entrada a almácen) </span>
+                <span v-else-if="order.status==7"> Finalizar cáptura de combustible </span>
+                </a>
+            </div>
+        </div>
+</form>
+{% endblock %}
+
+{% block jsForm %}
+<script src="{% static 'base/js/vue/components/table_component.js' %}"></script>
+<script>
+    createApp({
+        delimiters: ['{$', '$}'],
+        data() {
+            return {
+                key_order: ref('3131213'), //3131213
+                url_order: '/api/v1/orders/warehouse/',
+                url_options_fuel:'/api/v1/administration/options/?only=fuel',
+                headers_table: ref(["Producto", "Remolque", "Cantidad", "Toneladas salida", "Toneladas entregadas"]),
+                order: ref({
+                    id: null,
+                    key_order: '',
+                    client: '',
+                    address: '',
+                    vehicle: '',
+                    driver: '',
+                    fuel_pump: null,
+                    fuel_liters: null
+                }),
+                products : ref([]),
+                disabled: ref(false),
+                step: ref(0),
+                options_fuel_pump: ref([])
+            }
+        },
+        methods: {
+            async search_order(){
+                this.order = {}
+                await getDataAsync(this.url_order + "?key_order=" +this.key_order + "&step=" + this.step,  (data)=>{
+                    this.order = data.order
+                    this.order.status_display = data.status
+                    this.products = data.order.detail
+                    this.disabled = data.disabled
+                    if(data.msg){
+                        NotificationToast.fire({
+                            icon: 'question',
+                            title: data.msg
+                        })
+                    }
+                })
+            },
+            submit_form(sum_step){
+                if (!this.$refs.formGeneralVue.checkValidity()) {
+                    NotificationToast.fire({
+                        icon: 'error',
+                        title: 'Por favor llena todos los campos requeridos'
+                    })
+                    return
+                }
+                let current_data = []
+                for(let product of this.products){
+                    current_data.push({
+                        id: product.id,
+                        ton_out: product.ton_out,
+                        ton_receiver: product.ton_receiver,
+                    })
+                }
+
+
+                let send_data = {
+                    "id": this.order.id,
+                    "status": this.order.status + sum_step,
+                    "products": current_data
+                }
+
+                if(this.order.status == 7){
+                    if(!this.order.fuel_pump){
+                        NotificationToast.fire({
+                            icon: 'error',
+                            title: 'Por favor selecciona una bomba de combustible'
+                        })
+                        return
+                    }else{
+                        console.log("Hola")
+                        send_data.fuel_pump = this.order.fuel_pump.id
+                        send_data.fuel_liters = this.order.fuel_liters
+                    }
+                }
+
+                saveFormAsync(this.url_order, "POST", {
+                    "data": JSON.stringify(send_data)
+                }, (data)=>{
+                    NotificationToast.fire({
+                        icon: 'success',
+                        title: 'Se ha guardado correctamente'
+                    })
+                    this.search_order()
+                }, (error)=>{
+                    console.log(error)
+                    NotificationToast.fire({
+                        icon: 'error',
+                        title: 'Ha ocurrido un error'
+                    })
+                })
+            },
+        },
+        async mounted() {
+            this.step = $('#step_id').val()
+            await getDataAsync(this.url_options_fuel, (data)=>{
+                this.options_fuel_pump = data.options_fuel_pump
+            })
+            await this.search_order()
+        },
+        components: {
+            'v-select': window["vue-select"],
+            'table-component': tableComponent,
+        },
+    }).mount('#appVue')
+</script>
+{% endblock %}

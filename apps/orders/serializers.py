@@ -14,7 +14,7 @@ class OrderSerializer(SerializerBase):
 
 
 class DetailOrderSerializer(serializers.ModelSerializer):
-
+    id = serializers.UUIDField(required=False)
     class Meta:
         model = DetailOrderModel
         fields = (
@@ -24,13 +24,15 @@ class DetailOrderSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, data, *args, **kwargs):
-        super().validate(data, *args, **kwargs)
-        print("Validando", data, data.get('quantity_order'), data.get('quantity_transfer'))
-        if data.get('quantity_order') < data.get('quantity_transfer'):
+        data = super().validate(data, *args, **kwargs)
+        if data.get('quantity_order', 0) < data.get('quantity_transfer', 0):
             raise serializers.ValidationError({
                 "quantity_transfer": 'La cantidad de traslado no puede ser mayor a la cantidad de la orden'
             })
         return data
+    
+class DetailOrderBaseSerializer(SerializerBase, DetailOrderSerializer):
+    pass
 
 class OrderSaveSerializer(serializers.ModelSerializer):
     products = DetailOrderSerializer(many=True, write_only=True, required=True)
@@ -44,12 +46,15 @@ class OrderSaveSerializer(serializers.ModelSerializer):
             'client', 'address', 'vehicle', 'driver',
             'fuel_liters', 'fuel_pump', 'products', 'detail',
         )
-    
+        extra_kwargs = {
+            'key_order': {'read_only': True},
+        }
     def create(self, validated_data):
         products = validated_data.pop('products')
         order = super().create(validated_data)
         for product in products:
             DetailOrderModel.objects.create(order=order, **product)
+        order.save()
         return order
     
     def update(self, instance, validated_data):
@@ -62,7 +67,11 @@ class OrderSaveSerializer(serializers.ModelSerializer):
         for product in products:
             if 'id' in product:
                 DetailOrderModel.objects.get(id=product.pop('id'))
-                DetailOrderModel.objects.update(**product, user_update=user, date_update=today)
+                DetailOrderModel.objects.update(**product, user_update=user, date_updated=today)
             else:
                 DetailOrderModel.objects.create(order=order, **product)
+        order.save()
         return order
+
+class OrderWarehouseSerializer(SerializerBase, OrderSaveSerializer):
+    detail = DetailOrderBaseSerializer(many=True, read_only=True, source='order_detail')

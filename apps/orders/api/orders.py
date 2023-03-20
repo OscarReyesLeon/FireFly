@@ -18,6 +18,7 @@ class OrderOptionsInitialAPIView(APIView):
         data = {
             'order_status': convert_to_choices(CHOICES_ORDER_STATUS),
             'invoice_status': convert_to_choices(CHOICES_INVOICE_STATUS),
+            'current_key_order': OrderModel.objects.get_next_key_order()
         }
         return Response(data)
     

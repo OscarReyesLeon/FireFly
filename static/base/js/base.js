@@ -379,28 +379,30 @@ async function saveFormAsync(url, method, data,function_success, function_error)
 }
 
 async function getDataAsync(url, function_success, function_error=null){
-    await $.ajax({
-        url: url,
-        type: 'GET',
-        headers: {
-            'X-CSRFToken': csrfcookie()
-        },
-        success: function (data) {
-            function_success(data)
-        },
-        error: function (data) {
-            if(function_error){
-                function_error(data)
+    try{
+        await $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'X-CSRFToken': csrfcookie()
+            },
+            success: function (data) {
+                function_success(data)
+            },
+        })
+    }catch(error){
+        if(function_error){
+            function_error(error)
+        }else{
+            let error_message = error.responseJSON
+            console.log(error_message)
+            if(error_message){
+                Swal.fire(error_message.msg, '', 'error')
             }else{
-                let error_message = data.responseJSON
-                if(error_message){
-                    Swal.fire(error_message.msg, '', 'error')
-                }else{
-                    Swal.fire('Ocurrió un error inesperado', '', 'error')
-                }
+                Swal.fire('Ocurrió un error inesperado', '', 'error')
             }
         }
-    })
+    }
 }
 
 $(document).ready(function() {

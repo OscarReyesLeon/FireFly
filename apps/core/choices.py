@@ -3,12 +3,12 @@ CHOICES_ORDER_STATUS = (
     (2, 'Autorización y asignación de camión'), #Persona2- Autoriza pedido y asigna camión
     (3, 'Cáptura de salida'),  #Persona3-Captura datos de salida del almacen (piezas)
     (4, 'Salida del almacén'), #Bascula - Indica el tonelaje que lleva el chofer, peso y GPS (Se genera Carta porte)
-    (5, 'Entregado'), #Chofer- Indica lo mismo que en la salida de báscula(peso,GPS, Imagen(?)) y se genera factura
+    #Se bloquea el pedido y ya no se actualiza nada
+    (5, 'Entregando'), #Chofer- Indica lo mismo que en la salida de báscula(peso,GPS, Imagen(?)) y se genera factura
     (6, 'Entrada a almacén'), #Chofer-Indica que el viaje ha finalizado.
     (7, 'Cáptura de entrada'), #Vigilante- Indica litros de diesel que recargó y cierra viaje
     (8, 'Finalizado'), #Fin del viaje
 )
-
 """
 Paso 4: Salida del almacén
     - Se genera carta porte

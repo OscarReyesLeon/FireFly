@@ -8,7 +8,8 @@ const tableComponent = defineComponent({
         },
         initial_data: {
             type: Object,
-            required: true
+            required: false,
+            default: {}
         },
         text_button_add: {
             type: String,
