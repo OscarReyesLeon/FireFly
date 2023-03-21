@@ -100,8 +100,6 @@ class ClientCompleteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        print(instance.credit_set.all())
-        print(CreditModel.objects.all())
         data['credit'] = CreditSerializer(instance.credit_set.all(), many=True).data
         return data
     

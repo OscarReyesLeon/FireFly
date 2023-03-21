@@ -13,6 +13,7 @@ def insert_data():
         'Jalisco': '14-Jalisco.csv',
         'México': '15-Mexico.csv',
         'Michoacán': '16-Michoacan.csv',
+        'Queretaro': '22-Queretaro.csv',
         'San Luis Potosí': '24-San_Luis_Potosi.csv'
     }
 

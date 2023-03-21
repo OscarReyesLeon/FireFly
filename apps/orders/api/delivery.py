@@ -25,25 +25,25 @@ class OrderSearchAPIView(APIView):
             order = order.first()
             msg = None
             disabled = True
-            if delivery == 'exit_warehouse':
+            if delivery == 'exit_warehouse': #Cuando se va a capturar las toneladas antes de salir
                 if order.status < 4:
                     msg = 'El folio de la orden aún no puede ser despachada'
                 if order.status > 4:
                     msg = 'El folio de la orden ya fue despachada'
                 disabled = order.status != 4
-            elif delivery == 'delivery_customer':
+            elif delivery == 'delivery_customer': #Cuando el chofer captura las toneladas que entrego al cliente
                 if order.status < 5:
                     msg = 'El folio de la orden aún no puede ser entregada al cliente'
                 if order.status > 5:
                     msg = 'El folio de la orden ya fue entregada al cliente'
                 disabled = order.status != 5
-            elif delivery == 'return_warehouse':
+            elif delivery == 'return_warehouse': #Cuando el chofer indica que ya regreso al almacén/fin del viaje
                 if order.status < 6:
                     msg = 'El traslado aún no puede ser finalizado'
                 if order.status > 6:
                     msg = 'El traslado ya fue finalizado'
                 disabled = order.status != 6
-            elif delivery == 'fuel_capture':
+            elif delivery == 'fuel_capture': #Cuando se va a capturar el combustible, al capturar, se finaliza el viaje
                 if order.status < 7:
                     msg = 'No puedes capturar el combustible si el viaje aún no se ha finalizado'
                 if order.status > 7:

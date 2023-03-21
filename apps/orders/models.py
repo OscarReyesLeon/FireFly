@@ -7,11 +7,47 @@ from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 from crum import get_current_user
 from datetime import datetime
+import requests
+import json
 
 class LogOrderModel(BaseModel):
-    pedido = models.ForeignKey('OrderModel', on_delete=models.CASCADE)
-    estatus = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1)
+    order = models.ForeignKey('OrderModel', on_delete=models.CASCADE)
+    status = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1)
     api_gps = models.JSONField(blank=True, null=True) #Cambios de PedidoModel y DetallesPedidoModel
+    odometer = models.PositiveIntegerField(blank=True, null=True, default=0)
+    velocity = models.PositiveIntegerField(blank=True, null=True, default=0)
+    
+    def save(self,with_api=False, *args, **kwargs):
+        user = get_current_user()
+        if self.pk:
+            self.user_update = user
+        else:
+            self.user_create = user
+        if with_api:
+            try:
+                url = "https://swservicios.mastrack.com.mx/Unidades/LocalizarUnidades/"
+                alias = self.order.vehicle.economic_number
+                data_send = json.dumps({
+                    "LocalizarUnidades":{
+                        "sGeocercasSubclasificaciones":"","sGeocercasCategorias":"",
+                        "sGrupos":"","sGeocercasSubcategorias":"","bCompania":True,"sSeries":"",
+                        "bGeocercas":True,"sAlias":alias,"sUsuario":"C7357LEDSA",
+                        "sGeocercasClasificaciones":"","sZonaHoraria":"","sGeocercas":"Todas","sPassword":"admin"
+                    }
+                })
+                data = requests.post(url, data=data_send)
+                self.api_gps = data.json()
+                response = self.api_gps.get("LocalizarUnidades", {})
+                if data.status_code == 200:
+                    unity = response.get("Unidades", [{}])[0]
+                    odometer = unity.get("Odometro", "0")
+                    velocity = unity.get("Velocidad", "0")
+                    self.odometer = odometer.split(" ")[0]
+                    self.velocity = velocity.split(" ")[0]
+            except Exception as e:
+                self.api_gps = None
+        super().save(*args, **kwargs)
+
 class OrderManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs).order_by("-key_order")
@@ -39,23 +75,24 @@ class OrderManager(models.Manager):
         return queryset
     
     def get_next_key_order(self, *args, **kwargs):
+        import random
+        letters = ["A", "B", "C", "D", "E", "F", 
+                                "G", "H", "I", "J", "K", "L", "M", "N", "O", 
+                                "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+                ]
         query =  self.get_queryset(*args, **kwargs)
         search_key = True
-        if query.first():
-            last_key = query.first().key_order + 1
-        else:
-            return 1
+        current_key = "A1"
         while search_key:
-            if query.filter(key_order=last_key).exists():
-                last_key += 1
-            else:
+            current_key = f"{random.choice(letters)}{random.choice(letters)}{random.randint(0, 10)}{random.randint(0, 10)}{random.randint(0, 10)}"
+            if not query.filter(key_order=current_key).exists():
                 search_key = False
-        return last_key
+        return current_key
 
 
 class OrderModel(BaseModel):
     objects = OrderManager()
-    key_order = models.IntegerField(unique=True,
+    key_order = models.CharField(unique=True, max_length=6,
                     verbose_name='Folio de la orden',
                     help_text='Folio de la orden',)
     status = models.PositiveSmallIntegerField(choices=CHOICES_ORDER_STATUS, default=1,
@@ -118,16 +155,15 @@ class OrderModel(BaseModel):
         if self.status == 6:
             self.delivery_date = datetime.now().date()
             #Generar fáctura
-        if self.status in [4, 5,6,7,8]:
-            #Consultar API GPS
-            pass
-
         if self.pk:
-            LogOrderModel.objects.create(
+            log = LogOrderModel(
+                with_api=False,
                 order=self,
                 status=self.status,
-                api_gps=None
             )
+            if self.status in [4, 5,6,7,8]:
+                log.with_api = True
+            log.save()
         super().save(*args, **kwargs)
         
 
