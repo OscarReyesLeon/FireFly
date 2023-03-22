@@ -21,7 +21,7 @@ def insert_data():
     list_municipalities = []
     list_neighborhoods = []
     for key, value in name_files.items():
-        with open(f'{location_files}{value}', 'r') as csvfile:
+        with open(f'{location_files}{value}', 'r',encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
             state_current = StateModel(name=key, code=value.split('-')[0])
             list_states.append(state_current)

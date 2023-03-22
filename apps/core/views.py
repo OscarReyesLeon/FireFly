@@ -1,5 +1,5 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
-from django_datatables_view.base_datatable_view import BaseDatatableView
+#from django_datatables_view.base_datatable_view import BaseDatatableView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import JsonResponse
 from django.urls import reverse
