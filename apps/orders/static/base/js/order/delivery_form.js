@@ -1,4 +1,4 @@
-#(function(){
+$(function(){
     createApp({
         delimiters: ['{$', '$}'],
         data() {
@@ -99,7 +99,7 @@
             await getDataAsync(this.url_options_fuel, (data)=>{
                 this.options_fuel_pump = data.options_fuel_pump
             })
-            await this.search_order()
+            // await this.search_order()
         },
         components: {
             'v-select': window["vue-select"],

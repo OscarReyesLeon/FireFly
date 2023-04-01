@@ -45,10 +45,13 @@ INSTALLED_APPS = [
     'cmp',
     'fac',
     'bita',
-    'prf',
     'logi',
-    'external',
-    'comercial',
+    'apps.external',
+    'apps.administration',
+    'apps.users',
+    'apps.address',
+    'apps.clients',
+    'apps.orders',
     'django_userforeignkey',
     'rest_framework',
     'django.contrib.humanize',
@@ -64,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_userforeignkey.middleware.UserForeignKeyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -71,7 +75,7 @@ ROOT_URLCONF = 'app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,11 +95,20 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'ledsa.db',
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'ledsa.db',
-    },
-     'sensor': {
+        #postgresql
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'firefly_db',
+        'USER': 'admin_firefly',
+        'PASSWORD': 'Mzkj*4gyb8gtPdZF',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }, 
+    'sensor': {
         #mysql
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'arduinos',
@@ -147,9 +160,11 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

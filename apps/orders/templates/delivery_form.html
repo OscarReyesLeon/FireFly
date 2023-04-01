@@ -4,7 +4,7 @@
 <form action="" method="POST" class="col-md-12" enctype="multipart/form-data" 
         id="formGeneralVue" ref="formGeneralVue" @submit.prevent="submit_form">
         {% csrf_token %}
-        <input type="text" id="step_id" disabled value="{{step}}"> {$ this.order.status $}
+        <input type="hidden" id="step_id" disabled value="{{step}}"> 
 
         <div class="row">
             <div class="col-6">
@@ -118,6 +118,7 @@
                     class="btn btn-primary text-white ml-3"
                     @click="submit_form(1)"
                 >
+                hola mundo
                 <span v-if="order.status == 4"> Generar carte porte y salida </span>
                 <span v-else-if="order.status==5"> Confirmar entrega </span>
                 <span v-else-if="order.status==6"> Finalizar viaje (Entrada a almácen) </span>
