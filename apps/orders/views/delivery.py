@@ -26,3 +26,9 @@ class DeliveryChechEndCaptureView(DeliveryCaptureView):
 class DeliveryFuelView(DeliveryCustomerCaptureView):
     c_title_form = 'Captura de combustible'
     step = 'fuel_capture'
+
+class DeliveryExample(TemplateView):
+    template_name = 'delivery_example1.html'
+
+class DeliveryExample2(TemplateView):
+    template_name = 'delivery_example2.html'
