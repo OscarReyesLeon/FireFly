@@ -10,12 +10,12 @@
   <meta name="description" content="">
   <meta name="author" content="Oscar Reyes León">
 
-    <link rel="shortcut icon" type="image/png" href="https://ledsa.mx/ff/firefly.png"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'base/img/firefly.png' %}"/>
     <title>Ledsa FireFly</title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static  'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="{% static  'base/css/font_google.css' %}" rel="stylesheet" type="text/css">
 
   <!-- Custom styles for this template-->
   <link href="{% static  'base/css/sb-admin-2.min.css' %}" rel="stylesheet">
@@ -29,11 +29,11 @@
    <!-- jQuery Confirm -->
   <link rel="stylesheet" href="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.css' %}">
 
-  <!-- XDSoft DateTimePicker -->  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
+  <!-- XDSoft DateTimePicker -->
+  <link href="{% static  'base/css/jquery.datetimepicker.min.css' %}" rel="stylesheet">
+  <link href="{% static  'base/css/bootstrap-table.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static  'base/css/select2.min.css' %}" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
   {% block css_page %}
   {% endblock %}
 </head>
@@ -330,15 +330,12 @@
   <script src="{% static 'base/datatable/buttons.print.min.js'%}"></script>
   
   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+  <script src="{% static 'base/js/datetimepicker.full.min.js'%}"></script>  
  
-  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table-locale-all.min.js"></script>
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-
+  <script src="{% static 'base/js/bootstrap-table.min.js'%}"></script> 
+  <script src="{% static 'base/js/bootstrap-table-locale-all.min.js'%}"></script>
+  <script src="{% static 'base/js/select2.min.js'%}"></script>
   <script src="{% static  'base/js/jquery.chained.min.js' %}"></script>
 
 

@@ -41,7 +41,7 @@ class GenericListMixin(General):
                 *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.template_list = 'layouts/partial/list_base.html' if template_list is None else template_list
-        self.name_file_list_js = 'js/generic_list/{}/{}_list.js'.format(self.prefix_app_url,self.prefix)
+        self.name_file_list_js = 'js/{}/{}_list.js'.format(self.prefix_app_url,self.prefix)
         if table_title_complete is None:
             self.table_title = 'Listado de {}s'.format(self.prefix_text) if table_title is None else table_title
         else:
@@ -180,7 +180,6 @@ class ListViewMixin(GenericListMixin, ListViewAjaxMixin, ListView):
         return self.model.objects.none()
     
     def get(self, request, *args, **kwargs):
-        #If ajax
         if request.is_ajax():
             return JsonResponse(self.get_with_ajax(request, *args, **kwargs))
         return super().get(request, *args, **kwargs)
