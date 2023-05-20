@@ -40,7 +40,7 @@ def get_values(request):
             dict_filter.update({
                 'fecha__hour__range': [hora_inicial, hora_final],
             })
-    promedio = request.POST.get('promedio', 'Hora')
+    promedio = request.POST.get('promedio', 'Minuto')
     if promedio == 'Anual':
         values = [ 'fecha__year']
     elif promedio == 'Mensual':
@@ -93,10 +93,16 @@ def report_sensor(request):
             orden_filas.append("Hora")
             ordenar_por.append("Hora")
             restar_columna += 1
+            for ineto in lectura_values.fecha__hour:
+                if ineto < 10:
+                    lectura_values.fecha__hour = lectura_values.fecha__hour.replace(ineto, '0'+str(ineto))
         if "fecha__minute" in lectura_values.columns:
             orden_filas.append("Minuto")
             ordenar_por.append("Minuto")
             restar_columna += 1
+            for inet in lectura_values.fecha__minute:
+                if inet < 10:
+                    lectura_values.fecha__minute = lectura_values.fecha__minute.replace(inet, '0'+str(inet))
 
         sobreescribir_nombre_columnas = {
             "fecha__hour": "Hora",
