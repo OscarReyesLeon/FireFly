@@ -18,7 +18,6 @@ def get_values(request):
     maquina = request.POST.getlist('maquina[]', "")
     dict_filter = {
         'fecha__range': [fecha_inicial, fecha_final],
-        'valor__gte': 3
     }
 
     if maquina:
@@ -72,7 +71,11 @@ def report_sensor(request):
         lectura_values = pd.DataFrame(list(lectura))
         values_by_machine = values[:-1]
         #Columna valor a dos decimales
-        lectura_values['valor'] = lectura_values['valor'].round(0)
+        lectura_temporal = lectura_values['valor'].round(0)
+        for index, value in enumerate(lectura_temporal):
+            if value <= 3:
+                lectura_temporal[index] = 0
+        lectura_values['valor'] = lectura_temporal
         lectura_values = lectura_values.pivot(index=values_by_machine, 
             columns='maquina', values='valor').reset_index()
         lectura_values.replace(np.nan, 0, inplace=True) 
@@ -93,17 +96,10 @@ def report_sensor(request):
             orden_filas.append("Hora")
             ordenar_por.append("Hora")
             restar_columna += 1
-            for ineto in lectura_values.fecha__hour:
-                if ineto < 10:
-                    lectura_values.fecha__hour = lectura_values.fecha__hour.replace(ineto, '0'+str(ineto))
         if "fecha__minute" in lectura_values.columns:
             orden_filas.append("Minuto")
             ordenar_por.append("Minuto")
             restar_columna += 1
-            for inet in lectura_values.fecha__minute:
-                if inet < 10:
-                    lectura_values.fecha__minute = lectura_values.fecha__minute.replace(inet, '0'+str(inet))
-
         sobreescribir_nombre_columnas = {
             "fecha__hour": "Hora",
             "fecha__minute": "Minuto"
@@ -117,9 +113,14 @@ def report_sensor(request):
             values_by_machine = values_by_machine[:-restar_columna]
         lectura_values.drop(values_by_machine, axis=1,inplace=True)
         lectura_values.rename(columns = sobreescribir_nombre_columnas, inplace = True)
-
         lectura_values = lectura_values[orden_filas]
         lectura_values.sort_values(by=ordenar_por, inplace=True, ascending=False)
+        for ineto in lectura_values["Hora"]:
+            if ineto < 10:
+                lectura_values["Hora"] = lectura_values["Hora"].replace(ineto, '0'+str(ineto))
+        for inet in lectura_values["Minuto"]:
+            if inet < 10:
+                lectura_values["Minuto"] = lectura_values["Minuto"].replace(inet, '0'+str(inet))
         export_report = request.POST.get('export_report', 'false')
         if export_report in ['1','true']:
             response = HttpResponse(content_type='text/csv')
