@@ -94,19 +94,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'ledsa.db',
-    # },
-    'default': {
-        #postgresql
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'firefly_db',
-        'USER': 'admin_firefly',
-        'PASSWORD': 'Mzkj*4gyb8gtPdZF',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }, 
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': 'ledsa.db',
+     },
+#    'default': {
+#        #postgresql
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'firefly_db',
+#        'USER': 'admin_firefly',
+#        'PASSWORD': 'Mzkj*4gyb8gtPdZF',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }, 
     'sensor': {
         #mysql
         'ENGINE': 'django.db.backends.mysql',
