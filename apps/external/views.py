@@ -122,6 +122,7 @@ def report_sensor(request):
             if inet < 10:
                 lectura_values["Minuto"] = lectura_values["Minuto"].replace(inet, '0'+str(inet))
         export_report = request.POST.get('export_report', 'false')
+        lectura_values = lectura_values[sorted(lectura_values.columns)].round(0)
         if export_report in ['1','true']:
             response = HttpResponse(content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename=category.csv'
