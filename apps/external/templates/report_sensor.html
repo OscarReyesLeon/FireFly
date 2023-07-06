@@ -129,19 +129,22 @@
                     "lengthMenu": [ 1000, 2500, 5000, 10000],
                     responsive: true,
                     createdRow: function(row, data, dataIndex){
-                        //Recorrer objeto y todo lo que empiece con P 
-                        $.each(data, function(key, value){
-                            if(key.startsWith("P")){
-                                if(value == 0){
-                                    $(row).find('td:eq('+dataIndex+')').css('text-color', '#FD0505'); //Rojo
-                                }else if(value == 1){
-                                    $(row).find('td:eq('+dataIndex+')').css('background-color', '#0550FD'); //Azul
-                                }else if(value >= 10){
-                                    $(row).find('td:eq('+dataIndex+')').css('background-color', '#3CC713'); //Verde
-                                }else {
-                                    $(row).find('td:eq('+dataIndex+')').css('background-color', '#F0F329'); //Amarillo
-                                }
-                            }
+                        let group = $("#id_promedio").val();
+                        let number = 0;
+                        if(group == "Hora") number = 2;
+                        else if(group == "Minuto") number = 3
+                        else if(group == "Diario") number = 1;
+                        $.each(row.cells, function(i, v){
+                            try{
+                                const value = parseFloat(v.innerText);
+                                if(isNaN(value) || i < number) return;
+                                let color =  "#C9CC00"; //amarillo
+                                if(value == 0) color = "#FD0505"; //rojo
+                                else if(value == 1) color = "#0550FD"; //azul
+                                else if(value >= 10) color = "#3CC713"; //verde
+                                v.style.backgroundColor = color;
+                                v.style.color = "white";
+                            }catch(e){}
                         });
                     }
 

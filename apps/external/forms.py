@@ -7,9 +7,9 @@ class ReportSensorMForm(forms.Form):
             ('Minuto', 'Minuto'),
             ('Hora', 'Hora'),
             ('Diario', 'Diario'),
-            ('Semanal', 'Semanal'),
-            ('Mensual', 'Mensual'),
-            ('Anual', 'Anual'),
+            # ('Semanal', 'Semanal'),
+            # ('Mensual', 'Mensual'),
+            # ('Anual', 'Anual'),
         ],
         initial='Hora',
         widget=forms.Select(attrs={'class': 'form-control'}),
@@ -19,15 +19,15 @@ class ReportSensorMForm(forms.Form):
         queryset=MaquinaModel.objects.all().using('sensor').order_by('nombre'),
         widget=forms.SelectMultiple(attrs={'class': 'form-control select2'})
     )
-    turno = forms.ChoiceField(
-        choices=[
-            ('', 'Todos'),
-            ('1', 'Turno Matutino'),
-            ('2', 'Turno Vespertino'),
-            ('3', 'Turno Nocturno'),
-            ('4', 'Mantenimiento'),
-        ], widget=forms.Select(attrs={'class': 'form-control select2'})
-    )
+    # turno = forms.ChoiceField(
+    #     choices=[
+    #         ('', 'Todos'),
+    #         ('1', 'Turno Matutino'),
+    #         ('2', 'Turno Vespertino'),
+    #         ('3', 'Turno Nocturno'),
+    #         ('4', 'Mantenimiento'),
+    #     ], widget=forms.Select(attrs={'class': 'form-control select2'})
+    # )
     fecha_inicial = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'value': timezone.now().strftime('%Y-%m-%d') })
     )
