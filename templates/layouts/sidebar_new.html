@@ -1,118 +1,121 @@
 <li class="nav-item">
-    <a data-target="#collapseExternal" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
-      <i class="fas fa-external-link-alt"></i>
-      <span>External</span>
-    </a>
-    <div id="collapseExternal" class="collapse {% if 'external/' in request.path  %} show {% endif %}">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Reporte Sundara</h6>
-        <a class="collapse-item" href="{% url 'external:report_sensor' %}">
-            <i class="fas fa-file-excel"></i> Exportar a excel
-        </a>
-      </div>
+  <a data-target="#collapseExternal" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
+    <i class="fas fa-external-link-alt"></i>
+    <span>External</span>
+  </a>
+  <div id="collapseExternal" class="collapse {% if 'external/' in request.path  %} show {% endif %}">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <h6 class="collapse-header">Reporte Sundara</h6>
+      <a class="collapse-item" href="{% url 'external:report_sensor' %}">
+        <i class="fas fa-file-excel"></i> Exportar a excel
+      </a>
+      <a class="collapse-item" href="{% url 'external:report_status_sensor' %}">
+        <i class="fas fa-file-excel"></i> Tiempos de encendido
+      </a>
     </div>
+  </div>
 </li>
 
 <li class="nav-item">
-    <a data-target="#collapseAdministation" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
-      <i class="fas fa-fw fa-house-damage"></i>
-      <span>Administración</span>
-    </a>
-    <div id="collapseAdministation" class="collapse {% if 'administration/' in request.path  %} show {% endif %}">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Producto</h6>
-        <a class="collapse-item" href="{% url 'administration:category_product_list' %}">
-            <i class="fas fa-filter"></i> Categorias
-        </a>
-        <a class="collapse-item" href="{% url 'administration:unit_measure_list' %}">
-            <i class="fas fa-arrows-alt-h"></i> Unidad de médida
-        </a>
-        <a class="collapse-item" href="{% url 'administration:product_list' %}">
-            <i class="fas fa-layer-group"></i> Productos
-        </a>
-        <h6 class="collapse-header">Vehiculos</h6>
-        <a class="collapse-item" href="{% url 'administration:truck_vehicle_list' %}">
-            <i class="fas fa-truck-loading"></i> Remolques
-        </a>
-        <a class="collapse-item" href="{% url 'administration:brand_vehicle_list' %}">
-            <i class="fas fa-bookmark"></i> Marcas de vehículos
-        </a>
-        <a class="collapse-item" href="{% url 'administration:vehicle_list' %}">
-            <i class="fas fa-truck"></i> Vehiculos
-        </a>
-        <a class="collapse-item" href="{% url 'administration:fuel_pump_list' %}">
-            <i class="fas fa-gas-pump"></i> Bomba de combustible
-        </a>
-      </div>
+  <a data-target="#collapseAdministation" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
+    <i class="fas fa-fw fa-house-damage"></i>
+    <span>Administración</span>
+  </a>
+  <div id="collapseAdministation" class="collapse {% if 'administration/' in request.path  %} show {% endif %}">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <h6 class="collapse-header">Producto</h6>
+      <a class="collapse-item" href="{% url 'administration:category_product_list' %}">
+        <i class="fas fa-filter"></i> Categorias
+      </a>
+      <a class="collapse-item" href="{% url 'administration:unit_measure_list' %}">
+        <i class="fas fa-arrows-alt-h"></i> Unidad de médida
+      </a>
+      <a class="collapse-item" href="{% url 'administration:product_list' %}">
+        <i class="fas fa-layer-group"></i> Productos
+      </a>
+      <h6 class="collapse-header">Vehiculos</h6>
+      <a class="collapse-item" href="{% url 'administration:truck_vehicle_list' %}">
+        <i class="fas fa-truck-loading"></i> Remolques
+      </a>
+      <a class="collapse-item" href="{% url 'administration:brand_vehicle_list' %}">
+        <i class="fas fa-bookmark"></i> Marcas de vehículos
+      </a>
+      <a class="collapse-item" href="{% url 'administration:vehicle_list' %}">
+        <i class="fas fa-truck"></i> Vehiculos
+      </a>
+      <a class="collapse-item" href="{% url 'administration:fuel_pump_list' %}">
+        <i class="fas fa-gas-pump"></i> Bomba de combustible
+      </a>
     </div>
+  </div>
 </li>
 
 <li class="nav-item">
-    <a data-target="#collapseUsuarios" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
-      <i class="fas fa-fw fa-lock"></i>
-      <span>Autenticación</span>
-    </a>
-    <div id="collapseUsuarios" class="collapse {% if 'auth/' in request.path  %} show {% endif %}">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="{% url 'user:user_list' %}">
-            <i class="fas fa-fw fa-user"></i> Usuarios
-        </a>
-        <a class="collapse-item" href="{% url 'user:group_list' %}">
-            <i class="fas fa-fw fa-users"></i> Grupos
-        </a>
-        <a class="collapse-item" href="{% url 'user:permission_list' %}">
-            <i class="fas fa-user-lock"></i> Permisos
-        </a>
-      </div>
+  <a data-target="#collapseUsuarios" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
+    <i class="fas fa-fw fa-lock"></i>
+    <span>Autenticación</span>
+  </a>
+  <div id="collapseUsuarios" class="collapse {% if 'auth/' in request.path  %} show {% endif %}">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="{% url 'user:user_list' %}">
+        <i class="fas fa-fw fa-user"></i> Usuarios
+      </a>
+      <a class="collapse-item" href="{% url 'user:group_list' %}">
+        <i class="fas fa-fw fa-users"></i> Grupos
+      </a>
+      <a class="collapse-item" href="{% url 'user:permission_list' %}">
+        <i class="fas fa-user-lock"></i> Permisos
+      </a>
     </div>
+  </div>
 </li>
 
 <li class="nav-item">
-  <a data-target="#collapseAddress" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
+  <a data-target="#collapseAddress" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
     <i class="fas fa-address-book	"></i>
     <span>Direcciones</span>
   </a>
   <div id="collapseAddress" class="collapse {% if 'address/' in request.path  %} show {% endif %}">
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="{% url 'address:state_list' %}">
-          <i class="fas fa-map"></i> Estados
+        <i class="fas fa-map"></i> Estados
       </a>
       <a class="collapse-item" href="{% url 'address:municipality_list' %}">
-          <i class="fas fa-map-marked"></i> Municipios
+        <i class="fas fa-map-marked"></i> Municipios
       </a>
       <a class="collapse-item" href="{% url 'address:neighborhood_list' %}">
-          <i class="fas fas fa-map-marker"></i> Colonias
+        <i class="fas fas fa-map-marker"></i> Colonias
       </a>
       <a class="collapse-item" href="{% url 'address:direction_list' %}">
         <i class="fas fa-address-card"></i> Direcciones
-    </a>
+      </a>
     </div>
   </div>
 </li>
 
 <li class="nav-item">
-<a data-target="#collapseClients" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
-  <i class="fas fa-address-book	"></i>
-  <span>Clientes</span>
-</a>
-<div id="collapseClients" class="collapse {% if 'client/' in request.path  %} show {% endif %}">
-  <div class="bg-white py-2 collapse-inner rounded">
-    <a class="collapse-item" href="{% url 'client:client_list' %}">
+  <a data-target="#collapseClients" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
+    <i class="fas fa-address-book	"></i>
+    <span>Clientes</span>
+  </a>
+  <div id="collapseClients" class="collapse {% if 'client/' in request.path  %} show {% endif %}">
+    <div class="bg-white py-2 collapse-inner rounded">
+      <a class="collapse-item" href="{% url 'client:client_list' %}">
         <i class="fas fa-map"></i> Clientes
-    </a>
+      </a>
+    </div>
   </div>
-</div>
 </li>
 
 <li class="nav-item">
-  <a data-target="#collapseOrders" class="nav-link collapsed" data-toggle="collapse"  aria-expanded="true" >
+  <a data-target="#collapseOrders" class="nav-link collapsed" data-toggle="collapse" aria-expanded="true">
     <i class="fas fa-address-book	"></i>
     <span>Proceso entrega</span>
   </a>
   <div id="collapseOrders" class="collapse {% if 'orders/' in request.path  %} show {% endif %}">
     <div class="bg-white py-2 collapse-inner rounded">
       <a class="collapse-item" href="{% url 'order:order_list' %}">
-          <i class="fas fa-box-open"></i> Pedidos
+        <i class="fas fa-box-open"></i> Pedidos
       </a>
       <a class="collapse-item" href="{% url 'order:delivery_output' %}">
         <i class="fas fa-weight-hanging"></i> Capturar báscula
@@ -128,4 +131,4 @@
       </a>
     </div>
   </div>
-  </li>
+</li>

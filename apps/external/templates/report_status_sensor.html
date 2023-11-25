@@ -1,0 +1,183 @@
+{% extends 'layouts/partial/form_base.html' %}
+{% load humanize %}
+{% load static %}
+{% block page_content %}
+<div class="card shadow mb-4" id="report_id">
+    <div class="card-body">
+        <div class="row" v-show="loading && this.loading_initial">
+            <div class="col-md-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+            Cargando reporte...
+        </div>
+        <div class="row" v-show="!loading || !this.loading_initial">
+
+
+            <div class="col-md-6">
+
+                <h6>Reporte de las últimas: {$ hours $}</h6>
+                <h6>Fecha inicial: {$ initial_date $}</h6>
+                <h6>Fecha final: {$ final_date $}</h6>
+                <div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6>Última actualización: {$ last_updated $}</h6>
+                <h6 v-if="regresive_counter > 0">Próxima actualización en: {$ regresive_counter_minutes $} minutos</h6>
+                <h6 v-else>Actualizando...</h6>
+            </div>
+            <hr>
+            <div class="col-md-12 pt-2 mt-2">
+                <h5>Amperaje promedio</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="table_value" style="width:100%;">
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 pt-2 mt-2">
+                <h5>Horas productivas</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="table_time" style="width:100%;">
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-2">
+                <h5>Cambios entre encendido/apagado</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="table_io" style="width:100%;">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js_page %}
+<link rel="stylesheet" href="{% static 'base/vue/files/vue-select.css' %}">
+<script src="{% static 'base/vue/files/vue3.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'base/datatable/jquery.dataTables.min.css'%}">
+<link rel="stylesheet" href="{% static 'base/other/datatable_responsive.bootstrap.min.css'%}">
+<script src="{% static 'base/vue/files/vue-select.min.js' %}"></script>
+<script src="{% static 'base/datatable/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'base/other/datatable_responsive.min.js'%}"></script>
+
+
+<script>
+    $(function () {
+        const { createApp, ref } = Vue
+
+        createApp({
+            delimiters: ['{$', '$}'],
+            data() {
+                const time_regresive = ref(5 * 60);
+                const table_value = ref([]);
+                const table_time = ref([]);
+                const table_io = ref([]);
+                const loading = ref(false);
+                const loading_initial = ref(true);
+                const columns = ref([]);
+                const initial_date = ref('');
+                const final_date = ref('');
+                const total_records = ref(0);
+                const time_report = ref(0);
+                const hours = ref(0);
+                const last_updated = ref(null);
+                const regresive_counter = ref(time_regresive.value);
+                return {
+                    table_value,
+                    table_time,
+                    table_io,
+                    hours,
+                    loading,
+                    loading_initial,
+                    columns,
+                    initial_date,
+                    final_date,
+                    total_records,
+                    time_report,
+                    last_updated,
+                    regresive_counter,
+                    time_regresive
+                }
+            },
+            methods: {
+                async create_table(id, data) {
+                    //Destroy table
+                    // try { $(id).DataTable().destroy() } catch (e) { }
+                    $(id).DataTable({
+                        columns: this.columns,
+                        data: data,
+                        // aDataSort: [],
+                        bFilter: false,
+                        bInfo: false,
+                        bPaginate: false,
+                        bLengthChange: false,
+                        destroy: true,
+                        responsive: true,
+
+                    })
+                },
+                async get_data() {
+                    this.loading = true;
+                    let result = null
+                    await $.ajax({
+                        url: window.location.pathname,
+                        method: "GET",
+                        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                    }).done((response) => {
+                        result = response
+                    }).fail((error) => {
+                        console.log(error)
+                    }).always(() => {
+                        this.loading = false;
+                        this.loading_initial = false;
+                        this.last_updated = new Date().toLocaleString()
+                    })
+
+                    if (result) {
+                        this.table_value = result.table_value;
+                        this.table_time = result.table_time;
+                        this.table_io = result.table_io;
+                        this.columns = result.columns;
+                        this.initial_date = result.initial_date;
+                        this.final_date = result.final_date;
+                        this.total_records = result.total_records;
+                        this.total_time = result.total_time;
+                        this.hours = result.horas;
+
+                        await this.create_table('#table_value', result.table_value)
+                        await this.create_table('#table_time', result.table_time)
+                        await this.create_table('#table_io', result.table_io)
+                    }
+                },
+            },
+            computed: {
+                regresive_counter_minutes() {
+                    const minutes = Math.floor(this.regresive_counter / 60)
+                    seconds = this.regresive_counter - (minutes * 60)
+                    return seconds < 10 ? `${minutes}:0${seconds}` : `${minutes}:${seconds}`
+                },
+            },
+            async mounted() {
+                await this.get_data()
+                this.interval = setInterval(async () => {
+                    if (this.regresive_counter > 0) {
+                        this.regresive_counter -= 1;
+                    }
+                    else if (this.regresive_counter == 0) {
+                        await this.get_data()
+                        this.regresive_counter = this.time_regresive;
+                    }
+                }, 1000);
+            }
+        }).mount('#report_id');
+    })
+
+</script>
+{% endblock %}
