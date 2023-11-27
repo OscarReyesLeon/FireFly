@@ -129,9 +129,15 @@ class DashboardService:
         Obtiene las máquinas que están en el dashboard
         """
         machine_queryset = (
-            MaquinaModel.objects.all().values("nombre", "id").using("sensor")
+            MaquinaModel.objects.all()
+            .values("nombre", "id")
+            .using("sensor")
+            .order_by("nombre")
         )
         self.machine_df = pd.DataFrame(list(machine_queryset))
+        self.machine_df = self.machine_df.sort_values(by=["nombre"]).reset_index(
+            drop=True
+        )
 
     def process_dashboard(self):
         """
@@ -147,8 +153,8 @@ class DashboardService:
         machines.sort()
         shifts = self.df["turno"].unique().tolist()
 
-        for machine in machines:
-            name = self.machine_df[self.machine_df["id"] == machine]["nombre"].values[0]
+        for index, row in self.machine_df.iterrows():
+            name = row["nombre"]
             self.columns.append({"title": name, "data": name})
         table_value, table_time, table_io = [], [], []
         for shift in shifts:
@@ -158,10 +164,9 @@ class DashboardService:
                 initial_data.copy(),
                 initial_data.copy(),
             )
-            for machine in machines:
-                name = self.machine_df[self.machine_df["id"] == machine][
-                    "nombre"
-                ].values[0]
+            for index, row in self.machine_df.iterrows():
+                name = row["nombre"]
+                machine = row["id"]
 
                 result_df = self.df[
                     (self.df["maquina"] == machine) & (self.df["turno"] == shift)
