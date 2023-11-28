@@ -126,7 +126,7 @@
                     data: r,
                     ordering: true,
                     "order": [],
-                    "lengthMenu": [ 1000, 2500, 5000, 10000],
+                    "lengthMenu": [ 10000, 25000, 50000, 100000],
                     responsive: true,
                     createdRow: function(row, data, dataIndex){
                         let group = $("#id_promedio").val();
@@ -140,8 +140,8 @@
                                 if(isNaN(value) || i < number) return;
                                 let color =  "#C9CC00"; //amarillo
                                 if(value == 0) color = "#FD0505"; //rojo
-                                else if(value == 1) color = "#0550FD"; //azul
-                                else if(value >= 10) color = "#3CC713"; //verde
+                                else if(value == 1) color = "#3CC713"; //azul
+                                else if(value >= 10) color = "#0550FD"; //verde
                                 v.style.backgroundColor = color;
                                 v.style.color = "white";
                             }catch(e){}

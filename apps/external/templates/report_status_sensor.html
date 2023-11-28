@@ -17,21 +17,21 @@
 
             <div class="col-md-6">
 
-                <h6>Reporte de las últimas: {$ hours $}</h6>
+                <h6><b>Reporte de las últimas: {$ hours $}</b></h6>
                 <h6>Fecha inicial: {$ initial_date $}</h6>
-                <h6>Fecha final: {$ final_date $}</h6>
+                <h6>Fecha final: <b>{$ final_date $}</b></h6>
                 <div>
 
                 </div>
             </div>
             <div class="col-md-6">
                 <h6>Última actualización: {$ last_updated $}</h6>
-                <h6 v-if="regresive_counter > 0">Próxima actualización en: {$ regresive_counter_minutes $} minutos</h6>
-                <h6 v-else>Actualizando...</h6>
+                <h6 v-if="regresive_counter > 0">Próxima recolección en: {$ regresive_counter_minutes $} minutos<br>**Los datos se actualizan cada 15 minutos.</h6>
+                <h5 v-else><b>Recolectando...</b></h5>
             </div>
             <hr>
             <div class="col-md-12 pt-2 mt-2">
-                <h5>Amperaje promedio</h5>
+                <h5>Trabajo promedio</h5>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover" id="table_value" style="width:100%;">
                     </table>

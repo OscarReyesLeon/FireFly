@@ -113,7 +113,7 @@ DATABASES = {
         "NAME": "arduinos",
         "USER": "arduinos",
         "PASSWORD": "LEDSA963",
-        "HOST": "sundara.ledsa.mx",
+        "HOST": "localhost",
         "PORT": "3306",
     },
 }
@@ -170,7 +170,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "unique-snowflake",
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211",
     }
 }
