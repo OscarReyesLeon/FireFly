@@ -37,18 +37,40 @@ class DashboardService:
         de hoy, pero no debe tener datos del turno de ayer
         )
         """
+        SHIFT_FORMAT = "%H:%M:%S"
         initial_date: datetime = self.final_date - timezone.timedelta(hours=self.hours)
         initial_date_time = initial_date.time()
+
+        # Si la fecha inicial está entre las 10 PM y las 6 AM, se debe cambiar la fecha
+        # El reporte debe comenzar con los datos de las 6 AM del día
+        # anterior si está entre las 00:00:00 y las 5:59:59 AM o actual si está entre las
+        # 22:00:00 y las 23:59:59
+        morning = bool(
+            initial_date_time
+            <= timezone.datetime.strptime("05:59:59", SHIFT_FORMAT).time()
+        )
+        if morning or (
+            initial_date_time
+            >= timezone.datetime.strptime("22:00:00", SHIFT_FORMAT).time()
+        ):
+            return initial_date.replace(
+                hour=6,
+                minute=0,
+                second=0,
+                microsecond=0,
+                day=self.final_date.day - int(morning),
+            )
         for shift in shifts_options:
             start, end = shifts_options[shift]
-            start = timezone.datetime.strptime(start, "%H:%M:%S").time()
-            end = timezone.datetime.strptime(end, "%H:%M:%S").time()
+            start = timezone.datetime.strptime(start, SHIFT_FORMAT).time()
+            end = timezone.datetime.strptime(end, SHIFT_FORMAT).time()
 
             if start <= initial_date_time <= end:
                 current = initial_date.replace(
                     hour=end.hour + 1, minute=0, second=0, microsecond=0
                 )
                 return initial_date if current > self.final_date else current
+
         return initial_date
 
     def create_df(self):
@@ -62,7 +84,7 @@ class DashboardService:
         )
         self.df = pd.DataFrame(list(queryset))
         # Save
-        self.df.to_csv("data_nueva.csv")
+        # self.df.to_csv("data_nueva.csv")
         self.df["fecha"] = pd.to_datetime(self.df["fecha"])
         self.df["hora"] = self.df["fecha"].dt.hour
         self.df["minutos"] = self.df["fecha"].dt.minute
