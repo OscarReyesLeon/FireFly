@@ -3,12 +3,10 @@ from .forms import ReportSensorForm, ReportSensorMForm
 from django.shortcuts import render
 from django.utils import timezone
 from django.db.models import Avg
-from .models import LecturaModel, MaquinaModel
+from .models import LecturaModel
 import pandas as pd
 import numpy as np
 from django.contrib.auth.decorators import login_required, permission_required
-import time
-from django.core.cache import cache
 
 # from dateutil.rrule import rrule, MONTHLY, YEARLY, WEEKLY, DAILY, HOURLY
 def process_sensor(request):
@@ -257,43 +255,3 @@ def report_crudo(request):
     else:
         form = ReportSensorForm()
         return render(request, 'report_crudo.html', {'form': form})
-    
-@login_required(login_url="/login/")
-@permission_required("prf.change_sundara", login_url="bases:sin_privilegios")
-def report_status_sensor(request):
-    """
-    La salida de sundara, procesar y mostrar en la vista
-    Reporte que de la última semana por default (7 días) y que se pueda seleccionar el rango de fechas
-
-    Cache de cada 30 minutos
-    Navegador con auto refresh de cada 5 minutos
-    Navegador a pantalla completa
-
-    1- Obtener los datos entre 2 fechas
-    2- Encontrar el cambio de 0 a 10 de voltaje, eso indica que se encendió la máquina
-    3- Encontrar el cambio de 10 a 0 de voltaje, eso indica que se apagó la máquina
-    4- Calcular el tiempo que estuvo encendida la máquina
-    5- Calcular el voltaje promedio de la máquina encendida
-    6- Calcular el tiempo que estuvo apagada la máquina antes de volver a encenderse
-    7- Encontrar el siguiente cambio de 0 a 10 de voltaje, eso indica que se encendió la máquina
-    8- Repetir el proceso hasta que se acaben los datos
-    """
-
-    if request.is_ajax():
-        cache_key = "report_status_sensor"
-        cache_time = 10 * 60
-        try:
-            from apps.external.services.dashboard_report import DashboardService
-
-            data = cache.get(cache_key)
-            if not data:
-                instance = DashboardService(hours=24)
-                data = instance.process_dashboard()
-                # data = MI_DATA
-                cache.set(cache_key, data, cache_time)
-            return JsonResponse(data, safe=False, status=200)
-        except Exception as e:
-            print(str(e))
-            raise e
-
-    return render(request, "report_status_sensor.html", {})

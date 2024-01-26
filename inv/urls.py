@@ -1,8 +1,9 @@
+from django.views.decorators.cache import cache_page
 from django.urls import path
 
 from .views import EquipoView, EquipoNew, EquipoEdit, ingresoalmacen, \
     EquipoDel, \
-    AutorizaView, AutorizaNew, AutorizaEdit, \
+    AutorizaView, AutorizaNew, AutorizaEdit, PedidoViewALRCot, \
     AutorizaDel, \
     BancoView, BancoNew, BancoEdit, pedido_transferido, \
     BancoDel, PedidoViewPlantaCot, PedidoViewOficinaCot, \
@@ -56,12 +57,13 @@ urlpatterns = [
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
     path('pedidos/importar', importar_compras_excel,name="pedidos_importar"),
-    path('pedidostodos/',PedidoView.as_view(), name="pedido_list"),
+    path('pedidostodos/', PedidoView.as_view(), name="pedido_list"),
     path('pedidosexport/',PedidoExport.as_view(), name="pedido_export"),
     path('pedidos/',PedidoViewF.as_view(), name="pedido_list_f"),
     path('pedidosh/',PedidoViewH.as_view(), name="pedido_list_h"),
     path('pedidosCotOficina/',PedidoViewOficinaCot.as_view(), name="cotiza_oficina"),
     path('pedidosCotPlanta/',PedidoViewPlantaCot.as_view(), name="cotiza_planta"),
+    path('pedidosCotALR/',PedidoViewALRCot.as_view(), name="cotiza_alr"),
     path('pedidosf3/',PedidoViewF3.as_view(), name="pedido_list_f3"),
     path('pedidosf4o/',PedidoViewF4o.as_view(), name="pedido_list_f4o"),
     path('pedidosf4p/',PedidoViewF4p.as_view(), name="pedido_list_f4p"),

@@ -1,0 +1,10 @@
+jquery-3.5.1.js
+jquery.dataTables.min.js
+dataTables.buttons.min.js
+jszip.min.js
+pdfmake.min.js
+vfs_fonts.js
+buttons.html5.min.js
+buttons.print.min.js
+jquery.dataTables.min.css
+buttons.dataTables.min.css

@@ -163,7 +163,18 @@ class ComprasViewO(SinPrivilegios, generic.ListView):
     def get_queryset(self):
         user = self.request.user
         qs = super().get_queryset()
-        qs = qs.filter(io=1).filter(uc=user).order_by('-id')[:100] | ComprasEnc.objects.exclude(io=1).exclude(autorizante="GLS").order_by('-id')[:500]
+        qs = qs.filter(io=1).filter(uc=user).order_by('-id')[:100] | ComprasEnc.objects.exclude(io=1).filter(autorizante="ALS").order_by('-id')[:500]
+        return qs
+
+class ComprasViewALR(SinPrivilegios, generic.ListView):
+    model = ComprasEnc
+    template_name = "cmp/compras_list.html"
+    context_object_name = "obj"
+    permission_required="prf.view_comprasalr"
+    def get_queryset(self):
+        user = self.request.user
+        qs = super().get_queryset()
+        qs = qs.filter(io=1).filter(uc=user).order_by('-id')[:100] | ComprasEnc.objects.exclude(io=1).filter(autorizante="MLS").order_by('-id')[:500]
         return qs
 
 class ComprasViewP(SinPrivilegios, generic.ListView):
@@ -215,7 +226,7 @@ class ComprasViewCXP(SinPrivilegios, generic.ListView):
 @permission_required('prf.change_comprasoficinas', login_url='bases:sin_privilegios')
 def comprasOficina(request,compra_id=None):
     template_name="cmp/compras.html"
-    prod=Pedido.objects.exclude(precio_uni=0).filter(indentificador_estado=1).exclude(autpor_id=2)
+    prod=Pedido.objects.exclude(precio_uni=0).filter(indentificador_estado=1).filter(autpor_id=1)
     form_compras={}
     contexto={}
 
@@ -323,6 +334,122 @@ def comprasOficina(request,compra_id=None):
                 enc.save()
 
         return redirect("cmp:compras_edito",compra_id=compra_id)
+
+
+    return render(request, template_name, contexto)
+
+@login_required(login_url='/login/')
+@permission_required('prf.change_comprasalr', login_url='bases:sin_privilegios')
+def comprasALR(request,compra_id=None):
+    template_name="cmp/compras.html"
+    prod=Pedido.objects.exclude(precio_uni=0).filter(indentificador_estado=1).filter(autpor_id=3)
+    form_compras={}
+    contexto={}
+
+    if request.method=='GET':
+        form_compras=ComprasEncForm()
+        enc = ComprasEnc.objects.filter(pk=compra_id).first()
+
+        if enc:
+            det = ComprasDet.objects.filter(compra=enc)
+            fecha_compra = datetime.date.isoformat(enc.fecha_compra)
+            e = {
+                'fecha_compra':fecha_compra,
+                'proveedor': enc.proveedor,
+                'empresaoc': enc.empresaoc,
+                'observacion': enc.observacion,
+                'no_factura': enc.no_factura,
+                'sub_total': enc.sub_total,
+                'descuento': enc.descuento,
+                'descuento2': enc.descuento2,
+                'total':enc.total
+            }
+            form_compras = ComprasEncForm(e)
+        else:
+            det=None
+        contexto={'pedidos':prod,'encabezado':enc,'detalle':det,'form_enc':form_compras}
+
+    if request.method=='POST':
+        fecha_compra = request.POST.get("fecha_compra")
+        observacion = request.POST.get("observacion")
+        no_factura = request.POST.get("no_factura")
+        proveedor = request.POST.get("proveedor")
+        empresaoc = request.POST.get("empresaoc")
+        sub_total = request.POST.get("sub_total")
+        descuento = request.POST.get("descuento2")
+        iva = request.POST.get("descuento")
+        total = request.POST.get("total")
+
+        total = float(sub_total) - float(descuento) + float(iva)
+
+        if not compra_id:
+            prov=Proveedor.objects.get(pk=proveedor)
+            emproc=Empresa.objects.get(pk=empresaoc)
+            enc = ComprasEnc(
+                fecha_compra=fecha_compra,
+                observacion=observacion,
+                no_factura=no_factura,
+                empresaoc=emproc,
+                proveedor=prov,
+                uc = request.user,
+                sub_total=sub_total,
+                descuento2=descuento,
+                descuento=iva,
+                total=total
+            )
+            if enc:
+                enc.clienteuniqueid = id_generator()
+                enc.save()
+                compra_id=enc.id
+        else:
+            enc=ComprasEnc.objects.filter(pk=compra_id).first()
+            if enc:
+                enc.fecha_compra = fecha_compra
+                enc.observacion = observacion
+                enc.no_factura=no_factura
+                enc.um=request.user.id
+                enc.clienteuniqueid = id_generator()
+                enc.sub_total=sub_total
+                enc.descuento2=descuento
+                enc.descuento=iva
+                enc.total=total
+                enc.save()
+
+        if not compra_id:
+            return redirect("cmp:compras_list")
+        pedido = request.POST.get("id_id_pedido")
+        cantidad = request.POST.get("id_cantidad_detalle")
+        precio = request.POST.get("id_precio_detalle")
+        sub_total_detalle = request.POST.get("id_sub_total_detalle")
+        descuento_detalle  = request.POST.get("id_descuento_detalle")
+        total_detalle  = request.POST.get("id_total_detalle")
+
+        if pedido:
+            prod = Pedido.objects.get(pk=pedido)
+
+            det = ComprasDet(
+                compra=enc,
+                pedido=prod,
+                cantidad=cantidad,
+                precio_prv=precio,
+                descuento=descuento_detalle,
+                costo=0,
+                uc = request.user,
+            )
+
+            if det:
+                if ComprasDet.objects.filter(pedido_id=pedido).exists() == True:
+                    antiduplicado = ComprasDet.objects.filter(pedido_id=pedido).get()
+                    return redirect("cmp:compras_editalr",compra_id=antiduplicado.compra_id)
+                det.save()
+
+                sub_total=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('sub_total'))
+                descuento=ComprasDet.objects.filter(compra=compra_id).aggregate(Sum('descuento'))
+                enc.sub_total = sub_total["sub_total__sum"]
+                enc.descuento=descuento["descuento__sum"]
+                enc.save()
+
+        return redirect("cmp:compras_editalr",compra_id=compra_id)
 
 
     return render(request, template_name, contexto)
@@ -652,23 +779,23 @@ def AutorizarOCReciclarM(request, id):
     if not pede:
         return redirect("cmp:compras_listm")
     if request.method=='GET':
-        if pede.autorizacion=='OC: Autorización en Revisión':
+        if pede.autorizacion=='OC: Autorización en Revisión' or pede.io==3:
             pede.autorizacion='OC: Editando - Incompleta'
             pede.io = 1
             pede.compras = False
             pede.save()
             return redirect("cmp:compras_listm")
         else:
-            return HttpResponse("La orden no puede ser autorizada")
+            return HttpResponse("La orden no puede ser des-autorizada")
     if request.method=='POST':
-        if pede.autorizacion=='OC: Autorización en Revisión':
+        if pede.autorizacion=='OC: Autorización en Revisión' or pede.io==3:
             pede.autorizacion='OC: Editando - Incompleta'
             pede.io = 1
             pede.compras = False
             pede.save()
             return redirect("cmp:compras_listm")
         else:
-            return HttpResponse("La orden no puede ser autorizada")
+            return HttpResponse("La orden no puede ser des-autorizada")
     return render(request,template_name,contexto)
 @login_required(login_url="/login/")
 @permission_required("prf.change_comprasoficinas",login_url="/login/")

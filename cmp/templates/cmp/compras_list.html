@@ -11,6 +11,7 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
         <div class="dropdown-header">Acciones:</div>
+        <a class="dropdown-item" href="{% url 'cmp:compras_newalr' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_newo' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_newp' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_print_all' %}" target="reportes"><i class="fas fa-print"></i> Listado</a>
@@ -20,19 +21,26 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'cmp:compras_listalr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% endif %}
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'cmp:compras_newalr' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
       <a href="{% url 'cmp:compras_listp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
-      {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
-      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
-      {% endif %}
       {% if perms.prf.change_comprasplanta %}
       <a href="{% url 'cmp:compras_newp' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
       <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+      {% endif %}
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% endif %}
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
       {% endif %}
 
       <a href="{% url 'cmp:proveedor_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedores</a>
@@ -78,13 +86,17 @@
 
                     {% if perms.prf.change_autorizantemls and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
                     <a href="{% url 'cmp:autorizarocmls' item.id %}" onclick="antidoble()" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-check"></i></a>
+                    {% endif %}
+                    {% if perms.prf.change_autorizantemls and item.io == 3 and item.autorizante == "MLS" %}
                     <a href="{% url 'cmp:reciclarocm' item.id %}" onclick="antidoble()" class="btn btn-outline-info btn-circle" role="button"><i class="fa fa-recycle"></i></a>
                     {% endif %}
+
+
 
                     {% if perms.prf.change_comprasoficinas and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "ALS" %}
                     <a href="{% url 'cmp:reciclaroco' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-recycle"></i></a>
                     {% endif %}
-                    {% if perms.prf.change_comprasoficinas and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
+                    {% if perms.prf.change_comprasalr and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "MLS" %}
                     <a href="{% url 'cmp:reciclaroco' item.id %}" onclick="antidoble()" class="btn btn-outline-warning btn-circle" role="button"><i class="fa fa-recycle"></i></a>
                     {% endif %}
                     {% if perms.prf.change_comprasplanta and item.autorizacion == "OC: Autorización en Revisión" and item.autorizante == "GLS" %}
@@ -100,7 +112,10 @@
             <td>{{item.compras|yesno:"Si,Incompleto"}} | {{item.autorizado|yesno:"Si,Incompleto"}} | {{item.cxp|yesno:"Si,Incompleto"}}</td>
   
                   <td>
-                    {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
+                    {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasalr %}
+                    <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_editalr' item.id %}"><i class="far fa-edit"></i></a>
+                    {% endif %}
+                     {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasoficinas %}
                     <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edito' item.id %}"><i class="far fa-edit"></i></a>
                     {% endif %}
                     {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}

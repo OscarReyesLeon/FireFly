@@ -6,6 +6,8 @@
   <!-- Card Header - Dropdown -->
   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     <h6 class="m-0 font-weight-bold text-primary">Listado de Pedidos</h6>
+    <div class="dropdown no-arrow">
+    
       <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
       </a>
@@ -19,30 +21,45 @@
   <div class="card-body">
     <div class="buttons-toolbar">
       <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="#" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
+      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Abiertos</a>
+      <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Histórico</i></a>
+
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_listp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
-      <a href="#" class="btn btn-primary" role="button"></i>Recibir</a>
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
+      {% if perms.prf.change_cxp %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CXP</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
+      {% if perms.prf.change_autorizanteals %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
+      {% endif %}
+      {% if perms.prf.change_autorizantegls %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
+      {% endif %}
+      {% if perms.prf.change_autorizantemls %}
+      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
+      {% endif %}
+      {% if perms.prf.change_almacenistaoficina %}
+      <a href="{% url 'inv:pedido_list_f4o' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
+      {% endif %}
+      {% if perms.prf.change_almacenistaplanta %}
+      <a href="{% url 'inv:pedido_list_f4p' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
+      {% endif %}
+      {% if perms.prf.change_almacenista %}
       <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
+      {% if perms.prf.change_sundara %}
+      <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Sundara</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-light" role="button"></i>Todo</a>
 
 
     </div><br>
 
     {% if not obj %}
-    <div class="alert alert-info">No Pedidos</div>
+    <div class="alert alert-success">No hay Pedidos para cotizar  ٩(^‿^)۶</div>
     {% endif %}
     <table class="table table-striped table-hover dt-responsive nowrap compact" style="width:100%">
       <thead>
@@ -95,7 +112,35 @@
         buttons: [
             'copy', 'csv', 'excel', 'print'
         ],
-      "order": [[ 0, 'asc' ],[ 1, 'desc' ]],
+        "rowCallback": function(row, data, index){
+        if(data[9]!= '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(2)').css('color', 'blue');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(0)').css('color', 'black');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(1)').css('color', 'black');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(2)').css('color', 'red');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(3)').css('color', 'black');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(4)').css('color', 'black');
+        }
+        if(data[9]== '୧༼ಠ益ಠ༽୨'){
+      	$(row).find('td:eq(5)').css('color', 'black');
+        }
+
+      },
+
+
+
+
+      "order": [[ 9, 'asc' ],[ 0, 'desc' ]],
       "lengthMenu": [ 1000, 2500, 5000, 7500, 10000],
       "scrollX": true,
       "language": {

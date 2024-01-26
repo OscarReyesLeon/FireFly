@@ -359,7 +359,7 @@ class PedidoView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="inv.view_pedido"
     def get_queryset(self):
-        qs = Pedido.objects.order_by('-id')[:1000]
+        qs = Pedido.objects.order_by('-id')[:4000]
         return qs
 
 class PedidoExport(SinPrivilegios, generic.ListView):
@@ -482,7 +482,15 @@ class PedidoViewOficinaCot(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="prf.change_comprasoficinas"
     def get_queryset(self):
-        qs = Pedido.objects.filter(indentificador_estado=1).exclude(autpor=2).order_by('-id')[:200]
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=1).order_by('-id')[:200]
+        return qs
+class PedidoViewALRCot(SinPrivilegios, generic.ListView):
+    model = Pedido
+    template_name = "inv/pedido_list_f2.html"
+    context_object_name = "obj"
+    permission_required="prf.change_comprasalr"
+    def get_queryset(self):
+        qs = Pedido.objects.filter(indentificador_estado=1).filter(autpor=3).order_by('-id')[:200]
         return qs
 class PedidoViewPlantaCot(SinPrivilegios, generic.ListView):
     model = Pedido

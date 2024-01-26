@@ -24,6 +24,9 @@
       <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Abiertos</a>
       <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Histórico</i></a>
 
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'cmp:compras_listalr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      {% endif %}
       {% if perms.prf.change_comprasoficinas %}
       <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
@@ -46,10 +49,13 @@
       <a href="{% url 'cmp:compras_listm' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarOficina</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
-      <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+      <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarPlanta</a>
+      {% endif %}
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'inv:cotiza_alr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarALR</a>
       {% endif %}
       {% if perms.prf.change_almacenistaoficina %}
       <a href="{% url 'inv:pedido_list_f4o' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
