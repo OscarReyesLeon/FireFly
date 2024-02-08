@@ -18,23 +18,23 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Proveedor(ClaseModelo):
     regimen_sat = (
-        ('Revisar datos del proveedor', 'Revisar datos del proveedor'),
-        ('Persona moral', 'Persona moral'),
-        ('Régimen Simplificado de Confianza', 'Régimen Simplificado de Confianza'),
-        ('Sueldos y salarios e ingresos asimilados a salarios', 'Sueldos y salarios e ingresos asimilados a salarios'),
-        ('Régimen de Actividades Empresariales y Profesionales', 'Régimen de Actividades Empresariales y Profesionales'),
-        ('Régimen de Incorporación Fiscal', 'Régimen de Incorporación Fiscal'),
-        ('Enajenación de bienes', 'Enajenación de bienes'),
-        ('Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas', 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
-        ('Régimen de Arrendamiento', 'Régimen de Arrendamiento'),
-        ('Intereses', 'Intereses'),
-        ('Obtención de premios', 'Obtención de premios'),
-        ('Dividendos', 'Dividendos'),
-        ('Demás ingresos', 'Demás ingresos'),
-        ('Régimen Simplificado de Confianza', 'Régimen Simplificado de Confianza'),
-        ('Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas', 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
-        ('Régimen de Arrendamiento', 'Régimen de Arrendamiento'),
-        ('Régimen de Actividades Empresariales y Profesionales', 'Régimen de Actividades Empresariales y Profesionales'),
+        (1, 'Revisar datos del proveedor'),
+        (2, 'Persona moral'),
+        (3, 'Régimen Simplificado de Confianza'),
+        (4, 'Sueldos y salarios e ingresos asimilados a salarios'),
+        (5, 'Régimen de Actividades Empresariales y Profesionales'),
+        (6, 'Régimen de Incorporación Fiscal'),
+        (7, 'Enajenación de bienes'),
+        (8, 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
+        (9, 'Régimen de Arrendamiento'),
+        (10, 'Intereses'),
+        (11, 'Obtención de premios'),
+        (12, 'Dividendos'),
+        (13, 'Demás ingresos'),
+        (14, 'Régimen Simplificado de Confianza'),
+        (15, 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
+        (16, 'Régimen de Arrendamiento'),
+        (17, 'Régimen de Actividades Empresariales y Profesionales'),
     )
     descripcion=models.CharField(max_length=100,unique=True)
     direccion=models.CharField(
@@ -68,7 +68,8 @@ class Proveedor(ClaseModelo):
     giro=models.CharField(max_length=50,null=True,blank=True)
     ubicacion=models.CharField(max_length=20,null=True,blank=True)
     nombrecomercial=models.CharField(max_length=70)
-    regimen=models.CharField(max_length=86, choices=regimen_sat, default='Revisar datos del proveedor', null=False, blank=False)
+    regimen=models.PositiveSmallIntegerField(choices=regimen_sat, default=1, null=False, blank=False)
+#    prueba = models.CharField(max_length=100, null=True, blank=True)
     @property
     def cuentabancoauto(self):
         if self.clabeproveedor:

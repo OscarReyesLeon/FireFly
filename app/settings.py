@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY='#*+^p)w+otw#0s6gon_2+e=as8kvdcm&u$5i!2(3&=!l73rs$+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,19 +94,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': 'ledsa.db',
-     },
-#    'default': {
-#        #postgresql
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'firefly_db',
-#        'USER': 'admin_firefly',
-#        'PASSWORD': 'Mzkj*4gyb8gtPdZF',
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    }, 
+    #  'default': {
+    #      'ENGINE': 'django.db.backends.sqlite3',
+    #      'NAME': 'ledsa.db',
+    #  },
+   'default': {
+       #postgresql
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'firefly_db',
+       'USER': 'admin_firefly',
+       'PASSWORD': 'Mzkj*4gyb8gtPdZF',
+       'HOST': 'localhost',
+       'PORT': '5432',
+   }, 
     'sensor': {
         #mysql
         'ENGINE': 'django.db.backends.mysql',
