@@ -141,7 +141,7 @@ def imprimir_compra2(request, clienteuniqueid):
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="OrdenCompra.pdf"'
+    response['Content-Disposition'] = 'inline; filename="OC-%s.pdf"'%(compra_id)
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)

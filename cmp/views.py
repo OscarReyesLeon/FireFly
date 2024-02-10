@@ -20,6 +20,8 @@ from inv.models import Pedido
 import string
 import random
 
+from django.template.loader import render_to_string
+
 def id_generator(size=40, chars=string.ascii_letters + string.digits):
     verificadorid = ''.join(random.choice(chars) for _ in range(size))
     repetidocheck = ComprasEnc.objects.filter(clienteuniqueid=verificadorid).exists()
@@ -904,3 +906,20 @@ def Provisionar(request, id):
         else:
             return HttpResponse("La orden no ha sido autorizada")
     return render(request,template_name,contexto)
+
+
+
+def reporte_compras_public(request, clienteuniqueid):
+    if ComprasEnc.objects.filter(clienteuniqueid=clienteuniqueid).exists() == True:
+        template_path = "cmp/public.html"
+        compra = ComprasEnc.objects.get(clienteuniqueid=clienteuniqueid)
+        details = ComprasDet.objects.filter(compra__clienteuniqueid=clienteuniqueid)
+        #render template 
+        context = {
+            'obj': compra,
+            'detalle': details,
+            }
+        html = render_to_string(template_name=template_path, context=context)
+        return HttpResponse(html)
+    else:
+        return HttpResponse("OC no existe")

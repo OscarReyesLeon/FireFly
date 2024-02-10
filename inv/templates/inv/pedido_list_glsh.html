@@ -93,8 +93,8 @@
             {% if perms.prf.view_autorizantegls and item.indentificador_estado == '1' %}
             <a href="{% url 'inv:pedido_rechazado_gls' item.id %}" onclick="antidoble()" class="btn btn-danger" role="button"><i class="far fa-thumbs-down"></i></a>
             {% endif %}
-            {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info" role="button"><i class="fas fa-print"></i></a>
+            {% if item.status == 'Proveedor' or item.status == 'Recibido' %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info" role="button"><i class="fa fa-box-open"></i></a>
             {% endif %}
           </td>
           <td>{{item.divisa}}$ {{item.preciotransaccion|floatformat:"0"}}</td>

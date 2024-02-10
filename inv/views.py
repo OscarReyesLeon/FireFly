@@ -538,7 +538,7 @@ class PedidoViewF5(SinPrivilegios, generic.ListView):
     permission_required="inv.change_pedido"
 
     def get_queryset(self):
-        qs = Pedido.objects.filter(status="Fin").order_by('-id')[:200] | Pedido.objects.filter(status="Directo").order_by('-id')[:200] | Pedido.objects.filter(status="Stock").order_by('-id')[:200]
+        qs = Pedido.objects.filter(status='Recibido').order_by('-id')[:200] | Pedido.objects.filter(status="Directo").order_by('-id')[:200] | Pedido.objects.filter(status="Stock").order_by('-id')[:200]
         return qs
 class PedidoViewF6(SinPrivilegios, generic.ListView):
     model = Pedido
@@ -859,7 +859,7 @@ def pedido_comprando(request, id):
     if request.method=='GET':
         if pede.status2=='Si' and pede.status=='Pendiente':
             pede.fecha_requerido = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='en Proveedor'
+            pede.status='Proveedor'
             pede.indentificador_estado='4'
             pede.save()
             return redirect("inv:pedido_list_f3")
@@ -869,7 +869,7 @@ def pedido_comprando(request, id):
     if request.method=='POST':
         if pede.status2=='Si' and pede.status=='Pendiente':
             pede.fecha_requerido = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='en Proveedor'
+            pede.status='Proveedor'
             pede.indentificador_estado='4'
             pede.save()
             return redirect("inv:pedido_list_f3")
@@ -890,7 +890,7 @@ def pedido_entregadoo(request, id):
     if request.method=='GET':
         if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='Fin'
+            pede.status='Recibido'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list_f4o")
@@ -899,7 +899,7 @@ def pedido_entregadoo(request, id):
     if request.method=='POST':
         if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='Fin'
+            pede.status='Recibido'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list_f4o")
@@ -916,7 +916,7 @@ def pedido_entregadop(request, id):
     if request.method=='GET':
         if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='Fin'
+            pede.status='Recibido'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list_f4p")
@@ -926,7 +926,7 @@ def pedido_entregadop(request, id):
     if request.method=='POST':
         if pede.indentificador_estado=='4':
             pede.fecha_finalizado = datetime.now().strftime('%d-%m-%y %H:%M')
-            pede.status='Fin'
+            pede.status='Recibido'
             pede.indentificador_estado='5'
             pede.save()
             return redirect("inv:pedido_list_f4p")
@@ -1181,7 +1181,7 @@ def pedido_oc(request, id):
         if ComprasDet.objects.filter(pedido_id=pede).exists() == True:
             triplebusqueda = ComprasDet.objects.filter(pedido_id=pede).get()
             triplebusqueda = ComprasEnc.objects.filter(id=triplebusqueda.compra_id).get()
-            return redirect("cmp:compras_print_client",clienteuniqueid=triplebusqueda.clienteuniqueid)
+            return redirect("cmp:compras_print_public",clienteuniqueid=triplebusqueda.clienteuniqueid)
         else:
             return HttpResponse("Esta pedido no esta en ninguna orden de compra. Pudo ser oc-cancela, Pedido Directo, ó Stock")
     return redirect("inv:pedidos_list")

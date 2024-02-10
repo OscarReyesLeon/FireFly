@@ -6,9 +6,10 @@
         <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
             <div class="col">
-                <h4>Tienes permisos para FireFly y Sundara</h4><br>
-                <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info"></span> FireFly</a>
-                <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-primary"></span> Sundara</a>
+                <h4>Acceso a FireFly, Sundara y Magnetar</h4><br>
+                <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-primary"></span> FireFly</a>
+                <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info"></span> Sundara</a>
+                <a href="https://magnetar.ledsa.mx/" onclick="antidoble()" class="btn btn-outline-danger"></span> Magnetar</a>
             </div>
         </div>
     </div>

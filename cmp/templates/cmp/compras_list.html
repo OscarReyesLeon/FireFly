@@ -14,7 +14,6 @@
         <a class="dropdown-item" href="{% url 'cmp:compras_newalr' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_newo' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
         <a class="dropdown-item" href="{% url 'cmp:compras_newp' %}"><i class="far fa-calendar-plus"></i> Nueva</a>
-        <a class="dropdown-item" href="{% url 'cmp:compras_print_all' %}" target="reportes"><i class="fas fa-print"></i> Listado</a>
       </div>
     </div>
   </div>
@@ -121,8 +120,7 @@
                     {% if item.autorizacion == "OC: Editando - Incompleta" and perms.prf.change_comprasplanta %}
                     <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_editp' item.id %}"><i class="far fa-edit"></i></a>
                     {% endif %}
-                    <a class="btn btn-outline-success btn-circle" href="{% url 'cmp:compras_print_three' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
-                    <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_client' item.clienteuniqueid %}" target="reportes"><i class="fas fa-print"></i></a>
+                    <a class="btn btn-success btn-circle" href="{% url 'cmp:compras_print_public' item.clienteuniqueid %}" target="reportes"><i class="fa fa-box-open"></i></a>
                   </td>
                   <td>
                     {{ item.io }}

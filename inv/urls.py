@@ -57,7 +57,7 @@ urlpatterns = [
     path('productos/inactivar/<int:id>',producto_inactivar, name="producto_inactivar"),
 
     path('pedidos/importar', importar_compras_excel,name="pedidos_importar"),
-    path('pedidostodos/', PedidoView.as_view(), name="pedido_list"),
+    path('pedidostodos/', cache_page(60 * 1440)(PedidoView.as_view()), name="pedido_list"),
     path('pedidosexport/',PedidoExport.as_view(), name="pedido_export"),
     path('pedidos/',PedidoViewF.as_view(), name="pedido_list_f"),
     path('pedidosh/',PedidoViewH.as_view(), name="pedido_list_h"),

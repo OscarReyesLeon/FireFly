@@ -75,8 +75,8 @@
           <td>{{item.fc|date:"d/m/y"}}</td>
           <td>{{item.status}}</td>
           <td>
-            {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-outline-success btn-circle" role="button"><i class="fas fa-print"></i></i></a>
+            {% if item.status == 'Proveedor' or item.status == 'Recibido' %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-box-open"></i></i></a>
             {% endif %}
           </td>
         </tr>

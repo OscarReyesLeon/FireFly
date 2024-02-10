@@ -83,15 +83,15 @@
           <td>{{item.divisa}}$ {{item.precio_uni|floatformat:2}}</td>
           <td>
             {% if item.indentificador_estado != '1' %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-outline-success btn-circle" role="button"><i class="fas fa-print"></i></i></a>
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-outline-success btn-circle" role="button"><i class="fa fa-box-open"></i></i></a>
             {% endif %}
           </td>
           <td>
             {% if perms.prf.change_almacenistaoficina and item.indentificador_estado == '4' %}
-            <a href="{% url 'inv:pedido_entregadoo' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-box-open"></i></a>
+            <a href="{% url 'inv:pedido_entregadoo' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-box"></i></a>
             {% endif %}
             {% if perms.prf.change_almacenistaplanta and item.indentificador_estado == '4' %}
-            <a href="{% url 'inv:pedido_entregadop' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-box-open"></i></a>
+            <a href="{% url 'inv:pedido_entregadop' item.id %}" onclick="antidoble()" class="btn btn-outline-primary btn-circle" role="button"><i class="fa fa-box"></i></a>
             {% endif %}
           </td>
         </tr>

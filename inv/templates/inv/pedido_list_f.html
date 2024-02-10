@@ -63,7 +63,7 @@
       {% if perms.prf.change_almacenistaplanta %}
       <a href="{% url 'inv:pedido_list_f4p' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
       {% endif %}
-      <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-light" role="button"></i>Todo</a>
+      <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-danger" role="button"></i>Todo</a>
       <!---
       {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
       <a href="{% url 'inv:pedido_export' %}" class="btn btn-outline-light" role="button"></i>Exportar</a>
@@ -105,8 +105,8 @@
             {% if item.status == "Cotizando" %}
             <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-trash"></i></a>
             {% endif %}
-            {% if item.status == 'en Proveedor' or item.status == 'Fin' %}
-            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fas fa-print"></i></i></a>
+            {% if item.status == 'Proveedor' or item.status == 'Recibido' %}
+            <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fa fa-box-open"></i></i></a>
             {% endif %}
           </td>
           <td>{{item.estandarizadorq}}</td>
@@ -226,10 +226,10 @@
         if(data[5]== 'Pendiente'){
       	$(row).find('td:eq(5)').css('color', 'rgb(255, 99, 132)');
         }
-        if(data[5]== 'en Proveedor'){
+        if(data[5]== 'Proveedor'){
       	$(row).find('td:eq(5)').css('color', '#33D1FF');
         }
-        if(data[5]== 'Fin'){
+        if(data[5]== 'Recibido'){
       	$(row).find('td:eq(5)').css('color', 'purple');
         }
         if(data[5]== 'S-Cancela'){
@@ -262,10 +262,10 @@
         if(data[5]== 'Pendiente'){
           $(row).find('td:eq(0)').css('color', 'rgb(255, 99, 132)');
         }
-        if(data[5]== 'en Proveedor'){
+        if(data[5]== 'Proveedor'){
           $(row).find('td:eq(0)').css('color', '#33D1FF');
         }
-        if(data[5]== 'Fin'){
+        if(data[5]== 'Recibido'){
           $(row).find('td:eq(0)').css('color', 'purple');
         }
         if(data[5]== 'S-Cancela'){

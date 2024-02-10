@@ -188,7 +188,7 @@ def detalle_compra_guardar(sender,instance,**kwargs):
 
     prod=Pedido.objects.filter(pk=id_pedido).first()
     if prod:
-        prod.status='en Proveedor'
+        prod.status='Proveedor'
         prod.indentificador_estado='4'
         prod.ultima_compra=fecha_compra
         prod.save()
