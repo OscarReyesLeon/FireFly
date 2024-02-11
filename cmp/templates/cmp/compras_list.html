@@ -21,11 +21,11 @@
   <div class="card-body">
     <div class="buttons-toolbar">
       {% if perms.prf.change_comprasalr %}
-      <a href="{% url 'cmp:compras_listalr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      <a href="{% url 'cmp:compras_listalr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC-ALR</a>
       {% endif %}
       {% if perms.prf.change_comprasalr %}
-      <a href="{% url 'cmp:compras_newalr' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
-      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+      <a href="{% url 'cmp:compras_newalr' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC-ALR</a>
+      <a href="{% url 'inv:cotiza_alr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarALR</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
       <a href="{% url 'cmp:compras_listp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
@@ -35,11 +35,11 @@
       <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC-Ledsa</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC</a>
-      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar</a>
+      <a href="{% url 'cmp:compras_newo' %}" onclick="antidoble()" class="btn btn-success" role="button"></i>Nueva-OC-Ledsa</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Cotizar-Ledsa</a>
       {% endif %}
 
       <a href="{% url 'cmp:proveedor_list' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedores</a>

@@ -28,7 +28,13 @@
                   <h6>Orden de compra ID: {{obj.id}}<br>
                     UM ID: {{ obj.um }} | UM: {{ obj.fm|date:"d/m/Y"}} - {{obj.fm|date:"H:i:s"}}<br>
                     Comprador: {{ obj.uc }} <br> 
-                    <u><b>{{ obj.autorizacion}}</b></u></h6>
+                    {% if obj.autorizacion == "OC: Editando - Incompleta" %}
+                  </h6><h1><u><b><p style="color:red;">{{ obj.autorizacion}}</p></b></u></h1>
+                    {% elif obj.autorizacion == "OC: Autorización en Revisión" %}
+                  </h6><h1><u><b><p style="color:orangered;">{{ obj.autorizacion}}</p></b></u></h1>
+                    {% else %}
+                    <u><b><p style="color:green;">{{ obj.autorizacion}}</p></b></u></h6>
+                    {% endif %}
               </div>
           </td>
       </tr>
@@ -45,7 +51,10 @@
         <h6>Subtotal: $ {{ obj.sub_total|floatformat:"2" }} </h6>
         <h6>IVA: $ {{ obj.descuento|floatformat:"2" }} </h6>
         <h6>Total: $ {{ obj.total|floatformat:"2" }} </h6>
-        <a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fa fa-box-open"></i>Generar PDF</a>
+        
+        {% if obj.autorizacion != "OC: Editando - Incompleta" and obj.autorizacion != "OC: Autorización en Revisión" %}
+          <a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fa fa-box-open"></i>Generar PDF</a>
+        {% endif %}
       </div>
       <div class="col-12">
         <hr>
@@ -74,6 +83,9 @@
               {% endfor %}
             </tbody>
           </table>
+          <hr>
+          <b>URL para enviar a proveedor:</b> </br> https://firefly.ledsa.mx/cmp/ordencompra/public/{{ obj.clienteuniqueid }}
+  
 
           
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>

@@ -20,48 +20,48 @@
   <div class="card-body">
     <div class="buttons-toolbar">
 
-      <a href="{% url 'inv:pedido_new' %}" onclick="antidoble()" class="btn btn-outline-success"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-info" role="button"></i>Abiertos</a>
-      <a href="{% url 'inv:pedido_list_h' %}" onclick="antidoble()" class="btn btn-outline-info" role="button">Histórico</i></a>
+      <a href="{% url 'inv:pedido_new' %}" class="btn btn-outline-success"></i> Nuevo</a>
+      <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-info" role="button"></i>Abiertos</a>
+      <a href="{% url 'inv:pedido_list_h' %}" class="btn btn-outline-info" role="button">Histórico</i></a>
 
       {% if perms.prf.change_comprasalr %}
-      <a href="{% url 'cmp:compras_listalr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      <a href="{% url 'cmp:compras_listalr' %}" class="btn btn-outline-info" role="button"></i>OC-ALR</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'cmp:compras_listo' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      <a href="{% url 'cmp:compras_listo' %}" class="btn btn-outline-info" role="button"></i>OC-Ledsa</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
-      <a href="{% url 'cmp:compras_listp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>OC</a>
+      <a href="{% url 'cmp:compras_listp' %}" class="btn btn-outline-info" role="button"></i>OC</a>
       {% endif %}
       {% if perms.prf.change_cxp %}
-      <a href="{% url 'cmp:compras_listcxp' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CXP</a>
+      <a href="{% url 'cmp:compras_listcxp' %}" class="btn btn-outline-info" role="button"></i>CXP</a>
       {% endif %}
       {% if perms.prf.change_autorizanteals %}
-      <a href="{% url 'cmp:compras_lista' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
+      <a href="{% url 'cmp:compras_lista' %}" class="btn btn-outline-info" role="button"></i>ALS</a>
       {% endif %}
       {% if perms.prf.change_autorizantegls %}
-      <a href="{% url 'cmp:compras_listg' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
+      <a href="{% url 'cmp:compras_listg' %}" class="btn btn-outline-info" role="button"></i>GLS</a>
       {% endif %}
       {% if perms.prf.change_sundara %}
-      <a href="{% url 'external:report_sensor' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Sundara</a>
+      <a href="{% url 'external:report_sensor' %}" class="btn btn-outline-info" role="button"></i>Sundara</a>
       {% endif %}
       {% if perms.prf.change_autorizantemls %}
-      <a href="{% url 'cmp:compras_listm' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
+      <a href="{% url 'cmp:compras_listm' %}" class="btn btn-outline-info" role="button"></i>MLS</a>
       {% endif %}
       {% if perms.prf.change_comprasoficinas %}
-      <a href="{% url 'inv:cotiza_oficina' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarOficina</a>
+      <a href="{% url 'inv:cotiza_oficina' %}" class="btn btn-outline-info" role="button"></i>CotizarOficina</a>
       {% endif %}
       {% if perms.prf.change_comprasplanta %}
-      <a href="{% url 'inv:cotiza_planta' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarPlanta</a>
+      <a href="{% url 'inv:cotiza_planta' %}" class="btn btn-outline-info" role="button"></i>CotizarPlanta</a>
       {% endif %}
       {% if perms.prf.change_comprasalr %}
-      <a href="{% url 'inv:cotiza_alr' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>CotizarALR</a>
+      <a href="{% url 'inv:cotiza_alr' %}" class="btn btn-outline-info" role="button"></i>CotizarALR</a>
       {% endif %}
       {% if perms.prf.change_almacenistaoficina %}
-      <a href="{% url 'inv:pedido_list_f4o' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
+      <a href="{% url 'inv:pedido_list_f4o' %}" class="btn btn-outline-info" role="button"></i>Recibir</a>
       {% endif %}
       {% if perms.prf.change_almacenistaplanta %}
-      <a href="{% url 'inv:pedido_list_f4p' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Recibir</a>
+      <a href="{% url 'inv:pedido_list_f4p' %}" class="btn btn-outline-info" role="button"></i>Recibir</a>
       {% endif %}
       <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-danger" role="button"></i>Todo</a>
       <!---
@@ -70,7 +70,7 @@
       {% endif %}
       -->
       {% if perms.prf.change_almacenista %}
-      <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
+      <a href="{% url 'inv:articuloes_list' %}" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
       {% endif %}
 
     </div><br>
@@ -103,7 +103,7 @@
           <td>{{item.fc|date:"d/m/y H:i:s"}}</td>
           <td>
             {% if item.status == "Cotizando" %}
-            <a href="{% url 'inv:scancela' item.id %}" onclick="antidoble()" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-trash"></i></a>
+            <a href="{% url 'inv:scancela' item.id %}" class="btn btn-outline-danger btn-circle" role="button"><i class="fa fa-trash"></i></a>
             {% endif %}
             {% if item.status == 'Proveedor' or item.status == 'Recibido' %}
             <a href="{% url 'inv:pedido_oc' item.id %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fa fa-box-open"></i></i></a>
