@@ -46,14 +46,17 @@
         <h6>Proveedor:  {{obj.proveedor.descripcion}}</h6>
         <h6>RFC: {{obj.proveedor.rfcproveedor}}</h6>
         <h6>Fecha de entrega: {{obj.fecha_compra}}</h6>
+        <h6><hr><b>No se recibirá material sin la factura correspondiente</b></h6>
       </div>
       <div class="col-6">
         <h6>Subtotal: $ {{ obj.sub_total|floatformat:"2" }} </h6>
         <h6>IVA: $ {{ obj.descuento|floatformat:"2" }} </h6>
         <h6>Total: $ {{ obj.total|floatformat:"2" }} </h6>
-        
+      
         {% if obj.autorizacion != "OC: Editando - Incompleta" and obj.autorizacion != "OC: Autorización en Revisión" %}
-          <a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-info btn-circle" role="button"><i class="fa fa-box-open"></i>Generar PDF</a>
+          <hr><a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-primary btn-circle" role="button"><i class="fa fa-box-open"></i>Convertir a PDF</a>
+        {% else %}
+          <hr><h1>La OC aun no está autorizada</h1>
         {% endif %}
       </div>
       <div class="col-12">

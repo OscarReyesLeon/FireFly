@@ -26,13 +26,30 @@
                         <img src="{{encabezado.empresaoc.urllogoempresa}}">
                     </div>
                 </td>
+                <td style="width: 40%">
+                    
+                </td>
+                <td align="right">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https://firefly.ledsa.mx/cmp/ordencompra/public/{{encabezado.clienteuniqueid}}&size=90x90">
+                </td>
+                <td style="width: 1%">
+                    
+                </td>
                 <td>
-                    <div class="card-header" align="right">
-                        <h4>Orden de compra ID: {{encabezado.id}}<br>UM ID: {{ encabezado.um }} | UM: {{ encabezado.fm|date:"d/m/Y"}} - {{encabezado.fm|date:"H:i:s"}}<br>Comprador: {{ encabezado.uc }} <br> <u>{{ encabezado.autorizacion}}</u></h4>
-                    </div>
+                    {% if encabezado.autorizacion != "OC: Editando - Incompleta" and encabezado.autorizacion != "OC: Autorización en Revisión" %}
+                    <h4>Orden de compra ID: {{encabezado.id}}<br>Impresión: {{ today|date:"d/m/Y - H:i" }}<br>Comprador: {{ encabezado.uc }}<br>{{ encabezado.autorizacion}}<br><br><b>Verifica OC con el QR **</b></h4>
                 </td>
             </tr>
         </table>
+                    {% else %}
+                    <h4>Orden de compra ID: {{encabezado.id}}<br>Impresión: {{ today|date:"d/m/Y - H:i" }}<br>Comprador: {{ encabezado.uc }}<br>{{ encabezado.autorizacion}}<br><br><b>Verifica OC con el QR **</b></h4>
+                </td>
+            </tr>
+        </table>
+                <div align="center">
+                    <br><hr><h1>La OC aun no está autorizada</h1>
+                </div>
+            {% endif %}
         <hr/>
         <div class="card">
             <div class="list-group">
@@ -81,8 +98,13 @@
                 <table class"">
                     <tbody>
                         <tr>
+                            {% if encabezado.proveedor.get_regimen_display == "Revisar datos del proveedor" %}
+                            <hr><td align="center" ><b><h1>Se necesita verificar y actualizar el régimen fiscal del proveedor</h1></b></td>
+                            {% else %}
                             <td><h4>Regimen fiscal:</h4></td>
-                            <td>{{ encabezado.proveedor.get_regimen_display }}</td>
+                            <td align="left" >{{ encabezado.proveedor.get_regimen_display }}</td>
+                            <td></td>
+                            {% endif %}
                         </tr>
                     </tbody>
                 </table>
@@ -102,7 +124,6 @@
                             <td>{{ encabezado.empresaoc.razonsocial }}</td>
                             <td></td>
                             <td><h4>RFC: {{ encabezado.empresaoc.rfcempresa }}</h4></td>
-                            <td><h4>No se recibirá material sin la factura correspondiente</h4></td>
                         </tr>
                     </table>
                     <table class="">
@@ -140,7 +161,7 @@
                 <tbody>
                     {% for item in detalle %}
                     <tr>
-                        <td><span class="small"><center><small>|{{ item.pedido.id }}|</small></center></span></td>
+                        <td><span class="small"><center><small>|<b>{{ item.pedido.id }}</b>|</small></center></span></td>
                         <td class="numero"><center>{{ item.cantidad|floatformat:2 }} {{ item.pedido.UniMed }}</center></td>
                         <td class="numero"><center>|<small>{{ item.pedido.proceso }}</small>|</center></td>
                         <td class="letter">{{ item.pedido.motivo_peticion }}</td>
@@ -202,14 +223,11 @@
         <hr>
         <table>
             <tr>
-                <td> <little>
-                    <b>Autenticidad: </b>El QR deberá llevar al dominio <b>firefly.ledsa.mx</b> y devolver un PDF con la misma información de esta impresión.
-                    <br>
-                    <b>Última Verificación:</b> {{ today|date:"d/m/Y - H:i:s" }} <br><b>Verificador:</b> {{ encabezado.clienteuniqueid }}
-                    <br><b>Dominio Validador:</b> firefly.ledsa.mx
-                    <br><br><b><u> {{ encabezado.autorizacion}}</u></b>
+                <td>
+                    * No se recibirá material sin la factura correspondiente.
+                    <br>** Verifique la autorización de la OC así como la recepción de los artículos leyendo el QR.
+                    <br>** El QR debe mostrar datos dentro del subdominio <b>firefly.ledsa.mx</b>
                 </td>
-                <td align="left" valign="top"><img src="https://chart.googleapis.com/chart?chs=132x132&cht=qr&chl=https://firefly.ledsa.mx/cmp/ordencompra/{{encabezado.clienteuniqueid}}/oc"></td>
             </tr>
         </table>
     </div>
