@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,7 +38,7 @@
                 </td>
                 <td>
                     {% if encabezado.autorizacion != "OC: Editando - Incompleta" and encabezado.autorizacion != "OC: Autorización en Revisión" %}
-                    <h4>Orden de compra ID: {{encabezado.id}}<br>Impresión: {{ today|date:"d/m/Y - H:i" }}<br>Comprador: {{ encabezado.uc }}<br>{{ encabezado.autorizacion}}<br><br><b>Verifica OC con el QR **</b></h4>
+                    <b>Orden de compra ID:</b> {{encabezado.id}}<br><b>Impresión:</b> {{ today|date:"d/m/Y - H:i" }}<br><b>Comprador:</b> {{ encabezado.uc }}<br><u>{{ encabezado.autorizacion}}</u><br><br><b>Verifica OC con el QR **</b></h4>
                 </td>
             </tr>
         </table>
@@ -56,42 +57,43 @@
                 <table class="">
                     <tbody>
                         <tr>
-                            <td>
-                                <h3>Información del Proveedor</h3>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <h4>Dias de credito: {{ encabezado.proveedor.diascredito }}</h4>
-                            </td>
+                            <td><h3>Información del Proveedor</h3></td>
                         </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
                         <tr>
-                            <td><h4>Razon Social:</h4></td>
-                            <td>{{ encabezado.proveedor.descripcion}}</td>
-                            <td><h4>RFC:</h4></td>
-                            <td>{{ encabezado.proveedor.rfcproveedor }}</td>
+                            <td style="width: 11%"><h4>Razon Social:</h4></td>
+                            <td style="width: 44%">{{ encabezado.proveedor.descripcion}}</td>
+                            <td style="width: 6%"><h4>RFC:</h4></td>
+                            <td style="width: 19%">{{ encabezado.proveedor.rfcproveedor }}</td>
+                            <td style="width: 12%"><b>Dias de credito:</b></td>
+                            <td align="left">{{ encabezado.proveedor.diascredito }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <table class="">
                     <tbody>
                         <tr>
-                            <td><h4>Contacto:</h4></td>
-                            <td>{{ encabezado.proveedor.contacto }}</td>
-                            <td>{{ encabezado.proveedor.telefono}} </td>
-                            <td>{{ encabezado.proveedor.email }}</td>
+                            <td style="width: 11%"><h4>Banco</h4></td>
+                            <td style="width: 44%">{{encabezado.proveedor.bancoproveedor}}</td>
+                            <td style="width: 6%"><h4>CLABE:</h4></td>
+                            <td style="width: 19%">{{ encabezado.proveedor.clabeproveedor }}</td>
+                            <td style="width: 12%"><h4>Cuenta:</h4></td>
+                            <td align="left">{{ encabezado.proveedor.cuentabancoauto }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <table class="">
                     <tbody>
                         <tr>
-                            <td><h4>Banco</h4></td>
-                            <td>{{encabezado.proveedor.bancoproveedor}}</td>
-                            <td><h4>CLABE:</h4></td>
-                            <td>{{ encabezado.proveedor.clabeproveedor }}</td>
-                            <td><h4>Cuenta:</h4></td>
-                            <td>{{ encabezado.proveedor.cuentabancoauto }}</td>
+                            <td style="width: 11%"><h4>Contacto:</h4></td>
+                            <td style="width: 44%">{{ encabezado.proveedor.contacto }}</td>
+                            <td style="width: 6%"><h4>Email:</h4></td>
+                            <td style="width: 19%">{{ encabezado.proveedor.email }}</td>
+                            <td style="width: 12%"><h4>Telefono:</h4></td>
+                            <td align="left">{{ encabezado.proveedor.telefono}} </td>
                         </tr>
                     </tbody>
                 </table>
@@ -101,7 +103,7 @@
                             {% if encabezado.proveedor.get_regimen_display == "Revisar datos del proveedor" %}
                             <hr><td align="center" ><b><h1>Se necesita verificar y actualizar el régimen fiscal del proveedor</h1></b></td>
                             {% else %}
-                            <td><h4>Regimen fiscal:</h4></td>
+                            <td style="width: 11%"><h4>Regimen fiscal:</h4></td>
                             <td align="left" >{{ encabezado.proveedor.get_regimen_display }}</td>
                             <td></td>
                             {% endif %}
@@ -112,36 +114,34 @@
                 <table class="">
                     <tbody>
                         <tr>
-                            <td>
+                            <td align="left">
                                 <h3>Información de Facturación</h3>
                             </td>
-                            <td></td>
-                            <td></td>
-                            <td><h4>Uso CFDI: {{ encabezado.no_factura }}</h4></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="width: 17%"><h4>Razon Social:</h4></td>
+                            <td style="width: 53%">{{ encabezado.empresaoc.razonsocial }}</td>
+                            <td style="width: 14%"><h4>RFC:</h4></td> 
+                            <td align="left">{{ encabezado.empresaoc.rfcempresa }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 20%"><h4>Razon Social:</h4></td>
-                            <td>{{ encabezado.empresaoc.razonsocial }}</td>
-                            <td></td>
-                            <td><h4>RFC: {{ encabezado.empresaoc.rfcempresa }}</h4></td>
-                        </tr>
-                    </table>
-                    <table class="">
-                        <tbody>
-                            <tr>
-                            <td style="width: 20%"><h4>Dirección Fiscal</h4></td>
-                            <td style="width: 80%">{{encabezado.empresaoc.direccionfiscal}}</td>
+                            <td style="width: 17%"><h4>Dirección Fiscal</h4></td>
+                            <td style="width: 53%">{{encabezado.empresaoc.direccionfiscal}}</td>
+                            <td style="width: 14%"><h4>Uso CFDI:</h4></td>
+                            <td align="left">{{ encabezado.no_factura }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 20%"><h4>Dirección de Entrega:</h4></td>
-                            <td style="width: 80%"><u>{{encabezado.empresaoc.direccionentrega}}</u></td>
+                            <td style="width: 17%"><h4>Dirección de Recepción:</h4></td>
+                            <td style="width: 53%">{{encabezado.empresaoc.direccionentrega}}</td>
+                            <td style="width: 14%"><h4>Fecha de Recepción:</h4></td>
+                            <td align="left">{{encabezado.fecha_compra}}</td>
                         </tr>
-                        <tr>
-                            <td style="width: 20%"><h4>Fecha de Entrega:</h4></td>
-                            <td style="width: 80%">{{encabezado.fecha_compra}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    </tbody>
+                </table>
                 <hr>
             </div>
 
@@ -149,69 +149,56 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="width: 7%">Pedido ID</th>
-                        <th style="width: 8%">Cantidad</th>
-                        <th style="width: 11%">Proceso</th>
-                        <th>Articulo</th>
-                        <th style="width: 5%">IVA</th>
-                        <th style="width: 12%">Unitario</th>
-                        <th style="width: 15%">Total</th>
+                        <th style="width: 10%">Pedido ID</th>
+                        <th style="width: 12%">Cantidad</th>
+                        <th style="width: 46%">Articulo</th>
+                        <th style="width: 10%">IVA</th>
+                        <th style="width: 11%">Unitario</th>
+                        <th style="width: 11%">Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in detalle %}
                     <tr>
-                        <td><span class="small"><center><small>|<b>{{ item.pedido.id }}</b>|</small></center></span></td>
-                        <td class="numero"><center>{{ item.cantidad|floatformat:2 }} {{ item.pedido.UniMed }}</center></td>
-                        <td class="numero"><center>|<small>{{ item.pedido.proceso }}</small>|</center></td>
+                        <td align="center">{{ item.pedido.id }}</td>
+                        <td class="numero" align="center">{{ item.cantidad|floatformat:2|intcomma }} {{ item.pedido.UniMed }}</td>
                         <td class="letter">{{ item.pedido.motivo_peticion }}</td>
-                        <td class="letter"><center>{{ item.pedido.iva }}</center></td>
-                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:2 }}</td>
-                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:2 }}</td>
+                        <td class="letter" align="center">{{ item.pedido.iva }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:2|intcomma }}</td>
+                        <td class="numero">{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:2|intcomma }}</td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
                         <td><hr></td>
                         <td><hr></td>
                         <td><hr></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><br></td>
-                    <td><br></td>
-            </tr>
-            <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><h4>Sub Total</h4></td>
-                            <td class="numero"><h4>$ {{ encabezado.sub_total|floatformat:2 }}</h4></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width: 78%"></td>
+                        <td style="width: 11%"><br></td>
+                        <td style="width: 11%"><br></td>
                     </tr>
                     <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><h4>IVA</h4></td>
-                            <td class="numero"><h4>$ {{ encabezado.descuento|floatformat:2 }}</h4></td>
+                        <td style="width: 78%"></td>
+                        <td style="width: 11%"><h4>Sub Total:</h4></td>
+                        <td style="width: 11%" class="numero"><h4>$ {{ encabezado.sub_total|floatformat:2|intcomma }}</h4></td>
                     </tr>
                     <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><h4>Total</h4><hr></td>
-                            <td class="numero"><h4>$ {{ encabezado.total|floatformat:2 }}<hr></h4></td>
+                        <td style="width: 78%"></td>
+                        <td style="width: 11%"><h4>IVA:</h4></td>
+                        <td style="width: 11%" class="numero"><h4>$ {{ encabezado.descuento|floatformat:2|intcomma }}</h4></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 78%"></td>
+                        <td style="width: 11%"><h4>Total:</h4><hr></td>
+                        <td style="width: 11%" class="numero"><h4>$ {{ encabezado.total|floatformat:2|intcomma }}<hr></h4></td>
                     </tr>
                 </tbody>
             </table>

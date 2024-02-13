@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -49,9 +50,9 @@
         <h6><hr><b>No se recibirá material sin la factura correspondiente</b></h6>
       </div>
       <div class="col-6">
-        <h6>Subtotal: $ {{ obj.sub_total|floatformat:"2" }} </h6>
-        <h6>IVA: $ {{ obj.descuento|floatformat:"2" }} </h6>
-        <h6>Total: $ {{ obj.total|floatformat:"2" }} </h6>
+        <h6>Subtotal: $ {{ obj.sub_total|floatformat:2|intcomma }} </h6>
+        <h6>IVA: $ {{ obj.descuento|floatformat:2|intcomma }} </h6>
+        <h6>Total: $ {{ obj.total|floatformat:2|intcomma }} </h6>
       
         {% if obj.autorizacion != "OC: Editando - Incompleta" and obj.autorizacion != "OC: Autorización en Revisión" %}
           <hr><a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-primary btn-circle" role="button"><i class="fa fa-box-open"></i>Convertir a PDF</a>
@@ -79,8 +80,8 @@
                   <td>{{item.pedido.id}}</td>
                   <td>{{item.cantidad}} {{item.pedido.UniMed}}</td>
                   <td>{{item.pedido.motivo_peticion}}</td>
-                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:"2" }}</td>
-                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:"2" }}</td>
+                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.precio_uni|floatformat:2|intcomma }}</td>
+                  <td>{{ item.pedido.divisa }} $ {{ item.pedido.preciotransaccion|floatformat:2|intcomma }}</td>
                   <td>{{ item.pedido.status }}</td>
                 </tr>  
               {% endfor %}
