@@ -18,36 +18,59 @@
   <!-- Card Body -->
   <div class="card-body">
     <div class="buttons-toolbar">
-      <a class="btn btn-outline-success" href="{% url 'inv:pedido_new' %}" target="_blank"><i cass="far fa-calendar-plus"></i> Nuevo</a>
-      <a href="{% url 'inv:pedido_list_f' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Mis Pedidos</a>
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="#" onclick="antidoble()" class="btn btn-outline-info" role="button">Cotizar</i></a>
+      pedido_list_f3
+      <a href="{% url 'inv:pedido_new' %}" class="btn btn-outline-success"> Nuevo</a>
+      <a href="{% url 'inv:pedido_list_f' %}" class="btn btn-outline-info" role="button">Abiertos</a>
+      <a href="{% url 'inv:pedido_list_h' %}" class="btn btn-outline-info" role="button">Histórico</a>
+      {% if perms.prf.change_autorizanteals %}
+      <a href="{% url 'cmp:compras_lista' %}" class="btn btn-outline-primary" role="button"></i>ALS</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_auxcompras or perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'cmp:compras_list' %}" onclick="antidoble()" class="btn btn-primary" role="button"></i>OC</a>
+      {% if perms.prf.change_autorizantegls %}
+      <a href="{% url 'cmp:compras_listg' %}" class="btn btn-outline-primary" role="button"></i>GLS</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras or perms.prf.change_comprador %}
-      <a href="{% url 'inv:pedido_list_f4' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Proveedor</a>
+      {% if perms.prf.change_autorizantemls %}
+      <a href="{% url 'cmp:compras_listm' %}" class="btn btn-outline-primary" role="button"></i>MLS</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:pedido_list_f5' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>Terminado</a>
+      {% if perms.prf.change_cxp %}
+      <a href="{% url 'cmp:compras_listcxp' %}" class="btn btn-outline-primary" role="button"></i>CXP</a>
       {% endif %}
-      {% if perms.prf.change_autorizador or perms.prf.change_comprador %}
-      <a href="{% url 'inv:pedido_list_als' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>ALS</a>
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'inv:cotiza_oficina' %}" class="btn btn-outline-primary" role="button"></i>Cot-Oficina</a>
       {% endif %}
-      {% if perms.prf.change_autorizador%}
-      <a href="{% url 'inv:pedido_list_gls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>GLS</a>
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'inv:cotiza_planta' %}" class="btn btn-outline-primary" role="button"></i>Cot-Planta</a>
       {% endif %}
-      {% if perms.prf.view_autorizantemls %}
-      <a href="{% url 'inv:pedido_list_mls' %}" onclick="antidoble()" class="btn btn-outline-info" role="button"></i>MLS</a>
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'inv:cotiza_alr' %}" class="btn btn-outline-primary" role="button"></i>Cotizar-ALR</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:articuloes_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Estandarizar</i></a>
+      {% if perms.prf.change_almacenistaoficina %}
+      <a href="{% url 'inv:pedido_list_f4o' %}" class="btn btn-outline-primary" role="button"></i>Recibir-Patio</a>
       {% endif %}
-      {% if perms.prf.change_almacenista or perms.prf.change_comprador or perms.prf.change_auxcompras %}
-      <a href="{% url 'inv:nombrerelacion_list' %}" onclick="antidoble()" class="btn btn-outline-primary" role="button">Relacionar</i></a>
+      {% if perms.prf.change_almacenistaplanta %}
+      <a href="{% url 'inv:pedido_list_f4p' %}" class="btn btn-outline-primary" role="button"></i>Recibir-Planta</a>
       {% endif %}
-
+      <a href="{% url 'inv:pedido_list' %}" class="btn btn-outline-danger" role="button"></i>Todo</a>
+      <br>
+      <br>
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'cmp:compras_newalr' %}" class="btn btn-outline-success" role="button"></i>Nueva-OC-ALR</a>
+      {% endif %}
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_newp' %}" class="btn btn-outline-success" role="button"></i>Nueva-OC-Planta</a>
+      {% endif %}
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_newo' %}" class="btn btn-outline-success" role="button"></i>Nueva-OC-Ledsa</a>
+      {% endif %}
+      {% if perms.prf.change_comprasplanta %}
+      <a href="{% url 'cmp:compras_listp' %}" class="btn btn-outline-info" role="button"></i>OC-Planta</a>
+      {% endif %}
+      {% if perms.prf.change_comprasalr %}
+      <a href="{% url 'cmp:compras_listalr' %}" class="btn btn-outline-info" role="button"></i>OC-ALR</a>
+      {% endif %}
+      {% if perms.prf.change_comprasoficinas %}
+      <a href="{% url 'cmp:compras_listo' %}" class="btn btn-outline-info" role="button"></i>OC-Ledsa</a>
+      {% endif %}
+      <a href="{% url 'cmp:proveedor_list' %}" class="btn btn-outline-primary" role="button"></i>Proveedores</a>
     </div><br>
     <h2>  <p class="text-secondary", align="center">Pendientes de generar Orden de Compra</p></h2>
     {% if not obj %}
