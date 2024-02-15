@@ -55,7 +55,7 @@
         <h6>Total: $ {{ obj.total|floatformat:2|intcomma }} </h6>
       
         {% if obj.autorizacion != "OC: Editando - Incompleta" and obj.autorizacion != "OC: Autorización en Revisión" %}
-          <hr><a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-primary btn-circle" role="button"><i class="fa fa-box-open"></i>Convertir a PDF</a>
+          <hr><a href="{% url 'cmp:compras_print_client' obj.clienteuniqueid %}" target="_blank" class="btn btn-primary btn-circle" role="button"><i class="fa fa-box-open"></i>Obtener Orden de Compra</a>
         {% else %}
           <hr><h1>La OC aun no está autorizada</h1>
         {% endif %}

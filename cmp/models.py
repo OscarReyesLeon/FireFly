@@ -19,22 +19,22 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Proveedor(ClaseModelo):
     regimen_sat = (
         (1, 'Revisar datos del proveedor'),
-        (2, 'Persona moral'),
+        (2, 'general de ley personas morales'),
         (3, 'Régimen Simplificado de Confianza'),
         (4, 'Sueldos y salarios e ingresos asimilados a salarios'),
-        (5, 'Régimen de Actividades Empresariales y Profesionales'),
+        (5, 'Régimen de personas fisica con Actividades Empresariales y Profesionales'),
         (6, 'Régimen de Incorporación Fiscal'),
         (7, 'Enajenación de bienes'),
         (8, 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
         (9, 'Régimen de Arrendamiento'),
-        (10, 'Intereses'),
-        (11, 'Obtención de premios'),
-        (12, 'Dividendos'),
-        (13, 'Demás ingresos'),
-        (14, 'Régimen Simplificado de Confianza'),
-        (15, 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
-        (16, 'Régimen de Arrendamiento'),
-        (17, 'Régimen de Actividades Empresariales y Profesionales'),
+#       (10, 'Intereses'),
+#       (11, 'Obtención de premios'),
+#       (12, 'Dividendos'),
+#       (13, 'Demás ingresos'),
+#       (14, 'Régimen Simplificado de Confianza'),
+#       (15, 'Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas'),
+#       (16, 'Régimen de Arrendamiento'),
+#       (17, 'Régimen de Actividades Empresariales y Profesionales'),
     )
     descripcion=models.CharField(max_length=100,unique=True)
     direccion=models.CharField(
